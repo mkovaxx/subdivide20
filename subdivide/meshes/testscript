@@ -1,0 +1,27 @@
+#!/bin/csh
+
+set DEPTH = 2
+set SUBDIR = ./.
+
+set CCSUB = ../examples/ccsub
+set LOOPSUB = ../examples/loopsub
+
+cd SUBDIR
+
+foreach p (testtags open_meshes closed_meshes medium_meshes) 
+ 
+  if -e ${p}_out then
+    rm -rf ${p}_out
+  endif
+  mkdir ${p}_out
+
+  foreach f ($p/*.wrl)
+    set u = ${f:t}
+    set s = ${f:h}_out/${u:r}
+    echo "----------------------------------\n"
+    echo ${CCSUB} $f ${DEPTH}
+    ${CCSUB} $f ${s}_cc_${DEPTH}.wrl  ${DEPTH} 
+    echo ${LOOPSUB} $f ${DEPTH}
+    ${LOOPSUB} $f  ${s}_loop_${DEPTH}.wrl  ${DEPTH} 
+  end
+end

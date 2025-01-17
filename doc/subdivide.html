@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Subdivide 2.0</title>
+<meta content="text/html" http-equiv="Content-Type">
+<style type="text/css">
+ 
+P {
+  font-family: helvetica;
+}
+h1 {
+  font-family: helvetica;
+}
+h2 {
+  font-family: helvetica;
+}
+h3 {
+  font-family: helvetica;
+}
+h4 {
+  font-family: helvetica;
+}
+ul {
+  font-family: helvetica;
+}
+code {  font-family: courier;
+    font-size:10pt;
+}
+pre {   font-family: courier;
+    font-size:10pt;
+}
+</style>
+</head>
+<body bgcolor="#ffffff" text="#000000" >
+<center>
+<h2> Subdivide 2.0</h2>
+
+<h3> <a href="mailto:biermann@cs.nyu.edu">Henning Biermann</a>,
+<a href="mailto:dzorin@mrl.nyu.edu">Denis Zorin</a><br>
+ biermann@cs.nyu.edu, dzorin@mrl.nyu.edu<br>
+ Media Research Lab, NYU</h3>
+
+<h3> April 2000</h3>
+</center>
+
+<table cellspacing="10">
+<tbody>
+<tr>
+<td valign="top">
+<p> <a href="#introduction">introduction</a></p>
+
+<p> <a href="#installing">installation</a></p>
+
+<p> <a href="#testing">tests</a></p>
+
+<p> <a href="#ui">usage</a></p>
+
+<p> <a href="#fileformat">file format</a></p>
+</td>
+<td valign="top"><a name="introduction"></a> 
+
+<h3> INTRODUCTION</h3>
+
+<p> <font size="2">This software demonstrates algorithms for
+piecewise smooth subdivision surfaces described in the paper
+"Piecewise Smooth Subdivision Surfaces with Normal Control" by H.
+Biermann, A. Levin and D. Zorin. Two subdivision schemes, based
+on Loop and Catmull-Clark subdivision, are implemented. We have
+extended the classical Loop and Catmull-Clark schemes by adding
+rules to handle correctly a number of surface
+features:</font></p>
+
+<ul>
+<li><font size="2">convex and concave corners on the boundary and
+on creases;</font></li>
+
+<li><font size="2">extraordinary vertices on the boundary and on
+creases;</font></li>
+
+<li><font size="2">prescribed normals at vertices.</font></li>
+</ul>
+<p>
+<font size="2">We will refer to these schemes as extended Loop
+and Catmull-Clark schemes.</font> 
+
+<p> <font size="2">The code includes a minimal user interface for
+viewing control meshes and subdivision surfaces and changing mesh
+tags. The input to the code is a mesh description in VRML
+format,</font></p>
+
+<h4>License</h4>
+
+<p> <font size="2"><code>Subdivide</code> is free software; you
+can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later
+version.</font></p>
+
+<h4>Acknowledgments</h4>
+
+<p> <font size="2">Subdivide uses the following code:</font></p>
+
+<ul>
+<li><font size="2"><a href= 
+"http://reality.sgi.com/mjk_asd/glut3/glut3.html"> GLUT</a>, the
+OpenGL Utility Toolkit, by Mark Kilgard, a system independent
+windowing toolkit. GLUT is not included in the distribution; 
+if it is not installed on your computer, you can obtain the source or 
+binaries from the GLUT <a href= 
+"http://reality.sgi.com/mjk_asd/glut3/glut3.html">Home Page.</a>
+ </font></li>
+
+<li><font size="2"><a href= 
+"ftp://ftp.sgi.com/sgi/inventor/2.0/qv1.0.tar.Z"> QvLib</a>. A
+VRML parser by Paul S. Strauss of Silicon Graphics. (Extended to
+handle user defined nodes correctly).</font></li>
+
+<li><font size="2">Our user interface uses arcball, a general
+purpose 3-D rotation controller described by Ken Shoemaker in the
+Graphics Interface '92 Proceedings. Complete source code appears
+in Graphics Gems IV pp. 175-192. Our arcball implementation is
+based on the <a href="ftp://ftp.cis.upenn.edu/pub/graphics">
+original code</a> .</font></li>
+</ul>
+
+We are very grateful to Daniel Kristjiansson and Jianbo Peng for
+their help with preparing this code for release. <a name= 
+"installing"></a> 
+
+<h3> PACKAGE STRUCTURE</h3>
+<p>
+<font size="2"> The package consists of two main libraries, 3
+sample programs, and an auxiliary library, <code>qvlib</code>.
+Interface to the main libraries is defined by the header files in
+the directory <code>../subdivide/include</code>.</font> 
+
+<ul>
+<li><code>libsub</code> <font size="2"> contains classes for
+our versions of Catmull-Clark and Loop subdivision surfaces. To
+use these classes, the code has to be compiled with <code>
+qvlib</code></font></li>
+
+<li><code>libviewer</code><font size="2"> contains subdivision
+surface classes extended with rendering and interaction
+capabilities, and a simple viewer class to support
+interaction.</font></li>
+
+<li><code>loopsub</code><font size="2"> is an extended Loop
+subdivision surface filter; it reads a file with a tagged mesh
+and produces an output file containing the subdivided mesh. It
+uses only <code> libsub</code> and <code>
+qvlib</code>.</font></li>
+
+<li><code>ccsub</code><font size="2"> is a similar filter
+for extended Catmull-Clark surfaces.</font></li>
+
+<li><code>subviewer</code><font size="2"> is an example showing
+how to use the viewer class and subdivision surface classes (both
+extended Loop and Catmull-Clark) with rendering and manipulation
+support from <code> libviewer</code>. This library requires
+linking with <code>qvlib</code>, <code>OpenGL</code> or <code>
+Mesa</code> libraries, and <code> GLUT</code>. Note that the
+Makefiles assume that these libraries are found in the default
+library path. If they are in nonstandard locations, you may have
+to modify the Makefiles in the directory <code>
+../examples</code></font></li>
+
+<li><code>qvlib</code><font size="2"> is a VRML
+parser.</font></li>
+</ul>
+<p>
+<font size="2">The libraries and examples can be found in the
+following directories:</font> 
+
+<table cellspacing="10pt" cellpadding="0pt">
+<tr><td><font size="2"><code><a href="../subdivide/src">
+../subdivide/src</a></code> </font></td><td> <font size="2">Source code for <code>libsub.</code>
+Note that most of the work is actually done by template classes
+in <code><a href="../subdivide/template">
+../subdivide/template.</a></code></font></td></tr>
+
+<tr><td><font size="2"><code><a href="../subdivide/viewer">
+../subdivide/viewer</a></code> </font></td><td><font size="2"> Source code for <code>
+libviewer.</code></font></td></tr>
+
+<tr><td><font size="2"><code><a href="../subdivide/template">
+../subdivide/template</a></code></font> </td><td><font size="2">Header files and templates
+shared by <code>libsub</code> and <code>
+libviewer</code>.</font></td></tr>
+
+<tr><td><font size="2"><code><a href="../subdivide/include">
+../subdivide/include</a></code></font></td><td><font size="2">Header files defining the
+interface for the libraries.</font></td></tr>
+
+<tr><td><font size="2"><code><a href="../subdivide/examples">
+../subdivide/examples</a></code></font></td><td><font size="2">Code for <code> loopsub</code>,
+<code>ccsub</code>, <code> subviewer.</code></font></td></tr>
+
+<tr><td><font size="2"><code><a href="../subdivide/meshes">
+../subdivide/meshes</a></code> </font></td><td> <font size="2">Several sample tagged meshes in
+the VRML format with additional nodes described
+below.</font></td></tr>
+</table>
+
+<font size="2">Each directory contains a README file briefly
+describing the contents of each file.</font> 
+
+<h3> COMPILING</h3>
+
+<p> <font size="2">The Source code has been developed and tested
+under</font></p>
+
+<ul>
+<li><font size="2">IRIX 6.5, MIPSpro Compilers: Version 7.2.1 and
+7.3.</font></li>
+
+<li><font size="2">IRIX 6.5, gcc version 2.95.2.</font></li>
+
+<li><font size="2">Red Hat Linux, gcc-egcs version
+2.91.66.</font></li>
+
+<li><font size="2">Windown NT, Visual Studio 6.0</font></li>
+</ul>
+<p>
+<font size="2">To build everything on IRIX or Linux, run one of
+the following commands in the directory <code>
+../subdivide</code></font> 
+
+<pre>
+<font size="2">% make -f Makefile.CC</font>
+</pre>
+
+<pre>
+<font size="2">% make -f Makefile.gcc</font>
+</pre>
+
+<pre>
+<font size="2">% make -f Makefile.linux</font>
+</pre>
+<p>
+<font size="2">The makefiles with extension <code> .CC</code>
+work with SGI MIPSPro compiler, those with extension <code>
+.gcc</code> work with <code>gcc 2.8.1 on IRIX 6.5, and those with
+extension <code> linux</code> work with <code>gcc-egcs
+2.91.66</code> on Red hat Linix.</code>  The makefiles assume that
+the GLUT library is installed in a standard location. If it is not, 
+<code>subviewer</code> will not compile, unless you modify the makefile 
+in <code>examples</code>, to include the path to <code>libglut</code> 
+as a linking option, and all makefiles in <code>src</code>,  
+<code>viewer</code> and <code>examples</code> to include the path 
+to <code>glut.h</code> as a compile option.
+
+</font> 
+<p> <font size="2">For Microsoft Visual Studio 6.0, there are
+several project files in the directory <a href=
+"../subdivide/winnt"><code> ../subdivide/winnt</code></a>. To
+compile, open the work space called <code>All.dsw</code> and
+build the release or debug version of the examples <code>
+ccsub</code>, <code>loopsub</code> and <code> subviewer</code>,
+The executables are placed in the subdirectories:</font></p>
+
+<ul>
+<li><font size="2">debug: <code> .\winnt\Debug</code></font></li>
+
+<li><font size="2">release: <code>
+.\winnt\Release</code></font></li>
+</ul>
+
+<a name="testing"></a> 
+
+<h3> TESTING</h3>
+
+<p> <font size="2">A number of test meshes are contained in
+subdirectories of <code>meshes</code>. The script <code>
+testscript</code> subdivides them and writes them to
+corresponding output directories. The script <code>
+testscript</code> works only under Unix.</font> <a name="ui">
+</a></p>
+
+<h3> USAGE</h3>
+
+<p> <font size="2">The filters <code>loopsub</code> and <code>
+ccsub</code> take three arguments: the input file name, the
+output file name, and the subdivision depth. For
+example,</font></p>
+
+<pre>
+<font size="2">ccsub bunny.wrl cube-out.wrl 3
+</font>
+</pre>
+<p>
+<font size="2">subdivides the mesh contained in the file <code>
+bunny.wrl</code> 3 times using extended Catmull-Clark
+subdivision, and places the result into <code>
+bunny-out.wrl</code>.</font> 
+
+<p> <font size="2">The program <code>subviewer</code> is
+interactive. It takes a single command line argument, the name of
+the file containing a mesh, and displays two windows, one showing
+the result of applying the extended Catmull-Clark scheme to the
+mesh and the other the result of applying the extended Loop
+scheme to the same mesh.</font></p>
+
+<p> <font size="2">The user interface has two modes: picking and
+examination. Picking allows one to select edges, vertices and
+sectors and to apply, change and remove the tags. In the
+examination mode, the arcball is used to change the camera
+position with respect to the mesh. Spacebar is used to switch
+between the two modes. In the examination mode, drag with the
+left mouse button pressed to rotate the surface, drag with the
+middle button pressed to translate it in a plane parallel to the
+screen, and with the left to move it perpendicular to the screen.
+For a two-button mouse use Alt+left mouse button instead of the
+middle button.</font></p>
+
+<p> <font size="2">The user can increase the subdivision level by
+pressing <code>d</code>, and write out the subdivided meshes by
+pressing <code>s</code> in the active window. The mesh with tags can
+be written with key <code>w</code>. Pressing <code>o</code> 
+cycles between three different display modes: control mesh  
+and subdivided mesh together, only subdivided mesh, and only control mesh.
+</font>
+
+<p> <font size="2">In the picking mode, vertices, edges and
+sectors are selected with left mouse click. Selected elements are
+highlighted in green.</font></p>
+
+<p> <font size="2">The user interface supports the following
+operations:</font></p>
+
+<ul>
+<li><font size="2">Tagging the toplevel mesh:</font> 
+
+<ul>
+<li><font size="2">Left click on an edge toggles the edge tag
+(smooth/crease edge); crease edges are shown in blue.</font></li>
+
+<li><font size="2">Left click on a vertex toggles the vertex tag
+where applicable (smooth vertex/corner). Corner vertices are shown in red. </font></li>
+
+<li><font size="2">Left click on a sector: select sector, click
+again to toggle tag (convex/concave at corner
+vertices). Convex corner sectors are shown in blue, concave corner sectors are shown in orange.  </font></li>
+</ul>
+</li>
+
+<li><font size="2">Modifying flatness and theta parameters: when
+a vertex is selected, the flatness and theta parameters can be
+modified at this vertex using up/down and left/right arrows
+respectively.</font></li>
+</ul>
+
+<a name="fileformat"></a> 
+
+<h3> FILE FORMAT</h3>
+
+<p> <font size="2">The program reads and writes files in VRML 1.0/Inventor format, and the files are compatible with any VRML
+viewer. However, we use several user-defined nodes, which can be
+interpreted only by our software. These nodes conform to the VRML
+standard for extension nodes, and any standard-compliant software
+should ignore them.</font></p>
+
+<p> <font size="2">The layout of a tagged mesh description 
+is shown below. The mesh  includes a conventional 
+<code>IndexedFaceSet</code> definition and several custom nodes describing
+different types of tags and tag parameters: <code>CornerVertex</code>, 
+<code>CreaseVertex</code>, <code>DartVertex</code>, and <code>Sector</code>. 
+In addition an <code>IndexedLineSet</code> is used to enumerate crease edges.
+</font>
+
+<p><font size="2"> The following nodes  are just lists of different types of tagged vertices: 
+<code>CornerVertex,</code> <code>CreaseVertex</code>, and
+<code>DartVertex</code>.  Each of these nodes has a single field
+<code>vertexIndex</code>, an array  of indices of  tagged
+vertices of this type.
+</font> 
+
+<p><font size="2"> Additionally, we provide parameters for surface sectors, that is, 
+sequences of top-level faces adjacent to a vertex, starting and ending 
+with a crease.
+</font>
+<p><font size="2"> The node <code>Sector</code> contains several parameters for a specific
+sector, given by the following fields. There may be several nodes of this type.
+</font>
+<ul>
+<li><font size="2"><code>faceIndex</code> and <code>vertexIndex</code>: The sector is identified by this face/vertex pair.  There are in
+general many ways of referring to the same sector, as we can take 
+any face contained in it.  The vertex indexed used here  is not the vertex index in the <code>Coordinate3</code> node: it is the vertex number inside the face. For example, the fields <code>faceIndex 77</code> and
+<code>vertexIndex 2</code>, refer to the second vertex of face number
+<code>77</code> as listed in the <code>indexedFaceSet</code>.
+</font></li>
+<li><font size="2"><code>sectorTag</code>: one of <code>0, 1, 2</code>
+indicating whether the sector is untagged, convex or concave. Corner
+vertices require either convex or concave tags.
+</font></li>
+<li><font size="2"><code>flatness</code>: number in the range <code>[0, 1]</code>,
+controlling the shape of the surface.  Reasonable choices are:
+<code>0.5</code> at concave corners and <code>0</code> otherwise.
+</font></li>
+<li><font size="2"><code>theta</code>: only used at corner vertices. A number in the
+range <code>(0, pi)</code> for convex corners, and <code>(pi,
+2pi)</code> for concave corners.  Reasonable choices are
+<code>pi/2</code> and <code>3pi/2</code> respectively.
+</font></li>
+<li><font size="2"><code>normal</code>: the prescribed normal direction, <code>0 0
+0</code> if no normal is prescribed.
+</font></li>
+<li><font size="2"><code>normalT</code>: a number in the range <code>[0, 1]</code>
+controlling how fast the normals of faces of the mesh converge
+to the prescribed limit normal.
+</ul>
+
+<p>The following example shows the general file structure.  We omit the actual values for the fields:
+<pre>
+#VRML V1.0 ascii
+Separator {
+	Coordinate3 {
+		point [ ... ]
+        }
+
+	IndexedFaceSet {
+		coordIndex [ ... ]
+        }
+
+	DEF creaseEdge IndexedLineSet {
+		coordIndex [ ... ]
+        }
+
+	CornerVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ ... ]
+	}
+
+	CreaseVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ ... ]
+        }
+
+	DartVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ ... ]
+
+	}
+
+
+	Sector {
+		fields [
+			SFLong faceIndex,
+			SFLong vertexIndex,
+			SFLong sectorTag,
+			SFFloat flatness,
+			SFFloat theta,
+			SFVec3f normal,
+			SFFloat normalT,
+		]
+		faceIndex   ...
+		vertexIndex ...
+		sectorTag   ...
+		flatness    ...
+		theta       ...
+		normal      ...
+		normalT     .
+	}
+
+}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+ <br>
+</body>
+</html>
+

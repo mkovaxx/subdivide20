@@ -1,0 +1,130 @@
+#VRML V1.0 ascii
+Separator {
+	renderCulling AUTO
+
+	Coordinate3 {
+		point [ 
+			0.850651  0.525731  0,
+			-0.525301  0.00042967  -0.850221,
+			0.525322  -1.66682e-05  0.849979,
+			-0.525731  0  0.850651,
+			-0.850651  -0.525731  0,
+			-0.863191  0.533521  2.42802e-05,
+			0.850651  -0.525731  0,
+			0  -0.850651  0.525731,
+			8.28078e-06  -0.845057  -0.511071,
+			0.525731  0  -0.850651,
+			0  0.850651  -0.525731,
+			-0.000138764  0.796447  0.468809,
+			
+		]
+	}
+
+	IndexedFaceSet {
+		coordIndex [ 
+			8, 1, 9, -1, 
+			9, 1, 10, -1, 
+			10, 1, 5, -1, 
+			5, 1, 4, -1, 
+			4, 1, 8, -1, 
+			2, 3, 7, -1, 
+			7, 3, 4, -1, 
+			4, 3, 5, -1, 
+			5, 3, 11, -1, 
+			11, 3, 2, -1, 
+			2, 0, 11, -1, 
+			11, 0, 10, -1, 
+			10, 0, 9, -1, 
+			9, 0, 6, -1, 
+			6, 0, 2, -1, 
+			10, 5, 11, -1, 
+			7, 4, 8, -1, 
+			2, 7, 6, -1, 
+			6, 7, 8, -1, 
+			6, 8, 9, -1, 
+		]
+		materialIndex [ 
+			-1, 
+		]
+		normalIndex [ 
+			-1, 
+		]
+		textureCoordIndex [ 
+			-1, 
+		]
+	}
+
+	CornerVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ 
+		]
+
+	}
+
+	DartVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ 
+		]
+
+	}
+
+	CreaseVertex {
+		fields [
+			MFLong vertexIndex,
+		]
+		vertexIndex [ 
+			0, 1, 2, 3, 
+			4, 5, 6, 8, 
+			9, 11, 
+		]
+
+	}
+
+	DrawStyle {
+		style FILLED
+		pointSize 1
+		lineWidth 3
+		linePattern 65535
+	}
+
+	Material {
+		ambientColor 0.2 0.2 0.2 
+		diffuseColor 0 1 0 
+		specularColor 0 0 0 
+		emissiveColor 0 0 0 
+		shininess [ 
+			0.2, 
+		]
+		transparency [ 
+			0, 
+		]
+	}
+
+	DEF creaseEdge IndexedLineSet {
+		coordIndex [ 
+			9, 8, -1, 8, 
+			1, -1, 4, 5, 
+			-1, 1, 4, -1, 
+			3, 5, -1, 3, 
+			11, -1, 2, 11, 
+			-1, 2, 0, -1, 
+			6, 9, -1, 0, 
+			6, -1, 
+		]
+		materialIndex [ 
+			-1, 
+		]
+		normalIndex [ 
+			-1, 
+		]
+		textureCoordIndex [ 
+			-1, 
+		]
+	}
+
+}
+

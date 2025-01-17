@@ -1,0 +1,16 @@
+Tags test
+
+mesh0.iv: closed icosa (tris)
+mesh1.iv: plane (quads)
+mesh2.iv: plane with creases (tris)
+mesh3.iv: plane with creases (quads)
+mesh4.iv: plane with creases and darts (tris)
+mesh5.iv: plane with creases and darts (quads)
+mesh6.iv: plane with creases and convex corner (quads)
+mesh7.iv: plane with creases and convex corner (tri)
+mesh8.iv: plane with crease/convex/concave (tri)
+mesh9.iv: plane with crease/convex/concvae, angles (quad)
+mesh10.iv: icosa with crease (convex)
+mesh11.iv: icosa with crease (convex/concave)
+mesh12.iv: icosa with crease (smooth)
+mesh13.iv: corner with convex and concvae corners (due to Aaron Lee)
