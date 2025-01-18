@@ -1,3 +1,6 @@
+# Makedepend files
+Makedepend.*
+
 # Prerequisites
 *.d
 
