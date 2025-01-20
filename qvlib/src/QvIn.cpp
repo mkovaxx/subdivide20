@@ -5,7 +5,7 @@
 #include <QvInput.h>
 #include <QvNode.h>
 #include <QvSeparator.h>
-#include <iostream.h>
+#include <iostream>
 
 QvIn::QvIn(char* filename) : _error(false) {
 
