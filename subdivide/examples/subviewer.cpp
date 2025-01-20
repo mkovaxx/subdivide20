@@ -58,7 +58,7 @@ void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
         }
 
         if (argc > 2)
-            depth = min(max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
+            depth = std::min(std::max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
     }
 
     TagFlatMesh tagFlatMesh;

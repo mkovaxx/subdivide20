@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 
         // subdivide the quad mesh a number of times
         int d = atoi(argv[3]);
-        d = min(max(0, d), GEN_MAX_DEPTH);
+        d = std::min(std::max(0, d), GEN_MAX_DEPTH);
         quadMesh.subdivide(d);
 
         // extract the mesh formed by the leaves
