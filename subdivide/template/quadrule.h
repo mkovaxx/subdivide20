@@ -28,149 +28,155 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.h"
 #include <vector>
 
-
-
 class QuadEdgeCoef {
-public:
-  float cf[6];
-  void print() const
-    { cerr<<"c = { "<<cf[0]<<", "<<cf[1]<<", "<<cf[2]
-	  <<", "<<cf[3]<<", "<<cf[4]<<", "<<cf[5]<<"} "<<endl; }
+  public:
+    float cf[6];
+    void print() const {
+        cerr << "c = { " << cf[0] << ", " << cf[1] << ", " << cf[2] << ", " << cf[3] << ", " << cf[4] << ", " << cf[5]
+             << "} " << endl;
+    }
 };
 
 class QuadCoef {
-public:
-  float         centerC;
-  vector<float> edgeC;
-  vector<float> faceC;
-  float dot(const QuadCoef& coef) const;
-  float dotOne() const;
-  void print() const {
-    cerr<<"{ centerC = "<<centerC;
-    uint i;
-    for(i = 0; i < edgeC.size(); ++i)
-      cerr<<", "<<edgeC[i];
-    cerr<<". faceC = ";
-    for(i = 0; i < faceC.size(); ++i)
-      cerr<<", "<<faceC[i];
-    cerr<<"} "<<endl;
-  }
+  public:
+    float centerC;
+    vector<float> edgeC;
+    vector<float> faceC;
+    float dot(const QuadCoef& coef) const;
+    float dotOne() const;
+    void print() const {
+        cerr << "{ centerC = " << centerC;
+        uint i;
+        for (i = 0; i < edgeC.size(); ++i)
+            cerr << ", " << edgeC[i];
+        cerr << ". faceC = ";
+        for (i = 0; i < faceC.size(); ++i)
+            cerr << ", " << faceC[i];
+        cerr << "} " << endl;
+    }
 };
 
 // Base class for subdivision rules for quadrilateral schemes.
-// Different rules (interior, smooth boundary, concave/convex corner) 
+// Different rules (interior, smooth boundary, concave/convex corner)
 // derive from this.
 // each rule comes with 3 pairs of left and right eigenvectors
-// x0, x1, x2 and l0, l1, l2; x0 is trivial (constant 1) and 
+// x0, x1, x2 and l0, l1, l2; x0 is trivial (constant 1) and
 // need not be computed explicitly.
 
 class QuadRule {
-public:
-  typedef QuadCoef CoefType;
-  typedef QuadEdgeCoef EdgeCoefType;
+  public:
+    typedef QuadCoef CoefType;
+    typedef QuadEdgeCoef EdgeCoefType;
 
-  QuadRule() {
-    _creaseSub.cf[0] = 0.5f; _creaseSub.cf[1] = 0.0f; _creaseSub.cf[2] = 0.0f;
-    _creaseSub.cf[3] = 0.5f; _creaseSub.cf[4] = 0.0f; _creaseSub.cf[5] = 0.0f;
-  }
-  virtual ~QuadRule() { ; }
-  const CoefType& subCoef() const { return _sub; }
-  
-  const EdgeCoefType& creaseSubCoef() const { return _creaseSub; }
-  const EdgeCoefType& edgeSubCoef() const { return _edgeSub; }
-  
-  const CoefType& l0() const { return _l0; }
-  const CoefType& l1() const { return _l1; }
-  const CoefType& l2() const { return _l2; }
-  
-  const CoefType& x1() const { return _x1; }
-  const CoefType& x2() const { return _x2; }
-  
-  float lambda1() const { return _lambda1; }
-  float lambda2() const { return _lambda2; }
+    QuadRule() {
+        _creaseSub.cf[0] = 0.5f;
+        _creaseSub.cf[1] = 0.0f;
+        _creaseSub.cf[2] = 0.0f;
+        _creaseSub.cf[3] = 0.5f;
+        _creaseSub.cf[4] = 0.0f;
+        _creaseSub.cf[5] = 0.0f;
+    }
+    virtual ~QuadRule() { ; }
+    const CoefType& subCoef() const { return _sub; }
 
-  virtual void printName() const { cerr<<"QuadRule"<<endl; }  
+    const EdgeCoefType& creaseSubCoef() const { return _creaseSub; }
+    const EdgeCoefType& edgeSubCoef() const { return _edgeSub; }
 
-protected:
-  CoefType _sub, _l0, _l1, _l2, _x1, _x2;
-  EdgeCoefType _edgeSub, _creaseSub;
-  float _lambda1, _lambda2;
+    const CoefType& l0() const { return _l0; }
+    const CoefType& l1() const { return _l1; }
+    const CoefType& l2() const { return _l2; }
+
+    const CoefType& x1() const { return _x1; }
+    const CoefType& x2() const { return _x2; }
+
+    float lambda1() const { return _lambda1; }
+    float lambda2() const { return _lambda2; }
+
+    virtual void printName() const { cerr << "QuadRule" << endl; }
+
+  protected:
+    CoefType _sub, _l0, _l1, _l2, _x1, _x2;
+    EdgeCoefType _edgeSub, _creaseSub;
+    float _lambda1, _lambda2;
 };
 
 class InteriorQuadRule : public QuadRule {
-public:
-  InteriorQuadRule(int k);
-  virtual void printName() const { cerr<<"InteriorQuadRule"<<endl; }  
+  public:
+    InteriorQuadRule(int k);
+    virtual void printName() const { cerr << "InteriorQuadRule" << endl; }
 
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
 };
-  
-class CreaseQuadRule : public QuadRule{
-public:
-  CreaseQuadRule(int k);
-  virtual ~CreaseQuadRule() { ; }
-  virtual void printName() const { cerr<<"CreaseQuadRule"<<endl; }  
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
+
+class CreaseQuadRule : public QuadRule {
+  public:
+    CreaseQuadRule(int k);
+    virtual ~CreaseQuadRule() { ; }
+    virtual void printName() const { cerr << "CreaseQuadRule" << endl; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
 };
 
 class ConvexQuadRule : public QuadRule {
-public:
-  ConvexQuadRule(int k, float theta);
-  virtual ~ConvexQuadRule() { ; }
-  virtual void printName() const { cerr<<"ConvexQuadRule"<<endl; }  
-  float getTheta() { return theta; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
-  float theta;
+  public:
+    ConvexQuadRule(int k, float theta);
+    virtual ~ConvexQuadRule() { ; }
+    virtual void printName() const { cerr << "ConvexQuadRule" << endl; }
+    float getTheta() { return theta; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
+    float theta;
 };
 
 class ConcaveQuadRule : public QuadRule {
-public:
-  ConcaveQuadRule(int k, float theta);
-  virtual ~ConcaveQuadRule() { ; }
-  virtual void printName() const { cerr<<"ConcaveQuadRule"<<endl; }  
-  float getTheta() { return theta; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
-  float theta;
+  public:
+    ConcaveQuadRule(int k, float theta);
+    virtual ~ConcaveQuadRule() { ; }
+    virtual void printName() const { cerr << "ConcaveQuadRule" << endl; }
+    float getTheta() { return theta; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
+    float theta;
 };
 
 //-------------------------------------------------------
@@ -178,111 +184,101 @@ private:
 // Rule tables: lazy tables, hold a collection of rules
 
 class InteriorQuadRuleTable {
-public:
-  InteriorQuadRuleTable() { ; }
-  ~InteriorQuadRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
-    
-  InteriorQuadRule* getRule(uint k) { 
-    if (k >= ruleVec.size()) 
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new InteriorQuadRule(k);
-      
-    return ruleVec[k];
-  }
-    
-private:
-  vector<InteriorQuadRule*> ruleVec;
-};
+  public:
+    InteriorQuadRuleTable() { ; }
+    ~InteriorQuadRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
 
+    InteriorQuadRule* getRule(uint k) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new InteriorQuadRule(k);
+
+        return ruleVec[k];
+    }
+
+  private:
+    vector<InteriorQuadRule*> ruleVec;
+};
 
 class CreaseQuadRuleTable {
-public:
-  CreaseQuadRuleTable() { ; }
-  ~CreaseQuadRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
-    
-  CreaseQuadRule* getRule(uint k) { 
-    if (k >= ruleVec.size()) 
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new CreaseQuadRule(k);
-      
-    return ruleVec[k];
-  }
-    
-private:
-  vector<CreaseQuadRule*> ruleVec;
+  public:
+    CreaseQuadRuleTable() { ; }
+    ~CreaseQuadRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
+
+    CreaseQuadRule* getRule(uint k) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new CreaseQuadRule(k);
+
+        return ruleVec[k];
+    }
+
+  private:
+    vector<CreaseQuadRule*> ruleVec;
 };
-  
 
 class ConvexQuadRuleTable {
-public:
-  ConvexQuadRuleTable() { ; }
-  ~ConvexQuadRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
+  public:
+    ConvexQuadRuleTable() { ; }
+    ~ConvexQuadRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
 
-  ConvexQuadRule* getRule(uint k, float theta) { 
-    if (k >= ruleVec.size())
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new ConvexQuadRule(k, theta); 
-    else 
-      if (ruleVec[k]->getTheta() != theta) {
-	delete ruleVec[k];
-	ruleVec[k] = new ConvexQuadRule(k, theta); 
-      }
-    return ruleVec[k];
-  }
-    
-private:
-  vector<ConvexQuadRule*> ruleVec;
+    ConvexQuadRule* getRule(uint k, float theta) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new ConvexQuadRule(k, theta);
+        else if (ruleVec[k]->getTheta() != theta) {
+            delete ruleVec[k];
+            ruleVec[k] = new ConvexQuadRule(k, theta);
+        }
+        return ruleVec[k];
+    }
+
+  private:
+    vector<ConvexQuadRule*> ruleVec;
 };
-  
-  
+
 class ConcaveQuadRuleTable {
-public:
-  ConcaveQuadRuleTable() { ; }
-  ~ConcaveQuadRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
+  public:
+    ConcaveQuadRuleTable() { ; }
+    ~ConcaveQuadRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
 
-  ConcaveQuadRule* getRule(uint k, float theta) { 
-    if (k >= ruleVec.size())
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new ConcaveQuadRule(k, theta); 
-    else 
-      if (ruleVec[k]->getTheta() != theta) {
-	delete ruleVec[k];
-	ruleVec[k] = new ConcaveQuadRule(k, theta); 
-      }
-    return ruleVec[k];
-  }
-    
-private:
-  vector<ConcaveQuadRule*> ruleVec;
+    ConcaveQuadRule* getRule(uint k, float theta) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new ConcaveQuadRule(k, theta);
+        else if (ruleVec[k]->getTheta() != theta) {
+            delete ruleVec[k];
+            ruleVec[k] = new ConcaveQuadRule(k, theta);
+        }
+        return ruleVec[k];
+    }
+
+  private:
+    vector<ConcaveQuadRule*> ruleVec;
 };
-
 
 #endif /* __QUADRULE_H__ */
-
-
-
-

@@ -25,23 +25,23 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __GEOOBJECT_H__
 #define __GEOOBJECT_H__
 
-#include <GL/gl.h>
 #include "compat.h"
 #include "cvec3t.h"
+#include <GL/gl.h>
 
 class GeoObject {
-public:
+  public:
+    GeoObject(float d = 1.0);
+    virtual void render();
+    virtual void rerender() { render(); }
+    virtual void pick(GLint, GLint) {}
+    virtual cvec3f centerPoint() const;
+    virtual cvec3f minPoint() const;
+    virtual cvec3f maxPoint() const;
+    virtual void write(char*) const {}
 
-  GeoObject(float d = 1.0);
-  virtual void render();
-  virtual void rerender() { render(); }
-  virtual void pick(GLint , GLint ) {}
-  virtual cvec3f centerPoint() const;
-  virtual cvec3f minPoint() const;
-  virtual cvec3f maxPoint() const;
-  virtual void write(char* ) const {}
-private:
-  float _d;
+  private:
+    float _d;
 };
 
 #endif /* __GEOOBJECT_H__ */

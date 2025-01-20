@@ -1,5 +1,5 @@
-#ifndef  _QV_INFO_
-#define  _QV_INFO_
+#ifndef _QV_INFO_
+#define _QV_INFO_
 
 #include <QvSFString.h>
 #include <QvSubNode.h>
@@ -10,7 +10,7 @@ class QvInfo : public QvNode {
 
   public:
     // Fields
-    QvSFString		string;		// Info string
+    QvSFString string; // Info string
 };
 
 #endif /* _QV_INFO_ */

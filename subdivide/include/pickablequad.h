@@ -22,47 +22,43 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __PICKABLEQUAD_H__
 #define __PICKABLEQUAD_H__
 
-#include "pickobject.h"  // pickable object
-#include "geoobject.h"   // renderable object
-#include "quadmesh.h"    // quad class wrapper
+#include "geoobject.h"  // renderable object
+#include "pickobject.h" // pickable object
+#include "quadmesh.h"   // quad class wrapper
 
 // internal representation
-template<class Mesh> class PickMeshObjectTp;
+template <class Mesh> class PickMeshObjectTp;
 
 // interaction and rendering interface for quad meshes
 class PickableQuad : public GeoObject, public PickObject {
-public:
-  PickableQuad();
-  virtual ~PickableQuad();
+  public:
+    PickableQuad();
+    virtual ~PickableQuad();
 
-  const QuadMesh& getMesh() const;
-  QuadMesh& getMesh();
-  void setMesh(const QuadMesh& mesh);
+    const QuadMesh& getMesh() const;
+    QuadMesh& getMesh();
+    void setMesh(const QuadMesh& mesh);
 
-  virtual void rerender();
-  virtual void render();
-  virtual void renderPick(unsigned char picks, 
-                          unsigned int targetCnt,
-			  unsigned int shift);
-  virtual PickedStuff* doPick(unsigned char r, unsigned char g, 
-			      unsigned char b, unsigned char picks,
-			      unsigned int shift);
+    virtual void rerender();
+    virtual void render();
+    virtual void renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift);
+    virtual PickedStuff* doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks,
+                                unsigned int shift);
 
-  virtual unsigned char& tlRenderMode();
- 
-  virtual cvec3f minPoint() const;
-  virtual cvec3f maxPoint() const;
+    virtual unsigned char& tlRenderMode();
 
-private:
-  typedef PickMeshObjectTp<TagMeshTp<Quad> > PickMeshObjectType;
-  // internal representation 
-  PickMeshObjectType* _sobject;
-  // associated mesh
-  QuadMesh _quadMesh;
+    virtual cvec3f minPoint() const;
+    virtual cvec3f maxPoint() const;
+
+  private:
+    typedef PickMeshObjectTp<TagMeshTp<Quad>> PickMeshObjectType;
+    // internal representation
+    PickMeshObjectType* _sobject;
+    // associated mesh
+    QuadMesh _quadMesh;
 };
 
 #endif /* __PICKABLEQUAD_H__ */

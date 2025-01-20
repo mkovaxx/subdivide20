@@ -1,5 +1,5 @@
-#ifndef  _QV_DIRECTIONAL_LIGHT_
-#define  _QV_DIRECTIONAL_LIGHT_
+#ifndef _QV_DIRECTIONAL_LIGHT_
+#define _QV_DIRECTIONAL_LIGHT_
 
 #include <QvSFBool.h>
 #include <QvSFColor.h>
@@ -13,10 +13,10 @@ class QvDirectionalLight : public QvNode {
 
   public:
     // Fields
-    QvSFBool		on;		// Whether light is on
-    QvSFFloat		intensity;	// Source intensity (0 to 1)
-    QvSFColor		color;		// RGB source color
-    QvSFVec3f		direction;	// Illumination direction vector
+    QvSFBool on;         // Whether light is on
+    QvSFFloat intensity; // Source intensity (0 to 1)
+    QvSFColor color;     // RGB source color
+    QvSFVec3f direction; // Illumination direction vector
 };
 
 #endif /* _QV_DIRECTIONAL_LIGHT_ */

@@ -27,50 +27,48 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "mesh.h"
 #include "trimesh.h"
 
-TriangleIter::TriangleIter(TriIter ti) 
-{ _ti = new TriIter(ti); }
+TriangleIter::TriangleIter(TriIter ti) { _ti = new TriIter(ti); }
 
-TriangleIter::TriangleIter() 
-{ _ti = new TriIter(); }
+TriangleIter::TriangleIter() { _ti = new TriIter(); }
 
-TriangleIter::~TriangleIter() 
-{ delete _ti; }
+TriangleIter::~TriangleIter() { delete _ti; }
 
-
-Triangle TriangleIter::operator*() { 
-  assert(_ti);  
-  return Triangle(**_ti);
+Triangle TriangleIter::operator*() {
+    assert(_ti);
+    return Triangle(**_ti);
 }
 
-TriangleIter& TriangleIter::operator++() { 
-  assert(_ti);
-  ++(*_ti);
-  return *this;
+TriangleIter& TriangleIter::operator++() {
+    assert(_ti);
+    ++(*_ti);
+    return *this;
 }
 
 TriangleIter& TriangleIter::operator=(const TriangleIter& i) {
-  assert(_ti); assert(i._ti);
-  *_ti = *(i._ti);
-  return *this;
+    assert(_ti);
+    assert(i._ti);
+    *_ti = *(i._ti);
+    return *this;
 }
 
 bool TriangleIter::operator==(const TriangleIter& i) const {
-  assert(_ti); assert(i._ti);
-  return (*_ti) == (*i._ti);
+    assert(_ti);
+    assert(i._ti);
+    return (*_ti) == (*i._ti);
 }
 
 bool TriangleIter::operator!=(const TriangleIter& i) const {
-  assert(_ti); assert(i._ti);
-  return (*_ti) != (*i._ti);
+    assert(_ti);
+    assert(i._ti);
+    return (*_ti) != (*i._ti);
 }
 
 int TriangleIter::depth() const {
-  assert(_ti);
-  return _ti->depth();
+    assert(_ti);
+    return _ti->depth();
 }
 
 int TriangleIter::maxDepth() const {
-  assert(_ti);
-  return _ti->maxDepth(); 
+    assert(_ti);
+    return _ti->maxDepth();
 }
-

@@ -2,9 +2,7 @@
 
 QV_NODE_SOURCE(QvMaterialBinding);
 
-
-QvMaterialBinding::QvMaterialBinding()
-{
+QvMaterialBinding::QvMaterialBinding() {
     QV_NODE_CONSTRUCTOR(QvMaterialBinding);
     isBuiltIn = TRUE;
 
@@ -24,8 +22,4 @@ QvMaterialBinding::QvMaterialBinding()
     QV_NODE_SET_SF_ENUM_TYPE(value, Binding);
 }
 
-
-QvMaterialBinding::~QvMaterialBinding()
-{
-}
-
+QvMaterialBinding::~QvMaterialBinding() {}

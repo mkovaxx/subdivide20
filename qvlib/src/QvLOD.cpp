@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvLOD);
 
-QvLOD::QvLOD()
-{
+QvLOD::QvLOD() {
     QV_NODE_CONSTRUCTOR(QvLOD);
     isBuiltIn = TRUE;
 
@@ -14,6 +13,4 @@ QvLOD::QvLOD()
     center.value[0] = center.value[1] = center.value[2] = 0.0;
 }
 
-QvLOD::~QvLOD()
-{
-}
+QvLOD::~QvLOD() {}

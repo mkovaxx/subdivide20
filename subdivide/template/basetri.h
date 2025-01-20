@@ -28,124 +28,130 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.h"
 #include "vertex.h"
 
-// base template class for top level faces 
+// base template class for top level faces
 // in triangle-based face hierarchies (e.g. Loop)
-// does not do much, as for triangles top level 
+// does not do much, as for triangles top level
 // faces are also triangles, unlike quads.
 
-template<class Face>
-class TLBTriTp: public Face {
-public:
-  TLBTriTp(VnoType nVtx, Vertex** v) { 
-    assert(nVtx == 3);
-    for(VnoType i = 0; i < nVtx; ++i) {
-      Vertex::ref(v[i]);
-      _v[i] = v[i];
+template <class Face> class TLBTriTp : public Face {
+  public:
+    TLBTriTp(VnoType nVtx, Vertex** v) {
+        assert(nVtx == 3);
+        for (VnoType i = 0; i < nVtx; ++i) {
+            Vertex::ref(v[i]);
+            _v[i] = v[i];
+        }
     }
-  }
-  virtual ~TLBTriTp() { ; }
+    virtual ~TLBTriTp() { ; }
 };
 
-// Base template class for all faces (both top-level and non-top-level) 
+// Base template class for all faces (both top-level and non-top-level)
 // in triangle-based meshes.
-// Implements triangle-specific stuff: neighbor finding, noVtx(), 
-// children creation, access to edges and vertices up and 
+// Implements triangle-specific stuff: neighbor finding, noVtx(),
+// children creation, access to edges and vertices up and
 // down the hierarchy.
-// We also keep the array of vertices here, because for 
+// We also keep the array of vertices here, because for
 // quad schemes it can be variable size on the top level
 
-template<class BFace> 
-class BaseTriTp : public BFace {
-public:
-  typedef typename BFace::Face FaceType;
-  typedef typename BFace::TLFace TLFace;
+template <class BFace> class BaseTriTp : public BFace {
+  public:
+    typedef typename BFace::Face FaceType;
+    typedef typename BFace::TLFace TLFace;
 
-  BaseTriTp() { _v[0] = _v[1] = _v[2] = 0;   }
+    BaseTriTp() { _v[0] = _v[1] = _v[2] = 0; }
 
-  virtual ~BaseTriTp() { 
-    for(VnoType v = 0; v < noVtx(); ++v) Vertex::unref(_v[v]);
-    if(_c != 0) delete[] _c;
-  }
-  
-public:
-  VnoType noVtx() const { return 3; }
-  VnoType childCount() const { return (_c == 0) ? 0 : 4; }
-
-  void makeChildren(int d = 0);
-
-  FaceType* headSubEdge(EnoType e, EnoType& se) const { 
-    assert(((FaceType*)this)->checkEno(e)); 
-    if(_c == 0) { se = 0; return 0; } 
-    else { 
-      se = _headSubEno[e+3]; return &_c[_headSubCno[e+3]]; 
+    virtual ~BaseTriTp() {
+        for (VnoType v = 0; v < noVtx(); ++v)
+            Vertex::unref(_v[v]);
+        if (_c != 0)
+            delete[] _c;
     }
-  }
 
-  FaceType* tailSubEdge(EnoType e, EnoType& se) const {
-    assert(((FaceType*)this)->checkEno(e));
-    if(_c == 0) { se = 0; return 0; } 
-    else { 
-      se = _tailSubEno[e+3]; return &_c[_tailSubCno[e+3]]; 
-    }
-  }
+  public:
+    VnoType noVtx() const { return 3; }
+    VnoType childCount() const { return (_c == 0) ? 0 : 4; }
 
-  FaceType* midEdge(EnoType e, EnoType& me) const {
-    if(_c == 0) {
-      return 0;
-    } else { 
-      me = (abs(e) == 3)?1 : (abs(e)+1); 
-      return (FaceType*) &_c[0]; 
-    }
-  }
+    void makeChildren(int d = 0);
 
-  FaceType* parentEdge(EnoType e, EnoType& pe) const {
-    assert(((FaceType*)this)->checkEno(e));
-    pe = (_no == 0) ? 0 : _parentEno[_no-1][e+3];
-    return (FaceType*)_p;
-  }
-  
-  FaceType* neighbor(EnoType e, EnoType& ne) const {
-    assert(((FaceType*)this)->checkEno(e));
-    ne = 0;
-    if(_p == 0) 
-      return ((TLFace*)this)->neighbor(e, ne);
-    else {
-      
-      CnoType nc = _neiCno[_no][e+3];
-      ne = _neiEno[_no][e+3];
-      
-      if(ne != 0) 
-        return ((FaceType*)_p)->child(nc);
-      else {
-        EnoType pe;
-        FaceType*    pt = parentEdge(e, pe);
-        
-        EnoType npe;
-        FaceType*    npt = pt->neighbor(pe, npe);
-        
-        if((npt == 0) || npt->isLeaf()) {
-          return 0;
+    FaceType* headSubEdge(EnoType e, EnoType& se) const {
+        assert(((FaceType*)this)->checkEno(e));
+        if (_c == 0) {
+            se = 0;
+            return 0;
         } else {
-          if(((FaceType*)this)->headVert(e) == npt->headVert(npe))
-            return npt->headSubEdge(npe, ne);
-          else
-            return npt->tailSubEdge(npe, ne);
+            se = _headSubEno[e + 3];
+            return &_c[_headSubCno[e + 3]];
         }
-      }
     }
-  }
 
-  
-protected:
-  Vertex* _v[3];
-private:
-  static const EnoType _parentEno[3][7];
-  static const CnoType _neiCno[4][7];
-  static const EnoType _neiEno[4][7];
-  static const CnoType _headSubCno[7];
-  static const EnoType _headSubEno[7];
-  static const CnoType _tailSubCno[7];
-  static const EnoType _tailSubEno[7];
+    FaceType* tailSubEdge(EnoType e, EnoType& se) const {
+        assert(((FaceType*)this)->checkEno(e));
+        if (_c == 0) {
+            se = 0;
+            return 0;
+        } else {
+            se = _tailSubEno[e + 3];
+            return &_c[_tailSubCno[e + 3]];
+        }
+    }
+
+    FaceType* midEdge(EnoType e, EnoType& me) const {
+        if (_c == 0) {
+            return 0;
+        } else {
+            me = (abs(e) == 3) ? 1 : (abs(e) + 1);
+            return (FaceType*)&_c[0];
+        }
+    }
+
+    FaceType* parentEdge(EnoType e, EnoType& pe) const {
+        assert(((FaceType*)this)->checkEno(e));
+        pe = (_no == 0) ? 0 : _parentEno[_no - 1][e + 3];
+        return (FaceType*)_p;
+    }
+
+    FaceType* neighbor(EnoType e, EnoType& ne) const {
+        assert(((FaceType*)this)->checkEno(e));
+        ne = 0;
+        if (_p == 0)
+            return ((TLFace*)this)->neighbor(e, ne);
+        else {
+
+            CnoType nc = _neiCno[_no][e + 3];
+            ne = _neiEno[_no][e + 3];
+
+            if (ne != 0)
+                return ((FaceType*)_p)->child(nc);
+            else {
+                EnoType pe;
+                FaceType* pt = parentEdge(e, pe);
+
+                EnoType npe;
+                FaceType* npt = pt->neighbor(pe, npe);
+
+                if ((npt == 0) || npt->isLeaf()) {
+                    return 0;
+                } else {
+                    if (((FaceType*)this)->headVert(e) == npt->headVert(npe))
+                        return npt->headSubEdge(npe, ne);
+                    else
+                        return npt->tailSubEdge(npe, ne);
+                }
+            }
+        }
+    }
+
+  protected:
+    Vertex* _v[3];
+
+  private:
+    static const EnoType _parentEno[3][7];
+    static const CnoType _neiCno[4][7];
+    static const EnoType _neiEno[4][7];
+    static const CnoType _headSubCno[7];
+    static const EnoType _headSubEno[7];
+    static const CnoType _tailSubCno[7];
+    static const EnoType _tailSubEno[7];
 };
 
 #include "basetri.hi"

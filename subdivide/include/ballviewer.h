@@ -25,35 +25,35 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BALLVIEWER_H__
 #define __BALLVIEWER_H__
 
+#include "arcball.h"
 #include "compat.h"
 #include "viewer.h"
-#include "arcball.h"
 
 class UiAction;
 
 class BallViewer : public Viewer {
 
-public:
-  BallViewer(char* name = 0, int w = 512, int h = 512);
-  virtual ~BallViewer();
-  virtual void setObject(GeoObject* geoObject);
+  public:
+    BallViewer(char* name = 0, int w = 512, int h = 512);
+    virtual ~BallViewer();
+    virtual void setObject(GeoObject* geoObject);
 
-  ArcBall* getArcBall() { return &_arcball; }
-  
-protected:
-  UiAction* _uiAction;
-  ArcBall _arcball;
-  virtual void display();
-  virtual void renderObject();
-  virtual void mouse(int button, int state, int x, int y);
-  virtual void motion(int x, int y);
-  virtual void key(unsigned char k, int x, int y);
-  virtual void specialKey(int k, int x, int y);
+    ArcBall* getArcBall() { return &_arcball; }
 
-private:
-  void setLightAndMaterial();
-  void centerArcBall();
-  void positionArcBall();
+  protected:
+    UiAction* _uiAction;
+    ArcBall _arcball;
+    virtual void display();
+    virtual void renderObject();
+    virtual void mouse(int button, int state, int x, int y);
+    virtual void motion(int x, int y);
+    virtual void key(unsigned char k, int x, int y);
+    virtual void specialKey(int k, int x, int y);
+
+  private:
+    void setLightAndMaterial();
+    void centerArcBall();
+    void positionArcBall();
 };
 
 #endif /* __BALLVIEWER_H__ */

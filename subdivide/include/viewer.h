@@ -25,71 +25,70 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VIEWER_H__
 #define __VIEWER_H__
 
-
-#include "compat.h"
-#include<vector>
 #include "camera.h"
+#include "compat.h"
+#include <vector>
 
 class GeoObject;
 
 class Viewer {
-public:
+  public:
+    Viewer(char* name = 0, int w = 512, int h = 512);
+    virtual ~Viewer();
 
-  Viewer(char* name = 0, int w = 512, int h = 512);
-  virtual ~Viewer();
+    // viewed object
+    virtual void setObject(GeoObject* geoObject);
+    GeoObject* getObject() const { return _geoObject; }
 
-  // viewed object
-  virtual void setObject(GeoObject* geoObject);
-  GeoObject* getObject() const { return _geoObject; }
+    // camera
+    Camera* getCamera() { return _camera; }
 
-  // camera
-  Camera* getCamera() { return _camera; }
-  
-  // window management
-  int getId() const { return _winId; }
-  int getWidth() { return _width; }
-  int getHeight() { return _height; }
-  void setSize(int w, int h);
-  void setPos(int x, int y);
-  void setWindow();
+    // window management
+    int getId() const { return _winId; }
+    int getWidth() { return _width; }
+    int getHeight() { return _height; }
+    void setSize(int w, int h);
+    void setPos(int x, int y);
+    void setWindow();
 
-  static void initGL(int* argc, char** argv);
+    static void initGL(int* argc, char** argv);
 
-protected:
-  virtual void display();
-  virtual void reshape(int w, int h);
-  virtual void mouse(int button, int state, int x, int y);
-  virtual void motion(int x, int y);
-  virtual void key(unsigned char k, int x, int y);
-  virtual void specialKey(int k, int x, int y);
-  
-private:
-  // window data
-  int _winId;
-  int _width;
-  int _height;
-  char _title[80];
+  protected:
+    virtual void display();
+    virtual void reshape(int w, int h);
+    virtual void mouse(int button, int state, int x, int y);
+    virtual void motion(int x, int y);
+    virtual void key(unsigned char k, int x, int y);
+    virtual void specialKey(int k, int x, int y);
 
-  // user interface components
-  Camera* _camera;
+  private:
+    // window data
+    int _winId;
+    int _width;
+    int _height;
+    char _title[80];
 
-  // the object to view
-  GeoObject* _geoObject;
-  
-  // some wrapper functions
-  static Viewer* getCurrentViewer();
-  static void displayWrapper();
-  static void reshapeWrapper(int x, int y);
-  static void mouseWrapper(int button, int state, int x, int y);
-  static void motionWrapper(int x, int y);
-  static void keyWrapper(unsigned char k, int x, int y);
-  static void specialKeyWrapper(int k, int x, int y);
-  static vector<Viewer*> _viewer;
-protected:
-  void positionCamera();
+    // user interface components
+    Camera* _camera;
 
-public:
-  static void redisplayAll();
+    // the object to view
+    GeoObject* _geoObject;
+
+    // some wrapper functions
+    static Viewer* getCurrentViewer();
+    static void displayWrapper();
+    static void reshapeWrapper(int x, int y);
+    static void mouseWrapper(int button, int state, int x, int y);
+    static void motionWrapper(int x, int y);
+    static void keyWrapper(unsigned char k, int x, int y);
+    static void specialKeyWrapper(int k, int x, int y);
+    static vector<Viewer*> _viewer;
+
+  protected:
+    void positionCamera();
+
+  public:
+    static void redisplayAll();
 };
 
 #endif /* __VIEWER_H__ */

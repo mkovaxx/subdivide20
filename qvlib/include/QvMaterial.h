@@ -1,5 +1,5 @@
-#ifndef  _QV_MATERIAL_
-#define  _QV_MATERIAL_
+#ifndef _QV_MATERIAL_
+#define _QV_MATERIAL_
 
 #include <QvMFColor.h>
 #include <QvMFFloat.h>
@@ -11,12 +11,12 @@ class QvMaterial : public QvNode {
 
   public:
     // Fields
-    QvMFColor		ambientColor;	// Ambient color
-    QvMFColor		diffuseColor;	// Diffuse color
-    QvMFColor		specularColor;	// Specular color
-    QvMFColor		emissiveColor;	// Emissive color
-    QvMFFloat		shininess;	// Shininess
-    QvMFFloat		transparency;	// Transparency
+    QvMFColor ambientColor;  // Ambient color
+    QvMFColor diffuseColor;  // Diffuse color
+    QvMFColor specularColor; // Specular color
+    QvMFColor emissiveColor; // Emissive color
+    QvMFFloat shininess;     // Shininess
+    QvMFFloat transparency;  // Transparency
 };
 
 #endif /* _QV_MATERIAL_ */

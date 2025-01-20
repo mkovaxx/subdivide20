@@ -22,41 +22,34 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __BASEFACE_H__
 #define __BASEFACE_H__
 
 #include "compat.h"
 #include "general.h"
 
-
-// least common denominator for all face classes which 
+// least common denominator for all face classes which
 // are nodes in polygon hierarchies
 // contains pointers to the parent and children
 
+template <class FaceParam, class TLFaceParam> class BaseFaceTp {
+  public:
+    typedef FaceParam Face;
+    typedef TLFaceParam TLFace;
 
-template<class FaceParam, class TLFaceParam>
-class BaseFaceTp {
-public:
-  typedef FaceParam Face;
-  typedef TLFaceParam TLFace;
-  
-  BaseFaceTp() : _p(0), _no(0), _c(0), _orient(CCW) {}
-  virtual ~BaseFaceTp() {}
-  
-protected:
-  BaseFaceTp* _p;          // parent
-  CnoType _no;             // my number among the children of my parent
-  Face* _c;                // array of children
-  OrientationType _orient; // clockwise/counterclockwise orientation
+    BaseFaceTp() : _p(0), _no(0), _c(0), _orient(CCW) {}
+    virtual ~BaseFaceTp() {}
 
-public:
-  BaseFaceTp*& parentx() { return _p; }
-  CnoType& nox() { return _no; }
-  OrientationType& orient() { return _orient; }
+  protected:
+    BaseFaceTp* _p;          // parent
+    CnoType _no;             // my number among the children of my parent
+    Face* _c;                // array of children
+    OrientationType _orient; // clockwise/counterclockwise orientation
+
+  public:
+    BaseFaceTp*& parentx() { return _p; }
+    CnoType& nox() { return _no; }
+    OrientationType& orient() { return _orient; }
 };
 
 #endif /* __BASEFACE_H__ */
-
-
-

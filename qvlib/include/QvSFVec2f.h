@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_VEC2F_
-#define  _QV_SF_VEC2F_
+#ifndef _QV_SF_VEC2F_
+#define _QV_SF_VEC2F_
 
 #include <QvSubField.h>
 

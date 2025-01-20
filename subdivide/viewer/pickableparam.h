@@ -25,25 +25,24 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKABLEPARAM_H__
 #define __PICKABLEPARAM_H__
 
-
 class PickableParam {
-public:
-  static const float vertexColor[3];     
-  static const float creaseVertexColor[3];
-  static const float cornerVertexColor[3];
+  public:
+    static const float vertexColor[3];
+    static const float creaseVertexColor[3];
+    static const float cornerVertexColor[3];
 
-  static const float normalColor[3];     
-  static const float edgeColor[3];       
-  static const float creaseEdgeColor[3]; 
+    static const float normalColor[3];
+    static const float edgeColor[3];
+    static const float creaseEdgeColor[3];
 
-  // sector colors have an alpha value, as they are blended with the
-  // background to create a transparent effect.
-  static const float sectorColor[4];     
-  static const float convexSectorColor[4]; 
-  static const float concaveSectorColor[4];
+    // sector colors have an alpha value, as they are blended with the
+    // background to create a transparent effect.
+    static const float sectorColor[4];
+    static const float convexSectorColor[4];
+    static const float concaveSectorColor[4];
 
-  // color for selected things 
-  static const float pickColor[3];       
+    // color for selected things
+    static const float pickColor[3];
 };
 
 #endif /* __PICKABLEPARAM_H__ */

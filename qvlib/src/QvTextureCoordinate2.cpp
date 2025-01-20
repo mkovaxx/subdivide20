@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvTextureCoordinate2);
 
-QvTextureCoordinate2::QvTextureCoordinate2()
-{
+QvTextureCoordinate2::QvTextureCoordinate2() {
     QV_NODE_CONSTRUCTOR(QvTextureCoordinate2);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvTextureCoordinate2::QvTextureCoordinate2()
     point.values[0] = point.values[1] = 0.0;
 }
 
-QvTextureCoordinate2::~QvTextureCoordinate2()
-{
-}
+QvTextureCoordinate2::~QvTextureCoordinate2() {}

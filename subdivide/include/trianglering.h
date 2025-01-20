@@ -28,51 +28,49 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "triangle.h"
 
 class Tri;
-template<class Face>
-class FaceRingTp;
+template <class Face> class FaceRingTp;
 
 class TriangleRing {
-public:
-  TriangleRing();
-  TriangleRing(const TriangleRing& tr);
-  ~TriangleRing();
-  TriangleRing& operator=(const TriangleRing& tr);
+  public:
+    TriangleRing();
+    TriangleRing(const TriangleRing& tr);
+    ~TriangleRing();
+    TriangleRing& operator=(const TriangleRing& tr);
 
-  // collect the entire ring
-  void collectRing(Triangle tr, EnoType eno);
-  // collect the part of the ring between two crease edges
-  void collectSector(Triangle tr, EnoType eno);
-  
-  Triangle triangle(uint i, EnoType& eno) const;
+    // collect the entire ring
+    void collectRing(Triangle tr, EnoType eno);
+    // collect the part of the ring between two crease edges
+    void collectSector(Triangle tr, EnoType eno);
 
-  // ring closed?
-  bool isClosed() const;
+    Triangle triangle(uint i, EnoType& eno) const;
 
-  // number of faces
-  uint noFace() const;
-  
-  // number of vertices
-  uint noVtx() const;
+    // ring closed?
+    bool isClosed() const;
 
-  // edge index: where in the ring is the triangle we collected from?
-  int edgeIndex() const;
-  
-  // triangle and edge to access the center of the ring
-  Triangle centerEdge(EnoType& e) const;
-  
-  // triangle and vertex to access the center of the ring
-  Triangle centerVertex(VnoType& vno) const;
-  
-  // first vertex in the ring
-  Triangle startVertex(VnoType& vno) const;
+    // number of faces
+    uint noFace() const;
 
-  // last vertex in the ring
-  Triangle endVertex(VnoType& vno) const;
+    // number of vertices
+    uint noVtx() const;
 
-private:
-  typedef FaceRingTp<Tri> TriRingType;
-  TriRingType* _tr;
+    // edge index: where in the ring is the triangle we collected from?
+    int edgeIndex() const;
+
+    // triangle and edge to access the center of the ring
+    Triangle centerEdge(EnoType& e) const;
+
+    // triangle and vertex to access the center of the ring
+    Triangle centerVertex(VnoType& vno) const;
+
+    // first vertex in the ring
+    Triangle startVertex(VnoType& vno) const;
+
+    // last vertex in the ring
+    Triangle endVertex(VnoType& vno) const;
+
+  private:
+    typedef FaceRingTp<Tri> TriRingType;
+    TriRingType* _tr;
 };
 
 #endif /* __TRIANGLERING_H__ */
-

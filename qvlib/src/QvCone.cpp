@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvCone);
 
-QvCone::QvCone()
-{
+QvCone::QvCone() {
     QV_NODE_CONSTRUCTOR(QvCone);
     isBuiltIn = TRUE;
 
@@ -22,6 +21,4 @@ QvCone::QvCone()
     QV_NODE_SET_SF_ENUM_TYPE(parts, Part);
 }
 
-QvCone::~QvCone()
-{
-}
+QvCone::~QvCone() {}

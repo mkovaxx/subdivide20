@@ -1,5 +1,5 @@
-#ifndef  _QV_SCALE_
-#define  _QV_SCALE_
+#ifndef _QV_SCALE_
+#define _QV_SCALE_
 
 #include <QvSFVec3f.h>
 #include <QvSubNode.h>
@@ -10,7 +10,7 @@ class QvScale : public QvNode {
 
   public:
     // Fields
-    QvSFVec3f		scaleFactor;	// Scale factors in x, y, and z
+    QvSFVec3f scaleFactor; // Scale factors in x, y, and z
 };
 
 #endif /* _QV_SCALE_ */

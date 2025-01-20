@@ -1,5 +1,5 @@
-#ifndef  _QV_POINT_LIGHT_
-#define  _QV_POINT_LIGHT_
+#ifndef _QV_POINT_LIGHT_
+#define _QV_POINT_LIGHT_
 
 #include <QvSFBool.h>
 #include <QvSFColor.h>
@@ -13,10 +13,10 @@ class QvPointLight : public QvNode {
 
   public:
     // Fields
-    QvSFBool		on;		// Whether light is on
-    QvSFFloat		intensity;	// Source intensity (0 to 1)
-    QvSFColor		color;		// RGB source color
-    QvSFVec3f		location;	// Source location
+    QvSFBool on;         // Whether light is on
+    QvSFFloat intensity; // Source intensity (0 to 1)
+    QvSFColor color;     // RGB source color
+    QvSFVec3f location;  // Source location
 };
 
 #endif /* _QV_POINT_LIGHT_ */

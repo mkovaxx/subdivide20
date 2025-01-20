@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvWWWAnchor);
 
-QvWWWAnchor::QvWWWAnchor()
-{
+QvWWWAnchor::QvWWWAnchor() {
     QV_NODE_CONSTRUCTOR(QvWWWAnchor);
     isBuiltIn = TRUE;
 
@@ -21,6 +20,4 @@ QvWWWAnchor::QvWWWAnchor()
     QV_NODE_SET_SF_ENUM_TYPE(map, Map);
 }
 
-QvWWWAnchor::~QvWWWAnchor()
-{
-}
+QvWWWAnchor::~QvWWWAnchor() {}

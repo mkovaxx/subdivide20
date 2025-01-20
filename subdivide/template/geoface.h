@@ -30,56 +30,47 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 // Vertex accessors for faces
 
-template<class Face>
-class GeoFaceTp : public Face {
-public:
-  virtual ~GeoFaceTp() { ; }
-  const cvec3f& pos(VnoType v, int d) const
-    { return vert(v)->getPos(d); }
+template <class Face> class GeoFaceTp : public Face {
+  public:
+    virtual ~GeoFaceTp() { ; }
+    const cvec3f& pos(VnoType v, int d) const { return vert(v)->getPos(d); }
 
-  const cvec3f& midPos(EnoType e, int d) const
-    { return midVert(e)->getPos(d+1); } 
-  
-  const cvec3f& tailPos(EnoType e, int d) const
-    { return tailVert(e)->getPos(d); }
-  
-  const cvec3f& headPos(EnoType e, int d) const
-    { return headVert(e)->getPos(d); }
+    const cvec3f& midPos(EnoType e, int d) const { return midVert(e)->getPos(d + 1); }
 
-  void setPos(VnoType v, int d, const cvec3f& p) {
-    vert(v)->setPos(d, p);
-    vert(v)->set(d);
-  }
+    const cvec3f& tailPos(EnoType e, int d) const { return tailVert(e)->getPos(d); }
 
-  void setMidPos(EnoType e, int d, const cvec3f& p) { 
-    midVert(e)->setPos(d+1, p); 
-    assert(d+1 > midVert(e)->currentDepth());
-    midVert(e)->set(d+1); 
-  } 
-  
-  void setTailPos(EnoType e, int d, const cvec3f& p) { 
-    tailVert(e)->setPos(d, p); 
-    assert(d > tailVert(e)->currentDepth());
-    tailVert(e)->set(d); 
-  }
-  
-  void setHeadPos(EnoType e, int d, const cvec3f& p) { 
-    headVert(e)->setPos(d, p); 
-    assert(d > headVert(e)->currentDepth());
-    headVert(e)->set(d); 
-  }
-  
-  bool hasPos(VnoType v, int d) const
-    { return vert(v)->isSet(d); }
+    const cvec3f& headPos(EnoType e, int d) const { return headVert(e)->getPos(d); }
 
-  bool hasHeadPos(EnoType e, int d) const
-    { return headVert(e)->isSet(d); }
-  
-  bool hasTailPos(EnoType e, int d) const
-    { return tailVert(e)->isSet(d); }
+    void setPos(VnoType v, int d, const cvec3f& p) {
+        vert(v)->setPos(d, p);
+        vert(v)->set(d);
+    }
 
-  bool hasMidPos(EnoType e, int d) const 
-    { return midVert(e)->isSet(d+1); }
+    void setMidPos(EnoType e, int d, const cvec3f& p) {
+        midVert(e)->setPos(d + 1, p);
+        assert(d + 1 > midVert(e)->currentDepth());
+        midVert(e)->set(d + 1);
+    }
+
+    void setTailPos(EnoType e, int d, const cvec3f& p) {
+        tailVert(e)->setPos(d, p);
+        assert(d > tailVert(e)->currentDepth());
+        tailVert(e)->set(d);
+    }
+
+    void setHeadPos(EnoType e, int d, const cvec3f& p) {
+        headVert(e)->setPos(d, p);
+        assert(d > headVert(e)->currentDepth());
+        headVert(e)->set(d);
+    }
+
+    bool hasPos(VnoType v, int d) const { return vert(v)->isSet(d); }
+
+    bool hasHeadPos(EnoType e, int d) const { return headVert(e)->isSet(d); }
+
+    bool hasTailPos(EnoType e, int d) const { return tailVert(e)->isSet(d); }
+
+    bool hasMidPos(EnoType e, int d) const { return midVert(e)->isSet(d + 1); }
 };
 
 #endif /* __GEOFACE_H__ */

@@ -26,41 +26,36 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #define __TAGFACE_H__
 
 #include "compat.h"
-#include "sectorinfo.h"
 #include "facering.h"
+#include "sectorinfo.h"
 
 // Functions to manipulate tags for a face;
-// tags are stored only for top-level faces; for all 
-// other faces the tags are retrieved from the 
-// top-level parent. 
+// tags are stored only for top-level faces; for all
+// other faces the tags are retrieved from the
+// top-level parent.
 // This template has no data; all tags are in TLTagFaceTp
 
+template <class ConvenientFace> class TagFaceTp : public ConvenientFace {
+  public:
+    typedef typename ConvenientFace::Face Face;
+    typedef typename ConvenientFace::TLFace TLFace;
+    typedef FaceRingTp<Face> FaceRingType;
+    typedef enum { NOTAG_VERTEX, CORNER_VERTEX, CREASE_VERTEX } VertexTagType;
+    typedef enum { NOTAG_EDGE, CREASE_EDGE } EdgeTagType;
+    typedef SectorInfo::SectorTagType SectorTagType;
 
-template<class ConvenientFace>
-class TagFaceTp : public ConvenientFace {
-public:
+    TagFaceTp() { ; }
+    virtual ~TagFaceTp() { ; }
 
-  typedef typename ConvenientFace::Face Face;
-  typedef typename ConvenientFace::TLFace TLFace;
-  typedef FaceRingTp<Face> FaceRingType;
-  typedef enum { NOTAG_VERTEX, CORNER_VERTEX, CREASE_VERTEX } VertexTagType;
-  typedef enum { NOTAG_EDGE, CREASE_EDGE } EdgeTagType;
-  typedef SectorInfo::SectorTagType SectorTagType;
+    void makeChildren(int d = 0);
+    EdgeTagType edgeTag(EnoType e) const;
+    VertexTagType vertexTag(VnoType v) const;
+    SectorTagType sectorTag(VnoType v) const;
+    SectorInfo* sectorInfo(VnoType v) const;
 
-  TagFaceTp() { ; }
-  virtual ~TagFaceTp() { ; }
-
-  void makeChildren(int d = 0);
-  EdgeTagType edgeTag(EnoType e) const;
-  VertexTagType vertexTag(VnoType v) const;
-  SectorTagType sectorTag(VnoType v) const;
-  SectorInfo* sectorInfo(VnoType v) const;
-  
-  const cvec3f& normal(VnoType v) const; 
-  void setNormal(VnoType v, const cvec3f& n);
-  bool hasNormal(VnoType v) const
-    { return (normal(v).l1() != 0);  }
-  
+    const cvec3f& normal(VnoType v) const;
+    void setNormal(VnoType v, const cvec3f& n);
+    bool hasNormal(VnoType v) const { return (normal(v).l1() != 0); }
 };
 
 #include "tagface.hi"

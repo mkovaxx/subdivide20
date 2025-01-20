@@ -31,203 +31,179 @@ GLint Camera::_vp[4];
 
 // ******************** Camera memeber functions ***********************
 
-void Camera::identityModel() {
-  _ballModel.setIdentity();
+void Camera::identityModel() { _ballModel.setIdentity(); }
+
+Camera::Camera(const Camera& c)
+    : _projectionMatrix(c._projectionMatrix), _modelviewMatrix(c._modelviewMatrix), _trans(c._trans),
+      _ballModel(c._ballModel), _znear(c._znear), _zfar(c._zfar), _fovy(c._fovy), _aspect(c._aspect),
+      _wincenterx(c._wincenterx), _wincentery(c._wincentery), _winscale(c._winscale) {
+
+    _viewport[0] = c._viewport[0];
+    _viewport[1] = c._viewport[1];
+    _viewport[2] = c._viewport[2];
+    _viewport[3] = c._viewport[3];
 }
 
-Camera::Camera(const Camera & c) :
-  _projectionMatrix(c._projectionMatrix),
-  _modelviewMatrix(c._modelviewMatrix),
-  _trans(c._trans),
-  _ballModel(c._ballModel),
-  _znear(c._znear), 
-  _zfar(c._zfar),
-  _fovy(c._fovy), 
-  _aspect(c._aspect),
-  _wincenterx(c._wincenterx),
-  _wincentery(c._wincentery),
-  _winscale(c._winscale)
-{
+const Camera& Camera::operator=(const Camera& c) {
+    _trans = c._trans;
+    _fovy = c._fovy;
+    _znear = c._znear;
+    _zfar = c._zfar;
+    _wincenterx = c._wincenterx;
+    _wincentery = c._wincentery;
+    _winscale = c._winscale;
+    _ballModel = c._ballModel;
+    _modelviewMatrix = c._modelviewMatrix;
+    _projectionMatrix = c._projectionMatrix;
 
-  _viewport[0] = c._viewport[0];
-  _viewport[1] = c._viewport[1];
-  _viewport[2] = c._viewport[2];
-  _viewport[3] = c._viewport[3];
-}
-
-const Camera & Camera::operator=(const Camera & c) {
-  _trans = c._trans;
-  _fovy = c._fovy; _znear = c._znear; _zfar = c._zfar;
-  _wincenterx =  c._wincenterx; _wincentery =  c._wincentery;
-  _winscale = c._winscale;
-  _ballModel = c._ballModel;
-  _modelviewMatrix = c._modelviewMatrix;
-  _projectionMatrix = c._projectionMatrix;
-
-  _aspect = c._aspect;
-  _viewport[0] = c._viewport[0];
-  _viewport[1] = c._viewport[1];
-  _viewport[2] = c._viewport[2];
-  _viewport[3] = c._viewport[3];
-  return *this;
+    _aspect = c._aspect;
+    _viewport[0] = c._viewport[0];
+    _viewport[1] = c._viewport[1];
+    _viewport[2] = c._viewport[2];
+    _viewport[3] = c._viewport[3];
+    return *this;
 }
 
 void Camera::reset() {
-  _trans = 0;
-  _fovy = 34.f;
-  _znear = .1f;
-  _zfar = 100.f;
-  _winscale = 1.0f;
-  _wincenterx = 0.0f;
-  _wincentery = 0.0f;
-  _aspect = 1.0;
-  identityModel();
+    _trans = 0;
+    _fovy = 34.f;
+    _znear = .1f;
+    _zfar = 100.f;
+    _winscale = 1.0f;
+    _wincenterx = 0.0f;
+    _wincentery = 0.0f;
+    _aspect = 1.0;
+    identityModel();
 
-  computeModelview();
-  computeProjection();
+    computeModelview();
+    computeProjection();
 }
 
 void Camera::setFovy(float fovy_degrees) {
-  _fovy = fovy_degrees;
-  computeProjection();
+    _fovy = fovy_degrees;
+    computeProjection();
 }
 
-void Camera::setPerspectiveParams(float fovy_degrees, float znear,float
-                                  zfar) {
-    _fovy = fovy_degrees;  
+void Camera::setPerspectiveParams(float fovy_degrees, float znear, float zfar) {
+    _fovy = fovy_degrees;
     _znear = znear;
     _zfar = zfar;
     computeProjection();
-  }
-
+}
 
 // ******************** OpenGL matrices ********************
 
 // TODO: these need not use OpenGL
 void Camera::computeModelview() {
-  glMatrixMode(GL_MODELVIEW);
-  glPushMatrix();
-  glLoadIdentity();
-  glTranslatef(_trans.x(), _trans.y(), _trans.z());
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    glTranslatef(_trans.x(), _trans.y(), _trans.z());
 
-  glMultMatrixd( (double*)(_ballModel));
-  glGetDoublev(GL_MODELVIEW_MATRIX,(double*)(_modelviewMatrix));
-  glMatrixMode(GL_MODELVIEW);
-  glPopMatrix();
-
+    glMultMatrixd((double*)(_ballModel));
+    glGetDoublev(GL_MODELVIEW_MATRIX, (double*)(_modelviewMatrix));
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }
 
 // TODO: these need not use OpenGL
 void Camera::computeProjection() {
 
-  glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
 
-  float ysize = tan(0.5*_fovy*M_PI/180.0)*_znear;
-  float xsize = _aspect*ysize;
-  float left   = _wincenterx -  xsize*_winscale; 
-  float right  = _wincenterx +  xsize*_winscale; 
-  float bottom = _wincentery -  ysize*_winscale; 
-  float top    = _wincentery +  ysize*_winscale; 
+    float ysize = tan(0.5 * _fovy * M_PI / 180.0) * _znear;
+    float xsize = _aspect * ysize;
+    float left = _wincenterx - xsize * _winscale;
+    float right = _wincenterx + xsize * _winscale;
+    float bottom = _wincentery - ysize * _winscale;
+    float top = _wincentery + ysize * _winscale;
 
-  glFrustum(left, right, bottom, top, _znear, _zfar);
+    glFrustum(left, right, bottom, top, _znear, _zfar);
 
-  glGetDoublev(GL_PROJECTION_MATRIX,(double*)(_projectionMatrix));
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
+    glGetDoublev(GL_PROJECTION_MATRIX, (double*)(_projectionMatrix));
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
 
-  glMatrixMode(GL_MODELVIEW);
-
+    glMatrixMode(GL_MODELVIEW);
 }
 
-void Camera::loadMatrices()const {
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixd((const double*)(_projectionMatrix));
-  glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixd((const double*)(_modelviewMatrix));
+void Camera::loadMatrices() const {
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd((const double*)(_projectionMatrix));
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixd((const double*)(_modelviewMatrix));
 }
-    
 
 // ******************** project/unproject ********************
 
 // project a point from world space to screen space
-CVec3T<float> Camera::project(const CVec3T<float>&  worldPoint) const {
-  GLdouble winx, winy, winz;
+CVec3T<float> Camera::project(const CVec3T<float>& worldPoint) const {
+    GLdouble winx, winy, winz;
 
-  gluProject(worldPoint.x(),worldPoint.y(),worldPoint.z(),
-	 (const double*)(_modelviewMatrix),
-             (const double*)(_projectionMatrix),
-             _viewport,
-             &winx,&winy,&winz);
+    gluProject(worldPoint.x(), worldPoint.y(), worldPoint.z(), (const double*)(_modelviewMatrix),
+               (const double*)(_projectionMatrix), _viewport, &winx, &winy, &winz);
 
-  return CVec3T<float>(winx,winy,winz);
+    return CVec3T<float>(winx, winy, winz);
 }
 
 // compute the world space coordinate for an image coordinate
 CVec3T<float> Camera::unproject(const CVec3T<float>& imagePoint) const {
-  GLdouble objx, objy, objz;
+    GLdouble objx, objy, objz;
 
-  gluUnProject(imagePoint.x(),imagePoint.y(),imagePoint.z(),
-               (const double*)(_modelviewMatrix),
-               (const double*)(_projectionMatrix)
-               ,_viewport,
-	     &objx,&objy,&objz);
+    gluUnProject(imagePoint.x(), imagePoint.y(), imagePoint.z(), (const double*)(_modelviewMatrix),
+                 (const double*)(_projectionMatrix), _viewport, &objx, &objy, &objz);
 
-  return CVec3T<float>(objx,objy,objz);
+    return CVec3T<float>(objx, objy, objz);
 }
 
 // compute the object space coordinate for an image coordinate
 CVec3T<float> Camera::unproject(const HMatrix& model, const CVec3T<float>& imagePoint) const {
-  GLdouble objx, objy, objz;
+    GLdouble objx, objy, objz;
 
-  gluUnProject(imagePoint.x(),imagePoint.y(),imagePoint.z(),
-               (double*)(_modelviewMatrix * model),
-               (const double*)(_projectionMatrix)
-               ,_viewport,
-	     &objx,&objy,&objz);
+    gluUnProject(imagePoint.x(), imagePoint.y(), imagePoint.z(), (double*)(_modelviewMatrix * model),
+                 (const double*)(_projectionMatrix), _viewport, &objx, &objy, &objz);
 
-  return CVec3T<float>(objx,objy,objz);
+    return CVec3T<float>(objx, objy, objz);
 }
-
 
 // ******************** camera modification ********************
 
-void Camera::translate(const CVec3T<float> & t) { _trans += t;}
+void Camera::translate(const CVec3T<float>& t) { _trans += t; }
 
-void Camera::translateWindow(float dx, float dy) { 
- _wincentery -= 2.0*dy*tan(0.5*_fovy*M_PI/180.0)*_znear*_winscale;
- _wincenterx -= 2.0*dx*tan(0.5*_fovy*M_PI/180.0)*_aspect*_znear*_winscale;
- computeProjection();
+void Camera::translateWindow(float dx, float dy) {
+    _wincentery -= 2.0 * dy * tan(0.5 * _fovy * M_PI / 180.0) * _znear * _winscale;
+    _wincenterx -= 2.0 * dx * tan(0.5 * _fovy * M_PI / 180.0) * _aspect * _znear * _winscale;
+    computeProjection();
 }
 
-void Camera::scaleWindow( float sfactor) { 
-  _winscale = _winscale*pow(2.0f, sfactor);
-  computeProjection();
+void Camera::scaleWindow(float sfactor) {
+    _winscale = _winscale * pow(2.0f, sfactor);
+    computeProjection();
 }
-
 
 // ******************** input/output  ********************
 
-ostream& operator<<(ostream& os, const Camera& camera ) {
-  os << "TRANSFORMATIONS:"    << endl;  
-  os << "Modelview matrix: "  << camera._modelviewMatrix << endl;
-  os << "Projection matrix: " << camera._projectionMatrix << endl;
+ostream& operator<<(ostream& os, const Camera& camera) {
+    os << "TRANSFORMATIONS:" << endl;
+    os << "Modelview matrix: " << camera._modelviewMatrix << endl;
+    os << "Projection matrix: " << camera._projectionMatrix << endl;
 
-  os << "CAMERA PARAMETERS:"  << endl;
-  os << "ballModel : "       << camera._ballModel << endl;
-  os << "trans: "            << camera._trans  << endl;
-  os << "aspect: "           << camera._aspect << endl;
-  os << "znear: "            << camera._znear  <<  endl; 
-  os << "zfar: "             << camera._zfar   << endl;
-  os << "fovy: "             << camera._fovy   << endl;
-  return os;
+    os << "CAMERA PARAMETERS:" << endl;
+    os << "ballModel : " << camera._ballModel << endl;
+    os << "trans: " << camera._trans << endl;
+    os << "aspect: " << camera._aspect << endl;
+    os << "znear: " << camera._znear << endl;
+    os << "zfar: " << camera._zfar << endl;
+    os << "fovy: " << camera._fovy << endl;
+    return os;
 }
 
-istream& operator>>(istream& is, Camera& ) { 
-  die();
-  //TODO  
-  return  is;
+istream& operator>>(istream& is, Camera&) {
+    die();
+    // TODO
+    return is;
 }
 
 // ********************** current matrix project *********
@@ -242,15 +218,14 @@ void Camera::getMatricesC()const {
 CVec3T<float> Camera::projectC(const CVec3T<float>&  worldPoint) const {
   GLdouble winx, winy, winz;
   gluProject(worldPoint.x(),worldPoint.y(),worldPoint.z(),
-	     _view,_proj,_vp,&winx,&winy,&winz);
+             _view,_proj,_vp,&winx,&winy,&winz);
   return CVec3T<float>(winx,winy,winz);
 }
 
 CVec3T<float> Camera::unprojectC(const CVec3T<float>& screenPoint) const {
   GLdouble wx, wy, wz;
   gluUnProject(screenPoint.x(),screenPoint.y(),screenPoint.z(),
-	       _view, _proj, _vp, &wx, &wy, &wz);
+               _view, _proj, _vp, &wx, &wy, &wz);
   return CVec3T<float>(wx,wy,wz);
 }
 */
-

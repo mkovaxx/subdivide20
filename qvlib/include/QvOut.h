@@ -12,16 +12,16 @@
 class QvNode;
 
 class QvOut {
-public:
+  public:
+    QvOut(char* filename);
+    void write(QvNode* rootNode);
+    QvBool error() { return _error; }
 
-  QvOut(char* filename);
-  void write(QvNode* rootNode);
-  QvBool error() { return _error; }
+  private:
+    char filename[80];
 
-private:
-  char filename[80];
- public:
-  static QvBool _error;
+  public:
+    static QvBool _error;
 };
 
 #endif /* _QV_OUT_ */

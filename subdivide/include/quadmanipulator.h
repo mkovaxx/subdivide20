@@ -36,44 +36,41 @@ class Quad;
 
 // interface for changing tags for faces of a triangular mesh
 class QuadManipulator {
-public:
+  public:
+    typedef enum { NOTAG_VERTEX, CORNER_VERTEX, CREASE_VERTEX } VertexTagType;
+    typedef enum { NOTAG_EDGE, CREASE_EDGE } EdgeTagType;
 
-  typedef enum { NOTAG_VERTEX, CORNER_VERTEX, CREASE_VERTEX } VertexTagType;
-  typedef enum { NOTAG_EDGE, CREASE_EDGE } EdgeTagType;
+    QuadManipulator(void* f);
 
-  QuadManipulator(void* f);
+    bool isNull() { return _t == 0; }
 
-  bool isNull() { return _t == 0; }
+    // numbering
+    EnoType headVno(EnoType eno); // head vertex number of eno
+    EnoType tailVno(EnoType eno); // tail vertex number of eno
+    VnoType noVtx();              // number of vertices
 
-  // numbering
-  EnoType headVno(EnoType eno);   // head vertex number of eno
-  EnoType tailVno(EnoType eno);   // tail vertex number of eno
-  VnoType noVtx();                // number of vertices
-  
-  bool isBoundaryEdge(EnoType eno); // edge eno is a boundary edge
+    bool isBoundaryEdge(EnoType eno); // edge eno is a boundary edge
 
+    VertexTagType getVertexTag(VnoType vno);
+    void setVertexTag(VnoType vno, VertexTagType vertexTag);
 
-  VertexTagType getVertexTag(VnoType vno);
-  void setVertexTag(VnoType vno, VertexTagType vertexTag);
-  
-  EdgeTagType getEdgeTag(EnoType eno);
-  void setEdgeTag(EnoType eno, EdgeTagType edgeTag);
+    EdgeTagType getEdgeTag(EnoType eno);
+    void setEdgeTag(EnoType eno, EdgeTagType edgeTag);
 
-  SectorInfo* getSectorInfo(VnoType vno);
-  void setSectorInfo(VnoType vno, SectorInfo* sectorInfo);
-  
-  cvec3f getNormalDir(VnoType vno);
-  cvec3f getVertexPos(VnoType vno);
-  void   setVertexPos(VnoType vno, const cvec3f& pos);
-  
+    SectorInfo* getSectorInfo(VnoType vno);
+    void setSectorInfo(VnoType vno, SectorInfo* sectorInfo);
 
-  void recomputeNeighbors();
-  bool toggleEdge(EnoType eno);
-  bool toggleVertex(EnoType eno);
-  bool toggleSector(EnoType eno);
+    cvec3f getNormalDir(VnoType vno);
+    cvec3f getVertexPos(VnoType vno);
+    void setVertexPos(VnoType vno, const cvec3f& pos);
 
-private:
-  Quad* _t;
+    void recomputeNeighbors();
+    bool toggleEdge(EnoType eno);
+    bool toggleVertex(EnoType eno);
+    bool toggleSector(EnoType eno);
+
+  private:
+    Quad* _t;
 };
 
 #endif /* __QUADMANIPULATOR_H__ */

@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvIndexedLineSet);
 
-QvIndexedLineSet::QvIndexedLineSet()
-{
+QvIndexedLineSet::QvIndexedLineSet() {
     QV_NODE_CONSTRUCTOR(QvIndexedLineSet);
     isBuiltIn = TRUE;
 
@@ -18,6 +17,4 @@ QvIndexedLineSet::QvIndexedLineSet()
     textureCoordIndex.values[0] = QV_END_LINE_INDEX;
 }
 
-QvIndexedLineSet::~QvIndexedLineSet()
-{
-}
+QvIndexedLineSet::~QvIndexedLineSet() {}

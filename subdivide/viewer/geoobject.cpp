@@ -22,24 +22,15 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include<GL/glut.h>
 #include "geoobject.h"
+#include <GL/glut.h>
 
 GeoObject::GeoObject(float d) : _d(d) { ; }
 
-cvec3f GeoObject::centerPoint() const 
-{ return 0.5 * (minPoint() + maxPoint()); }
+cvec3f GeoObject::centerPoint() const { return 0.5 * (minPoint() + maxPoint()); }
 
-cvec3f GeoObject::minPoint() const 
-{ return cvec3f(-_d, -_d, -_d); }
+cvec3f GeoObject::minPoint() const { return cvec3f(-_d, -_d, -_d); }
 
-cvec3f GeoObject::maxPoint() const 
-{ return cvec3f(_d, _d, _d); }
+cvec3f GeoObject::maxPoint() const { return cvec3f(_d, _d, _d); }
 
-void GeoObject::render() 
-{
-  glutSolidTeapot(_d); 
-}
-
-
-
+void GeoObject::render() { glutSolidTeapot(_d); }

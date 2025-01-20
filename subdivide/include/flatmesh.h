@@ -22,15 +22,14 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __FLATMESH_H__
 #define __FLATMESH_H__
 
 #include "compat.h"
-#include <vector>
 #include "ipoly.h"
+#include <vector>
 
-//: Generic flat mesh representation 
+//: Generic flat mesh representation
 //
 // The mesh is stored as an array of vertices and an array of
 // polygons, each represented as an array of vertex numbers. This
@@ -40,40 +39,39 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 class Vertex;
 
-class FlatMesh { 
-public:
+class FlatMesh {
+  public:
+    //: array of vertices
+    vector<Vertex*> vert_v;
+    //: array of indices of vertices;
+    vector<uint> index_v;
 
-  //: array of vertices
-  vector<Vertex*> vert_v;
-  //: array of indices of vertices;
-  vector<uint>   index_v;          
+    //: we assume a uniform depth for the mesh. when we write the mesh,
+    // we will access the vertex position according to the vertex_depth
+    int vertex_depth;
 
-  //: we assume a uniform depth for the mesh. when we write the mesh,
-  //we will access the vertex position according to the vertex_depth
-  int vertex_depth;
+    //: each polygon corresponds to a subarray of indices
+    // each poly is represented by a pair
 
-  //: each polygon corresponds to a subarray of indices
-  // each poly is represented by a pair
+    // (index into index_v, # of vertices)
+    vector<IPoly> poly_v; // array of polygons;
 
-  // (index into index_v, # of vertices)  
-  vector<IPoly> poly_v; // array of polygons; 
+    //: sometimes we have to triangulate the mesh, however, we want to be able to
+    //: find for each face of the original mesh a corresponding triangle
+    //: triindex stores the indices of the first triangle corresponding to a face
+    vector<int> triindex_v;
 
-  //: sometimes we have to triangulate the mesh, however, we want to be able to
-  //: find for each face of the original mesh a corresponding triangle
-  //: triindex stores the indices of the first triangle corresponding to a face
-  vector<int> triindex_v;
+    FlatMesh() { ; }
+    FlatMesh(const FlatMesh& fm);
+    FlatMesh& operator=(const FlatMesh& fm);
 
-  FlatMesh() { ; }
-  FlatMesh(const FlatMesh& fm);
-  FlatMesh& operator=(const FlatMesh& fm);
-  
-  //: erase the flat mesh 
+    //: erase the flat mesh
 
-  // we erase the flat mesh by erasing each vector individually.  this
-  // function is virtual since we might have to destroy more objects
-  // in derived classes
-  virtual void Cleanup();
-  virtual ~FlatMesh() { Cleanup(); }
+    // we erase the flat mesh by erasing each vector individually.  this
+    // function is virtual since we might have to destroy more objects
+    // in derived classes
+    virtual void Cleanup();
+    virtual ~FlatMesh() { Cleanup(); }
 };
 
 #endif /* __FLATMESH_H__ */

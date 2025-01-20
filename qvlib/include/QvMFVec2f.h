@@ -1,11 +1,11 @@
-#ifndef  _QV_MF_VEC2F_
-#define  _QV_MF_VEC2F_
+#ifndef _QV_MF_VEC2F_
+#define _QV_MF_VEC2F_
 
 #include <QvSubField.h>
 
 class QvMFVec2f : public QvMField {
   public:
-    float *values;
+    float* values;
     QV_MFIELD_HEADER(QvMFVec2f);
 };
 

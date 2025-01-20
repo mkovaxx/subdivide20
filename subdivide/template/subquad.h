@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __SUBQUAD_H__
 #define __SUBQUAD_H__
 
-#include "compat.h"
 #include "baseface.h"
 #include "basequad.h"
+#include "compat.h"
 #include "convface.h"
 #include "geoface.h"
 #include "tagface.h"
@@ -41,88 +41,75 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 class TLQuad;
 class Quad;
 
-
 // Build a class from the templates that handle different functionality
 // (hierarchy, geometry and tags), add subdivision functions. The innermost
 // base class is parametrized by the most derived class so that we can have
 // generic accessors defined in the templates that return correct types.
 
-//TODO remove first parameter of BaseFaceTp
+// TODO remove first parameter of BaseFaceTp
 
-class Quad : public 
-  TagFaceTp<                     // normals and tags
-    GeoFaceTp<                   // accessors to geom information
-      ConvenientFaceTp<          // accessors to children etc.
-        BaseQuadTp<              // quad mesh neighbors and children
-           BaseFaceTp<Quad, TLQuad>    // base class for all faces
-        > 
-      >
-    >
-  > {
-public:
+class Quad : public TagFaceTp<                        // normals and tags
+                 GeoFaceTp<                           // accessors to geom information
+                     ConvenientFaceTp<                // accessors to children etc.
+                         BaseQuadTp<                  // quad mesh neighbors and children
+                             BaseFaceTp<Quad, TLQuad> // base class for all faces
+                             >>>> {
+  public:
+    typedef QuadRuleTableTp<FaceRingType> QuadRuleTableType;
+    typedef SubdivideTp<QuadRuleTableType, FaceRingType> SubdivideType;
 
-  typedef QuadRuleTableTp<FaceRingType> QuadRuleTableType;
-  typedef SubdivideTp<QuadRuleTableType, FaceRingType> SubdivideType;
+    Quad() { ; }
+    virtual ~Quad() { ; }
 
-  Quad() { ; }
-  virtual ~Quad() { ; }
+    void clearFace(int d = 0);
+    void clearNormal() {
+        for (VnoType v = 0; v < noVtx(); ++v)
+            setNormal(v, 0);
+    }
+    void midSub(int d = 0);
 
-  void clearFace(int d = 0);  
-  void clearNormal() { 
-    for(VnoType v = 0; v < noVtx(); ++v)
-      setNormal(v, 0);
-  }
-  void midSub(int d = 0);
+    // complete subdivision
+    void subdivide(int d);
 
-  // complete subdivision
-  void subdivide(int d);
+    // compute normal and limit
+    void computeNormalAndLimit(int d);
 
-  // compute normal and limit
-  void computeNormalAndLimit(int d);
+  private:
+    bool hasCenterPos(int d) const { return centerVert()->isSet(d + 1); }
+    void setCenterPos(int d, const cvec3f& p) {
+        centerVert()->setPos(d + 1, p);
+        centerVert()->set(d + 1);
+    }
+    cvec3f centerPos(int d) const { return centerVert()->getPos(d + 1); }
 
-
-private:
-  bool hasCenterPos(int d) const
-    { return centerVert()->isSet(d+1); }
-  void setCenterPos(int d, const cvec3f& p) 
-    { centerVert()->setPos(d+1, p); centerVert()->set(d+1); }
-  cvec3f centerPos(int d) const
-    { return centerVert()->getPos(d+1); }
-  
-  cvec3f computeVertexPoint(EnoType e, int d);
-  void computeFaceNormal(int d);
-  void computeEdgeNormal(EnoType e, int d);
-  cvec3f computeFacePoint(int d);
-  cvec3f computeEdgePoint(EnoType e, int d);
+    cvec3f computeVertexPoint(EnoType e, int d);
+    void computeFaceNormal(int d);
+    void computeEdgeNormal(EnoType e, int d);
+    cvec3f computeFacePoint(int d);
+    cvec3f computeEdgePoint(EnoType e, int d);
 };
-
 
 // class for top-level faces in quad meshes; adds tag information
 // and pointers to neighbors to Quad
 
-class TLQuad : public 
-  TLTagFaceTp<      // top level tag information
-    TLBaseFaceTp<   // pointers to neighbors etc
-      TLBQuadTp<    // number of vertices for top level
-          Quad
-      >  
-    > 
-  > {
-public:
-  TLQuad(VnoType nVtx, Vertex** v) : TLTagFaceTp<TLBaseFaceTp<TLBQuadTp<Quad>
-  > >(nVtx, v) {   }
-  virtual ~TLQuad() { ; }
+class TLQuad : public TLTagFaceTp< // top level tag information
+                   TLBaseFaceTp<   // pointers to neighbors etc
+                       TLBQuadTp<  // number of vertices for top level
+                           Quad>>> {
+  public:
+    TLQuad(VnoType nVtx, Vertex** v) : TLTagFaceTp<TLBaseFaceTp<TLBQuadTp<Quad>>>(nVtx, v) {}
+    virtual ~TLQuad() { ; }
 
-  // needed for cloning
-  static TLQuad* createFromFace(Face* f) {
-    Vertex** v = new Vertex*[f->noVtx()];
-    for(int i = 0; i < f->noVtx(); ++i)
-      v[i] = f->vert(i);
-    TLQuad* nf = new TLQuad(f->noVtx(), v);
-    nf->_orient = f->orientation();
-    delete[] v;
-    return nf;
-  }
+    // needed for cloning
+    static TLQuad* createFromFace(Face* f) {
+        Vertex** v = new Vertex*[f->noVtx()];
+        for (int i = 0; i < f->noVtx(); ++i)
+            v[i] = f->vert(i);
+        TLQuad* nf = new TLQuad(f->noVtx(), v);
+        nf->_orient = f->orientation();
+        delete[] v;
+        return nf;
+    }
 };
 
 #endif /* __SUBQUAD_H__ */

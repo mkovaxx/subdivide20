@@ -1,5 +1,5 @@
-#ifndef  _QV_DB_
-#define  _QV_DB_
+#ifndef _QV_DB_
+#define _QV_DB_
 
 #include <QvBasic.h>
 
@@ -9,10 +9,10 @@ class QvField;
 
 class QvDB {
   public:
-    static const char	*versionString;
+    static const char* versionString;
 
-    static void		init();
-    static QvBool	read(QvInput *in, QvNode *&rootNode);
+    static void init();
+    static QvBool read(QvInput* in, QvNode*& rootNode);
 };
 
 #endif /* _QV_DB_ */

@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_COLOR_
-#define  _QV_SF_COLOR_
+#ifndef _QV_SF_COLOR_
+#define _QV_SF_COLOR_
 
 #include <QvSubField.h>
 

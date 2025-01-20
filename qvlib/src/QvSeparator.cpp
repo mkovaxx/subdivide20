@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvSeparator);
 
-QvSeparator::QvSeparator()
-{
+QvSeparator::QvSeparator() {
     QV_NODE_CONSTRUCTOR(QvSeparator);
     isBuiltIn = TRUE;
 
@@ -18,6 +17,4 @@ QvSeparator::QvSeparator()
     QV_NODE_SET_SF_ENUM_TYPE(renderCulling, CullEnabled);
 }
 
-QvSeparator::~QvSeparator()
-{
-}
+QvSeparator::~QvSeparator() {}

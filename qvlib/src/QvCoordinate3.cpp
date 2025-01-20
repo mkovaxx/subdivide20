@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvCoordinate3);
 
-QvCoordinate3::QvCoordinate3()
-{
+QvCoordinate3::QvCoordinate3() {
     QV_NODE_CONSTRUCTOR(QvCoordinate3);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvCoordinate3::QvCoordinate3()
     point.values[0] = point.values[1] = point.values[2] = 0.0;
 }
 
-QvCoordinate3::~QvCoordinate3()
-{
-}
+QvCoordinate3::~QvCoordinate3() {}

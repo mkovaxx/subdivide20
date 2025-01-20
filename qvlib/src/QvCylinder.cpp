@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvCylinder);
 
-QvCylinder::QvCylinder()
-{
+QvCylinder::QvCylinder() {
     QV_NODE_CONSTRUCTOR(QvCylinder);
     isBuiltIn = TRUE;
 
@@ -23,6 +22,4 @@ QvCylinder::QvCylinder()
     QV_NODE_SET_SF_ENUM_TYPE(parts, Part);
 }
 
-QvCylinder::~QvCylinder()
-{
-}
+QvCylinder::~QvCylinder() {}

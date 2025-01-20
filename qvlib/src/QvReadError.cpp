@@ -1,13 +1,11 @@
-#include <stdarg.h>
-#include <QvString.h>
 #include <QvInput.h>
 #include <QvReadError.h>
+#include <QvString.h>
+#include <stdarg.h>
 
-void
-QvReadError::post(const QvInput *in, const char *formatString ...)
-{
-    char	buf[10000];
-    va_list	ap;
+void QvReadError::post(const QvInput* in, const char* formatString...) {
+    char buf[10000];
+    va_list ap;
 
     va_start(ap, formatString);
     vsprintf(buf, formatString, ap);

@@ -29,110 +29,100 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "camera.h"
 
 class UiAction {
-public:
-  virtual void update(int , int ) { ; }
-  virtual ~UiAction() { ; }
+  public:
+    virtual void update(int, int) { ; }
+    virtual ~UiAction() { ; }
 };
 
 class CameraRotateAction : public UiAction {
-public:
-  CameraRotateAction(int x, int y, ArcBall* arcball, Camera* camera) :
-    _x(x), _y(y), _arcball(arcball), _camera(camera) { 
+  public:
+    CameraRotateAction(int x, int y, ArcBall* arcball, Camera* camera)
+        : _x(x), _y(y), _arcball(arcball), _camera(camera) {
 
-    cvec3f worldMousePos = _camera->unproject(cvec3f(x,y,0));
-    _arcball->PickingRay(_camera->viewWorldPosition(), 
-			(worldMousePos - _camera->viewWorldPosition()).dir());
-    _arcball->BeginDrag();
-    _arcball->Update();
-  }
+        cvec3f worldMousePos = _camera->unproject(cvec3f(x, y, 0));
+        _arcball->PickingRay(_camera->viewWorldPosition(), (worldMousePos - _camera->viewWorldPosition()).dir());
+        _arcball->BeginDrag();
+        _arcball->Update();
+    }
 
-  virtual ~CameraRotateAction() {
-    cvec3f cp = _arcball->Position();
-    _camera->model() = _camera->model() * HMatrix::Translation(cp)
-      * _arcball->Rotation() * HMatrix::Translation(-cp);
+    virtual ~CameraRotateAction() {
+        cvec3f cp = _arcball->Position();
+        _camera->model() =
+            _camera->model() * HMatrix::Translation(cp) * _arcball->Rotation() * HMatrix::Translation(-cp);
 
-    _camera->computeModelview();
-    _camera->loadMatrices();
-    
-    _arcball->SetRotation(HMatrix::Identity());
-  }
-  
-  virtual void update(int x, int y) {
+        _camera->computeModelview();
+        _camera->loadMatrices();
 
-    cvec3f worldMousePos = _camera->unproject(cvec3f(x,y,0));
-    _arcball->PickingRay(_camera->viewWorldPosition(), 
-			(worldMousePos - _camera->viewWorldPosition()).dir());
-    _arcball->Update();
-  }
+        _arcball->SetRotation(HMatrix::Identity());
+    }
 
-  
-private:
-  int _x, _y;
-  ArcBall* _arcball;
-  Camera* _camera;
+    virtual void update(int x, int y) {
+
+        cvec3f worldMousePos = _camera->unproject(cvec3f(x, y, 0));
+        _arcball->PickingRay(_camera->viewWorldPosition(), (worldMousePos - _camera->viewWorldPosition()).dir());
+        _arcball->Update();
+    }
+
+  private:
+    int _x, _y;
+    ArcBall* _arcball;
+    Camera* _camera;
 };
-
 
 class CameraTransXYAction : public UiAction {
-public:
-  
-  CameraTransXYAction(int x, int y, ArcBall* arcball, Camera* camera) :
-    _x(x), _y(y), _arcball(arcball), _camera(camera) { 
-  }
+  public:
+    CameraTransXYAction(int x, int y, ArcBall* arcball, Camera* camera)
+        : _x(x), _y(y), _arcball(arcball), _camera(camera) {}
 
-  virtual ~CameraTransXYAction() {
-  }
+    virtual ~CameraTransXYAction() {}
 
-  virtual void update(int x, int y) {
-    float z = _camera->project(_arcball->Position()).z();
-    cvec3f p0 = _camera->unproject(cvec3f(_x, _y, z));
-    cvec3f p1 = _camera->unproject(cvec3f(x, y, z));
-    _camera->model() = _camera->model() * HMatrix::Translation(p1-p0);
-    
-    _camera->computeModelview();
-    _camera->loadMatrices();
+    virtual void update(int x, int y) {
+        float z = _camera->project(_arcball->Position()).z();
+        cvec3f p0 = _camera->unproject(cvec3f(_x, _y, z));
+        cvec3f p1 = _camera->unproject(cvec3f(x, y, z));
+        _camera->model() = _camera->model() * HMatrix::Translation(p1 - p0);
 
-    _x = x;
-    _y = y;
-  }
+        _camera->computeModelview();
+        _camera->loadMatrices();
 
-private:
-  int _x, _y;
-  ArcBall* _arcball;
-  Camera* _camera;
+        _x = x;
+        _y = y;
+    }
+
+  private:
+    int _x, _y;
+    ArcBall* _arcball;
+    Camera* _camera;
 };
-
 
 class CameraTransZAction : public UiAction {
-public:
-  
-  CameraTransZAction(int x, int y, ArcBall* arcball, Camera* camera) :
-    _x(x), _y(y), _arcball(arcball), _camera(camera) { 
-  }
+  public:
+    CameraTransZAction(int x, int y, ArcBall* arcball, Camera* camera)
+        : _x(x), _y(y), _arcball(arcball), _camera(camera) {}
 
-  virtual ~CameraTransZAction() {
-  }
+    virtual ~CameraTransZAction() {}
 
-  virtual void update(int x, int y) {
-    cvec3f p0 = _camera->unproject(cvec3f(x, _y, _camera->project(_arcball->Position()).z()));
-    cvec3f p1 = _camera->unproject(cvec3f(x,  y, _camera->project(_arcball->Position()).z()));
-    if (y<_y)
-      _camera->model() = _camera->model() * 
-	HMatrix::Translation((p0-p1).l2() * (_camera->viewWorldPosition()-_arcball->Position()).dir());
-    else
-      _camera->model() = _camera->model() * 
-	HMatrix::Translation(-(p0-p1).l2() * (_camera->viewWorldPosition()-_arcball->Position()).dir());
-    _x = x;
-    _y = y;
-    _camera->computeModelview();
-    _camera->loadMatrices();
-  }
-  
-private:
-  int _x, _y;
-  ArcBall* _arcball;
-  Camera* _camera;
+    virtual void update(int x, int y) {
+        cvec3f p0 = _camera->unproject(cvec3f(x, _y, _camera->project(_arcball->Position()).z()));
+        cvec3f p1 = _camera->unproject(cvec3f(x, y, _camera->project(_arcball->Position()).z()));
+        if (y < _y)
+            _camera->model() =
+                _camera->model() *
+                HMatrix::Translation((p0 - p1).l2() * (_camera->viewWorldPosition() - _arcball->Position()).dir());
+        else
+            _camera->model() =
+                _camera->model() *
+                HMatrix::Translation(-(p0 - p1).l2() * (_camera->viewWorldPosition() - _arcball->Position()).dir());
+        _x = x;
+        _y = y;
+        _camera->computeModelview();
+        _camera->loadMatrices();
+    }
+
+  private:
+    int _x, _y;
+    ArcBall* _arcball;
+    Camera* _camera;
 };
-
 
 #endif /* __UIACTION_H__ */

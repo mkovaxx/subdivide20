@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvInfo);
 
-QvInfo::QvInfo()
-{
+QvInfo::QvInfo() {
     QV_NODE_CONSTRUCTOR(QvInfo);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvInfo::QvInfo()
     string.value = "<Undefined info>";
 }
 
-QvInfo::~QvInfo()
-{
-}
+QvInfo::~QvInfo() {}

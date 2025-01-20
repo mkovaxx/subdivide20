@@ -1,12 +1,10 @@
-#include <stdarg.h>
-#include <QvString.h>
 #include <QvDebugError.h>
+#include <QvString.h>
+#include <stdarg.h>
 
-void
-QvDebugError::post(const char *methodName, const char *formatString ...)
-{
-    char	buf[10000];
-    va_list	ap;
+void QvDebugError::post(const char* methodName, const char* formatString...) {
+    char buf[10000];
+    va_list ap;
 
     va_start(ap, formatString);
     vsprintf(buf, formatString, ap);

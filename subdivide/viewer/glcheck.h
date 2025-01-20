@@ -31,9 +31,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #define glCheck() __glCheck__(__FILE__, __LINE__)
 
 inline int __glCheck__(char* fileName, int n) {
-  int e = glGetError();
-  if (e) cerr<<(char*)gluErrorString(e)<<"  "<<fileName<<", #"<<n<<endl;
-  return(e);
+    int e = glGetError();
+    if (e)
+        cerr << (char*)gluErrorString(e) << "  " << fileName << ", #" << n << endl;
+    return (e);
 }
 
 #endif /* __GL_CHECK_H__ */

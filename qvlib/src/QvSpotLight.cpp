@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvSpotLight);
 
-QvSpotLight::QvSpotLight()
-{
+QvSpotLight::QvSpotLight() {
     QV_NODE_CONSTRUCTOR(QvSpotLight);
     isBuiltIn = TRUE;
 
@@ -25,9 +24,7 @@ QvSpotLight::QvSpotLight()
     direction.value[1] = 0.0;
     direction.value[2] = -1.0;
     dropOffRate.value = 0.0;
-    cutOffAngle.value = (float) (M_PI / 4.0);
+    cutOffAngle.value = (float)(M_PI / 4.0);
 }
 
-QvSpotLight::~QvSpotLight()
-{
-}
+QvSpotLight::~QvSpotLight() {}

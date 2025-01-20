@@ -26,42 +26,42 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <stdlib.h>
 
 #include "general.h"
-#include "tagivgraph.h"
-#include "tagflatmesh.h"
 #include "quadmesh.h"
+#include "tagflatmesh.h"
+#include "tagivgraph.h"
 
 int main(int argc, char** argv) {
-  if(argc != 4) {
-    cerr<<argv[0]<<" usage: in.wrl out.wrl depth"<<endl;
-  } else {
+    if (argc != 4) {
+        cerr << argv[0] << " usage: in.wrl out.wrl depth" << endl;
+    } else {
 
-    // read the wrl file
-    TagIvGraph tagIvGraph;
-    tagIvGraph.read(argv[1]);
+        // read the wrl file
+        TagIvGraph tagIvGraph;
+        tagIvGraph.read(argv[1]);
 
-    // convert from wrl to flat mesh
-    // second parameter (false) indicates to triangulate all faces
-    TagFlatMesh tagFlatMesh;
-    tagIvGraph.toTagFlatMesh(&tagFlatMesh, false);
+        // convert from wrl to flat mesh
+        // second parameter (false) indicates to triangulate all faces
+        TagFlatMesh tagFlatMesh;
+        tagIvGraph.toTagFlatMesh(&tagFlatMesh, false);
 
-    // convert from flat mesh to quad mesh
-    QuadMesh quadMesh(tagFlatMesh);
+        // convert from flat mesh to quad mesh
+        QuadMesh quadMesh(tagFlatMesh);
 
-    // subdivide the quad mesh a number of times
-    int d = atoi(argv[3]);
-    d = min(max(0, d), GEN_MAX_DEPTH);
-    quadMesh.subdivide(d);
+        // subdivide the quad mesh a number of times
+        int d = atoi(argv[3]);
+        d = min(max(0, d), GEN_MAX_DEPTH);
+        quadMesh.subdivide(d);
 
-    // extract the mesh formed by the leaves
-    QuadMesh* leafMesh = quadMesh.leafMesh();
+        // extract the mesh formed by the leaves
+        QuadMesh* leafMesh = quadMesh.leafMesh();
 
-    // convert this new mesh to a tag flat mesh
-    leafMesh->toTagFlatMesh(&tagFlatMesh);
+        // convert this new mesh to a tag flat mesh
+        leafMesh->toTagFlatMesh(&tagFlatMesh);
 
-    // build an wrl graph and write it
-    tagIvGraph.fromTagFlatMesh(&tagFlatMesh);
-    tagIvGraph.write(argv[2]);
-  }
+        // build an wrl graph and write it
+        tagIvGraph.fromTagFlatMesh(&tagFlatMesh);
+        tagIvGraph.write(argv[2]);
+    }
 
-  return 0;
+    return 0;
 }

@@ -42,28 +42,25 @@ class QvNode;
 class Vertex;
 
 class IvGraph {
-public: 
-  IvGraph();
-  virtual ~IvGraph();
-  
-  bool read(char* fileName);
-  void write(char* fileName);
-  
-  bool toFlatMesh(FlatMesh* im, bool split);
-  void fromFlatMesh(FlatMesh* flatMesh);
+  public:
+    IvGraph();
+    virtual ~IvGraph();
 
-protected:
-  void clear();
-  QvSeparator* getRoot() { return root; } 
-  void setRoot( QvSeparator* r) { root = r; } 
-  
-private:
-  QvSeparator* root;  
-  QvNode* createCoordinate3Node(const vector<Vertex*>& v, int d);
-  QvNode* createIndexedFaceSet(FlatMesh* flatMesh);
+    bool read(char* fileName);
+    void write(char* fileName);
+
+    bool toFlatMesh(FlatMesh* im, bool split);
+    void fromFlatMesh(FlatMesh* flatMesh);
+
+  protected:
+    void clear();
+    QvSeparator* getRoot() { return root; }
+    void setRoot(QvSeparator* r) { root = r; }
+
+  private:
+    QvSeparator* root;
+    QvNode* createCoordinate3Node(const vector<Vertex*>& v, int d);
+    QvNode* createIndexedFaceSet(FlatMesh* flatMesh);
 };
 
-#endif  /* __IVGRAPH_H__ */
-
-
-
+#endif /* __IVGRAPH_H__ */

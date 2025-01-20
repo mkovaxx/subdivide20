@@ -22,52 +22,33 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
 #include "trianglering.h"
-#include "subtri.h"
 #include "facering.h"
+#include "subtri.h"
 
-TriangleRing::TriangleRing() 
-{ _tr = new TriRingType(); }
+TriangleRing::TriangleRing() { _tr = new TriRingType(); }
 
-TriangleRing::TriangleRing(const TriangleRing& tr)
-{ _tr = new TriRingType(*(tr._tr)); }
+TriangleRing::TriangleRing(const TriangleRing& tr) { _tr = new TriRingType(*(tr._tr)); }
 
-TriangleRing::~TriangleRing()
-{ delete _tr; }
+TriangleRing::~TriangleRing() { delete _tr; }
 
-void TriangleRing::collectRing(Triangle t, EnoType eno) 
-{ _tr->collectRing(t._t, eno); }
+void TriangleRing::collectRing(Triangle t, EnoType eno) { _tr->collectRing(t._t, eno); }
 
-void TriangleRing::collectSector(Triangle t, EnoType eno) 
-{ _tr->collectSector(t._t, eno); }
+void TriangleRing::collectSector(Triangle t, EnoType eno) { _tr->collectSector(t._t, eno); }
 
-Triangle TriangleRing::triangle(uint i, EnoType& eno) const 
-{ return Triangle(_tr->face(i, eno)); }
+Triangle TriangleRing::triangle(uint i, EnoType& eno) const { return Triangle(_tr->face(i, eno)); }
 
-bool TriangleRing::isClosed() const
-{ return _tr->isClosed(); }
+bool TriangleRing::isClosed() const { return _tr->isClosed(); }
 
-uint TriangleRing::noFace() const 
-{ return _tr->noFace(); }
-  
-uint TriangleRing::noVtx() const
-{ return _tr->noVtx(); }
+uint TriangleRing::noFace() const { return _tr->noFace(); }
 
-int TriangleRing::edgeIndex() const
-{ return _tr->edgeIndex(); }
-  
-Triangle TriangleRing::centerEdge(EnoType& e) const 
-{ return Triangle(_tr->centerFace(e)); }
+uint TriangleRing::noVtx() const { return _tr->noVtx(); }
 
-Triangle TriangleRing::centerVertex(VnoType& vno) const 
-{ return Triangle(_tr->centerVertex(vno)); }
-  
-Triangle TriangleRing::startVertex(VnoType& vno) const
-{ return Triangle(_tr->startVertex(vno)); }
+int TriangleRing::edgeIndex() const { return _tr->edgeIndex(); }
 
-Triangle TriangleRing::endVertex(VnoType& vno) const
-{ return Triangle(_tr->endVertex(vno)); }
+Triangle TriangleRing::centerEdge(EnoType& e) const { return Triangle(_tr->centerFace(e)); }
 
+Triangle TriangleRing::centerVertex(VnoType& vno) const { return Triangle(_tr->centerVertex(vno)); }
 
+Triangle TriangleRing::startVertex(VnoType& vno) const { return Triangle(_tr->startVertex(vno)); }
 
-
-
+Triangle TriangleRing::endVertex(VnoType& vno) const { return Triangle(_tr->endVertex(vno)); }

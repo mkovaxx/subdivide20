@@ -22,50 +22,44 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #include "pickablequad.h"
 
+#include "pickmeshobject.h"
 #include "subquad.h"
 #include "tagmesh.h"
-#include "pickmeshobject.h"
 
-PickableQuad::PickableQuad() { 
-  _sobject = new PickMeshObjectType(); 
-  delete _quadMesh._quadTagMesh;                 // remove the mesh 
-  _quadMesh._quadTagMesh = &_sobject->getMesh(); // and connect it with the mesh from the object
+PickableQuad::PickableQuad() {
+    _sobject = new PickMeshObjectType();
+    delete _quadMesh._quadTagMesh;                 // remove the mesh
+    _quadMesh._quadTagMesh = &_sobject->getMesh(); // and connect it with the mesh from the object
 }
 
-PickableQuad::~PickableQuad() { 
-  delete _sobject;           // here we already remove the mesh
-  _quadMesh._quadTagMesh = 0; // we set this to 0 to avoid a second destruction of the mesh
+PickableQuad::~PickableQuad() {
+    delete _sobject;            // here we already remove the mesh
+    _quadMesh._quadTagMesh = 0; // we set this to 0 to avoid a second destruction of the mesh
 }
 
-const QuadMesh& PickableQuad::getMesh() const 
-{ return _quadMesh; }
+const QuadMesh& PickableQuad::getMesh() const { return _quadMesh; }
 
-QuadMesh& PickableQuad::getMesh() 
-{ return _quadMesh; }
+QuadMesh& PickableQuad::getMesh() { return _quadMesh; }
 
-void PickableQuad::setMesh(const QuadMesh& mesh) 
-{ _sobject->setMesh(*(mesh._quadTagMesh)); }
+void PickableQuad::setMesh(const QuadMesh& mesh) { _sobject->setMesh(*(mesh._quadTagMesh)); }
 
-void PickableQuad::rerender() 
-{ _sobject->rerender(); }
+void PickableQuad::rerender() { _sobject->rerender(); }
 
-void PickableQuad::render() 
-{ _sobject->render(); }
+void PickableQuad::render() { _sobject->render(); }
 
-void PickableQuad::renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) 
-{ _sobject->renderPick(picks, targetCnt, shift); }
+void PickableQuad::renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) {
+    _sobject->renderPick(picks, targetCnt, shift);
+}
 
-PickedStuff* PickableQuad::
-doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks, unsigned int shift) 
-{ return _sobject->doPick(r, g, b, picks, shift); }
+PickedStuff* PickableQuad::doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks,
+                                  unsigned int shift) {
+    return _sobject->doPick(r, g, b, picks, shift);
+}
 
-cvec3f PickableQuad::minPoint() const 
-{ return _sobject->minPoint(); }
+cvec3f PickableQuad::minPoint() const { return _sobject->minPoint(); }
 
-cvec3f PickableQuad::maxPoint() const 
-{ return _sobject->maxPoint(); }
+cvec3f PickableQuad::maxPoint() const { return _sobject->maxPoint(); }
 
 unsigned char& PickableQuad::tlRenderMode() { return _sobject->tlRenderMode(); }

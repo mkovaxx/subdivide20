@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvSwitch);
 
-QvSwitch::QvSwitch()
-{
+QvSwitch::QvSwitch() {
     QV_NODE_CONSTRUCTOR(QvSwitch);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvSwitch::QvSwitch()
     whichChild.value = QV_SWITCH_NONE;
 }
 
-QvSwitch::~QvSwitch()
-{
-}
+QvSwitch::~QvSwitch() {}

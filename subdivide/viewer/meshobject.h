@@ -24,39 +24,37 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.h"
 #include "geoobject.h"
 
-
-template<class Mesh>
-class MeshObjectTp : public GeoObject {
-public:
-  MeshObjectTp();
-  virtual ~MeshObjectTp() { ; }
-  const Mesh& getMesh() const { return _mesh; }
-  Mesh& getMesh() { return _mesh; }
-  void setMesh(Mesh& mesh) {
-    _mesh = mesh;
-    // compute min/max points
-    typename Mesh::FaceIterType ti = _mesh.faceBegin();
-    _maxPoint = _minPoint = (*ti)->vert(0)->getPos();
-    for(ti = _mesh.faceBegin(); ti != _mesh.faceEnd(); ++ti) {
-      for(VnoType v = 0; v < (*ti)->noVtx(); ++v)
-        if((*ti)->isLeaf()) {
-          cvec3f p = (*ti)->vert(v)->getPos();
-          _maxPoint = _maxPoint.max(p);
-          _minPoint = _minPoint.min(p);
+template <class Mesh> class MeshObjectTp : public GeoObject {
+  public:
+    MeshObjectTp();
+    virtual ~MeshObjectTp() { ; }
+    const Mesh& getMesh() const { return _mesh; }
+    Mesh& getMesh() { return _mesh; }
+    void setMesh(Mesh& mesh) {
+        _mesh = mesh;
+        // compute min/max points
+        typename Mesh::FaceIterType ti = _mesh.faceBegin();
+        _maxPoint = _minPoint = (*ti)->vert(0)->getPos();
+        for (ti = _mesh.faceBegin(); ti != _mesh.faceEnd(); ++ti) {
+            for (VnoType v = 0; v < (*ti)->noVtx(); ++v)
+                if ((*ti)->isLeaf()) {
+                    cvec3f p = (*ti)->vert(v)->getPos();
+                    _maxPoint = _maxPoint.max(p);
+                    _minPoint = _minPoint.min(p);
+                }
         }
     }
-  }
 
-  virtual void render();
-  virtual void rerender() { render(); }
-  virtual cvec3f minPoint() const { return _minPoint; }
-  virtual cvec3f maxPoint() const { return _maxPoint; }
-  
-protected:
-  Mesh _mesh;
+    virtual void render();
+    virtual void rerender() { render(); }
+    virtual cvec3f minPoint() const { return _minPoint; }
+    virtual cvec3f maxPoint() const { return _maxPoint; }
 
-private:
-  cvec3f _minPoint, _maxPoint;
+  protected:
+    Mesh _mesh;
+
+  private:
+    cvec3f _minPoint, _maxPoint;
 };
 
 #include "meshobject.hi"

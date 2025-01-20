@@ -22,34 +22,32 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __TAGFLATMESH_H__
 #define __TAGFLATMESH_H__
 
 #include "compat.h"
-#include <vector>
 #include "flatmesh.h"
 #include "ipoly.h"
+#include <vector>
 
 class Vert;
 class SectorInfo;
 
-class TagFlatMesh : public FlatMesh { 
-public:
+class TagFlatMesh : public FlatMesh {
+  public:
+    typedef pair<pair<int, int>, SectorInfo*> FlatSectorType;
+    vector<FlatSectorType> sectorInfoVec;
 
-  typedef pair<pair<int, int>, SectorInfo*> FlatSectorType;
-  vector<FlatSectorType> sectorInfoVec;
+    vector<int> creaseEdgeVec;
+    vector<int> dartVertVec;
+    vector<int> creaseVertVec;
+    vector<int> cornerVertVec;
 
-  vector<int> creaseEdgeVec;
-  vector<int> dartVertVec;
-  vector<int> creaseVertVec;
-  vector<int> cornerVertVec;
-
-  TagFlatMesh() { ; }
-  TagFlatMesh(const TagFlatMesh& fm);
-  TagFlatMesh& operator=(const TagFlatMesh& fm);
-  virtual void Cleanup();
-  virtual ~TagFlatMesh() { Cleanup(); }
+    TagFlatMesh() { ; }
+    TagFlatMesh(const TagFlatMesh& fm);
+    TagFlatMesh& operator=(const TagFlatMesh& fm);
+    virtual void Cleanup();
+    virtual ~TagFlatMesh() { Cleanup(); }
 };
 
 #endif /* __TAGFLATMESH_H__ */
