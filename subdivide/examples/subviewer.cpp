@@ -48,12 +48,12 @@ int depth = 3;
 void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
     TagIvGraph ivGraph;
     if (argc < 2) {
-        cerr << "usage: " << argv[0] << " infile" << endl;
+        std::cerr << "usage: " << argv[0] << " infile" << std::endl;
         exit(1);
     } else {
         bool res = ivGraph.read(argv[1]);
         if (!res) {
-            cerr << "could not read " << argv[1] << endl;
+            std::cerr << "could not read " << argv[1] << std::endl;
             exit(1);
         }
 
@@ -93,7 +93,7 @@ void triFlatUpCB(void* triObject) {
             float f = si->modifiedFlatness();
             f += 0.1;
             f = min(f, 1.0f);
-            cerr << "set flatness: " << f << endl;
+            std::cerr << "set flatness: " << f << std::endl;
             f = min(f, 1.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
@@ -113,7 +113,7 @@ void quadFlatUpCB(void* quadObject) {
             float f = si->modifiedFlatness();
             f += 0.1;
             f = min(f, 1.0f);
-            cerr << "set flatness: " << f << endl;
+            std::cerr << "set flatness: " << f << std::endl;
             f = min(f, 1.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
@@ -133,7 +133,7 @@ void triFlatDownCB(void* triObject) {
             float f = si->modifiedFlatness();
             f -= 0.1;
             f = max(f, 0.0f);
-            cerr << "set flatness: " << f << endl;
+            std::cerr << "set flatness: " << f << std::endl;
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
             ((PickableTri*)triObject)->rerender();
@@ -151,7 +151,7 @@ void quadFlatDownCB(void* quadObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->modifiedFlatness();
             f -= 0.1;
-            cerr << "set flatness: " << f << endl;
+            std::cerr << "set flatness: " << f << std::endl;
             f = max(f, 0.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
@@ -177,7 +177,7 @@ void triThetaUpCB(void* triObject) {
                 f = min(float(M_PI), max(f, 0.0f));
             else
                 f = min(2.0f * float(M_PI), max(f, float(M_PI)));
-            cerr << "set theta: " << f << endl;
+            std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
             ((PickableTri*)triObject)->rerender();
@@ -199,7 +199,7 @@ void quadThetaUpCB(void* quadObject) {
                 f = min(float(M_PI), max(f, 0.0f));
             else
                 f = min(2.0f * float(M_PI), max(f, float(M_PI)));
-            cerr << "set theta: " << f << endl;
+            std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
             ((PickableQuad*)quadObject)->rerender();
@@ -221,7 +221,7 @@ void triThetaDownCB(void* triObject) {
                 f = min(float(M_PI), max(f, 0.0f));
             else
                 f = min(2.0f * float(M_PI), max(f, float(M_PI)));
-            cerr << "set theta: " << f << endl;
+            std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
             ((PickableTri*)triObject)->rerender();
@@ -243,7 +243,7 @@ void quadThetaDownCB(void* quadObject) {
                 f = min(float(M_PI), max(f, 0.0f));
             else
                 f = min(2.0f * float(M_PI), max(f, float(M_PI)));
-            cerr << "set theta: " << f << endl;
+            std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
             ((PickableQuad*)quadObject)->rerender();
@@ -311,7 +311,7 @@ void subTriObjectCB(void* o) {
     // clear display lists
     triMeshObject->rerender();
 
-    cerr << "subdivide (Loop). depth = " << tm->meshDepth() << endl;
+    std::cerr << "subdivide (Loop). depth = " << tm->meshDepth() << std::endl;
 }
 
 // subdivide a quadrialteral mesh object
@@ -321,12 +321,12 @@ void subQuadObjectCB(void* o) {
     // clear display lists
     quadMeshObject->rerender();
 
-    cerr << "subdivide (Catmull-Clark). depth = " << quadMeshObject->getMesh().meshDepth() << endl;
+    std::cerr << "subdivide (Catmull-Clark). depth = " << quadMeshObject->getMesh().meshDepth() << std::endl;
 }
 
 // write the control mesh
 void writeTriCtrlCB(void* o) {
-    cerr << "write control mesh to trimesh.wrl" << endl;
+    std::cerr << "write control mesh to trimesh.wrl" << std::endl;
 
     TriMesh triMesh = ((PickableTri*)o)->getMesh();
 
@@ -342,7 +342,7 @@ void writeTriCtrlCB(void* o) {
 
 // write the control mesh
 void writeQuadCtrlCB(void* o) {
-    cerr << "write control mesh to quadmesh.wrl" << endl;
+    std::cerr << "write control mesh to quadmesh.wrl" << std::endl;
 
     QuadMesh quadMesh = ((PickableQuad*)o)->getMesh();
 
@@ -358,7 +358,7 @@ void writeQuadCtrlCB(void* o) {
 
 // write the control mesh
 void writeTriSubCB(void* o) {
-    cerr << "write subdivided mesh to trimeshs.wrl" << endl;
+    std::cerr << "write subdivided mesh to trimeshs.wrl" << std::endl;
 
     TriMesh* leafMesh = ((PickableTri*)o)->getMesh().leafMesh();
     TriMesh leafClone;
@@ -377,7 +377,7 @@ void writeTriSubCB(void* o) {
 
 // write the control mesh
 void writeQuadSubCB(void* o) {
-    cerr << "write subdivided mesh to quadmeshs.wrl" << endl;
+    std::cerr << "write subdivided mesh to quadmeshs.wrl" << std::endl;
 
     QuadMesh* leafMesh = ((PickableQuad*)o)->getMesh().leafMesh();
     QuadMesh leafClone;

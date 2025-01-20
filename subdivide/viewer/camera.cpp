@@ -185,22 +185,22 @@ void Camera::scaleWindow(float sfactor) {
 
 // ******************** input/output  ********************
 
-ostream& operator<<(ostream& os, const Camera& camera) {
-    os << "TRANSFORMATIONS:" << endl;
-    os << "Modelview matrix: " << camera._modelviewMatrix << endl;
-    os << "Projection matrix: " << camera._projectionMatrix << endl;
+std::ostream& operator<<(std::ostream& os, const Camera& camera) {
+    os << "TRANSFORMATIONS:" << std::endl;
+    os << "Modelview matrix: " << camera._modelviewMatrix << std::endl;
+    os << "Projection matrix: " << camera._projectionMatrix << std::endl;
 
-    os << "CAMERA PARAMETERS:" << endl;
-    os << "ballModel : " << camera._ballModel << endl;
-    os << "trans: " << camera._trans << endl;
-    os << "aspect: " << camera._aspect << endl;
-    os << "znear: " << camera._znear << endl;
-    os << "zfar: " << camera._zfar << endl;
-    os << "fovy: " << camera._fovy << endl;
+    os << "CAMERA PARAMETERS:" << std::endl;
+    os << "ballModel : " << camera._ballModel << std::endl;
+    os << "trans: " << camera._trans << std::endl;
+    os << "aspect: " << camera._aspect << std::endl;
+    os << "znear: " << camera._znear << std::endl;
+    os << "zfar: " << camera._zfar << std::endl;
+    os << "fovy: " << camera._fovy << std::endl;
     return os;
 }
 
-istream& operator>>(istream& is, Camera&) {
+std::istream& operator>>(std::istream& is, Camera&) {
     die();
     // TODO
     return is;

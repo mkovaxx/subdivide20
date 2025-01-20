@@ -34,14 +34,14 @@ template <class F> class CVec3T;
 // another VC 6.0 problem: would not accept this definition
 // after the class
 
-template <class F> istream& operator>>(istream& is, CVec3T<F>& v) {
+template <class F> std::istream& operator>>(std::istream& is, CVec3T<F>& v) {
     is >> v.x();
     is >> v.y();
     is >> v.z();
     return is;
 }
 
-template <class F> ostream& operator<<(ostream& os, const CVec3T<F>& v) {
+template <class F> std::ostream& operator<<(std::ostream& os, const CVec3T<F>& v) {
     return os << v(0) << " " << v(1) << " " << v(2);
 }
 
@@ -72,7 +72,7 @@ template <class F> class CVec3T {
     operator F*(void) { return &v[X]; }
     operator const F*(void) const { return &v[X]; }
 
-    bool read(istream& is) { return is >> *this; }
+    bool read(std::istream& is) { return is >> *this; }
     CVec3T& operator=(const CVec3T& c) {
         v[X] = c.v[X];
         v[Y] = c.v[Y];

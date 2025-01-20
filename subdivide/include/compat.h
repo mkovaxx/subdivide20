@@ -101,7 +101,7 @@ template <class _Ty> inline const _Ty& min(const _Ty& _X, const _Ty& _Y) { retur
 
 inline void die() {
 #ifndef NDEBUG
-    cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << endl;
+    std::cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << std::endl;
 #endif
     abort();
 }

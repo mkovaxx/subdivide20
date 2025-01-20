@@ -31,8 +31,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <GL/glu.h>
 
 class Camera;
-ostream& operator<<(ostream& os, const Camera& camera);
-istream& operator>>(istream& is, Camera& camera);
+std::ostream& operator<<(std::ostream& os, const Camera& camera);
+std::istream& operator>>(std::istream& is, Camera& camera);
 
 //: Camera class for UI
 class Camera {
@@ -114,8 +114,8 @@ class Camera {
         _aspect = float(vp[2]) / float(vp[3]);
     }
 
-    friend ostream& operator<<(ostream& os, const Camera& camera);
-    friend istream& operator>>(istream& is, Camera& camera);
+    friend std::ostream& operator<<(std::ostream& os, const Camera& camera);
+    friend std::istream& operator>>(std::istream& is, Camera& camera);
 
   private:
     // projection and modelview matricies

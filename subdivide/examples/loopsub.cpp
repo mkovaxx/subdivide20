@@ -32,7 +32,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 int main(int argc, char** argv) {
     if (argc != 4) {
-        cerr << argv[0] << " usage: in.wrl out.wrl depth" << endl;
+        std::cerr << argv[0] << " usage: in.wrl out.wrl depth" << std::endl;
     } else {
 
         // read the wrl file

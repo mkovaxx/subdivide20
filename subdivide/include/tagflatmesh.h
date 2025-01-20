@@ -35,13 +35,13 @@ class SectorInfo;
 
 class TagFlatMesh : public FlatMesh {
   public:
-    typedef pair<pair<int, int>, SectorInfo*> FlatSectorType;
-    vector<FlatSectorType> sectorInfoVec;
+    typedef std::pair<int, int>, SectorInfo* > FlatSectorType;
+    std::vector<FlatSectorType> sectorInfoVec;
 
-    vector<int> creaseEdgeVec;
-    vector<int> dartVertVec;
-    vector<int> creaseVertVec;
-    vector<int> cornerVertVec;
+    std::vector<int> creaseEdgeVec;
+    std::vector<int> dartVertVec;
+    std::vector<int> creaseVertVec;
+    std::vector<int> cornerVertVec;
 
     TagFlatMesh() { ; }
     TagFlatMesh(const TagFlatMesh& fm);

@@ -46,7 +46,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
 
         EMapType _eMap;
         EdgeMapType _edgeMap;
-        typename set<FaceType*>::const_iterator fi;
+        typename std::set<FaceType*>::const_iterator fi;
         for (fi = faceSet().begin(); fi != faceSet().end(); ++fi)
             for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
                 Vertex* headVert = (*fi)->headVert(e);
@@ -73,7 +73,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         // build vertex map
         VertexMapType _vertexMap;
 
-        typename map<Vertex*, pair<int, VertexType>>::const_iterator it = vertMap().begin();
+        typename map<Vertex*, std::pair<int, VertexType>>::const_iterator it = vertMap().begin();
         for (uint i = 0; i < flatMesh->vert_v.size(); ++i) {
             assert(flatMesh->vert_v[i] == (*it).first);
             _vertexMap[flatMesh->vert_v[i]] = i;
@@ -148,19 +148,20 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
   private:
     typedef map<Vertex*, int> VertexMapType;
     typedef map<Vertex*, EdgeType> EMapType;
-    typedef pair<Vertex*, Vertex*> VertPairType;
+    typedef std::pair<Vertex*, Vertex*> VertPairType;
     typedef map<VertPairType, EdgeType> EdgeMapType;
     typedef typename Face::VertexTagType VertexTagType;
 
     void buildMaps(const TagFlatMesh* flatMesh);
 
     void applyCreaseEdge(const TagFlatMesh& flatMesh, const EdgeMapType& _edgeMap);
-    void applyVertTag(const TagFlatMesh& flatMesh, const vector<int>& index, VertexTagType tag, const EMapType& _eMap);
+    void applyVertTag(const TagFlatMesh& flatMesh, const std::vector<int>& index, VertexTagType tag,
+                      const EMapType& _eMap);
     void applySector(const TagFlatMesh& flatMesh, const EdgeMapType& _eMap);
     void fixBoundaryTag();
     void fixSector();
 
-    void setVertTag(TagFlatMesh* flatMesh, vector<int>& index, VertexTagType tag) const;
+    void setVertTag(TagFlatMesh* flatMesh, std::vector<int>& index, VertexTagType tag) const;
 
     void setCreaseEdge(TagFlatMesh* flatMesh, const VertexMapType& _vertexMap) const;
     void setSector(TagFlatMesh* flatMesh) const;
@@ -226,7 +227,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
 };
 
 template <class Face>
-void TagMeshTp<Face>::applyVertTag(const TagFlatMesh& m, const vector<int>& tagVertVec, VertexTagType tag,
+void TagMeshTp<Face>::applyVertTag(const TagFlatMesh& m, const std::vector<int>& tagVertVec, VertexTagType tag,
                                    const EMapType& _eMap) {
 
     for (uint i = 0; i < tagVertVec.size(); ++i) {
@@ -396,10 +397,10 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
         }
 
         if (f->vertexTag(fv) == FaceType::NOTAG_VERTEX) {
-            cerr << "ERROR: SECTOR FOR UNTAGGED VERTEX!" << endl;
-            cerr << "vert: " << f->vert(fv) << endl;
+            std::cerr << "ERROR: SECTOR FOR UNTAGGED VERTEX!" << std::endl;
+            std::cerr << "vert: " << f->vert(fv) << std::endl;
             for (VnoType a = 0; a < f->noVtx(); ++a)
-                cerr << "\tvert(a): " << f->vert(a) << "\t" << (int)f->vertexTag(a) << endl;
+                std::cerr << "\tvert(a): " << f->vert(a) << "\t" << (int)f->vertexTag(a) << std::endl;
         }
 
         ((TLFaceType*)f)->setSectorInfo(fv, si);
@@ -407,9 +408,9 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
 }
 
 template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
-    map<SectorInfo*, pair<int, int>> _sMap;
+    map<SectorInfo*, std::pair<int, int>> _sMap;
     int fcnt = 0;
-    typename set<FaceType*>::const_iterator it;
+    typename std::set<FaceType*>::const_iterator it;
     for (it = faceSet().begin(); it != faceSet().end(); ++it) {
         EnoType e = (*it)->directEno(1);
         VnoType i;
@@ -419,21 +420,21 @@ template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
                 if ((*it)->sectorInfo(v)->sectorTag() != SectorInfo::NOTAG_SECTOR)
                     assert((*it)->vertexTag(v) != FaceType::NOTAG_VERTEX);
 
-                _sMap[(*it)->sectorInfo(v)] = pair<int, int>(fcnt, i);
+                _sMap[(*it)->sectorInfo(v)] = std::pair<int, int>(fcnt, i);
             }
         }
         ++fcnt;
     }
 
-    map<SectorInfo*, pair<int, int>>::iterator mi;
+    map<SectorInfo*, std::pair<int, int>>::iterator mi;
     for (mi = _sMap.begin(); mi != _sMap.end(); ++mi) {
-        m->sectorInfoVec.push_back(TagFlatMesh::FlatSectorType(pair<int, int>((*mi).second), (*mi).first));
+        m->sectorInfoVec.push_back(TagFlatMesh::FlatSectorType(std::pair<int, int>((*mi).second), (*mi).first));
         SectorInfo::ref((*mi).first);
     }
 }
 
 template <class Face> void TagMeshTp<Face>::setCreaseEdge(TagFlatMesh* m, const VertexMapType& _vertexMap) const {
-    typename set<FaceType*>::const_iterator it;
+    typename std::set<FaceType*>::const_iterator it;
     for (it = faceSet().begin(); it != faceSet().end(); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
             if ((*it)->edgeTag(e) == Face::CREASE_EDGE) {
@@ -459,8 +460,9 @@ template <class Face> void TagMeshTp<Face>::setCreaseEdge(TagFlatMesh* m, const 
     }
 }
 
-template <class Face> void TagMeshTp<Face>::setVertTag(TagFlatMesh*, vector<int>& tagVertVec, VertexTagType tag) const {
-    typename map<Vertex*, pair<int, VertexType>>::const_iterator it;
+template <class Face>
+void TagMeshTp<Face>::setVertTag(TagFlatMesh*, std::vector<int>& tagVertVec, VertexTagType tag) const {
+    typename map<Vertex*, std::pair<int, VertexType>>::const_iterator it;
     int cnt = 0;
     for (it = vertMap().begin(); it != vertMap().end(); ++it) {
         FaceType* f = (*it).second.second.face();

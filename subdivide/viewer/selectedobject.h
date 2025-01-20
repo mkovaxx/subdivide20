@@ -149,14 +149,14 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
 
     void localSub(typename Mesh::FaceType* f) {
         // three ring face set
-        set<Mesh::FaceType*> s0;
-        set<Mesh::FaceType*> s1;
+        std::set<Mesh::FaceType*> s0;
+        std::set<Mesh::FaceType*> s1;
 
         s0.insert(f);
 
         // collect affected triangles
         for (int k = 0; k < 2; ++k) {
-            set<Mesh::FaceType*>::iterator it;
+            std::set<Mesh::FaceType*>::iterator it;
             for (it = s0.begin(); it != s0.end(); ++it) {
                 typename Mesh::FaceType* f = (*it);
                 for (EnoType e = 1; e < f->noVtx() + 1; ++e) {
@@ -173,7 +173,7 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
 
         // build local mesh
         Mesh mk;
-        set<Mesh::FaceType*>::iterator it;
+        std::set<Mesh::FaceType*>::iterator it;
         for (it = s0.begin(); it != s0.end(); ++it) {
             mk.insertFace((*it));
         }

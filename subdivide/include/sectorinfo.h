@@ -60,13 +60,13 @@ class SectorInfo {
     }
 
     void print() const {
-        cerr << "SectorInfo = " << (void*)this << endl;
-        cerr << "\t_sectorTag = " << (int)_sectorTag << endl;
-        cerr << "\t_modifiedNormal = " << _modifiedNormal << endl;
-        cerr << "\t_modifiedNormalT = " << _modifiedNormalT << endl;
-        cerr << "\t_modifiedFlatness = " << _modifiedFlatness << endl;
-        cerr << "\t_theta = " << _theta << endl;
-        cerr << "\t_refCount = " << _refCount << endl;
+        std::cerr << "SectorInfo = " << (void*)this << std::endl;
+        std::cerr << "\t_sectorTag = " << (int)_sectorTag << std::endl;
+        std::cerr << "\t_modifiedNormal = " << _modifiedNormal << std::endl;
+        std::cerr << "\t_modifiedNormalT = " << _modifiedNormalT << std::endl;
+        std::cerr << "\t_modifiedFlatness = " << _modifiedFlatness << std::endl;
+        std::cerr << "\t_theta = " << _theta << std::endl;
+        std::cerr << "\t_refCount = " << _refCount << std::endl;
     }
 
     const cvec3f& modifiedNormal() const { return _modifiedNormal; }

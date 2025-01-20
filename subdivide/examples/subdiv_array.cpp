@@ -88,10 +88,10 @@ class PointRing {
     }
 
     void print() const {
-        cerr << _center << "  " << endl;
+        std::cerr << _center << "  " << std::endl;
         for (int i = 0; i < noPts(); ++i)
-            cerr << "\t" << _ring[i] << endl;
-        cerr << endl;
+            std::cerr << "\t" << _ring[i] << std::endl;
+        std::cerr << std::endl;
     }
 
     void clear() {
@@ -154,10 +154,10 @@ class UL {
         for (int i = 0; i < size(); ++i) {
             for (int j = 0; (j < size() - i); ++j)
                 if ((*this)(i, j).x() == -99)
-                    cerr << ". ";
+                    std::cerr << ". ";
                 else
-                    cerr << (*this)(i, j) << ",   ";
-            cerr << endl;
+                    std::cerr << (*this)(i, j) << ",   ";
+            std::cerr << std::endl;
         }
     }
 
@@ -415,8 +415,8 @@ class MyObject : public GeoObject {
             writeTri(_m, _d);
             glEnd();
             glEndList();
-            PrintDeltaTimer(cerr);
-            cerr << endl;
+            PrintDeltaTimer(std::cerr);
+            std::cerr << std::endl;
         }
     }
 
@@ -455,22 +455,22 @@ int main(int argc, char** argv) {
       for(i = 0; i < 10; ++i)
         writeTri(&triMesh, d);
       EndTimer();
-      PrintDeltaTimer(cerr);
+      PrintDeltaTimer(std::cerr);
 
       // timing for subdivision with mesh
       //
-      cerr<<endl;
+      std::cerr<<std::endl;
       StartTimer();
       triMesh.subdivide(d);
       EndTimer();
-      cerr<<"time for initial subdivision: "; PrintDeltaTimer(cerr); cerr<<endl;
+      std::cerr<<"time for initial subdivision: "; PrintDeltaTimer(std::cerr); std::cerr<<std::endl;
 
       // and 10 subdivivision iterations
       StartTimer();
       for(i = 0; i < 10; ++i)
         triMesh.subdivide(d);
       EndTimer();
-      cerr<<"10 subdivision iterations: "; PrintDeltaTimer(cerr); cerr<<endl;
+      std::cerr<<"10 subdivision iterations: "; PrintDeltaTimer(std::cerr); std::cerr<<std::endl;
     }
     exit(0);
     */

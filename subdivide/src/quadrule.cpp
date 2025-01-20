@@ -52,8 +52,8 @@ void InteriorQuadRule::computeEdgeSubCoef() {
 }
 
 void InteriorQuadRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k);
-    _sub.faceC = vector<float>(k);
+    _sub.edgeC = std::vector<float>(k);
+    _sub.faceC = std::vector<float>(k);
 
     float beta = 3 / 2.0 / (float)k;
     float gamma = 1 / 4.0 / (float)k;
@@ -75,8 +75,8 @@ void InteriorQuadRule::computeLambda1() {
 void InteriorQuadRule::computeLambda2() { _lambda2 = lambda1(); }
 
 void InteriorQuadRule::computeL1() {
-    _l1.edgeC = vector<float>(k);
-    _l1.faceC = vector<float>(k);
+    _l1.edgeC = std::vector<float>(k);
+    _l1.faceC = std::vector<float>(k);
     _l1.centerC = 0.0;
 
     float lambda = lambda1();
@@ -90,8 +90,8 @@ void InteriorQuadRule::computeL1() {
 }
 
 void InteriorQuadRule::computeL0() {
-    _l0.edgeC = vector<float>(k);
-    _l0.faceC = vector<float>(k);
+    _l0.edgeC = std::vector<float>(k);
+    _l0.faceC = std::vector<float>(k);
     _l0.centerC = float(k) / (float(k) + 5.0f);
 
     for (int i = 0; i < k; i++) {
@@ -101,8 +101,8 @@ void InteriorQuadRule::computeL0() {
 }
 
 void InteriorQuadRule::computeL2() {
-    _l2.edgeC = vector<float>(k);
-    _l2.faceC = vector<float>(k);
+    _l2.edgeC = std::vector<float>(k);
+    _l2.faceC = std::vector<float>(k);
     _l2.centerC = 0.0;
 
     float lambda = lambda1();
@@ -116,8 +116,8 @@ void InteriorQuadRule::computeL2() {
 }
 
 void InteriorQuadRule::computeX1() {
-    _x1.edgeC = vector<float>(k);
-    _x1.faceC = vector<float>(k);
+    _x1.edgeC = std::vector<float>(k);
+    _x1.faceC = std::vector<float>(k);
     _x1.centerC = 0.0;
 
     float lambda = lambda1();
@@ -132,8 +132,8 @@ void InteriorQuadRule::computeX1() {
 }
 
 void InteriorQuadRule::computeX2() {
-    _x2.faceC = vector<float>(k);
-    _x2.edgeC = vector<float>(k);
+    _x2.faceC = std::vector<float>(k);
+    _x2.edgeC = std::vector<float>(k);
     _x2.centerC = 0.0;
 
     float lambda = lambda1();
@@ -176,8 +176,8 @@ void CreaseQuadRule::computeEdgeSubCoef() {
 void CreaseQuadRule::computeSubCoef() {
     int i;
 
-    _sub.edgeC = vector<float>(k + 1);
-    _sub.faceC = vector<float>(k);
+    _sub.edgeC = std::vector<float>(k + 1);
+    _sub.faceC = std::vector<float>(k);
 
     _sub.centerC = 6.0 / 8.0;
     _sub.edgeC[0] = 1.0 / 8.0;
@@ -195,8 +195,8 @@ void CreaseQuadRule::computeLambda1() { _lambda1 = (k == 1) ? 0.25 : 0.5; }
 void CreaseQuadRule::computeLambda2() { _lambda2 = 0.5; }
 
 void CreaseQuadRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
-    _l0.faceC = vector<float>(k);
+    _l0.edgeC = std::vector<float>(k + 1);
+    _l0.faceC = std::vector<float>(k);
     _l0.centerC = 2.0f / 3.0f;
 
     for (int i = 0; i < k; i++) {
@@ -208,8 +208,8 @@ void CreaseQuadRule::computeL0() {
 }
 
 void CreaseQuadRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
-    _l1.faceC = vector<float>(k);
+    _l1.edgeC = std::vector<float>(k + 1);
+    _l1.faceC = std::vector<float>(k);
 
     if (k == 1) {
         _l1.centerC = 6.0;
@@ -238,8 +238,8 @@ void CreaseQuadRule::computeL1() {
 
 void CreaseQuadRule::computeL2() {
 
-    _l2.edgeC = vector<float>(k + 1);
-    _l2.faceC = vector<float>(k);
+    _l2.edgeC = std::vector<float>(k + 1);
+    _l2.faceC = std::vector<float>(k);
 
     if (k == 1) {
         _l2.centerC = 0.0;
@@ -259,8 +259,8 @@ void CreaseQuadRule::computeL2() {
 }
 
 void CreaseQuadRule::computeX1() {
-    _x1.edgeC = vector<float>(k + 1);
-    _x1.faceC = vector<float>(k);
+    _x1.edgeC = std::vector<float>(k + 1);
+    _x1.faceC = std::vector<float>(k);
 
     float thetaK = M_PI / (float)k;
 
@@ -282,8 +282,8 @@ void CreaseQuadRule::computeX1() {
 }
 
 void CreaseQuadRule::computeX2() {
-    _x2.edgeC = vector<float>(k + 1);
-    _x2.faceC = vector<float>(k);
+    _x2.edgeC = std::vector<float>(k + 1);
+    _x2.faceC = std::vector<float>(k);
 
     float thetaK = M_PI / (float)k;
 
@@ -331,8 +331,8 @@ void ConvexQuadRule::computeEdgeSubCoef() {
 }
 
 void ConvexQuadRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k + 1);
-    _sub.faceC = vector<float>(k);
+    _sub.edgeC = std::vector<float>(k + 1);
+    _sub.faceC = std::vector<float>(k);
 
     _sub.centerC = 1.0;
 
@@ -349,8 +349,8 @@ void ConvexQuadRule::computeLambda1() { _lambda1 = 0.5; }
 void ConvexQuadRule::computeLambda2() { _lambda2 = lambda1(); }
 
 void ConvexQuadRule::computeL2() {
-    _l2.edgeC = vector<float>(k + 1);
-    _l2.faceC = vector<float>(k);
+    _l2.edgeC = std::vector<float>(k + 1);
+    _l2.faceC = std::vector<float>(k);
     _l2.centerC = -1.0;
 
     _l2.edgeC[0] = 1.0;
@@ -362,8 +362,8 @@ void ConvexQuadRule::computeL2() {
 }
 
 void ConvexQuadRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
-    _l0.faceC = vector<float>(k);
+    _l0.edgeC = std::vector<float>(k + 1);
+    _l0.faceC = std::vector<float>(k);
     _l0.centerC = 1.0f;
 
     for (int i = 0; i < k; i++) {
@@ -374,8 +374,8 @@ void ConvexQuadRule::computeL0() {
 }
 
 void ConvexQuadRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
-    _l1.faceC = vector<float>(k);
+    _l1.edgeC = std::vector<float>(k + 1);
+    _l1.faceC = std::vector<float>(k);
     _l1.centerC = -1.0;
 
     _l1.edgeC[k] = 1.0;
@@ -390,8 +390,8 @@ void ConvexQuadRule::computeX2() {
 
     float thetak = theta / (float)k;
 
-    _x2.edgeC = vector<float>(k + 1);
-    _x2.faceC = vector<float>(k);
+    _x2.edgeC = std::vector<float>(k + 1);
+    _x2.faceC = std::vector<float>(k);
     _x2.centerC = 0.0;
 
     int i;
@@ -407,8 +407,8 @@ void ConvexQuadRule::computeX1() {
 
     float thetak = theta / (float)k;
 
-    _x1.edgeC = vector<float>(k + 1);
-    _x1.faceC = vector<float>(k);
+    _x1.edgeC = std::vector<float>(k + 1);
+    _x1.faceC = std::vector<float>(k);
     _x1.centerC = 0.0;
 
     int i;
@@ -447,8 +447,8 @@ void ConcaveQuadRule::computeEdgeSubCoef() {
 }
 
 void ConcaveQuadRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k + 1);
-    _sub.faceC = vector<float>(k);
+    _sub.edgeC = std::vector<float>(k + 1);
+    _sub.faceC = std::vector<float>(k);
     _sub.centerC = 1.0;
 
     int i;
@@ -464,8 +464,8 @@ void ConcaveQuadRule::computeLambda1() { _lambda1 = 0.5; }
 void ConcaveQuadRule::computeLambda2() { _lambda2 = lambda1(); }
 
 void ConcaveQuadRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
-    _l0.faceC = vector<float>(k);
+    _l0.edgeC = std::vector<float>(k + 1);
+    _l0.faceC = std::vector<float>(k);
     _l0.centerC = 1.0f;
 
     for (int i = 0; i < k; i++) {
@@ -476,8 +476,8 @@ void ConcaveQuadRule::computeL0() {
 }
 
 void ConcaveQuadRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
-    _l1.faceC = vector<float>(k);
+    _l1.edgeC = std::vector<float>(k + 1);
+    _l1.faceC = std::vector<float>(k);
     _l1.centerC = -1.0;
 
     _l1.edgeC[0] = 1.0;
@@ -489,8 +489,8 @@ void ConcaveQuadRule::computeL1() {
 }
 
 void ConcaveQuadRule::computeL2() {
-    _l2.edgeC = vector<float>(k + 1);
-    _l2.faceC = vector<float>(k);
+    _l2.edgeC = std::vector<float>(k + 1);
+    _l2.faceC = std::vector<float>(k);
     _l2.centerC = -1.0;
 
     _l2.edgeC[k] = 1.0;
@@ -505,8 +505,8 @@ void ConcaveQuadRule::computeX1() {
 
     float thetak = theta / (float)k;
 
-    _x1.edgeC = vector<float>(k + 1);
-    _x1.faceC = vector<float>(k);
+    _x1.edgeC = std::vector<float>(k + 1);
+    _x1.faceC = std::vector<float>(k);
     _x1.centerC = 0.0;
 
     int i;
@@ -522,8 +522,8 @@ void ConcaveQuadRule::computeX2() {
 
     float thetak = theta / (float)k;
 
-    _x2.edgeC = vector<float>(k + 1);
-    _x2.faceC = vector<float>(k);
+    _x2.edgeC = std::vector<float>(k + 1);
+    _x2.faceC = std::vector<float>(k);
     _x2.centerC = 0.0;
 
     int i;

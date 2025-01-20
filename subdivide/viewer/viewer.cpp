@@ -33,7 +33,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "geoobject.h"
 #include "viewer.h"
 
-vector<Viewer*> Viewer::_viewer;
+std::vector<Viewer*> Viewer::_viewer;
 
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 

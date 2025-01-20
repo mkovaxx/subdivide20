@@ -69,7 +69,7 @@ TagFlatMesh& TagFlatMesh::operator=(const TagFlatMesh& fm) {
 }
 
 void TagFlatMesh::Cleanup() {
-    vector<Vertex*>::iterator vi;
+    std::vector<Vertex*>::iterator vi;
 
     for (vi = vert_v.begin(); vi != vert_v.end(); ++vi)
         Vertex::unref(*vi);

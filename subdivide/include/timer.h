@@ -15,7 +15,7 @@ inline void StartTimer(void) { __timerstart = clock(); }
 inline void EndTimer(void) { __timerend = clock(); }
 
 //: print timerend - timerstart
-inline ostream& PrintDeltaTimer(ostream& os) {
+inline std::ostream& PrintDeltaTimer(std::ostream& os) {
     os << (1000.0f * (float)(__timerend - __timerstart) / (CLOCKS_PER_SEC)) << " msec";
     return os;
 }

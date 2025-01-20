@@ -41,7 +41,7 @@ class PickViewer : public BallViewer {
     typedef void (*CBFuncType)(DataType);
 
     // use this type to pass callbacks to  registration functions
-    typedef pair<CBFuncType, DataType> CBPairType;
+    typedef std::pair<CBFuncType, DataType> CBPairType;
 
     // keyboard callback registration
     void addKeyCallback(unsigned char k, CBPairType cbPair) { _cbMap[k] = cbPair; }
@@ -60,10 +60,10 @@ class PickViewer : public BallViewer {
         _uiState = (_uiState == PICK_STATE) ? MOVE_STATE : PICK_STATE;
         switch (_uiState) {
         case PICK_STATE:
-            cerr << "pickState" << endl;
+            std::cerr << "pickState" << std::endl;
             break;
         case MOVE_STATE:
-            cerr << "moveState" << endl;
+            std::cerr << "moveState" << std::endl;
             break;
         }
     }

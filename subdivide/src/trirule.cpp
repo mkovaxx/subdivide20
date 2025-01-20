@@ -75,7 +75,7 @@ void InteriorTriRule::computeSubCoef() {
     else
         beta = 3.0f / 8.0f / (float)k;
 
-    _sub.edgeC = vector<float>(k);
+    _sub.edgeC = std::vector<float>(k);
     _sub.centerC = 1 - (float)k * beta;
 
     for (int i = 0; i < k; ++i)
@@ -84,7 +84,7 @@ void InteriorTriRule::computeSubCoef() {
 
 void InteriorTriRule::computeL0() {
     _l0.centerC = 0.5f;
-    _l0.edgeC = vector<float>(k);
+    _l0.edgeC = std::vector<float>(k);
     if (k == 3) {
         _l0.centerC = 2 / 5.0f;
         for (int i = 0; i < k; ++i)
@@ -97,28 +97,28 @@ void InteriorTriRule::computeL0() {
 
 void InteriorTriRule::computeL1() {
     _l1.centerC = 0;
-    _l1.edgeC = vector<float>(k);
+    _l1.edgeC = std::vector<float>(k);
     for (int i = 0; i < k; ++i)
         _l1.edgeC[i] = 2 / (float)k * sin(2.0 * M_PI * i / (float)k);
 }
 
 void InteriorTriRule::computeL2() {
     _l2.centerC = 0.0;
-    _l2.edgeC = vector<float>(k);
+    _l2.edgeC = std::vector<float>(k);
     for (int i = 0; i < k; ++i)
         _l2.edgeC[i] = 2 / (float)k * cos(2.0 * M_PI * i / (float)k);
 }
 
 void InteriorTriRule::computeX1() {
     _x1.centerC = 0.0;
-    _x1.edgeC = vector<float>(k);
+    _x1.edgeC = std::vector<float>(k);
     for (int i = 0; i < k; ++i)
         _x1.edgeC[i] = sin(2.0 * M_PI * i / (float)k);
 }
 
 void InteriorTriRule::computeX2() {
     _x2.centerC = 0.0;
-    _x2.edgeC = vector<float>(k);
+    _x2.edgeC = std::vector<float>(k);
     for (int i = 0; i < k; ++i)
         _x2.edgeC[i] = cos(2.0 * M_PI * i / (float)k);
 }
@@ -151,7 +151,7 @@ void CreaseTriRule::computeEdgeSubCoef() {
 }
 
 void CreaseTriRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k + 1);
+    _sub.edgeC = std::vector<float>(k + 1);
     _sub.centerC = 6 / 8.0;
     _sub.edgeC[0] = 1 / 8.0;
     _sub.edgeC[k] = 1 / 8.0;
@@ -160,7 +160,7 @@ void CreaseTriRule::computeSubCoef() {
 }
 
 void CreaseTriRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
+    _l0.edgeC = std::vector<float>(k + 1);
     _l0.centerC = 2 / 3.0f;
     _l0.edgeC[0] = 1 / 6.0f;
     _l0.edgeC[k] = 1 / 6.0f;
@@ -169,7 +169,7 @@ void CreaseTriRule::computeL0() {
 }
 
 void CreaseTriRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
+    _l1.edgeC = std::vector<float>(k + 1);
     if (k == 1) {
         _l1.centerC = -1.0;
         _l1.edgeC[0] = 0.5;
@@ -188,7 +188,7 @@ void CreaseTriRule::computeL1() {
 }
 
 void CreaseTriRule::computeL2() {
-    _l2.edgeC = vector<float>(k + 1);
+    _l2.edgeC = std::vector<float>(k + 1);
     _l2.centerC = 0.0;
     _l2.edgeC[0] = 0.5;
     _l2.edgeC[k] = -0.5;
@@ -197,7 +197,7 @@ void CreaseTriRule::computeL2() {
 }
 
 void CreaseTriRule::computeX1() {
-    _x1.edgeC = vector<float>(k + 1);
+    _x1.edgeC = std::vector<float>(k + 1);
 
     if (k == 1) {
         _x1.centerC = float(-1 / 3.0);
@@ -211,7 +211,7 @@ void CreaseTriRule::computeX1() {
 }
 
 void CreaseTriRule::computeX2() {
-    _x2.edgeC = vector<float>(k + 1);
+    _x2.edgeC = std::vector<float>(k + 1);
     if (k == 1) {
         _x2.centerC = 0;
         _x2.edgeC[0] = 1.0;
@@ -256,21 +256,21 @@ void ConcaveTriRule::computeEdgeSubCoef() {
 }
 
 void ConcaveTriRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k + 1);
+    _sub.edgeC = std::vector<float>(k + 1);
     _sub.centerC = 1.0;
     for (int i = 0; i < k + 1; ++i)
         _sub.edgeC[i] = 0.0;
 }
 
 void ConcaveTriRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
+    _l0.edgeC = std::vector<float>(k + 1);
     _l0.centerC = 1.0;
     for (int i = 0; i < k + 1; ++i)
         _l0.edgeC[k] = 0.0;
 }
 
 void ConcaveTriRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
+    _l1.edgeC = std::vector<float>(k + 1);
     _l1.centerC = -1.0;
     _l1.edgeC[0] = 1.0;
     for (int i = 1; i < k + 1; ++i)
@@ -278,7 +278,7 @@ void ConcaveTriRule::computeL1() {
 }
 
 void ConcaveTriRule::computeL2() {
-    _l2.edgeC = vector<float>(k + 1);
+    _l2.edgeC = std::vector<float>(k + 1);
     _l2.centerC = -1.0;
     _l2.edgeC[k] = 1.0;
     for (int i = 0; i < k; ++i)
@@ -287,7 +287,7 @@ void ConcaveTriRule::computeL2() {
 
 void ConcaveTriRule::computeX1() {
     float thetak = theta / (float)k;
-    _x1.edgeC = vector<float>(k + 1);
+    _x1.edgeC = std::vector<float>(k + 1);
     _x1.centerC = 0.0;
     for (int i = 0; i < k + 1; ++i)
         _x1.edgeC[i] = sin((k - i) * thetak) / sin(theta);
@@ -295,7 +295,7 @@ void ConcaveTriRule::computeX1() {
 
 void ConcaveTriRule::computeX2() {
     float thetak = theta / (float)k;
-    _x2.edgeC = vector<float>(k + 1);
+    _x2.edgeC = std::vector<float>(k + 1);
     _x2.centerC = 0.0;
     for (int i = 0; i < k + 1; ++i)
         _x2.edgeC[i] = sin(i * thetak) / sin(theta);
@@ -329,21 +329,21 @@ void ConvexTriRule::computeEdgeSubCoef() {
 }
 
 void ConvexTriRule::computeSubCoef() {
-    _sub.edgeC = vector<float>(k + 1);
+    _sub.edgeC = std::vector<float>(k + 1);
     _sub.centerC = 1.0;
     for (int i = 0; i < k + 1; ++i)
         _sub.edgeC[i] = 0.0;
 }
 
 void ConvexTriRule::computeL0() {
-    _l0.edgeC = vector<float>(k + 1);
+    _l0.edgeC = std::vector<float>(k + 1);
     _l0.centerC = 1.0;
     for (int i = 0; i < k + 1; ++i)
         _l0.edgeC[k] = 0.0;
 }
 
 void ConvexTriRule::computeL1() {
-    _l1.edgeC = vector<float>(k + 1);
+    _l1.edgeC = std::vector<float>(k + 1);
     _l1.centerC = -1.0;
     _l1.edgeC[k] = 1.0;
     for (int i = 0; i < k; ++i)
@@ -351,7 +351,7 @@ void ConvexTriRule::computeL1() {
 }
 
 void ConvexTriRule::computeL2() {
-    _l2.edgeC = vector<float>(k + 1);
+    _l2.edgeC = std::vector<float>(k + 1);
     _l2.centerC = -1.0;
     _l2.edgeC[0] = 1.0;
     for (int i = 1; i < k + 1; ++i)
@@ -359,14 +359,14 @@ void ConvexTriRule::computeL2() {
 }
 
 void ConvexTriRule::computeX1() {
-    _x1.edgeC = vector<float>(k + 1);
+    _x1.edgeC = std::vector<float>(k + 1);
     _x1.centerC = 0.0;
     for (int i = 0; i < k + 1; ++i)
         _x1.edgeC[i] = sin(i * theta / (float)k) / sin(theta);
 }
 
 void ConvexTriRule::computeX2() {
-    _x2.edgeC = vector<float>(k + 1);
+    _x2.edgeC = std::vector<float>(k + 1);
     _x2.centerC = 0.0;
     for (int i = 0; i < k + 1; ++i)
         _x2.edgeC[i] = sin((k - i) * theta / (float)k) / sin(theta);

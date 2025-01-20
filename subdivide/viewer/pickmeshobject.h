@@ -138,7 +138,7 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
         }
         unsigned int base = 256 / shift;
         if (_cnt > base * base * base)
-            cerr << "WARNING: not enough colors for picking!" << endl;
+            std::cerr << "WARNING: not enough colors for picking!" << std::endl;
 
         if (targetCnt == 0)
             glColor3ub(shift * (_cnt % base), shift * ((_cnt / base) % base), shift * ((_cnt / base / base) % base));

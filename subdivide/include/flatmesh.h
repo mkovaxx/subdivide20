@@ -42,9 +42,9 @@ class Vertex;
 class FlatMesh {
   public:
     //: array of vertices
-    vector<Vertex*> vert_v;
+    std::vector<Vertex*> vert_v;
     //: array of indices of vertices;
-    vector<uint> index_v;
+    std::vector<uint> index_v;
 
     //: we assume a uniform depth for the mesh. when we write the mesh,
     // we will access the vertex position according to the vertex_depth
@@ -54,12 +54,12 @@ class FlatMesh {
     // each poly is represented by a pair
 
     // (index into index_v, # of vertices)
-    vector<IPoly> poly_v; // array of polygons;
+    std::vector<IPoly> poly_v; // array of polygons;
 
     //: sometimes we have to triangulate the mesh, however, we want to be able to
     //: find for each face of the original mesh a corresponding triangle
     //: triindex stores the indices of the first triangle corresponding to a face
-    vector<int> triindex_v;
+    std::vector<int> triindex_v;
 
     FlatMesh() { ; }
     FlatMesh(const FlatMesh& fm);

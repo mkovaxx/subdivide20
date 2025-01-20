@@ -88,7 +88,7 @@ template <class Face> class FaceIterTp {
   private:
     FaceType* _t;
     int _cl, _l;
-    typename set<FaceType*>::iterator _it;
+    typename std::set<FaceType*>::iterator _it;
     void next() {
         if (_t == 0)
             _t = (*_it);
@@ -113,8 +113,8 @@ template <class Face> class FaceIterTp {
         }
     }
     bool inSet() const { return (_t == 0) || ((*_it) == _t); }
-    const typename set<FaceType*>::iterator& setIterator() const { return _it; }
-    FaceIterTp(int l, FaceType* t, typename set<FaceType*>::iterator it) : _t(t), _l(l), _it(it) {
+    const typename std::set<FaceType*>::iterator& setIterator() const { return _it; }
+    FaceIterTp(int l, FaceType* t, typename std::set<FaceType*>::iterator it) : _t(t), _l(l), _it(it) {
         _cl = (_t != 0) ? _t->depth() : 0;
     }
 };
@@ -143,10 +143,10 @@ template <class Face> class MeshTp {
     void setClone(const MeshTp& m);
     void setClone(const MeshTp& m, map<Vertex*, Vertex*>& vvMap, map<Face*, Face*>& ttMap);
 
-    const set<Face*>& faceSet() const { return _faceSet; }
-    const map<Vertex*, pair<int, VertexType>>& vertMap() const { return _vertMap; }
+    const std::set<Face*>& faceSet() const { return _faceSet; }
+    const map<Vertex*, std::pair<int, VertexType>>& vertMap() const { return _vertMap; }
     void insertFace(Face* t);
-    const vector<Vertex*> vertVector() const { return _vertVec; }
+    const std::vector<Vertex*> vertVector() const { return _vertVec; }
 
     FaceIterType faceBegin(int l = -1) {
         if (_faceSet.begin() == _faceSet.end())
@@ -171,9 +171,9 @@ template <class Face> class MeshTp {
     }
 
   private:
-    set<Face*> _faceSet;
-    map<Vertex*, pair<int, VertexType>> _vertMap;
-    vector<Vertex*> _vertVec;
+    std::set<Face*> _faceSet;
+    map<Vertex*, std::pair<int, VertexType>> _vertMap;
+    std::vector<Vertex*> _vertVec;
     void cleanup();
 };
 
@@ -182,7 +182,7 @@ template <class Face> class MeshTp {
 
 template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
 
-    typedef pair<Vertex*, Vertex*> VertPairType;
+    typedef std::pair<Vertex*, Vertex*> VertPairType;
     typedef map<VertPairType, EdgeType> EdgeMapType;
 
     EdgeMapType edgeMap;
@@ -227,8 +227,8 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
     // deleted vertices if one uses a wrong index.
 
     if (flatMesh.vert_v.size() != _vertVec.size()) {
-        cerr << "WARNING: more vertices in iv file than used in the mesh:! " << flatMesh.vert_v.size() << "\t"
-             << _vertVec.size() << endl;
+        std::cerr << "WARNING: more vertices in iv file than used in the mesh:! " << flatMesh.vert_v.size() << "\t"
+                  << _vertVec.size() << std::endl;
     }
     _vertVec.clear();
     assert(_vertVec.size() == 0);
@@ -236,14 +236,14 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
     for (i = 0; i < flatMesh.vert_v.size(); ++i) {
         Vertex* v = flatMesh.vert_v[i];
         _vertVec.push_back(v); // keep this vertex
-        typename map<Vertex*, pair<int, VertexType>>::iterator it = _vertMap.find(v);
+        typename map<Vertex*, std::pair<int, VertexType>>::iterator it = _vertMap.find(v);
         if (it != _vertMap.end())
-            _vertMap[v] = pair<int, VertexType>(i, (*it).second.second); // change index to point into table
+            _vertMap[v] = std::pair<int, VertexType>(i, (*it).second.second); // change index to point into table
     }
 }
 
 template <class Face> MeshTp<Face>::MeshTp(const MeshTp& m) {
-    typename set<Face*>::iterator it;
+    typename std::set<Face*>::iterator it;
     for (it = _faceSet.begin(); it != _faceSet.end(); ++it) {
         Face* t = (*it);
         if (t->isToplevel())
@@ -259,7 +259,7 @@ template <class Face> MeshTp<Face>::~MeshTp() { cleanup(); }
 template <class Face> MeshTp<Face>& MeshTp<Face>::operator=(MeshTp& m) {
     if (this != &m) {
 
-        typename set<Face*>::iterator it;
+        typename std::set<Face*>::iterator it;
 
         // ref all faceangles from m
         for (it = m._faceSet.begin(); it != m._faceSet.end(); ++it) {
@@ -305,7 +305,7 @@ void MeshTp<Face>::setClone(const MeshTp& m, map<Vertex*, Vertex*>& vvMap, map<F
         ttMap.clear();
 
         // clone faces
-        typename set<Face*>::const_iterator ti;
+        typename std::set<Face*>::const_iterator ti;
         for (ti = m._faceSet.begin(); ti != m._faceSet.end(); ++ti) {
             ttMap[*ti] = TLFaceType::createFromFace(*ti);
         }
@@ -328,7 +328,7 @@ void MeshTp<Face>::setClone(const MeshTp& m, map<Vertex*, Vertex*>& vvMap, map<F
         }
 
         // replace vertices
-        typename map<Vertex*, pair<int, VertexType>>::const_iterator vi;
+        typename map<Vertex*, std::pair<int, VertexType>>::const_iterator vi;
         for (vi = m._vertMap.begin(); vi != m._vertMap.end(); ++vi)
             vvMap[(*vi).first] = (*vi).first->clone((*vi).second.second.face()->depth());
 
@@ -346,9 +346,9 @@ template <class Face> void MeshTp<Face>::insertFace(Face* t) {
     if (t->isToplevel())
         TLFaceType::ref((TLFaceType*)t);
     for (VnoType v = 0; v < t->noVtx(); ++v) {
-        typename map<Vertex*, pair<int, VertexType>>::iterator it = _vertMap.find(t->vert(v));
+        typename map<Vertex*, std::pair<int, VertexType>>::iterator it = _vertMap.find(t->vert(v));
         if (it == _vertMap.end()) {
-            _vertMap[t->vert(v)] = pair<int, VertexType>(_vertVec.size(), VertexType(t, v));
+            _vertMap[t->vert(v)] = std::pair<int, VertexType>(_vertVec.size(), VertexType(t, v));
             _vertVec.push_back(t->vert(v));
             assert(_vertVec.size() == _vertMap.size());
         }
@@ -356,7 +356,7 @@ template <class Face> void MeshTp<Face>::insertFace(Face* t) {
 }
 
 template <class Face> void MeshTp<Face>::cleanup() {
-    typename set<Face*>::iterator it;
+    typename std::set<Face*>::iterator it;
     for (it = _faceSet.begin(); it != _faceSet.end(); ++it) {
         if ((*it)->isToplevel()) {
             TLFaceType::unref((TLFaceType*)(*it));
@@ -377,7 +377,7 @@ template <class Face> void MeshTp<Face>::toFlatMesh(FlatMesh* flatMesh) {
 
     // add vertices
     int vtxcnt = 0;
-    typename map<Vertex*, pair<int, VertexType>>::const_iterator mi;
+    typename map<Vertex*, std::pair<int, VertexType>>::const_iterator mi;
     for (mi = _vertMap.begin(); mi != _vertMap.end(); ++mi) {
         map<Vertex*, int>::iterator it = _vertexIndexMap.find((*mi).first);
         assert(it == _vertexIndexMap.end());
@@ -391,7 +391,7 @@ template <class Face> void MeshTp<Face>::toFlatMesh(FlatMesh* flatMesh) {
 
     // add polygons
     int fcnt = 0;
-    typename set<Face*>::iterator si;
+    typename std::set<Face*>::iterator si;
     for (si = _faceSet.begin(); si != _faceSet.end(); ++si) {
         Face* f = (*si);
         flatMesh->poly_v.push_back(IPoly(flatMesh->index_v.size(), f->noVtx()));

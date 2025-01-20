@@ -180,11 +180,11 @@ bool Triangle::isToplevel() const {
 // update neighborhood
 void Triangle::recomputeNeighbors() {
     // three ring face set
-    set<Tri*> s0;
-    set<Tri*> s1;
+    std::set<Tri*> s0;
+    std::set<Tri*> s1;
 
     typedef TagMeshTp<Tri> TriMeshType;
-    typedef set<Tri*>::iterator TriIterType;
+    typedef std::set<Tri*>::iterator TriIterType;
     typedef TriMeshType::FaceRingType TriRingType;
 
     s0.insert(_t);
