@@ -79,8 +79,8 @@ class PickViewer : public BallViewer {
     PickedStuff* _pickedStuff;
     void* _pickData;
 
-    map<unsigned char, CBPairType> _cbMap;
-    map<int, CBPairType> _specialMap;
+    std::map<unsigned char, CBPairType> _cbMap;
+    std::map<int, CBPairType> _specialMap;
 
     typedef enum { PICK_STATE, MOVE_STATE } UIStateType;
     UIStateType _uiState;

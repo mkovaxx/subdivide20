@@ -42,7 +42,7 @@ void PickViewer::mouse(int button, int state, int x, int y) {
 }
 
 void PickViewer::key(unsigned char k, int x, int y) {
-    map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
+    std::map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();
@@ -51,7 +51,7 @@ void PickViewer::key(unsigned char k, int x, int y) {
 }
 
 void PickViewer::specialKey(int k, int x, int y) {
-    map<int, CBPairType>::iterator it = _specialMap.find(k);
+    std::map<int, CBPairType>::iterator it = _specialMap.find(k);
     if (it != _specialMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();

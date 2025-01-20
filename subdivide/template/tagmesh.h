@@ -73,7 +73,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         // build vertex map
         VertexMapType _vertexMap;
 
-        typename map<Vertex*, std::pair<int, VertexType>>::const_iterator it = vertMap().begin();
+        typename std::map<Vertex*, std::pair<int, VertexType>>::const_iterator it = vertMap().begin();
         for (uint i = 0; i < flatMesh->vert_v.size(); ++i) {
             assert(flatMesh->vert_v[i] == (*it).first);
             _vertexMap[flatMesh->vert_v[i]] = i;
@@ -85,8 +85,8 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     }
 
     TagMeshTp* clone() const;
-    TagMeshTp* clone(map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) const;
-    void setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap);
+    TagMeshTp* clone(std::map<Vertex*, Vertex*>& vvMap, std::map<FaceType*, FaceType*>& ttMap) const;
+    void setClone(const TagMeshTp& m, std::map<Vertex*, Vertex*>& vvMap, std::map<FaceType*, FaceType*>& ttMap);
     void setClone(const TagMeshTp& m);
 
     void midsub(int maxl = -1) {
@@ -146,10 +146,10 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     void cleanup();
 
   private:
-    typedef map<Vertex*, int> VertexMapType;
-    typedef map<Vertex*, EdgeType> EMapType;
+    typedef std::map<Vertex*, int> VertexMapType;
+    typedef std::map<Vertex*, EdgeType> EMapType;
     typedef std::pair<Vertex*, Vertex*> VertPairType;
-    typedef map<VertPairType, EdgeType> EdgeMapType;
+    typedef std::map<VertPairType, EdgeType> EdgeMapType;
     typedef typename Face::VertexTagType VertexTagType;
 
     void buildMaps(const TagFlatMesh* flatMesh);
@@ -166,7 +166,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     void setCreaseEdge(TagFlatMesh* flatMesh, const VertexMapType& _vertexMap) const;
     void setSector(TagFlatMesh* flatMesh) const;
 
-    void cloneTag(map<FaceType*, FaceType*>& ttMap);
+    void cloneTag(std::map<FaceType*, FaceType*>& ttMap);
 
     void fixVertexToggle(FaceType* f, EnoType e) {
         typename Face::FaceRingType fr;
@@ -223,7 +223,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     }
 
     EdgeMapType _edgeMap;
-    map<SectorInfo*, EdgeType> _sectorMap;
+    std::map<SectorInfo*, EdgeType> _sectorMap;
 };
 
 template <class Face>
@@ -233,7 +233,7 @@ void TagMeshTp<Face>::applyVertTag(const TagFlatMesh& m, const std::vector<int>&
     for (uint i = 0; i < tagVertVec.size(); ++i) {
         Vertex* v = m.vert_v[tagVertVec[i]];
 
-        typename map<Vertex*, EdgeType>::const_iterator it = _eMap.find(v);
+        typename std::map<Vertex*, EdgeType>::const_iterator it = _eMap.find(v);
         if (it != _eMap.end()) {
             TLFaceType* f = (TLFaceType*)((*it).second.face());
             VnoType vno = f->headVno((*it).second.eno());
@@ -408,7 +408,7 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
 }
 
 template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
-    map<SectorInfo*, std::pair<int, int>> _sMap;
+    std::map<SectorInfo*, std::pair<int, int>> _sMap;
     int fcnt = 0;
     typename std::set<FaceType*>::const_iterator it;
     for (it = faceSet().begin(); it != faceSet().end(); ++it) {
@@ -426,7 +426,7 @@ template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
         ++fcnt;
     }
 
-    map<SectorInfo*, std::pair<int, int>>::iterator mi;
+    std::map<SectorInfo*, std::pair<int, int>>::iterator mi;
     for (mi = _sMap.begin(); mi != _sMap.end(); ++mi) {
         m->sectorInfoVec.push_back(TagFlatMesh::FlatSectorType(std::pair<int, int>((*mi).second), (*mi).first));
         SectorInfo::ref((*mi).first);
@@ -462,7 +462,7 @@ template <class Face> void TagMeshTp<Face>::setCreaseEdge(TagFlatMesh* m, const 
 
 template <class Face>
 void TagMeshTp<Face>::setVertTag(TagFlatMesh*, std::vector<int>& tagVertVec, VertexTagType tag) const {
-    typename map<Vertex*, std::pair<int, VertexType>>::const_iterator it;
+    typename std::map<Vertex*, std::pair<int, VertexType>>::const_iterator it;
     int cnt = 0;
     for (it = vertMap().begin(); it != vertMap().end(); ++it) {
         FaceType* f = (*it).second.second.face();
@@ -474,20 +474,22 @@ void TagMeshTp<Face>::setVertTag(TagFlatMesh*, std::vector<int>& tagVertVec, Ver
 }
 
 template <class Face> TagMeshTp<Face>* TagMeshTp<Face>::clone() const {
-    map<Vertex*, Vertex*> vvMap;
-    map<FaceType*, FaceType*> ttMap;
+    std::map<Vertex*, Vertex*> vvMap;
+    std::map<FaceType*, FaceType*> ttMap;
     return clone(vvMap, ttMap);
 }
 
 template <class Face>
-TagMeshTp<Face>* TagMeshTp<Face>::clone(map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) const {
+TagMeshTp<Face>* TagMeshTp<Face>::clone(std::map<Vertex*, Vertex*>& vvMap,
+                                        std::map<FaceType*, FaceType*>& ttMap) const {
     TagMeshTp* m = new TagMeshTp();
     m->setClone(*this, vvMap, ttMap);
     return m;
 }
 
 template <class Face>
-void TagMeshTp<Face>::setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) {
+void TagMeshTp<Face>::setClone(const TagMeshTp& m, std::map<Vertex*, Vertex*>& vvMap,
+                               std::map<FaceType*, FaceType*>& ttMap) {
     if (this != &m) {
         MeshTp<Face>::setClone(m, vvMap, ttMap);
         cloneTag(ttMap);
@@ -496,15 +498,15 @@ void TagMeshTp<Face>::setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap,
 
 template <class Face> void TagMeshTp<Face>::setClone(const TagMeshTp& m) {
     if (this != &m) {
-        map<Vertex*, Vertex*> vvMap;
-        map<FaceType*, FaceType*> ttMap;
+        std::map<Vertex*, Vertex*> vvMap;
+        std::map<FaceType*, FaceType*> ttMap;
         MeshTp<Face>::setClone(m, vvMap, ttMap);
         cloneTag(ttMap);
     }
 }
 
-template <class Face> void TagMeshTp<Face>::cloneTag(map<FaceType*, FaceType*>& ttMap) {
-    typename map<FaceType*, FaceType*>::iterator it;
+template <class Face> void TagMeshTp<Face>::cloneTag(std::map<FaceType*, FaceType*>& ttMap) {
+    typename std::map<FaceType*, FaceType*>::iterator it;
     for (it = ttMap.begin(); it != ttMap.end(); ++it) {
         FaceType* fOrig = (*it).first;
         TLFaceType* fClone = (TLFaceType*)((*it).second);
