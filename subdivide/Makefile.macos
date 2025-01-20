@@ -1,0 +1,18 @@
+##############################################################################
+#
+# Makefile for Subdivide
+#
+#
+# $Id: Makefile.macos,v 1.3 2000/04/30 01:39:28 biermann Exp $
+# $Source: /tools/cvs-repos/sig00code/nyuSub/Makefile.macos,v $
+#
+##############################################################################
+SHELL = /bin/sh
+
+ENV=macos
+DIRS= ../qvlib/src src viewer examples
+
+all:
+	( for i in $(DIRS); do ( cd $$i; touch Makedepend.$(ENV); make -f Makefile.$(ENV)  ); done )
+clean:
+	( for i in $(DIRS); do ( cd $$i; touch Makedepend.$(ENV); make -f Makefile.$(ENV) clean ); done )

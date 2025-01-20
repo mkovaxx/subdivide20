@@ -14,8 +14,8 @@ class QvTexture2 : public QvNode {
     enum Wrap { // Texture wrap type
         REPEAT, // Repeats texture outside 0-1
                 //  texture coordinate range
-        CLAMP // Clamps texture coordinates
-              //  to lie within 0-1 range
+        CLAMP   // Clamps texture coordinates
+                //  to lie within 0-1 range
     };
 
     // Fields.
