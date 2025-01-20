@@ -38,17 +38,14 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 //
 
 class TagIvGraph : public IvGraph {
-public: 
-  TagIvGraph();
-  virtual ~TagIvGraph();
-  
-  bool toTagFlatMesh(TagFlatMesh* im, bool split);
-  void fromTagFlatMesh(TagFlatMesh* tagFlatMesh);
+  public:
+    TagIvGraph();
+    virtual ~TagIvGraph();
 
-private:
+    bool toTagFlatMesh(TagFlatMesh* im, bool split);
+    void fromTagFlatMesh(TagFlatMesh* tagFlatMesh);
+
+  private:
 };
 
-#endif  /* __TAGIVGRAPH_H__ */
-
-
-
+#endif /* __TAGIVGRAPH_H__ */

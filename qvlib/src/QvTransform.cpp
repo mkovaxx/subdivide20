@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvTransform);
 
-QvTransform::QvTransform()
-{
+QvTransform::QvTransform() {
     QV_NODE_CONSTRUCTOR(QvTransform);
     isBuiltIn = TRUE;
 
@@ -26,6 +25,4 @@ QvTransform::QvTransform()
     center.value[0] = center.value[1] = center.value[2] = 0.0;
 }
 
-QvTransform::~QvTransform()
-{
-}
+QvTransform::~QvTransform() {}

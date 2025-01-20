@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvFontStyle);
 
-QvFontStyle::QvFontStyle()
-{
+QvFontStyle::QvFontStyle() {
     QV_NODE_CONSTRUCTOR(QvFontStyle);
     isBuiltIn = TRUE;
 
@@ -24,9 +23,7 @@ QvFontStyle::QvFontStyle()
     QV_NODE_DEFINE_ENUM_VALUE(Style, ITALIC);
 
     QV_NODE_SET_SF_ENUM_TYPE(family, Family);
-    QV_NODE_SET_SF_ENUM_TYPE(style,  Style);
+    QV_NODE_SET_SF_ENUM_TYPE(style, Style);
 }
 
-QvFontStyle::~QvFontStyle()
-{
-}
+QvFontStyle::~QvFontStyle() {}

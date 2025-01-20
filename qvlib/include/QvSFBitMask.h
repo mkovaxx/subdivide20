@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_BIT_MASK_
-#define  _QV_SF_BIT_MASK_
+#ifndef _QV_SF_BIT_MASK_
+#define _QV_SF_BIT_MASK_
 
 #include <QvSFEnum.h>
 

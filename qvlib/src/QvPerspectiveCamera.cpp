@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvPerspectiveCamera);
 
-QvPerspectiveCamera::QvPerspectiveCamera()
-{
+QvPerspectiveCamera::QvPerspectiveCamera() {
     QV_NODE_CONSTRUCTOR(QvPerspectiveCamera);
     isBuiltIn = TRUE;
 
@@ -23,6 +22,4 @@ QvPerspectiveCamera::QvPerspectiveCamera()
     heightAngle.value = float(M_PI_4); // 45 degrees
 }
 
-QvPerspectiveCamera::~QvPerspectiveCamera()
-{
-}
+QvPerspectiveCamera::~QvPerspectiveCamera() {}

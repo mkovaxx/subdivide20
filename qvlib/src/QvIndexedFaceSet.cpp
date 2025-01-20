@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvIndexedFaceSet);
 
-QvIndexedFaceSet::QvIndexedFaceSet()
-{
+QvIndexedFaceSet::QvIndexedFaceSet() {
     QV_NODE_CONSTRUCTOR(QvIndexedFaceSet);
     isBuiltIn = TRUE;
 
@@ -18,6 +17,4 @@ QvIndexedFaceSet::QvIndexedFaceSet()
     textureCoordIndex.values[0] = QV_END_FACE_INDEX;
 }
 
-QvIndexedFaceSet::~QvIndexedFaceSet()
-{
-}
+QvIndexedFaceSet::~QvIndexedFaceSet() {}

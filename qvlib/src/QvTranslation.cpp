@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvTranslation);
 
-QvTranslation::QvTranslation()
-{
+QvTranslation::QvTranslation() {
     QV_NODE_CONSTRUCTOR(QvTranslation);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvTranslation::QvTranslation()
     translation.value[0] = translation.value[1] = translation.value[2] = 0.0;
 }
 
-QvTranslation::~QvTranslation()
-{
-}
+QvTranslation::~QvTranslation() {}

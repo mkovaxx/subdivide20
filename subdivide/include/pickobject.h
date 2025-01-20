@@ -29,14 +29,14 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "pickedstuff.h"
 
 class PickObject {
-public:
-  // prepare screen buffer for picking
-  virtual void renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) = 0;
-  
-  // determine hit
-  virtual PickedStuff* doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks,
-			      unsigned int shift) = 0;
-  static const unsigned char PICK_ALL;
+  public:
+    // prepare screen buffer for picking
+    virtual void renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) = 0;
+
+    // determine hit
+    virtual PickedStuff* doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks,
+                                unsigned int shift) = 0;
+    static const unsigned char PICK_ALL;
 };
 
 #endif /* __PICKOBJECT_H__ */

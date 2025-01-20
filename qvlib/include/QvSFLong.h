@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_LONG_
-#define  _QV_SF_LONG_
+#ifndef _QV_SF_LONG_
+#define _QV_SF_LONG_
 
 #include <QvSubField.h>
 

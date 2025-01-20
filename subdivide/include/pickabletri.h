@@ -25,46 +25,41 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKABLETRI_H__
 #define __PICKABLETRI_H__
 
+#include "geoobject.h"   // renderable object
 #include "pickedstuff.h" // results from picking
 #include "pickobject.h"  // pickable object
-#include "geoobject.h"   // renderable object
 #include "trimesh.h"     // triangle class wrapper
 
 // internal representation
-template<class Mesh> class PickMeshObjectTp;
-
+template <class Mesh> class PickMeshObjectTp;
 
 // interaction and rendering interface for triangle meshes
 
 class PickableTri : public GeoObject, public PickObject {
-public:
-  PickableTri();
-  virtual ~PickableTri();
+  public:
+    PickableTri();
+    virtual ~PickableTri();
 
-  const TriMesh& getMesh() const;
-  TriMesh& getMesh();
-  void setMesh(const TriMesh& mesh);
+    const TriMesh& getMesh() const;
+    TriMesh& getMesh();
+    void setMesh(const TriMesh& mesh);
 
-  virtual void rerender();
-  virtual void render();
-  virtual void renderPick(unsigned char picks = PICK_ALL, 
-                          unsigned int targetCnt = 0, unsigned int shift = 1);
-  virtual PickedStuff* doPick(unsigned char r, unsigned char g, 
-                              unsigned char b, unsigned char picks = PICK_ALL,
-			      unsigned int shift = 1);
-  virtual unsigned char& tlRenderMode();
-  
-  virtual cvec3f minPoint() const;
-  virtual cvec3f maxPoint() const;
+    virtual void rerender();
+    virtual void render();
+    virtual void renderPick(unsigned char picks = PICK_ALL, unsigned int targetCnt = 0, unsigned int shift = 1);
+    virtual PickedStuff* doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks = PICK_ALL,
+                                unsigned int shift = 1);
+    virtual unsigned char& tlRenderMode();
 
-private:
-  typedef PickMeshObjectTp<TagMeshTp<Tri> > PickMeshObjectType;
-  // internal representation of the selected object
-  PickMeshObjectType* _sobject;
-  // associated mesh
-  TriMesh _triMesh;
+    virtual cvec3f minPoint() const;
+    virtual cvec3f maxPoint() const;
+
+  private:
+    typedef PickMeshObjectTp<TagMeshTp<Tri>> PickMeshObjectType;
+    // internal representation of the selected object
+    PickMeshObjectType* _sobject;
+    // associated mesh
+    TriMesh _triMesh;
 };
 
 #endif /* __PICKABLETRI_H__ */
-
-

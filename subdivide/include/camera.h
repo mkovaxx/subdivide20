@@ -22,14 +22,13 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
+#include "arcball.h"
 #include "compat.h"
-#include <GL/glu.h>
 #include "cvec3t.h"
 #include "hmatrix.h"
-#include "arcball.h"
+#include <GL/glu.h>
 
 class Camera;
 ostream& operator<<(ostream& os, const Camera& camera);
@@ -38,116 +37,114 @@ istream& operator>>(istream& is, Camera& camera);
 //: Camera class for UI
 class Camera {
 
-public:
+  public:
+    Camera() { reset(); }
+    Camera(const Camera&);
+    const Camera& operator=(const Camera&);
 
-  Camera() { reset();}
-  Camera(const Camera &);
-  const Camera & operator=(const Camera &);
+    void reset();
+    void identityModel();
 
-  void reset();
-  void identityModel();
+    void computeModelview();
+    void computeProjection();
 
-  void computeModelview();
-  void computeProjection();
+    void loadMatrices() const;
+    void getCurrentMatrices();
 
-  void loadMatrices() const;
-  void getCurrentMatrices();
+    CVec3T<float> project(const CVec3T<float>& worldPoint) const;
+    CVec3T<float> unproject(const CVec3T<float>& imagePoint) const;
+    CVec3T<float> unproject(const HMatrix& model, const CVec3T<float>& imagePoint) const;
 
-  CVec3T<float> project(const CVec3T<float> & worldPoint) const;
-  CVec3T<float> unproject(const CVec3T<float> & imagePoint) const;
-  CVec3T<float> unproject(const HMatrix& model, const CVec3T<float>& imagePoint) const;
+    CVec3T<float> projectVector(const CVec3T<float>& worldVector, const CVec3T<float>& startPoint) const {
+        return project(worldVector + startPoint) - project(startPoint);
+    }
 
+    // camera world position
+    CVec3T<float> viewWorldPosition() const {
+        HMatrix A;
+        A.setInv(_ballModel);
+        return A * (-_trans);
+    }
 
-  CVec3T<float> projectVector(const CVec3T<float> & worldVector,const CVec3T<float> &
-                       startPoint)  const {
-    return project(worldVector + startPoint) - project(startPoint);
-  }
+    // camera position (in camera coordinates)
+    CVec3T<float> viewPosition() const { return -_trans; }
 
-  // camera world position
-  CVec3T<float> viewWorldPosition() const {
-    HMatrix A;
-    A.setInv(_ballModel);
-    return A * (-_trans);
-  }
+    float fovy() const { return _fovy; }
+    float aspect() const { return _aspect; }
+    float znear() const { return _znear; }
+    float zfar() const { return _zfar; }
+    const HMatrix& model() const { return _ballModel; }
 
-  // camera position (in camera coordinates)
-  CVec3T<float> viewPosition() const 
-    { return -_trans; }
+    const HMatrix& projectionMatrix() const { return _projectionMatrix; }
+    const HMatrix& modelviewMatrix() const { return _modelviewMatrix; }
+    HMatrix& model() { return _ballModel; }
 
-  float fovy()   const { return _fovy; }
-  float aspect() const { return _aspect; }
-  float znear()  const { return _znear; }
-  float zfar()   const { return _zfar; }
-  const HMatrix& model() const { return _ballModel; }  
+    const int* viewport(void) const { return _viewport; }
 
-  const HMatrix& projectionMatrix() const { return _projectionMatrix; }
-  const HMatrix& modelviewMatrix()  const { return _modelviewMatrix; }
-  HMatrix& model() { return _ballModel; }  
+    void setWinCenter(float wincenterx, float wincentery) {
+        _wincenterx = wincenterx;
+        _wincentery = wincentery;
+    }
 
-  const int* viewport(void) const { return _viewport;}
+    void getWinCenter(float& wincenterx, float& wincentery) const {
+        wincenterx = _wincenterx;
+        wincentery = _wincentery;
+    }
 
-  void setWinCenter(float wincenterx, float wincentery)
-    { _wincenterx = wincenterx; _wincentery = wincentery; }
+    void setWinScale(float winscale) { _winscale = winscale; }
 
-  void getWinCenter(float& wincenterx, float& wincentery) const 
-    { wincenterx = _wincenterx; wincentery = _wincentery; }
+    float getWinScale() const { return _winscale; }
 
-  void setWinScale(float winscale) 
-    { _winscale = winscale; }
+    void setPerspectiveParams(float fovy_degrees, float znear, float zfar);
+    void setFovy(float fovy_degrees);
+    void setClippingPlanes(float znear, float zfar) {
+        _znear = znear;
+        _zfar = zfar;
+        computeProjection();
+    }
 
-  float getWinScale() const 
-    { return _winscale; }
+    void translateWindow(float dx, float dy);
+    void scaleWindow(float sfactor);
+    void translate(const CVec3T<float>& t);
+    void setViewport(const int vp[4]) {
+        _viewport[0] = vp[0];
+        _viewport[1] = vp[1];
+        _viewport[2] = vp[2];
+        _viewport[3] = vp[3];
+        _aspect = float(vp[2]) / float(vp[3]);
+    }
 
-  void setPerspectiveParams(float fovy_degrees, float znear,float zfar);
-  void setFovy(float fovy_degrees);
-  void setClippingPlanes(float znear,float zfar) {
-    _znear = znear;  _zfar = zfar;
-    computeProjection();
-  }
-	
+    friend ostream& operator<<(ostream& os, const Camera& camera);
+    friend istream& operator>>(istream& is, Camera& camera);
 
-  void translateWindow(float dx, float dy);
-  void scaleWindow( float sfactor);
-  void translate(const CVec3T<float> & t);  
-  void setViewport(const int vp[4] ) { 
-    _viewport[0] = vp[0]; _viewport[1] = vp[1];
-    _viewport[2] = vp[2]; _viewport[3] = vp[3];
-    _aspect = float(vp[2])/float(vp[3]);
-  }
+  private:
+    // projection and modelview matricies
+    HMatrix _projectionMatrix;
+    HMatrix _modelviewMatrix;
 
+    // modelview parameters (used to create modelview matrix)
+    CVec3T<float> _trans; //  camera position
+    HMatrix _ballModel;   // the camera rotation matrix
 
-  friend ostream& operator<<(ostream& os, const Camera& camera);
-  friend istream& operator>>(istream& is, Camera& camera);
+    // projection parameters (used to create projection matrix)
+    float _znear;  // near clipping plane
+    float _zfar;   // far clipping plane
+    float _fovy;   // field of view angle, in degrees, in the y direction
+    float _aspect; // x:y aspect ratio
 
-private:
-  // projection and modelview matricies
-  HMatrix _projectionMatrix;
-  HMatrix _modelviewMatrix;
+    // center and size of the
+    // visible part of the window; center is given as offset from
+    // the frustum center; the full view corresponds to
+    // _wincenter = (0,0), _winscale =1.0
+    float _wincenterx, _wincentery, _winscale;
 
-  // modelview parameters (used to create modelview matrix)
-  CVec3T<float>  _trans;      //  camera position
-  HMatrix _ballModel;  // the camera rotation matrix
+    GLint _viewport[4];
 
-  // projection parameters (used to create projection matrix)
-  float _znear;   // near clipping plane
-  float _zfar;    // far clipping plane 
-  float _fovy;    // field of view angle, in degrees, in the y direction
-  float _aspect;  // x:y aspect ratio
-
-  // center and size of the 
-  // visible part of the window; center is given as offset from 
-  // the frustum center; the full view corresponds to 
-  // _wincenter = (0,0), _winscale =1.0 
-  float _wincenterx,_wincentery, _winscale; 
-
-  GLint   _viewport[4];
-
-
-  // second part of matrixes. used for project and unproject with
-  // current axes
-  static GLdouble _proj[16];
-  static GLdouble _view[16];
-  static GLint _vp[4];
+    // second part of matrixes. used for project and unproject with
+    // current axes
+    static GLdouble _proj[16];
+    static GLdouble _view[16];
+    static GLint _vp[4];
 };
 
 #endif

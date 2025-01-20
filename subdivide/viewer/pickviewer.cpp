@@ -23,81 +23,77 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
 #include "pickviewer.h"
-#include "pickobject.h"
 #include "geoobject.h"
 #include "glcheck.h"
-#include "stdlib.h"
 #include "math.h"
-
+#include "pickobject.h"
+#include "stdlib.h"
 
 void PickViewer::mouse(int button, int state, int x, int y) {
-  if((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
-    pick(x, getHeight() - y); 
-    // callback to mesh class
-    if(_pickCB) _pickCB(_pickedStuff, _pickData);
-    glutPostRedisplay();
-  } else {
-    BallViewer::mouse(button, state, x, y);
-  }
+    if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
+        pick(x, getHeight() - y);
+        // callback to mesh class
+        if (_pickCB)
+            _pickCB(_pickedStuff, _pickData);
+        glutPostRedisplay();
+    } else {
+        BallViewer::mouse(button, state, x, y);
+    }
 }
 
-
-void PickViewer::key(unsigned char k, int x, int y) { 
-  map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
-  if(it != _cbMap.end()) {
-    ((*it).second.first)((*it).second.second);
-    glutPostRedisplay();
-  } else 
-    BallViewer::key(k, x, y);
+void PickViewer::key(unsigned char k, int x, int y) {
+    map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
+    if (it != _cbMap.end()) {
+        ((*it).second.first)((*it).second.second);
+        glutPostRedisplay();
+    } else
+        BallViewer::key(k, x, y);
 }
 
-void PickViewer::specialKey(int k, int x, int y) { 
-  map<int, CBPairType>::iterator it = _specialMap.find(k);
-  if(it != _specialMap.end()) {
-    ((*it).second.first)((*it).second.second);
-    glutPostRedisplay();
-  } else 
-    BallViewer::specialKey(k, x, y);
+void PickViewer::specialKey(int k, int x, int y) {
+    map<int, CBPairType>::iterator it = _specialMap.find(k);
+    if (it != _specialMap.end()) {
+        ((*it).second.first)((*it).second.second);
+        glutPostRedisplay();
+    } else
+        BallViewer::specialKey(k, x, y);
 }
 
 void PickViewer::pick(GLint x, GLint y) {
-  glClearColor( 0.0, 0.0, 0.0, 0.0);
-  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-  
-  glPushMatrix();
-  
-  glMultMatrixd((double*)HMatrix::Translation(_arcball.Position()));
-  glMultMatrixd(_arcball.Rotation());
-  glMultMatrixd((double*)HMatrix::Translation(-_arcball.Position()));
-  
-  glEnable(GL_DEPTH_TEST);
-  glDisable(GL_LIGHTING);
-  
-  int bbits, rbits, gbits;
-  glGetIntegerv(GL_RED_BITS, &rbits);
-  glGetIntegerv(GL_GREEN_BITS, &gbits);
-  glGetIntegerv(GL_BLUE_BITS, &bbits);
-  int shift = 1;
-  for(int i = 0; i < 8-min(min(rbits, gbits), bbits); ++i)
-    shift*=2;
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glPushMatrix();
 
-  if(getObject()) {
-    unsigned char picks = 
-      PickedStuff::PICK_EDGE | PickedStuff::PICK_VERTEX | 
-      PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;
-    PickObject* o = dynamic_cast<PickObject*>(getObject());
-    o->renderPick(picks, 0, shift);
-    glFlush();
-    
+    glMultMatrixd((double*)HMatrix::Translation(_arcball.Position()));
+    glMultMatrixd(_arcball.Rotation());
+    glMultMatrixd((double*)HMatrix::Translation(-_arcball.Position()));
 
-    GLbyte buff[10];
-    glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, buff);
-    glFlush(); 
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
 
-    _pickedStuff = o->doPick(buff[0], buff[1], buff[2], picks, shift);
-  }
-  
-  glPopMatrix();
-  glCheck();
+    int bbits, rbits, gbits;
+    glGetIntegerv(GL_RED_BITS, &rbits);
+    glGetIntegerv(GL_GREEN_BITS, &gbits);
+    glGetIntegerv(GL_BLUE_BITS, &bbits);
+    int shift = 1;
+    for (int i = 0; i < 8 - min(min(rbits, gbits), bbits); ++i)
+        shift *= 2;
+
+    if (getObject()) {
+        unsigned char picks =
+            PickedStuff::PICK_EDGE | PickedStuff::PICK_VERTEX | PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;
+        PickObject* o = dynamic_cast<PickObject*>(getObject());
+        o->renderPick(picks, 0, shift);
+        glFlush();
+
+        GLbyte buff[10];
+        glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, buff);
+        glFlush();
+
+        _pickedStuff = o->doPick(buff[0], buff[1], buff[2], picks, shift);
+    }
+
+    glPopMatrix();
+    glCheck();
 }

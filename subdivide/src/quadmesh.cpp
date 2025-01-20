@@ -26,74 +26,65 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "subquad.h"
 #include "tagmesh.h"
 
-QuadMesh::QuadMesh() 
-{ _quadTagMesh = new TagMeshTp<Quad>(); }
+QuadMesh::QuadMesh() { _quadTagMesh = new TagMeshTp<Quad>(); }
 
-QuadMesh::~QuadMesh() { 
-  if(_quadTagMesh)
-    delete _quadTagMesh; 
+QuadMesh::~QuadMesh() {
+    if (_quadTagMesh)
+        delete _quadTagMesh;
 }
 
-QuadMesh::QuadMesh(const QuadMesh& m) { 
-  _quadTagMesh = new TagMeshTp<Quad>(); 
-  _quadTagMesh->operator=(*(m._quadTagMesh));
+QuadMesh::QuadMesh(const QuadMesh& m) {
+    _quadTagMesh = new TagMeshTp<Quad>();
+    _quadTagMesh->operator=(*(m._quadTagMesh));
 }
 
-QuadMesh::QuadMesh(const TagFlatMesh& flatMesh) 
-{ _quadTagMesh = new TagMeshTp<Quad>(flatMesh); }
+QuadMesh::QuadMesh(const TagFlatMesh& flatMesh) { _quadTagMesh = new TagMeshTp<Quad>(flatMesh); }
 
-QuadMesh& QuadMesh::operator=(const QuadMesh& m) { 
-  _quadTagMesh->operator=(*(m._quadTagMesh));
-  return (*this);
+QuadMesh& QuadMesh::operator=(const QuadMesh& m) {
+    _quadTagMesh->operator=(*(m._quadTagMesh));
+    return (*this);
 }
 
-QuadMesh* QuadMesh::clone() const{
-  QuadMesh* nm = new QuadMesh();
-  nm->setClone(*this);
-  return nm;
+QuadMesh* QuadMesh::clone() const {
+    QuadMesh* nm = new QuadMesh();
+    nm->setClone(*this);
+    return nm;
 }
 
-void QuadMesh::setClone(const QuadMesh& m) 
-{ _quadTagMesh->setClone(*(m._quadTagMesh)); }
+void QuadMesh::setClone(const QuadMesh& m) { _quadTagMesh->setClone(*(m._quadTagMesh)); }
 
-int QuadMesh::meshDepth() const
-{ return _quadTagMesh->meshDepth(); }
+int QuadMesh::meshDepth() const { return _quadTagMesh->meshDepth(); }
 
-void QuadMesh::toTagFlatMesh(TagFlatMesh* flatMesh) const 
-{ _quadTagMesh->toTagFlatMesh(flatMesh); }
+void QuadMesh::toTagFlatMesh(TagFlatMesh* flatMesh) const { _quadTagMesh->toTagFlatMesh(flatMesh); }
 
-void QuadMesh::subdivide(int maxl)
-{ _quadTagMesh->subdivide(maxl); }
+void QuadMesh::subdivide(int maxl) { _quadTagMesh->subdivide(maxl); }
 
-void QuadMesh::midsub(int maxl)
-{ _quadTagMesh->midsub(maxl); }
+void QuadMesh::midsub(int maxl) { _quadTagMesh->midsub(maxl); }
 
 QuadMesh* QuadMesh::leafMesh() const {
-  
-  TagMeshTp<Quad>* tm = new TagMeshTp<Quad>();
 
-  TagMeshTp<Quad>::FaceIterType fi;
-  for(fi = _quadTagMesh->faceBegin(); fi != _quadTagMesh->faceEnd(); ++fi) {
-    if((*fi)->isLeaf())
-      tm->insertFace(*fi);
-  }
-  
-  QuadMesh* m = new QuadMesh();
-  m->_quadTagMesh = tm;
-  return m;
+    TagMeshTp<Quad>* tm = new TagMeshTp<Quad>();
+
+    TagMeshTp<Quad>::FaceIterType fi;
+    for (fi = _quadTagMesh->faceBegin(); fi != _quadTagMesh->faceEnd(); ++fi) {
+        if ((*fi)->isLeaf())
+            tm->insertFace(*fi);
+    }
+
+    QuadMesh* m = new QuadMesh();
+    m->_quadTagMesh = tm;
+    return m;
 }
 
-int QuadMesh::numberOfVertices() const 
-{ return _quadTagMesh->vertVector().size(); }
+int QuadMesh::numberOfVertices() const { return _quadTagMesh->vertVector().size(); }
 
-const cvec3f& QuadMesh::getVertexPos(uint index) const { 
-  assert(index < _quadTagMesh->vertVector().size());
-  return _quadTagMesh->vertVector()[index]->getPos(0);
+const cvec3f& QuadMesh::getVertexPos(uint index) const {
+    assert(index < _quadTagMesh->vertVector().size());
+    return _quadTagMesh->vertVector()[index]->getPos(0);
 }
 
-void QuadMesh::setVertexPos(uint index, const cvec3f& p) { 
-  assert(index < _quadTagMesh->vertVector().size());
-  _quadTagMesh->vertVector()[index]->setPos(0, p);
-  _quadTagMesh->vertVector()[index]->set(0);
+void QuadMesh::setVertexPos(uint index, const cvec3f& p) {
+    assert(index < _quadTagMesh->vertVector().size());
+    _quadTagMesh->vertVector()[index]->setPos(0, p);
+    _quadTagMesh->vertVector()[index]->set(0);
 }
-

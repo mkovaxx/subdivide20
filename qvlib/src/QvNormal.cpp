@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvNormal);
 
-QvNormal::QvNormal()
-{
+QvNormal::QvNormal() {
     QV_NODE_CONSTRUCTOR(QvNormal);
     isBuiltIn = TRUE;
 
@@ -14,6 +13,4 @@ QvNormal::QvNormal()
     vector.values[2] = 1.0;
 }
 
-QvNormal::~QvNormal()
-{
-}
+QvNormal::~QvNormal() {}

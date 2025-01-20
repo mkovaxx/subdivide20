@@ -1,5 +1,5 @@
-#ifndef  _QV_TRANSLATION_
-#define  _QV_TRANSLATION_
+#ifndef _QV_TRANSLATION_
+#define _QV_TRANSLATION_
 
 #include <QvSFVec3f.h>
 #include <QvSubNode.h>
@@ -10,7 +10,7 @@ class QvTranslation : public QvNode {
 
   public:
     // Fields
-    QvSFVec3f		translation;	// Translation vector
+    QvSFVec3f translation; // Translation vector
 };
 
 #endif /* _QV_TRANSLATION_ */

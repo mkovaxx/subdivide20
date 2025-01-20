@@ -28,261 +28,252 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.h"
 #include <vector>
 
-
-
 class EdgeCoef {
-public:
-  float c[4];
-  void print() const
-    { cerr<<"c = { "<<c[0]<<", "<<c[1]<<", "<<c[2]<<", "<<c[3]<<"}"<<endl; }
+  public:
+    float c[4];
+    void print() const { cerr << "c = { " << c[0] << ", " << c[1] << ", " << c[2] << ", " << c[3] << "}" << endl; }
 };
 
 class Coef {
-public:
-  float centerC;
-  vector<float> edgeC;
-  float dot(const Coef& coef) const;
-  float dotOne() const;
-  void print() const {
-    cerr<<"{ centerC = "<<centerC;
-    for(uint i = 0; i < edgeC.size(); ++i)
-      cerr<<", "<<edgeC[i];
-    cerr<<"} "<<endl;
-  }
+  public:
+    float centerC;
+    vector<float> edgeC;
+    float dot(const Coef& coef) const;
+    float dotOne() const;
+    void print() const {
+        cerr << "{ centerC = " << centerC;
+        for (uint i = 0; i < edgeC.size(); ++i)
+            cerr << ", " << edgeC[i];
+        cerr << "} " << endl;
+    }
 };
 
 // Base class for subdivision rules for triangular schemes.
-// Different rules (interior, smooth boundary, concave/convex corner) 
+// Different rules (interior, smooth boundary, concave/convex corner)
 // derive from this.
 // each rule comes with 3 pairs of left and right eigenvectors
-// x0, x1, x2 and l0, l1, l2; x0 is trivial (constant 1) and 
+// x0, x1, x2 and l0, l1, l2; x0 is trivial (constant 1) and
 // need not be computed explicitly.
 
 class TriRule {
-public:
+  public:
+    typedef Coef CoefType;
+    typedef EdgeCoef EdgeCoefType;
 
-  typedef Coef CoefType;
-  typedef EdgeCoef EdgeCoefType;
+    TriRule() {
+        _creaseSub.c[0] = 0.5;
+        _creaseSub.c[1] = 0.0f;
+        _creaseSub.c[2] = 0.5f;
+        _creaseSub.c[3] = 0.0f;
+    }
+    virtual ~TriRule() { ; }
 
-  TriRule() {
-    _creaseSub.c[0] = 0.5; _creaseSub.c[1] = 0.0f;
-    _creaseSub.c[2] = 0.5f; _creaseSub.c[3] = 0.0f;
-  }
-  virtual ~TriRule() { ; }
+    const Coef& subCoef() const { return _sub; }
 
-  const Coef& subCoef() const { return _sub; }
-  
-  const EdgeCoef& creaseSubCoef() const { return _creaseSub; }
-  const EdgeCoef& edgeSubCoef() const { return _edgeSub; }
-  
-  const Coef& l0() const { return _l0; }
-  const Coef& l1() const { return _l1; }
-  const Coef& l2() const { return _l2; }
-    
-  const Coef& x1() const { return _x1; }
-  const Coef& x2() const { return _x2; }
-    
-  float lambda1() const { return _lambda1; }
-  float lambda2() const { return _lambda2; }
+    const EdgeCoef& creaseSubCoef() const { return _creaseSub; }
+    const EdgeCoef& edgeSubCoef() const { return _edgeSub; }
 
-  virtual void printName() const { cerr<<"TriRule"<<endl; }
+    const Coef& l0() const { return _l0; }
+    const Coef& l1() const { return _l1; }
+    const Coef& l2() const { return _l2; }
 
-protected:
-  Coef _sub, _l0, _l1, _l2, _x1, _x2;
-  EdgeCoef _edgeSub, _creaseSub;
-  float _lambda1, _lambda2;
+    const Coef& x1() const { return _x1; }
+    const Coef& x2() const { return _x2; }
+
+    float lambda1() const { return _lambda1; }
+    float lambda2() const { return _lambda2; }
+
+    virtual void printName() const { cerr << "TriRule" << endl; }
+
+  protected:
+    Coef _sub, _l0, _l1, _l2, _x1, _x2;
+    EdgeCoef _edgeSub, _creaseSub;
+    float _lambda1, _lambda2;
 };
 
 // various rules for interior, crease, convex and concave vertices
 //
 
 class InteriorTriRule : public TriRule {
-public:
-  InteriorTriRule(int k);
-  virtual ~InteriorTriRule() { ; }
-  virtual void printName() const { cerr<<"InteriorTriRule"<<endl; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
+  public:
+    InteriorTriRule(int k);
+    virtual ~InteriorTriRule() { ; }
+    virtual void printName() const { cerr << "InteriorTriRule" << endl; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
 };
-  
-class CreaseTriRule : public TriRule{
-public:
-  CreaseTriRule(int k);
-  ~CreaseTriRule() { ; }
-  virtual void printName() const { cerr<<"CreaseTriRule"<<endl; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
+
+class CreaseTriRule : public TriRule {
+  public:
+    CreaseTriRule(int k);
+    ~CreaseTriRule() { ; }
+    virtual void printName() const { cerr << "CreaseTriRule" << endl; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
 };
 
 class ConvexTriRule : public TriRule {
-public:
-  ConvexTriRule(int k, float theta);
-  virtual ~ConvexTriRule() { ; }
-  virtual void printName() const { cerr<<"ConvexTriRule"<<endl; }
-  float getTheta() { return theta; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
-  float theta;
+  public:
+    ConvexTriRule(int k, float theta);
+    virtual ~ConvexTriRule() { ; }
+    virtual void printName() const { cerr << "ConvexTriRule" << endl; }
+    float getTheta() { return theta; }
+
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
+    float theta;
 };
 
 class ConcaveTriRule : public TriRule {
-public:
-  ConcaveTriRule(int k, float theta);
-  virtual ~ConcaveTriRule() { ; }
-  virtual void printName() const { cerr<<"ConcaveTriRule"<<endl; }
-  float getTheta() { return theta; }
-private:
-  void computeSubCoef();
-  void computeEdgeSubCoef();
-  void computeL0();
-  void computeL1();
-  void computeL2();
-  void computeX1();
-  void computeX2();
-  void computeLambda1();
-  void computeLambda2();
-  int k;
-  float theta;
-};
+  public:
+    ConcaveTriRule(int k, float theta);
+    virtual ~ConcaveTriRule() { ; }
+    virtual void printName() const { cerr << "ConcaveTriRule" << endl; }
+    float getTheta() { return theta; }
 
+  private:
+    void computeSubCoef();
+    void computeEdgeSubCoef();
+    void computeL0();
+    void computeL1();
+    void computeL2();
+    void computeX1();
+    void computeX2();
+    void computeLambda1();
+    void computeLambda2();
+    int k;
+    float theta;
+};
 
 //-------------------------------------------------------
 //
 // Rule tables: lazy tables, hold a collection of rules
 
 class InteriorTriRuleTable {
-public:
-  InteriorTriRuleTable() { ; }
-  ~InteriorTriRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
-    
-  InteriorTriRule* getRule(uint k) { 
-    if (k >= ruleVec.size()) {
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
+  public:
+    InteriorTriRuleTable() { ; }
+    ~InteriorTriRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
     }
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new InteriorTriRule(k);
-      
-    return ruleVec[k];
-  }
-    
-private:
-  vector<InteriorTriRule*> ruleVec;
-};
 
+    InteriorTriRule* getRule(uint k) {
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+        }
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new InteriorTriRule(k);
+
+        return ruleVec[k];
+    }
+
+  private:
+    vector<InteriorTriRule*> ruleVec;
+};
 
 class CreaseTriRuleTable {
-public:
-  CreaseTriRuleTable() { ; }
-  ~CreaseTriRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
-    
-  CreaseTriRule* getRule(uint k) { 
-    if (k >= ruleVec.size()) 
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new CreaseTriRule(k);
-      
-    return ruleVec[k];
-  }
-    
-private:
-  vector<CreaseTriRule*> ruleVec;
+  public:
+    CreaseTriRuleTable() { ; }
+    ~CreaseTriRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
+
+    CreaseTriRule* getRule(uint k) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new CreaseTriRule(k);
+
+        return ruleVec[k];
+    }
+
+  private:
+    vector<CreaseTriRule*> ruleVec;
 };
-  
 
 class ConvexTriRuleTable {
-public:
-  ConvexTriRuleTable() { ; }
-  ~ConvexTriRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
+  public:
+    ConvexTriRuleTable() { ; }
+    ~ConvexTriRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
 
-  ConvexTriRule* getRule(uint k, float theta) { 
-    if (k >= ruleVec.size())
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new ConvexTriRule(k, theta); 
-    else 
-      if (ruleVec[k]->getTheta() != theta) {
-	delete ruleVec[k];
-	ruleVec[k] = new ConvexTriRule(k, theta); 
-      }
-    return ruleVec[k];
-  }
-    
-private:
-  vector<ConvexTriRule*> ruleVec;
+    ConvexTriRule* getRule(uint k, float theta) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new ConvexTriRule(k, theta);
+        else if (ruleVec[k]->getTheta() != theta) {
+            delete ruleVec[k];
+            ruleVec[k] = new ConvexTriRule(k, theta);
+        }
+        return ruleVec[k];
+    }
+
+  private:
+    vector<ConvexTriRule*> ruleVec;
 };
-  
-  
+
 class ConcaveTriRuleTable {
-public:
-  ConcaveTriRuleTable() { ; }
-  ~ConcaveTriRuleTable() {
-    for(uint i = 0; i < ruleVec.size(); ++i)
-      delete ruleVec[i];
-  }
+  public:
+    ConcaveTriRuleTable() { ; }
+    ~ConcaveTriRuleTable() {
+        for (uint i = 0; i < ruleVec.size(); ++i)
+            delete ruleVec[i];
+    }
 
-  ConcaveTriRule* getRule(uint k, float theta) { 
-    if (k >= ruleVec.size())
-      for(uint i = ruleVec.size(); i < k+1; ++i)
-	ruleVec.push_back(0);
-      
-    if (ruleVec[k] == 0)
-      ruleVec[k] = new ConcaveTriRule(k, theta); 
-    else 
-      if (ruleVec[k]->getTheta() != theta) {
-	delete ruleVec[k];
-	ruleVec[k] = new ConcaveTriRule(k, theta); 
-      }
-    return ruleVec[k];
-  }
-    
-private:
-  vector<ConcaveTriRule*> ruleVec;
+    ConcaveTriRule* getRule(uint k, float theta) {
+        if (k >= ruleVec.size())
+            for (uint i = ruleVec.size(); i < k + 1; ++i)
+                ruleVec.push_back(0);
+
+        if (ruleVec[k] == 0)
+            ruleVec[k] = new ConcaveTriRule(k, theta);
+        else if (ruleVec[k]->getTheta() != theta) {
+            delete ruleVec[k];
+            ruleVec[k] = new ConcaveTriRule(k, theta);
+        }
+        return ruleVec[k];
+    }
+
+  private:
+    vector<ConcaveTriRule*> ruleVec;
 };
-  
-  
 
 #endif /* __TRIRULE_H__ */
-
-
-

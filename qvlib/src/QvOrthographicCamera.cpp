@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvOrthographicCamera);
 
-QvOrthographicCamera::QvOrthographicCamera()
-{
+QvOrthographicCamera::QvOrthographicCamera() {
     QV_NODE_CONSTRUCTOR(QvOrthographicCamera);
     isBuiltIn = TRUE;
 
@@ -23,6 +22,4 @@ QvOrthographicCamera::QvOrthographicCamera()
     height.value = 2.0;
 }
 
-QvOrthographicCamera::~QvOrthographicCamera()
-{
-}
+QvOrthographicCamera::~QvOrthographicCamera() {}

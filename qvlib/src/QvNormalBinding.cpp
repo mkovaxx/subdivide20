@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvNormalBinding);
 
-QvNormalBinding::QvNormalBinding()
-{
+QvNormalBinding::QvNormalBinding() {
     QV_NODE_CONSTRUCTOR(QvNormalBinding);
     isBuiltIn = TRUE;
 
@@ -23,6 +22,4 @@ QvNormalBinding::QvNormalBinding()
     QV_NODE_SET_SF_ENUM_TYPE(value, Binding);
 }
 
-QvNormalBinding::~QvNormalBinding()
-{
-}
+QvNormalBinding::~QvNormalBinding() {}

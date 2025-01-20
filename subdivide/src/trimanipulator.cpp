@@ -22,79 +22,90 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
+#include "trimanipulator.h"
 #include "compat.h"
 #include "subtri.h"
-#include "trimanipulator.h"
 
-#include "tagmesh.h"
 #include "facemanipulator.h"
+#include "tagmesh.h"
 
-TriManipulator::TriManipulator(void *f) : _t((Tri*)f) { ; }
+TriManipulator::TriManipulator(void* f) : _t((Tri*)f) { ; }
 
 bool TriManipulator::isBoundaryEdge(EnoType eno) {
-  EnoType ne;
-  Tri* nf = _t->neighbor(eno, ne);
-  return (nf == 0);
+    EnoType ne;
+    Tri* nf = _t->neighbor(eno, ne);
+    return (nf == 0);
 }
 
-TriManipulator::VertexTagType TriManipulator::getVertexTag(VnoType vno) 
-{ assert(_t); return VertexTagType(_t->vertexTag(vno)); }
+TriManipulator::VertexTagType TriManipulator::getVertexTag(VnoType vno) {
+    assert(_t);
+    return VertexTagType(_t->vertexTag(vno));
+}
 
-void TriManipulator::setVertexTag(VnoType vno, VertexTagType vertexTag) 
-{ assert(_t); ((TLTri*)_t)->setVertexTag(vno, Tri::VertexTagType(vertexTag)); }
+void TriManipulator::setVertexTag(VnoType vno, VertexTagType vertexTag) {
+    assert(_t);
+    ((TLTri*)_t)->setVertexTag(vno, Tri::VertexTagType(vertexTag));
+}
 
-TriManipulator::EdgeTagType TriManipulator::getEdgeTag(EnoType eno) 
-{ assert(_t); return TriManipulator::EdgeTagType(_t->edgeTag(eno)); }
+TriManipulator::EdgeTagType TriManipulator::getEdgeTag(EnoType eno) {
+    assert(_t);
+    return TriManipulator::EdgeTagType(_t->edgeTag(eno));
+}
 
-void TriManipulator::setEdgeTag(EnoType eno, EdgeTagType edgeTag) 
-{ assert(_t); ((TLTri*)_t)->setEdgeTag(eno, Tri::EdgeTagType(edgeTag)); }
+void TriManipulator::setEdgeTag(EnoType eno, EdgeTagType edgeTag) {
+    assert(_t);
+    ((TLTri*)_t)->setEdgeTag(eno, Tri::EdgeTagType(edgeTag));
+}
 
-SectorInfo* TriManipulator::getSectorInfo(VnoType vno) 
-{ assert(_t); return _t->sectorInfo(vno); }
+SectorInfo* TriManipulator::getSectorInfo(VnoType vno) {
+    assert(_t);
+    return _t->sectorInfo(vno);
+}
 
-void TriManipulator::setSectorInfo(VnoType vno, SectorInfo* sectorInfo)
-{ assert(_t); ((TLTri*)_t)->setSectorInfo(vno, sectorInfo); }
+void TriManipulator::setSectorInfo(VnoType vno, SectorInfo* sectorInfo) {
+    assert(_t);
+    ((TLTri*)_t)->setSectorInfo(vno, sectorInfo);
+}
 
-cvec3f TriManipulator::getNormalDir(VnoType vno) 
-{ assert(_t); return _t->normal(vno); }
+cvec3f TriManipulator::getNormalDir(VnoType vno) {
+    assert(_t);
+    return _t->normal(vno);
+}
 
-cvec3f TriManipulator::getVertexPos(VnoType vno) 
-{ assert(_t); return _t->pos(vno, 0); }
+cvec3f TriManipulator::getVertexPos(VnoType vno) {
+    assert(_t);
+    return _t->pos(vno, 0);
+}
 
-void TriManipulator::setVertexPos(VnoType vno, const cvec3f& pos) 
-{ assert(_t); _t->setPos(vno, 0, pos); }
+void TriManipulator::setVertexPos(VnoType vno, const cvec3f& pos) {
+    assert(_t);
+    _t->setPos(vno, 0, pos);
+}
 
 EnoType TriManipulator::headVno(EnoType eno) { return _t->headVno(eno); }
 EnoType TriManipulator::tailVno(EnoType eno) { return _t->tailVno(eno); }
 VnoType TriManipulator::noVtx() { return _t->noVtx(); }
 
 bool TriManipulator::toggleEdge(EnoType eno) {
-  typedef FaceManipulatorTp<TagMeshTp<Tri> > FaceManiType;
-  FaceManiType faceMani(_t);
-  return faceMani.toggleEdge(eno);
+    typedef FaceManipulatorTp<TagMeshTp<Tri>> FaceManiType;
+    FaceManiType faceMani(_t);
+    return faceMani.toggleEdge(eno);
 }
 
 bool TriManipulator::toggleVertex(EnoType eno) {
-  typedef FaceManipulatorTp<TagMeshTp<Tri> > FaceManiType;
-  FaceManiType faceMani(_t);
-  return faceMani.toggleVertex(eno);
+    typedef FaceManipulatorTp<TagMeshTp<Tri>> FaceManiType;
+    FaceManiType faceMani(_t);
+    return faceMani.toggleVertex(eno);
 }
 
 bool TriManipulator::toggleSector(EnoType eno) {
-  typedef FaceManipulatorTp<TagMeshTp<Tri> > FaceManiType;
-  FaceManiType faceMani(_t);
-  return faceMani.toggleSector(eno);
+    typedef FaceManipulatorTp<TagMeshTp<Tri>> FaceManiType;
+    FaceManiType faceMani(_t);
+    return faceMani.toggleSector(eno);
 }
 
 void TriManipulator::recomputeNeighbors() {
-  typedef FaceManipulatorTp<TagMeshTp<Tri> > FaceManiType;
-  FaceManiType faceMani(_t);
-  faceMani.recomputeNeighbors();
+    typedef FaceManipulatorTp<TagMeshTp<Tri>> FaceManiType;
+    FaceManiType faceMani(_t);
+    faceMani.recomputeNeighbors();
 }
-
-
-
-
-
-
-

@@ -33,7 +33,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 class Quad;
 
 // template for the mesh representation -- internal
-template<class Quad> class TagMeshTp;
+template <class Quad> class TagMeshTp;
 
 // face manipulation interface (defined separately)
 class PickableQuad;
@@ -41,58 +41,60 @@ class PickableQuad;
 // wrapper class for quad-based hierarchical meshes
 
 class QuadMesh {
-  friend class PickableQuad;
-public:
-  QuadMesh();
-  virtual ~QuadMesh();
+    friend class PickableQuad;
 
-  // create from a flat mesh (array of vertices + array of 
-  // arrays of vertex indices for each face)
-  QuadMesh(const TagFlatMesh& flatMesh);
-  
-  // construct from other mesh, share vertices and faces
-  QuadMesh(const QuadMesh& m);
+  public:
+    QuadMesh();
+    virtual ~QuadMesh();
 
-  // assignment, share vertices and faces
-  QuadMesh& operator=(const QuadMesh& m);
+    // create from a flat mesh (array of vertices + array of
+    // arrays of vertex indices for each face)
+    QuadMesh(const TagFlatMesh& flatMesh);
 
-  // create a new mesh, clone vertices and faces
-  QuadMesh* clone() const;
+    // construct from other mesh, share vertices and faces
+    QuadMesh(const QuadMesh& m);
 
-  // set the current mesh to be the clone of mesh m
-  void setClone(const QuadMesh& m);
+    // assignment, share vertices and faces
+    QuadMesh& operator=(const QuadMesh& m);
 
-  // return a mesh containing just the leaf faces
-  QuadMesh* leafMesh() const;
+    // create a new mesh, clone vertices and faces
+    QuadMesh* clone() const;
 
-  // depth of the mesh
-  int meshDepth() const;
+    // set the current mesh to be the clone of mesh m
+    void setClone(const QuadMesh& m);
 
-  // convert to flat mesh with tags (similar to 
-  // flat mesh but also contains arrays of tags
+    // return a mesh containing just the leaf faces
+    QuadMesh* leafMesh() const;
 
-  void toTagFlatMesh(TagFlatMesh* flatMesh) const;
+    // depth of the mesh
+    int meshDepth() const;
 
-  // midpoint subdivide until level maxl
-  // maxl == -1: just recompute current vertex position
-  void midsub(int maxl = -1);
+    // convert to flat mesh with tags (similar to
+    // flat mesh but also contains arrays of tags
 
-  // extended Catmull-Clark subdivision until level maxl
-  // maxl == -1: just recompute current vertex position
-  void subdivide(int maxl = -1);
+    void toTagFlatMesh(TagFlatMesh* flatMesh) const;
 
-  // number of toplevel vertices
-  int numberOfVertices() const ;
+    // midpoint subdivide until level maxl
+    // maxl == -1: just recompute current vertex position
+    void midsub(int maxl = -1);
 
-  // get position of vertex #index
-  const cvec3f& getVertexPos(uint index) const;
+    // extended Catmull-Clark subdivision until level maxl
+    // maxl == -1: just recompute current vertex position
+    void subdivide(int maxl = -1);
 
-  // set position of vertex #incex
-  void setVertexPos(uint index, const cvec3f& p);
+    // number of toplevel vertices
+    int numberOfVertices() const;
 
-  TagMeshTp<Quad>*& quadTagMesh() { return _quadTagMesh; }
-private:
-  TagMeshTp<Quad>* _quadTagMesh;
+    // get position of vertex #index
+    const cvec3f& getVertexPos(uint index) const;
+
+    // set position of vertex #incex
+    void setVertexPos(uint index, const cvec3f& p);
+
+    TagMeshTp<Quad>*& quadTagMesh() { return _quadTagMesh; }
+
+  private:
+    TagMeshTp<Quad>* _quadTagMesh;
 };
 
 #endif /* __QUADMESH_H__ */

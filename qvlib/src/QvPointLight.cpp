@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvPointLight);
 
-QvPointLight::QvPointLight()
-{
+QvPointLight::QvPointLight() {
     QV_NODE_CONSTRUCTOR(QvPointLight);
     isBuiltIn = TRUE;
 
@@ -20,6 +19,4 @@ QvPointLight::QvPointLight()
     location.value[2] = 1.0;
 }
 
-QvPointLight::~QvPointLight()
-{
-}
+QvPointLight::~QvPointLight() {}

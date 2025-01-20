@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_FLOAT_
-#define  _QV_SF_FLOAT_
+#ifndef _QV_SF_FLOAT_
+#define _QV_SF_FLOAT_
 
 #include <QvSubField.h>
 

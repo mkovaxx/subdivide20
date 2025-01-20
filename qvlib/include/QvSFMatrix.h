@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_MATRIX_
-#define  _QV_SF_MATRIX_
+#ifndef _QV_SF_MATRIX_
+#define _QV_SF_MATRIX_
 
 #include <QvSubField.h>
 

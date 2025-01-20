@@ -1,5 +1,5 @@
-#ifndef  _QV_TRANSFORM_SEPARATOR_
-#define  _QV_TRANSFORM_SEPARATOR_
+#ifndef _QV_TRANSFORM_SEPARATOR_
+#define _QV_TRANSFORM_SEPARATOR_
 
 #include <QvGroup.h>
 

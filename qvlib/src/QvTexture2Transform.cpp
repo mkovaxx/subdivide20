@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvTexture2Transform);
 
-QvTexture2Transform::QvTexture2Transform()
-{
+QvTexture2Transform::QvTexture2Transform() {
     QV_NODE_CONSTRUCTOR(QvTexture2Transform);
     isBuiltIn = TRUE;
 
@@ -18,6 +17,4 @@ QvTexture2Transform::QvTexture2Transform()
     center.value[0] = center.value[1] = 0.0;
 }
 
-QvTexture2Transform::~QvTexture2Transform()
-{
-}
+QvTexture2Transform::~QvTexture2Transform() {}

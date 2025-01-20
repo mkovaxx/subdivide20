@@ -20,5 +20,4 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "pickedstuff.h"
 
-//const unsigned char PickedStuff::PICK_ALL = PICK_NOTHING | PICK_VERTEX | PICK_EDGE | PICK_SECTOR | PICK_NORMAL;
-
+// const unsigned char PickedStuff::PICK_ALL = PICK_NOTHING | PICK_VERTEX | PICK_EDGE | PICK_SECTOR | PICK_NORMAL;

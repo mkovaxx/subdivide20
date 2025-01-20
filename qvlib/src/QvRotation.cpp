@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvRotation);
 
-QvRotation::QvRotation()
-{
+QvRotation::QvRotation() {
     QV_NODE_CONSTRUCTOR(QvRotation);
     isBuiltIn = TRUE;
 
@@ -15,6 +14,4 @@ QvRotation::QvRotation()
     rotation.angle = 0.0;
 }
 
-QvRotation::~QvRotation()
-{
-}
+QvRotation::~QvRotation() {}

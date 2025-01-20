@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvCube);
 
-QvCube::QvCube()
-{
+QvCube::QvCube() {
     QV_NODE_CONSTRUCTOR(QvCube);
     isBuiltIn = TRUE;
 
@@ -16,6 +15,4 @@ QvCube::QvCube()
     depth.value = 2.0;
 }
 
-QvCube::~QvCube()
-{
-}
+QvCube::~QvCube() {}

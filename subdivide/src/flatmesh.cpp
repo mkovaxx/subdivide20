@@ -26,36 +26,34 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "vertex.h"
 
 FlatMesh::FlatMesh(const FlatMesh& fm) {
-  for(uint i = 0; i < fm.vert_v.size(); ++i)
-    Vertex::ref(fm.vert_v[i]);
-  Cleanup();
-  vert_v = fm.vert_v;
-  index_v = fm.index_v;
-  poly_v = fm.poly_v;
-}
-
-FlatMesh& FlatMesh::operator=(const FlatMesh& fm) {
-  if(this != &fm) {
-    for(uint i = 0; i < fm.vert_v.size(); ++i) {
-      Vertex::ref(fm.vert_v[i]);
-    }
+    for (uint i = 0; i < fm.vert_v.size(); ++i)
+        Vertex::ref(fm.vert_v[i]);
     Cleanup();
     vert_v = fm.vert_v;
     index_v = fm.index_v;
     poly_v = fm.poly_v;
-  }
-  return *this;
+}
+
+FlatMesh& FlatMesh::operator=(const FlatMesh& fm) {
+    if (this != &fm) {
+        for (uint i = 0; i < fm.vert_v.size(); ++i) {
+            Vertex::ref(fm.vert_v[i]);
+        }
+        Cleanup();
+        vert_v = fm.vert_v;
+        index_v = fm.index_v;
+        poly_v = fm.poly_v;
+    }
+    return *this;
 }
 
 void FlatMesh::Cleanup() {
-  vector<Vertex* >::iterator vi;
-  for( vi = vert_v.begin(); vi != vert_v.end(); ++vi ) 
-    Vertex::unref(*vi);
+    vector<Vertex*>::iterator vi;
+    for (vi = vert_v.begin(); vi != vert_v.end(); ++vi)
+        Vertex::unref(*vi);
 
-  vert_v.erase(vert_v.begin(), vert_v.end());
-  poly_v.erase(poly_v.begin(), poly_v.end());
-  index_v.erase(index_v.begin(), index_v.end());
-  triindex_v.erase(triindex_v.begin(), triindex_v.end());
+    vert_v.erase(vert_v.begin(), vert_v.end());
+    poly_v.erase(poly_v.begin(), poly_v.end());
+    index_v.erase(index_v.begin(), index_v.end());
+    triindex_v.erase(triindex_v.begin(), triindex_v.end());
 }
-
-

@@ -1,5 +1,5 @@
-#ifndef  _QV_FIELDS_
-#define  _QV_FIELDS_
+#ifndef _QV_FIELDS_
+#define _QV_FIELDS_
 
 #include <QvMFColor.h>
 #include <QvMFFloat.h>
@@ -16,13 +16,11 @@
 #include <QvSFFloat.h>
 #include <QvSFImage.h>
 #include <QvSFLong.h>
-#include <QvSFUShort.h>
 #include <QvSFMatrix.h>
 #include <QvSFRotation.h>
 #include <QvSFString.h>
+#include <QvSFUShort.h>
 #include <QvSFVec2f.h>
 #include <QvSFVec3f.h>
 
 #endif /* _QV_FIELDS_ */
-
-

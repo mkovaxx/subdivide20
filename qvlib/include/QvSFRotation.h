@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_ROTATION_
-#define  _QV_SF_ROTATION_
+#ifndef _QV_SF_ROTATION_
+#define _QV_SF_ROTATION_
 
 #include <QvSubField.h>
 

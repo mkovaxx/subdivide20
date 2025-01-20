@@ -31,25 +31,21 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // a class describing the result of a picking operation
 
 class PickedStuff {
-public:
-  typedef enum { PICK_NOTHING = 0,
-		 PICK_VERTEX = 1, 
-		 PICK_EDGE = 2, 
-		 PICK_SECTOR = 4, 
-		 PICK_NORMAL = 8 } PickElementType;
+  public:
+    typedef enum { PICK_NOTHING = 0, PICK_VERTEX = 1, PICK_EDGE = 2, PICK_SECTOR = 4, PICK_NORMAL = 8 } PickElementType;
 
-  PickedStuff() : _pickType(PICK_NOTHING), _eno(0), _face(0) { ; } 
-  PickedStuff(PickElementType pickType, void* face, EnoType e) : 
-    _pickType(pickType), _eno(e),  _face(face)  { ; }
+    PickedStuff() : _pickType(PICK_NOTHING), _eno(0), _face(0) { ; }
+    PickedStuff(PickElementType pickType, void* face, EnoType e) : _pickType(pickType), _eno(e), _face(face) { ; }
 
-  PickElementType type() { return _pickType; }
-  EnoType eno() { return _eno; }
-  void* face() { return _face; }
-public:
-  PickElementType _pickType;
-  EnoType _eno;
-  // hide internal representation
-  void* _face;
+    PickElementType type() { return _pickType; }
+    EnoType eno() { return _eno; }
+    void* face() { return _face; }
+
+  public:
+    PickElementType _pickType;
+    EnoType _eno;
+    // hide internal representation
+    void* _face;
 };
 
 #endif /* __PICKEDSTUFF_H__ */

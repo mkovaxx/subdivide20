@@ -1,22 +1,12 @@
 #include <QvElement.h>
 
-const char *QvElement::nodeTypeNames[NumNodeTypes] = {
-    "Unknown",
-    "OrthographicCamera",
-    "PerspectiveCamera",
-    "DirectionalLight",
-    "PointLight",
-    "SpotLight",
-    "NoOpTransform",
-    "MatrixTransform",
-    "Rotation",
-    "Scale",
-    "Transform",
-    "Translation",
+const char* QvElement::nodeTypeNames[NumNodeTypes] = {
+    "Unknown",   "OrthographicCamera", "PerspectiveCamera", "DirectionalLight", "PointLight",
+    "SpotLight", "NoOpTransform",      "MatrixTransform",   "Rotation",         "Scale",
+    "Transform", "Translation",
 };
 
-QvElement::QvElement()
-{
+QvElement::QvElement() {
     // These will be set to something real when the element is
     // added to the state
     depth = -1;
@@ -27,12 +17,6 @@ QvElement::QvElement()
     type = Unknown;
 }
 
-QvElement::~QvElement()
-{
-}
+QvElement::~QvElement() {}
 
-void
-QvElement::print()
-{
-    printf("\t\tElement of type %s\n", nodeTypeNames[type]);
-}
+void QvElement::print() { printf("\t\tElement of type %s\n", nodeTypeNames[type]); }

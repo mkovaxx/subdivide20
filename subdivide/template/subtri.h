@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __SUBTRI_H__
 #define __SUBTRI_H__
 
-#include "compat.h"
 #include "baseface.h"
 #include "basetri.h"
+#include "compat.h"
 #include "convface.h"
 #include "geoface.h"
 #include "tagface.h"
@@ -35,87 +35,68 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "tlbaseface.h"
 #include "tltagface.h"
 
-#include "triruletable.h"
 #include "subdivide.h"
+#include "triruletable.h"
 
 class TLTri;
 class Tri;
 
-class Tri : public 
-  TagFaceTp<
-    GeoFaceTp<
-      ConvenientFaceTp<
-        BaseTriTp<
-          BaseFaceTp<Tri,TLTri> 
-        > 
-      > 
-    > 
-  > {
-public:
+class Tri : public TagFaceTp<GeoFaceTp<ConvenientFaceTp<BaseTriTp<BaseFaceTp<Tri, TLTri>>>>> {
+  public:
+    typedef TriRuleTableTp<FaceRingType> TriRuleTableType;
+    typedef SubdivideTp<TriRuleTableType, FaceRingType> SubdivideType;
 
-  typedef TriRuleTableTp<FaceRingType> TriRuleTableType;
-  typedef SubdivideTp<TriRuleTableType, FaceRingType> SubdivideType;
-  
-  Tri() { ;  }
-  virtual ~Tri() { ;  }
+    Tri() { ; }
+    virtual ~Tri() { ; }
 
-  void clearFace(int d = 0);
-  void clearNormal() { 
-    for(VnoType v = 0; v < noVtx(); ++v)
-      setNormal(v, 0);
-  }
+    void clearFace(int d = 0);
+    void clearNormal() {
+        for (VnoType v = 0; v < noVtx(); ++v)
+            setNormal(v, 0);
+    }
 
-  // midpoint subdivision
-  void midSub(int d);
+    // midpoint subdivision
+    void midSub(int d);
 
-  // basic subdivision without tags and modified normal, simple but fast
-  void subdivideBasic(int d);
+    // basic subdivision without tags and modified normal, simple but fast
+    void subdivideBasic(int d);
 
-  // compute normals for the triangle, basic as above
-  void computeNormalAndLimitBasic(int d);
+    // compute normals for the triangle, basic as above
+    void computeNormalAndLimitBasic(int d);
 
-  // complete subdivision
-  void subdivide(int d);
+    // complete subdivision
+    void subdivide(int d);
 
-  // compute normal and limit
-  void computeNormalAndLimit(int d);
-private:
+    // compute normal and limit
+    void computeNormalAndLimit(int d);
 
-  // compute vertex positions in the general case - 
-  // considering tags, flatness and normal modification
-  cvec3f computeEven(EnoType e, int d);
-  cvec3f computeOdd(EnoType e, int d);
+  private:
+    // compute vertex positions in the general case -
+    // considering tags, flatness and normal modification
+    cvec3f computeEven(EnoType e, int d);
+    cvec3f computeOdd(EnoType e, int d);
 
-  // compute vertex positions in the absence of tags and
-  // any kind of modification
-  void computeOddNormal(EnoType e, int d);
+    // compute vertex positions in the absence of tags and
+    // any kind of modification
+    void computeOddNormal(EnoType e, int d);
 };
 
-class TLTri : public 
-  TLTagFaceTp<
-    TLBaseFaceTp<
-      TLBTriTp<
-        Tri
-      > 
-    > 
-  > {
-public:
-  TLTri(VnoType nVtx, Vertex** v) : TLTagFaceTp<TLBaseFaceTp<TLBTriTp<Tri> >
-  >(nVtx,v) { }
+class TLTri : public TLTagFaceTp<TLBaseFaceTp<TLBTriTp<Tri>>> {
+  public:
+    TLTri(VnoType nVtx, Vertex** v) : TLTagFaceTp<TLBaseFaceTp<TLBTriTp<Tri>>>(nVtx, v) {}
 
-  virtual ~TLTri() { ; }
+    virtual ~TLTri() { ; }
 
-  static TLTri* createFromFace(Face* f) {
-    Vertex** v = new Vertex*[f->noVtx()];
-    for(int i = 0; i < f->noVtx(); ++i)
-      v[i] = f->vert(i);
-    TLTri* nf = new TLTri(f->noVtx(), v);
-    assert(nf);
-    nf->_orient = f->orientation();
-    delete[] v;
-    return nf;
-  }
-
+    static TLTri* createFromFace(Face* f) {
+        Vertex** v = new Vertex*[f->noVtx()];
+        for (int i = 0; i < f->noVtx(); ++i)
+            v[i] = f->vert(i);
+        TLTri* nf = new TLTri(f->noVtx(), v);
+        assert(nf);
+        nf->_orient = f->orientation();
+        delete[] v;
+        return nf;
+    }
 };
 
 #endif /* __SUBTRI_H__ */

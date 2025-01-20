@@ -27,36 +27,32 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "compat.h"
 
-
-
 // Subdivider: a set of functions to apply subdivision rules
 // to a ring
 
-template<class RuleTable, class FaceRing>
-class SubdivideTp {
-public:
+template <class RuleTable, class FaceRing> class SubdivideTp {
+  public:
+    typedef typename FaceRing::FaceType FaceType;
 
-  typedef typename FaceRing::FaceType FaceType;
+    static bool hdRelevantToMidpoint(FaceType* f, EnoType e);
+    void getHdRuleAndRing(FaceType* f, EnoType e, int depth);
 
-  static bool hdRelevantToMidpoint(FaceType* f, EnoType e);
-  void getHdRuleAndRing(FaceType* f, EnoType e, int depth);
+    cvec3f computeVertexPoint() const;
+    cvec3f computeEdgePoint() const;
+    cvec3f computeNormal() const;
+    cvec3f computeLimit() const;
 
-  cvec3f computeVertexPoint() const;
-  cvec3f computeEdgePoint() const;
-  cvec3f computeNormal() const;
-  cvec3f computeLimit() const;
+    const typename RuleTable::RuleType* rule() { return _rule; }
+    const FaceRing& ring() const { return _faceRing; }
+    cvec3f modifyFlatness(const cvec3f& p, float x1, float x2) const;
+    cvec3f modifyClosedNormal(const cvec3f& p, float x1, float x2) const;
+    cvec3f modifyOpenNormal(const cvec3f& p, float x1, float x2) const;
+    void printRelevance() const;
 
-  const typename RuleTable::RuleType* rule() { return _rule; }
-  const FaceRing& ring() const { return _faceRing; }
-  cvec3f modifyFlatness(const cvec3f& p, float x1, float x2) const;
-  cvec3f modifyClosedNormal(const cvec3f& p, float x1, float x2) const;
-  cvec3f modifyOpenNormal(const cvec3f& p, float x1, float x2) const;
-  void printRelevance() const;
-
-private:
-  int _depth;
-  typename RuleTable::RuleType* _rule;
-  FaceRing _faceRing;
+  private:
+    int _depth;
+    typename RuleTable::RuleType* _rule;
+    FaceRing _faceRing;
 };
 
 #include "subdivide.hi"

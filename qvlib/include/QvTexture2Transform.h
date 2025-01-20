@@ -1,5 +1,5 @@
-#ifndef  _QV_TEXTURE_2_TRANSFORM_
-#define  _QV_TEXTURE_2_TRANSFORM_
+#ifndef _QV_TEXTURE_2_TRANSFORM_
+#define _QV_TEXTURE_2_TRANSFORM_
 
 #include <QvSFFloat.h>
 #include <QvSFVec2f.h>
@@ -11,10 +11,10 @@ class QvTexture2Transform : public QvNode {
 
   public:
     // Fields
-    QvSFVec2f		translation;	// Translation vector
-    QvSFFloat		rotation;	// Rotation
-    QvSFVec2f		scaleFactor;	// Scale factors
-    QvSFVec2f		center;	        // Center point for scale and rotate
+    QvSFVec2f translation; // Translation vector
+    QvSFFloat rotation;    // Rotation
+    QvSFVec2f scaleFactor; // Scale factors
+    QvSFVec2f center;      // Center point for scale and rotate
 };
 
 #endif /* _QV_TEXTURE_2_TRANSFORM_ */

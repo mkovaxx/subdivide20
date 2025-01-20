@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_STRING_
-#define  _QV_SF_STRING_
+#ifndef _QV_SF_STRING_
+#define _QV_SF_STRING_
 
 #include <QvSubField.h>
 

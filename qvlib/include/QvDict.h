@@ -2,32 +2,35 @@
 #define _QV_DICT_
 
 #include <QvBasic.h>
-#include <QvString.h>
 #include <QvPList.h>
+#include <QvString.h>
 
 class QvDictEntry {
   private:
-    unsigned long		key;
-    void *		value;
-    QvDictEntry *	next;
-    QvDictEntry(unsigned long k, void *v)	{ key = k; value = v; };
+    unsigned long key;
+    void* value;
+    QvDictEntry* next;
+    QvDictEntry(unsigned long k, void* v) {
+        key = k;
+        value = v;
+    };
 
-friend class QvDict;
+    friend class QvDict;
 };
 
 class QvDict {
   public:
-    QvDict( int entries = 251 );
+    QvDict(int entries = 251);
     ~QvDict();
-    void	clear();
-    QvBool	enter(unsigned long key, void *value);
-    QvBool	find(unsigned long key, void *&value) const;
-    QvBool	remove(unsigned long key);
+    void clear();
+    QvBool enter(unsigned long key, void* value);
+    QvBool find(unsigned long key, void*& value) const;
+    QvBool remove(unsigned long key);
 
   private:
-    int			tableSize;
-    QvDictEntry *	*buckets;
-    QvDictEntry *&	findEntry(unsigned long key) const;
+    int tableSize;
+    QvDictEntry** buckets;
+    QvDictEntry*& findEntry(unsigned long key) const;
 };
 
 #endif /* _QV_DICT_ */

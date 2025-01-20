@@ -6,13 +6,14 @@
 class QvSeparator;
 
 class QvIn {
-public:
-  QvIn(char* filename);
-  QvSeparator* read();
-  QvBool error() const { return _error; }
-private:
-  QvInput qvInput;
-  QvBool _error;
+  public:
+    QvIn(char* filename);
+    QvSeparator* read();
+    QvBool error() const { return _error; }
+
+  private:
+    QvInput qvInput;
+    QvBool _error;
 };
 
 #endif /* _QV_IN_ */

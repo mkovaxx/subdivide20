@@ -24,50 +24,42 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "pickabletri.h"
 
+#include "pickmeshobject.h"
 #include "subtri.h"
 #include "tagmesh.h"
-#include "pickmeshobject.h"
 
-PickableTri::PickableTri() { 
-  _sobject = new PickMeshObjectType(); 
-  delete _triMesh._triTagMesh;                 // remove the mesh 
-  _triMesh._triTagMesh = &_sobject->getMesh(); // and connect it with the mesh from the object
+PickableTri::PickableTri() {
+    _sobject = new PickMeshObjectType();
+    delete _triMesh._triTagMesh;                 // remove the mesh
+    _triMesh._triTagMesh = &_sobject->getMesh(); // and connect it with the mesh from the object
 }
 
-PickableTri::~PickableTri() { 
-  delete _sobject;           // here we already remove the mesh
-  _triMesh._triTagMesh = 0; // we set this to 0 to avoid a second destruction of the mesh
+PickableTri::~PickableTri() {
+    delete _sobject;          // here we already remove the mesh
+    _triMesh._triTagMesh = 0; // we set this to 0 to avoid a second destruction of the mesh
 }
 
-const TriMesh& PickableTri::getMesh() const 
-{ return _triMesh; }
+const TriMesh& PickableTri::getMesh() const { return _triMesh; }
 
-TriMesh& PickableTri::getMesh() 
-{ return _triMesh; }
+TriMesh& PickableTri::getMesh() { return _triMesh; }
 
-void PickableTri::setMesh(const TriMesh& mesh) 
-{ _sobject->setMesh(*(mesh._triTagMesh)); }
+void PickableTri::setMesh(const TriMesh& mesh) { _sobject->setMesh(*(mesh._triTagMesh)); }
 
-void PickableTri::rerender() 
-{ _sobject->rerender(); }
+void PickableTri::rerender() { _sobject->rerender(); }
 
-void PickableTri::render() 
-{ _sobject->render(); }
+void PickableTri::render() { _sobject->render(); }
 
-void PickableTri::renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) 
-{ _sobject->renderPick(picks, targetCnt, shift); }
+void PickableTri::renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) {
+    _sobject->renderPick(picks, targetCnt, shift);
+}
 
-PickedStuff* PickableTri::
-doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks, unsigned int shift) 
-{ return _sobject->doPick(r, g, b, picks, shift); }
+PickedStuff* PickableTri::doPick(unsigned char r, unsigned char g, unsigned char b, unsigned char picks,
+                                 unsigned int shift) {
+    return _sobject->doPick(r, g, b, picks, shift);
+}
 
-cvec3f PickableTri::minPoint() const 
-{ return _sobject->minPoint(); }
+cvec3f PickableTri::minPoint() const { return _sobject->minPoint(); }
 
-cvec3f PickableTri::maxPoint() const 
-{ return _sobject->maxPoint(); }
+cvec3f PickableTri::maxPoint() const { return _sobject->maxPoint(); }
 
 unsigned char& PickableTri::tlRenderMode() { return _sobject->tlRenderMode(); }
-
-
-

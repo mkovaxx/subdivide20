@@ -1,5 +1,5 @@
-#ifndef  _QV_ROTATION_
-#define  _QV_ROTATION_
+#ifndef _QV_ROTATION_
+#define _QV_ROTATION_
 
 #include <QvSFRotation.h>
 #include <QvSubNode.h>
@@ -10,7 +10,7 @@ class QvRotation : public QvNode {
 
   public:
     // Fields
-    QvSFRotation	rotation;	// Rotation
+    QvSFRotation rotation; // Rotation
 };
 
 #endif /* _QV_ROTATION_ */

@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvSphere);
 
-QvSphere::QvSphere()
-{
+QvSphere::QvSphere() {
     QV_NODE_CONSTRUCTOR(QvSphere);
     isBuiltIn = TRUE;
 
@@ -12,6 +11,4 @@ QvSphere::QvSphere()
     radius.value = 1.0;
 }
 
-QvSphere::~QvSphere()
-{
-}
+QvSphere::~QvSphere() {}

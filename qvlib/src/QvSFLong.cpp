@@ -2,8 +2,4 @@
 
 QV_SFIELD_SOURCE(QvSFLong)
 
-QvBool
-QvSFLong::readValue(QvInput *in)
-{
-    return in->read(value);
-}
+QvBool QvSFLong::readValue(QvInput* in) { return in->read(value); }

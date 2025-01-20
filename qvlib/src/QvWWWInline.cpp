@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvWWWInline);
 
-QvWWWInline::QvWWWInline()
-{
+QvWWWInline::QvWWWInline() {
     QV_NODE_CONSTRUCTOR(QvWWWInline);
     isBuiltIn = TRUE;
 
@@ -16,6 +15,4 @@ QvWWWInline::QvWWWInline()
     bboxCenter.value[0] = bboxCenter.value[0] = bboxCenter.value[0] = 0.0;
 }
 
-QvWWWInline::~QvWWWInline()
-{
-}
+QvWWWInline::~QvWWWInline() {}

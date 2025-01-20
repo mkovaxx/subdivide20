@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvDirectionalLight);
 
-QvDirectionalLight::QvDirectionalLight()
-{
+QvDirectionalLight::QvDirectionalLight() {
     QV_NODE_CONSTRUCTOR(QvDirectionalLight);
     isBuiltIn = TRUE;
 
@@ -20,6 +19,4 @@ QvDirectionalLight::QvDirectionalLight()
     direction.value[2] = -1.0;
 }
 
-QvDirectionalLight::~QvDirectionalLight()
-{
-}
+QvDirectionalLight::~QvDirectionalLight() {}

@@ -1,5 +1,5 @@
-#ifndef  _QV_NODES_
-#define  _QV_NODES_
+#ifndef _QV_NODES_
+#define _QV_NODES_
 
 #include <QvAsciiText.h>
 #include <QvCone.h>
@@ -7,6 +7,7 @@
 #include <QvCube.h>
 #include <QvCylinder.h>
 #include <QvDirectionalLight.h>
+#include <QvDrawStyle.h>
 #include <QvFontStyle.h>
 #include <QvGroup.h>
 #include <QvIndexedFaceSet.h>
@@ -23,6 +24,7 @@
 #include <QvPointLight.h>
 #include <QvPointSet.h>
 #include <QvRotation.h>
+#include <QvSFUShort.h>
 #include <QvScale.h>
 #include <QvSeparator.h>
 #include <QvShapeHints.h>
@@ -38,7 +40,5 @@
 #include <QvTranslation.h>
 #include <QvWWWAnchor.h>
 #include <QvWWWInline.h>
-#include <QvDrawStyle.h>
-#include <QvSFUShort.h>
 
 #endif /* _QV_NODES_ */

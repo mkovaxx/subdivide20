@@ -1,5 +1,5 @@
-#ifndef  _QV_SF_BOOL_
-#define  _QV_SF_BOOL_
+#ifndef _QV_SF_BOOL_
+#define _QV_SF_BOOL_
 
 #include <QvSubField.h>
 

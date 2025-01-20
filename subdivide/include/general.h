@@ -21,14 +21,13 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#define  GEN_MAX_DEPTH 8                 /* maximum subdivision depth */
+#define GEN_MAX_DEPTH 8 /* maximum subdivision depth */
 
-typedef signed char EnoType;               // edges are signed
-typedef unsigned char VnoType;             // vertices
-typedef unsigned char CnoType;             // child numbers
-typedef enum { CW, CCW } OrientationType;  // triangle orientation
+typedef signed char EnoType;              // edges are signed
+typedef unsigned char VnoType;            // vertices
+typedef unsigned char CnoType;            // child numbers
+typedef enum { CW, CCW } OrientationType; // triangle orientation
 
-inline OrientationType reverseOrientation(OrientationType o) 
-{ return (o == CW)?CCW:CW; }
+inline OrientationType reverseOrientation(OrientationType o) { return (o == CW) ? CCW : CW; }
 
 #endif /* __GENERAL_H__ */

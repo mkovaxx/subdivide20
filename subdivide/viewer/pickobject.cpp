@@ -20,5 +20,5 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "pickobject.h"
 
-const unsigned char PickObject::PICK_ALL = PickedStuff::PICK_VERTEX | 
-PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;
+const unsigned char PickObject::PICK_ALL =
+    PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;

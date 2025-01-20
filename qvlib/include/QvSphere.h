@@ -1,5 +1,5 @@
-#ifndef  _QV_SPHERE_
-#define  _QV_SPHERE_
+#ifndef _QV_SPHERE_
+#define _QV_SPHERE_
 
 #include <QvSFFloat.h>
 #include <QvSubNode.h>
@@ -10,8 +10,7 @@ class QvSphere : public QvNode {
 
   public:
     // Fields
-    QvSFFloat		radius;		// Radius of sphere
+    QvSFFloat radius; // Radius of sphere
 };
 
 #endif /* _QV_SPHERE_ */
-

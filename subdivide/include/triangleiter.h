@@ -21,7 +21,6 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-
 #ifndef __TRIANGLEITER_H__
 #define __TRIANGLEITER_H__
 
@@ -31,29 +30,29 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 class TriMesh;
 class TriIter;
 
-template<class Face>
-class FaceIterTp;
+template <class Face> class FaceIterTp;
 
 class TriangleIter {
-  friend class TriMesh;
-public:
-  TriangleIter();
-  ~TriangleIter();
-  TriangleIter(const TriangleIter& i);
-  TriangleIter& operator=(const TriangleIter& i);
-  
-  Triangle operator*();
-  TriangleIter& operator++();
-  bool operator==(const TriangleIter& i) const;
-  bool operator!=(const TriangleIter& i) const;
+    friend class TriMesh;
 
-  int depth() const; 
-  int maxDepth() const;
+  public:
+    TriangleIter();
+    ~TriangleIter();
+    TriangleIter(const TriangleIter& i);
+    TriangleIter& operator=(const TriangleIter& i);
 
-private:
-  typedef FaceIterTp<Tri> TriIter;
-  TriIter* _ti;
-  TriangleIter(TriIter _ti);
+    Triangle operator*();
+    TriangleIter& operator++();
+    bool operator==(const TriangleIter& i) const;
+    bool operator!=(const TriangleIter& i) const;
+
+    int depth() const;
+    int maxDepth() const;
+
+  private:
+    typedef FaceIterTp<Tri> TriIter;
+    TriIter* _ti;
+    TriangleIter(TriIter _ti);
 };
 
 #endif /* __TRIANGLEITER_H__ */

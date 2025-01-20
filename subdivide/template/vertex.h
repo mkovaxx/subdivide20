@@ -25,47 +25,50 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VERTEX_H__
 #define __VERTEX_H__
 
-#include "compat.h"
 #include "basevertex.h"
+#include "compat.h"
 
 class TagTri;
 class TLTagTri;
 
-
 // Add reference counting to the vertex class
 
 class Vertex : public BaseVertex {
-  //  friend class TagTri;
-  // friend class TLTagTri;
-public:
-  Vertex(int d = 0) : BaseVertex(d), _refCount(0), _special(false) 
-    {}
-  virtual ~Vertex() {}
-  
-  Vertex* clone(int d) const {
-    Vertex* v = new Vertex(); 
-    v->_special = _special;
-    v->copyValue(*this, d);
-    return v;
-  }
-  
-  Vertex* clone() const { 
-    Vertex* v = new Vertex(); 
-    v->_special = _special;
-    v->copyValue(*this);
-    return v;
-  }
-  
-  bool isSpecial() const { return _special; }
-  void makeSpecial() { _special = true; }
-  static void ref(Vertex* vert) { if(vert) ++vert->_refCount; }
-  static void unref(Vertex* vert) 
-    { if(vert) if((0 == (--vert->_refCount))) delete vert; }
-  
-private:
-  unsigned long _refCount;
-  bool _special;
- 
+    //  friend class TagTri;
+    // friend class TLTagTri;
+  public:
+    Vertex(int d = 0) : BaseVertex(d), _refCount(0), _special(false) {}
+    virtual ~Vertex() {}
+
+    Vertex* clone(int d) const {
+        Vertex* v = new Vertex();
+        v->_special = _special;
+        v->copyValue(*this, d);
+        return v;
+    }
+
+    Vertex* clone() const {
+        Vertex* v = new Vertex();
+        v->_special = _special;
+        v->copyValue(*this);
+        return v;
+    }
+
+    bool isSpecial() const { return _special; }
+    void makeSpecial() { _special = true; }
+    static void ref(Vertex* vert) {
+        if (vert)
+            ++vert->_refCount;
+    }
+    static void unref(Vertex* vert) {
+        if (vert)
+            if ((0 == (--vert->_refCount)))
+                delete vert;
+    }
+
+  private:
+    unsigned long _refCount;
+    bool _special;
 };
 
 #endif /* __VERTEX_H__ */

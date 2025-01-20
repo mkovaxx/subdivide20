@@ -1,10 +1,5 @@
 #include <QvChildList.h>
 
-QvChildList::QvChildList() : QvNodeList()
-{
-}
+QvChildList::QvChildList() : QvNodeList() {}
 
-QvChildList::~QvChildList()
-{
-    truncate(0);
-}
+QvChildList::~QvChildList() { truncate(0); }

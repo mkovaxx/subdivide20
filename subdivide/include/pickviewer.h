@@ -24,68 +24,66 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.h"
 #include <map>
 
-#include <GL/glut.h>
 #include "ballviewer.h"
 #include "pickobject.h"
+#include <GL/glut.h>
 
 class PickViewer : public BallViewer {
-  
-public:
-  PickViewer(char* name = 0, int w = 512, int h = 512) : 
-    BallViewer(name, w, h),
-    _pickCB(0), _pickedStuff(0), _uiState(MOVE_STATE) { ; }
-  virtual ~PickViewer() { ; }
 
-  typedef void* DataType;
-  typedef void (*CBFuncType)(DataType);
-
-  // use this type to pass callbacks to  registration functions
-  typedef pair<CBFuncType, DataType> CBPairType;
-
-  // keyboard callback registration
-  void addKeyCallback(unsigned char k, CBPairType cbPair) {
-    _cbMap[k] = cbPair;
-  }
-
-  // picking callback registration
-  void addPickCallback(void(*pickCB)(PickedStuff*, void*), void* data) 
-    { _pickCB = pickCB; _pickData = data; }
-
-  // special key callback
-  void addSpecialCallback(int k, CBPairType cbPair) 
-    { _specialMap[k] = cbPair; }
-
-  // toggle the interface between picking and camera manipulation
-  void toggleState() {
-    _uiState = (_uiState == PICK_STATE) ? MOVE_STATE : PICK_STATE;
-    switch(_uiState) {
-    case PICK_STATE: cerr<<"pickState"<<endl; break;
-    case MOVE_STATE: cerr<<"moveState"<<endl; break;
+  public:
+    PickViewer(char* name = 0, int w = 512, int h = 512)
+        : BallViewer(name, w, h), _pickCB(0), _pickedStuff(0), _uiState(MOVE_STATE) {
+        ;
     }
-  }
+    virtual ~PickViewer() { ; }
 
-protected:
-  virtual void key(unsigned char k, int x, int y); 
-  virtual void pick(GLint x, GLint y);
-  virtual void mouse(int button, int state, int x, int y);
-  virtual void specialKey(int k, int x, int y);
+    typedef void* DataType;
+    typedef void (*CBFuncType)(DataType);
 
-private:
-  void(*_pickCB)(PickedStuff*, void*);
-  PickedStuff* _pickedStuff;
-  void* _pickData;
+    // use this type to pass callbacks to  registration functions
+    typedef pair<CBFuncType, DataType> CBPairType;
 
-  map<unsigned char, CBPairType> _cbMap;
-  map<int, CBPairType> _specialMap;
+    // keyboard callback registration
+    void addKeyCallback(unsigned char k, CBPairType cbPair) { _cbMap[k] = cbPair; }
 
-  typedef enum { PICK_STATE, MOVE_STATE } UIStateType;
-  UIStateType _uiState;
+    // picking callback registration
+    void addPickCallback(void (*pickCB)(PickedStuff*, void*), void* data) {
+        _pickCB = pickCB;
+        _pickData = data;
+    }
+
+    // special key callback
+    void addSpecialCallback(int k, CBPairType cbPair) { _specialMap[k] = cbPair; }
+
+    // toggle the interface between picking and camera manipulation
+    void toggleState() {
+        _uiState = (_uiState == PICK_STATE) ? MOVE_STATE : PICK_STATE;
+        switch (_uiState) {
+        case PICK_STATE:
+            cerr << "pickState" << endl;
+            break;
+        case MOVE_STATE:
+            cerr << "moveState" << endl;
+            break;
+        }
+    }
+
+  protected:
+    virtual void key(unsigned char k, int x, int y);
+    virtual void pick(GLint x, GLint y);
+    virtual void mouse(int button, int state, int x, int y);
+    virtual void specialKey(int k, int x, int y);
+
+  private:
+    void (*_pickCB)(PickedStuff*, void*);
+    PickedStuff* _pickedStuff;
+    void* _pickData;
+
+    map<unsigned char, CBPairType> _cbMap;
+    map<int, CBPairType> _specialMap;
+
+    typedef enum { PICK_STATE, MOVE_STATE } UIStateType;
+    UIStateType _uiState;
 };
 
 #endif /* __PICKVIEWER_H__ */
-
-
-
-
-
-

@@ -13,21 +13,15 @@
 
 // For debugging
 static int indent = 0;
-static void
-announce(const char *className)
-{
+static void announce(const char* className) {
     for (int i = 0; i < indent; i++)
-	printf("\t");
+        printf("\t");
     printf("Traversing a %s\n", className);
 }
 #define ANNOUNCE(className) announce(QV__QUOTE(className))
 
-#define DEFAULT_TRAVERSE(className)					      \
-void									      \
-className::traverse(QvState *)						      \
-{									      \
-    ANNOUNCE(className);						      \
-}
+#define DEFAULT_TRAVERSE(className)                                                                                    \
+    void className::traverse(QvState*) { ANNOUNCE(className); }
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -35,67 +29,56 @@ className::traverse(QvState *)						      \
 //
 //////////////////////////////////////////////////////////////////////////////
 
-void
-QvGroup::traverse(QvState *state)
-{
+void QvGroup::traverse(QvState* state) {
     ANNOUNCE(QvGroup);
     indent++;
     for (int i = 0; i < getNumChildren(); i++)
-	getChild(i)->traverse(state);
+        getChild(i)->traverse(state);
     indent--;
 }
 
-void
-QvLOD::traverse(QvState *state)
-{
+void QvLOD::traverse(QvState* state) {
     ANNOUNCE(QvLOD);
     indent++;
 
     // ??? In a real implementation, this would choose a child based
     // ??? on the distance to the eye point.
     if (getNumChildren() > 0)
-	getChild(0)->traverse(state);
+        getChild(0)->traverse(state);
 
     indent--;
 }
 
-void
-QvSeparator::traverse(QvState *state)
-{
+void QvSeparator::traverse(QvState* state) {
     ANNOUNCE(QvSeparator);
     state->push();
     indent++;
     for (int i = 0; i < getNumChildren(); i++)
-	getChild(i)->traverse(state);
+        getChild(i)->traverse(state);
     indent--;
     state->pop();
 }
 
-void
-QvSwitch::traverse(QvState *state)
-{
+void QvSwitch::traverse(QvState* state) {
     ANNOUNCE(QvSwitch);
     indent++;
 
     int which = whichChild.value;
 
     if (which == QV_SWITCH_NONE)
-	;
+        ;
 
     else if (which == QV_SWITCH_ALL)
-	for (int i = 0; i < getNumChildren(); i++)
-	    getChild(i)->traverse(state);
+        for (int i = 0; i < getNumChildren(); i++)
+            getChild(i)->traverse(state);
 
-    else
-	if (which < getNumChildren())
-	    getChild(which)->traverse(state);
+    else if (which < getNumChildren())
+        getChild(which)->traverse(state);
 
     indent--;
 }
 
-void
-QvTransformSeparator::traverse(QvState *state)
-{
+void QvTransformSeparator::traverse(QvState* state) {
     ANNOUNCE(QvTransformSeparator);
 
     // We need to "push" just the transformation stack. We'll
@@ -103,19 +86,19 @@ QvTransformSeparator::traverse(QvState *state)
     // that stack. When we "pop", we'll restore that stack to its
     // previous state.
 
-    QvElement *markerElt = new QvElement;
+    QvElement* markerElt = new QvElement;
     markerElt->data = this;
     markerElt->type = QvElement::NoOpTransform;
     state->addElement(QvState::TransformationIndex, markerElt);
 
     indent++;
     for (int i = 0; i < getNumChildren(); i++)
-	getChild(i)->traverse(state);
+        getChild(i)->traverse(state);
     indent--;
 
     // Now do the "pop"
     while (state->getTopElement(QvState::TransformationIndex) != markerElt)
-	state->popElement(QvState::TransformationIndex);
+        state->popElement(QvState::TransformationIndex);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -124,52 +107,48 @@ QvTransformSeparator::traverse(QvState *state)
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#define DO_PROPERTY(className, stackIndex)				      \
-void									      \
-className::traverse(QvState *state)					      \
-{									      \
-    ANNOUNCE(className);						      \
-    QvElement *elt = new QvElement;					      \
-    elt->data = this;							      \
-    state->addElement(QvState::stackIndex, elt);			      \
-}
+#define DO_PROPERTY(className, stackIndex)                                                                             \
+    void className::traverse(QvState* state) {                                                                         \
+        ANNOUNCE(className);                                                                                           \
+        QvElement* elt = new QvElement;                                                                                \
+        elt->data = this;                                                                                              \
+        state->addElement(QvState::stackIndex, elt);                                                                   \
+    }
 
-#define DO_TYPED_PROPERTY(className, stackIndex, eltType)		      \
-void									      \
-className::traverse(QvState *state)					      \
-{									      \
-    ANNOUNCE(className);						      \
-    QvElement *elt = new QvElement;					      \
-    elt->data = this;							      \
-    elt->type = QvElement::eltType;					      \
-    state->addElement(QvState::stackIndex, elt);			      \
-}
+#define DO_TYPED_PROPERTY(className, stackIndex, eltType)                                                              \
+    void className::traverse(QvState* state) {                                                                         \
+        ANNOUNCE(className);                                                                                           \
+        QvElement* elt = new QvElement;                                                                                \
+        elt->data = this;                                                                                              \
+        elt->type = QvElement::eltType;                                                                                \
+        state->addElement(QvState::stackIndex, elt);                                                                   \
+    }
 
-DO_PROPERTY(QvDrawStyle,                DrawStyleIndex)
-DO_PROPERTY(QvCoordinate3,		Coordinate3Index)
-DO_PROPERTY(QvFontStyle,		FontStyleIndex)
-DO_PROPERTY(QvMaterial,			MaterialIndex)
-DO_PROPERTY(QvMaterialBinding,		MaterialBindingIndex)
-DO_PROPERTY(QvNormal,			NormalIndex)
-DO_PROPERTY(QvNormalBinding,		NormalBindingIndex)
-DO_PROPERTY(QvShapeHints,		ShapeHintsIndex)
-DO_PROPERTY(QvTextureCoordinate2,	TextureCoordinate2Index)
-DO_PROPERTY(QvTexture2,			Texture2Index)
-DO_PROPERTY(QvTexture2Transform,	Texture2TransformationIndex)
-DO_PROPERTY(QvTextureCoordinateBinding,	TextureCoordinateBindingIndex)
+DO_PROPERTY(QvDrawStyle, DrawStyleIndex)
+DO_PROPERTY(QvCoordinate3, Coordinate3Index)
+DO_PROPERTY(QvFontStyle, FontStyleIndex)
+DO_PROPERTY(QvMaterial, MaterialIndex)
+DO_PROPERTY(QvMaterialBinding, MaterialBindingIndex)
+DO_PROPERTY(QvNormal, NormalIndex)
+DO_PROPERTY(QvNormalBinding, NormalBindingIndex)
+DO_PROPERTY(QvShapeHints, ShapeHintsIndex)
+DO_PROPERTY(QvTextureCoordinate2, TextureCoordinate2Index)
+DO_PROPERTY(QvTexture2, Texture2Index)
+DO_PROPERTY(QvTexture2Transform, Texture2TransformationIndex)
+DO_PROPERTY(QvTextureCoordinateBinding, TextureCoordinateBindingIndex)
 
-DO_TYPED_PROPERTY(QvDirectionalLight,	LightIndex, DirectionalLight)
-DO_TYPED_PROPERTY(QvPointLight,		LightIndex, PointLight)
-DO_TYPED_PROPERTY(QvSpotLight,		LightIndex, SpotLight)
+DO_TYPED_PROPERTY(QvDirectionalLight, LightIndex, DirectionalLight)
+DO_TYPED_PROPERTY(QvPointLight, LightIndex, PointLight)
+DO_TYPED_PROPERTY(QvSpotLight, LightIndex, SpotLight)
 
-DO_TYPED_PROPERTY(QvOrthographicCamera,	CameraIndex, OrthographicCamera)
-DO_TYPED_PROPERTY(QvPerspectiveCamera,	CameraIndex, PerspectiveCamera)
+DO_TYPED_PROPERTY(QvOrthographicCamera, CameraIndex, OrthographicCamera)
+DO_TYPED_PROPERTY(QvPerspectiveCamera, CameraIndex, PerspectiveCamera)
 
-DO_TYPED_PROPERTY(QvTransform,	     TransformationIndex, Transform)
-DO_TYPED_PROPERTY(QvRotation,	     TransformationIndex, Rotation)
+DO_TYPED_PROPERTY(QvTransform, TransformationIndex, Transform)
+DO_TYPED_PROPERTY(QvRotation, TransformationIndex, Rotation)
 DO_TYPED_PROPERTY(QvMatrixTransform, TransformationIndex, MatrixTransform)
-DO_TYPED_PROPERTY(QvTranslation,     TransformationIndex, Translation)
-DO_TYPED_PROPERTY(QvScale,	     TransformationIndex, Scale)
+DO_TYPED_PROPERTY(QvTranslation, TransformationIndex, Translation)
+DO_TYPED_PROPERTY(QvScale, TransformationIndex, Scale)
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -177,21 +156,17 @@ DO_TYPED_PROPERTY(QvScale,	     TransformationIndex, Scale)
 //
 //////////////////////////////////////////////////////////////////////////////
 
-static void
-printProperties(QvState *state)
-{
+static void printProperties(QvState* state) {
     printf("--------------------------------------------------------------\n");
     state->print();
     printf("--------------------------------------------------------------\n");
 }
 
-#define DO_SHAPE(className)						      \
-void									      \
-className::traverse(QvState *state)					      \
-{									      \
-    ANNOUNCE(className);						      \
-    printProperties(state);						      \
-}
+#define DO_SHAPE(className)                                                                                            \
+    void className::traverse(QvState* state) {                                                                         \
+        ANNOUNCE(className);                                                                                           \
+        printProperties(state);                                                                                        \
+    }
 
 DO_SHAPE(QvAsciiText)
 DO_SHAPE(QvCone)

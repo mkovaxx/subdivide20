@@ -2,9 +2,7 @@
 
 QV_NODE_SOURCE(QvTextureCoordinateBinding);
 
-
-QvTextureCoordinateBinding::QvTextureCoordinateBinding()
-{
+QvTextureCoordinateBinding::QvTextureCoordinateBinding() {
     QV_NODE_CONSTRUCTOR(QvTextureCoordinateBinding);
     isBuiltIn = TRUE;
 
@@ -24,8 +22,4 @@ QvTextureCoordinateBinding::QvTextureCoordinateBinding()
     QV_NODE_SET_SF_ENUM_TYPE(value, Binding);
 }
 
-
-QvTextureCoordinateBinding::~QvTextureCoordinateBinding()
-{
-}
-
+QvTextureCoordinateBinding::~QvTextureCoordinateBinding() {}

@@ -1,5 +1,5 @@
-#ifndef  _QV_LISTS_
-#define  _QV_LISTS_
+#ifndef _QV_LISTS_
+#define _QV_LISTS_
 
 #include <QvPList.h>
 
@@ -10,11 +10,10 @@ class QvNodeList : public QvPList {
   public:
     QvNodeList();
     virtual ~QvNodeList() { truncate(0); }
-    void		append(QvNode *node);
-    void		remove(int which);
-    void		truncate(int start);
-    QvNode *		operator [](int i) const
-	{ return ( (QvNode *) ( (* (const QvPList *) this) [i]) ); }
+    void append(QvNode* node);
+    void remove(int which);
+    void truncate(int start);
+    QvNode* operator[](int i) const { return ((QvNode*)((*(const QvPList*)this)[i])); }
 };
 
 #endif /* _QV_LISTS_ */

@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvPointSet);
 
-QvPointSet::QvPointSet()
-{
+QvPointSet::QvPointSet() {
     QV_NODE_CONSTRUCTOR(QvPointSet);
     isBuiltIn = TRUE;
 
@@ -14,6 +13,4 @@ QvPointSet::QvPointSet()
     numPoints.value = QV_POINT_SET_USE_REST_OF_POINTS;
 }
 
-QvPointSet::~QvPointSet()
-{
-}
+QvPointSet::~QvPointSet() {}

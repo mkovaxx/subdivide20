@@ -2,8 +2,7 @@
 
 QV_NODE_SOURCE(QvAsciiText);
 
-QvAsciiText::QvAsciiText()
-{
+QvAsciiText::QvAsciiText() {
     QV_NODE_CONSTRUCTOR(QvAsciiText);
     isBuiltIn = TRUE;
 
@@ -24,6 +23,4 @@ QvAsciiText::QvAsciiText()
     QV_NODE_SET_SF_ENUM_TYPE(justification, Justification);
 }
 
-QvAsciiText::~QvAsciiText()
-{
-}
+QvAsciiText::~QvAsciiText() {}

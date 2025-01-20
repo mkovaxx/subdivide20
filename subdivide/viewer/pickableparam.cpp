@@ -24,16 +24,16 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "pickableparam.h"
 
-const float PickableParam::normalColor[3]      = {0.7f, 0.7f, 0.7f};
-const float PickableParam::vertexColor[3]       = {0.4f, 0.4f, 0.4f};
-const float PickableParam::creaseVertexColor[3]       = {0.0f, 0.0f, 1.0f};
-const float PickableParam::cornerVertexColor[3]       = {1.0f, 0.0f, 0.0f};
+const float PickableParam::normalColor[3] = {0.7f, 0.7f, 0.7f};
+const float PickableParam::vertexColor[3] = {0.4f, 0.4f, 0.4f};
+const float PickableParam::creaseVertexColor[3] = {0.0f, 0.0f, 1.0f};
+const float PickableParam::cornerVertexColor[3] = {1.0f, 0.0f, 0.0f};
 
-const float PickableParam::edgeColor[3]        = {0.4f, 0.4f, 0.4f};
-const float PickableParam::creaseEdgeColor[3]  = {0.0f, 0.0f, 1.0f};
+const float PickableParam::edgeColor[3] = {0.4f, 0.4f, 0.4f};
+const float PickableParam::creaseEdgeColor[3] = {0.0f, 0.0f, 1.0f};
 
-const float PickableParam::sectorColor[4]      =        {0.5f, 0.5f, 0.5f, 0.5f};
-const float PickableParam::convexSectorColor[4]      =  {0.3f, 0.3f, 1.0f, 0.2f};
-const float PickableParam::concaveSectorColor[4]      = {1.0f, 0.3f, 0.0f, 0.2f};
+const float PickableParam::sectorColor[4] = {0.5f, 0.5f, 0.5f, 0.5f};
+const float PickableParam::convexSectorColor[4] = {0.3f, 0.3f, 1.0f, 0.2f};
+const float PickableParam::concaveSectorColor[4] = {1.0f, 0.3f, 0.0f, 0.2f};
 
-const float PickableParam::pickColor[3]        = {0.0f, 1.0f, 0.0f};
+const float PickableParam::pickColor[3] = {0.0f, 1.0f, 0.0f};
