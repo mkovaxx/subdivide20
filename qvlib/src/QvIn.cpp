@@ -15,7 +15,7 @@ QvIn::QvIn(char* filename) : _error(false) {
     qvInput.setFilePointer(fp);
 
     if (fp == 0) {
-        cerr << "could not open file" << endl;
+        std::cerr << "could not open file" << std::endl;
         _error = true;
     }
 }
@@ -27,7 +27,7 @@ QvSeparator* QvIn::read() {
     QvBool res = QvDB::read(&qvInput, node);
 
     if (!res || (node == 0) || (_error)) {
-        cerr << "Problem reading file!" << endl;
+        std::cerr << "Problem reading file!" << std::endl;
         _error = true;
         return 0;
     }

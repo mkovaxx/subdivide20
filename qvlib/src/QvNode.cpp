@@ -22,11 +22,11 @@ QvDict* QvNode::nameDict = NULL;
 void QvNode::init() {
     if (nameDict == NULL)
         nameDict = new QvDict;
-    //    cerr<<"QvNode::init()"<<endl;
+    //    std::cerr<<"QvNode::init()"<<std::endl;
 }
 
 QvNode::QvNode() {
-    //  cerr<<"QvNode::QvNode("<<this<<")"<<endl;
+    //  std::cerr<<"QvNode::QvNode("<<this<<")"<<std::endl;
     refCount = 0;
     objName = new QvName("");
 }
@@ -133,7 +133,7 @@ void QvNode::removeName(QvNode* b, const char* name) {
 
 QvBool QvNode::read(QvInput* in, QvNode*& node) {
 
-    //  cerr<<"QvNode::read("<<","<<in<<","<<node<<")"<<endl;
+    //  std::cerr<<"QvNode::read("<<","<<in<<","<<node<<")"<<std::endl;
 
     QvBool ret;
     QvName name;
@@ -162,13 +162,13 @@ QvBool QvNode::read(QvInput* in, QvNode*& node) {
 
 QvBool QvNode::readInstance(QvInput* in) {
 
-    //  cerr<<"QvNode::readInstance("<<this<<","<<in<<")"<<endl;
+    //  std::cerr<<"QvNode::readInstance("<<this<<","<<in<<")"<<std::endl;
 
     QvName typeString;
     QvFieldData* fieldData = getFieldData();
 
     if (in->read(typeString, TRUE)) {
-        //      cerr<<"got:"<<typeString.getString()<<endl;
+        //      std::cerr<<"got:"<<typeString.getString()<<std::endl;
         if (typeString == "fields") {
             if (!fieldData->readFieldTypes(in, this)) {
                 QvReadError::post(in, "Bad field specifications for node");
@@ -179,7 +179,7 @@ QvBool QvNode::readInstance(QvInput* in) {
         }
     } else {
         ;
-        //      cerr<<"got no string!"<<endl;
+        //      std::cerr<<"got no string!"<<std::endl;
     }
 
     if (!fieldData->read(in, this))
@@ -190,7 +190,7 @@ QvBool QvNode::readInstance(QvInput* in) {
 
 QvNode* QvNode::readReference(QvInput* in) {
 
-    //  cerr<<"QvNode::readReference("<<in<<")"<<endl;
+    //  std::cerr<<"QvNode::readReference("<<in<<")"<<std::endl;
 
     QvName refName;
     QvNode* node;
@@ -208,8 +208,8 @@ QvNode* QvNode::readReference(QvInput* in) {
 
 QvBool QvNode::readNode(QvInput* in, QvName& className, QvNode*& node) {
 
-    //  cerr<<"->QvNode::readNode("<<","<<in<<","<<className.getString()<<","
-    //      <<node<<")"<<endl;
+    //  std::cerr<<"->QvNode::readNode("<<","<<in<<","<<className.getString()<<","
+    //      <<node<<")"<<std::endl;
 
     QvBool gotChar;
     QvName refName;
@@ -264,19 +264,19 @@ QvBool QvNode::readNode(QvInput* in, QvName& className, QvNode*& node) {
     if (!ret && flush)
         flushInput(in);
 
-    //  cerr<<"<-QvNode::readNode("<<","<<in<<","<<className.getString()<<","
-    //      <<node<<")"<<endl;
+    //  std::cerr<<"<-QvNode::readNode("<<","<<in<<","<<className.getString()<<","
+    //      <<node<<")"<<std::endl;
 
-    //  cerr<<"\tinfo:\tfieldData = "<<node->getFieldData()<<endl;
-    //  cerr<<"\tinfo:\tnumFields = "<<node->getFieldData()->getNumFields()<<endl<<endl;
+    //  std::cerr<<"\tinfo:\tfieldData = "<<node->getFieldData()<<std::endl;
+    //  std::cerr<<"\tinfo:\tnumFields = "<<node->getFieldData()->getNumFields()<<std::endl<<std::endl;
 
     return ret;
 }
 
 QvBool QvNode::readNodeInstance(QvInput* in, const QvName& className, const QvName& refName, QvNode*& node) {
 
-    //  cerr<<"QvNode::readNodeInstance("<<","<<in<<","<<className.getString()<<","
-    //      <<refName.getString()<<","<<node<<")"<<endl;
+    //  std::cerr<<"QvNode::readNodeInstance("<<","<<in<<","<<className.getString()<<","
+    //      <<refName.getString()<<","<<node<<")"<<std::endl;
 
     node = createInstance(in, className);
     if (node == NULL)
@@ -292,7 +292,7 @@ QvNode* QvNode::createInstance(QvInput* in, const QvName& className) {
     QvNode* instance;
     QvString unknownString;
 
-    //    cerr<<"QvNode::createInstance("<<","<<in<<","<<className.getString()<<")"<<endl;
+    //    std::cerr<<"QvNode::createInstance("<<","<<in<<","<<className.getString()<<")"<<std::endl;
 
     instance = createInstanceFromName(className);
 
@@ -317,7 +317,7 @@ QvNode* QvNode::createInstance(QvInput* in, const QvName& className) {
 
 QvNode* QvNode::createInstanceFromName(const QvName& className) {
 
-    //  cerr<<"QvNode::createInstanceFromName("<<","<<className.getString()<<")"<<endl;
+    //  std::cerr<<"QvNode::createInstanceFromName("<<","<<className.getString()<<")"<<std::endl;
 
 #define TRY_CLASS(name, class)                                                                                         \
     else if (className == name) {                                                                                      \

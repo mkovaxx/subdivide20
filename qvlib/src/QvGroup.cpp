@@ -22,7 +22,7 @@ QvChildList* QvGroup::getChildren() const { return children; }
 
 QvBool QvGroup::readInstance(QvInput* in) {
 
-    //  cerr<<"QvGroup::readInstance("<<this<<","<<in<<")"<<endl;
+    //  std::cerr<<"QvGroup::readInstance("<<this<<","<<in<<")"<<std::endl;
 
     QvName typeString;
     QvFieldData* fieldData = getFieldData();
@@ -35,26 +35,26 @@ QvBool QvGroup::readInstance(QvInput* in) {
                     return FALSE;
                 } else {
                     ;
-                    //	    cerr<<"couldn't read field types"<<endl;
+                    //	    std::cerr<<"couldn't read field types"<<std::endl;
                 }
             } else {
                 ;
-                //	  cerr<<"got no fields!"<<endl;
+                //	  std::cerr<<"got no fields!"<<std::endl;
             }
         } else {
-            //	cerr<<"got no string!"<<endl;
+            //	std::cerr<<"got no string!"<<std::endl;
             in->putBack(typeString.getString());
         }
     } else {
         ;
-        //      cerr<<"buildin!"<<endl;
+        //      std::cerr<<"buildin!"<<std::endl;
     }
 
     return (fieldData->read(in, this, FALSE) && readChildren(in));
 }
 
 QvBool QvGroup::readChildren(QvInput* in) {
-    //  cerr<<"QvGroup::readChildren("<<this<<","<<in<<")"<<endl;
+    //  std::cerr<<"QvGroup::readChildren("<<this<<","<<in<<")"<<std::endl;
 
     QvNode* child;
     QvBool ret = TRUE;
