@@ -35,7 +35,7 @@ class SectorInfo;
 
 class TagFlatMesh : public FlatMesh {
   public:
-    typedef std::pair<int, int>, SectorInfo* > FlatSectorType;
+    typedef std::pair<std::pair<int, int>, SectorInfo*> FlatSectorType;
     std::vector<FlatSectorType> sectorInfoVec;
 
     std::vector<int> creaseEdgeVec;
