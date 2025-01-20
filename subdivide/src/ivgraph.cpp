@@ -117,7 +117,7 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
     im->Cleanup();
 
     std::set<uint> vset;
-    std::pair<uint>::iterator, bool > res;
+    std::pair<std::set<uint>::iterator, bool> res;
 
     QvCoordinate3* coord3 = NULL;
     QvIndexedFaceSet* indexSet = NULL;
