@@ -14,8 +14,8 @@ The include files defining the interface are in `../include`.
 flatmesh.cpp            Intermediate mesh representation used for input.
                         An array of vertices and and array of
                         arrays of indices of vertices forming faces.
-tagflatmesh.cpp         Same but with tags added.
 
+tagflatmesh.cpp         Same but with tags added.
 ivgraph.cpp             Conversion from VRML 1.0 to FlatMesh and back.
 tagivgraph.cpp          Same but with tags.
 
