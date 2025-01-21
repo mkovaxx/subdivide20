@@ -26,7 +26,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 template <class RuleTable, class FaceRing> void SubdivideTp<RuleTable, FaceRing>::printRelevance() const {
     EnoType e;
-    FaceRing::FaceType* t = ring().centerFace(e);
+    FaceType* t = ring().centerFace(e);
     int vn = t->headVno(e);
     assert(ring().centerVert() == t->headVert(e));
     assert(ring().centerVert() == t->vert(vn));
