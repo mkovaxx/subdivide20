@@ -31,25 +31,25 @@
 #include <QvPerspectiveCamera.h>
 #include <QvSeparator.h>
 #include <QvUnknownNode.h>
-#include <fstream.h>
+#include <fstream>
 
-static void writeNode(QvNode* node, int indent, ostream& outfile);
+static void writeNode(QvNode* node, int indent, std::ostream& outfile);
 
 QvBool QvOut::_error;
 
 QvOut::QvOut(char* f) {
     strcpy(filename, f);
-    ofstream outStream(filename);
+    std::ofstream outStream(filename);
     if (!outStream) {
-        cerr << "error: unable to open output file: " << filename << endl;
+        std::cerr << "error: unable to open output file: " << filename << std::endl;
         QvOut::_error = true;
     } else {
-        outStream << "#VRML V1.0 ascii" << endl;
+        outStream << "#VRML V1.0 ascii" << std::endl;
     }
 }
 
 void QvOut::write(QvNode* node) {
-    ofstream outStream(filename, ios::out | ios::app);
+    std::ofstream outStream(filename, std::ios::out | std::ios::app);
     writeNode(node, 0, outStream);
 }
 
@@ -101,7 +101,7 @@ char* getFieldDefName(QvField* field) {
         name = "SFVec3f";
 
     else {
-        cerr << "QvOut: unknown field" << endl;
+        std::cerr << "QvOut: unknown field" << std::endl;
         name = "";
         QvOut::_error = true;
     }
@@ -109,118 +109,120 @@ char* getFieldDefName(QvField* field) {
     return name;
 }
 
-static void printIndent(int indent, ostream& outfile) {
+static void printIndent(int indent, std::ostream& outfile) {
     int i;
     for (i = 0; i < indent; i++)
         outfile << "\t";
 }
 
-static void writeMFFloat(QvMFFloat* field, int indent, ostream& outfile) {
+static void writeMFFloat(QvMFFloat* field, int indent, std::ostream& outfile) {
     outfile << " [ ";
     for (int i = 0; i < field->num; ++i) {
         if (i % 4 == 0) {
-            outfile << endl;
+            outfile << std::endl;
             printIndent(indent + 1, outfile);
         }
         outfile << field->values[i] << ", ";
     }
-    outfile << endl;
+    outfile << std::endl;
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeMFInt32(QvMFInt32* field, int indent, ostream& outfile) {
+static void writeMFInt32(QvMFInt32* field, int indent, std::ostream& outfile) {
     outfile << " [ ";
     for (int i = 0; i < field->num; ++i) {
         if (i % 3 == 0) {
-            outfile << endl;
+            outfile << std::endl;
             printIndent(indent + 1, outfile);
         }
         outfile << field->values[i] << ", ";
     }
-    outfile << endl;
+    outfile << std::endl;
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeMFVec3f(QvMFVec3f* field, int indent, ostream& outfile) {
-    outfile << " [ " << endl;
+static void writeMFVec3f(QvMFVec3f* field, int indent, std::ostream& outfile) {
+    outfile << " [ " << std::endl;
     printIndent(indent + 1, outfile);
     for (int i = 0; i < field->num; ++i) {
         outfile << field->values[i * 3 + 0] << "  " << field->values[i * 3 + 1] << "  " << field->values[i * 3 + 2]
-                << "," << endl;
+                << "," << std::endl;
         printIndent(indent + 1, outfile);
     }
-    outfile << endl;
+    outfile << std::endl;
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeMFString(QvMFString* field, int indent, ostream& outfile) {
-    outfile << " [ " << endl;
+static void writeMFString(QvMFString* field, int indent, std::ostream& outfile) {
+    outfile << " [ " << std::endl;
     for (int i = 0; i < field->num; ++i) {
         printIndent(indent + 1, outfile);
-        outfile << "\"" << field->values[i].getString() << "\", " << endl;
+        outfile << "\"" << field->values[i].getString() << "\", " << std::endl;
     }
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeMFLong(QvMFLong* field, int indent, ostream& outfile) {
+static void writeMFLong(QvMFLong* field, int indent, std::ostream& outfile) {
     outfile << " [ ";
     for (int i = 0; i < field->num; ++i) {
         if (i % 4 == 0) {
-            outfile << endl;
+            outfile << std::endl;
             printIndent(indent + 1, outfile);
         }
         outfile << field->values[i] << ", ";
     }
-    outfile << endl;
+    outfile << std::endl;
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeSFFloat(QvSFFloat* field, int, ostream& outfile) { outfile << " " << field->value << endl; }
+static void writeSFFloat(QvSFFloat* field, int, std::ostream& outfile) { outfile << " " << field->value << std::endl; }
 
-static void writeSFLong(QvSFLong* field, int, ostream& outfile) { outfile << " " << field->value << endl; }
+static void writeSFLong(QvSFLong* field, int, std::ostream& outfile) { outfile << " " << field->value << std::endl; }
 
-static void writeSFVec3f(QvSFVec3f* field, int, ostream& outfile) {
-    outfile << " " << field->value[0] << " " << field->value[1] << " " << field->value[2] << endl;
+static void writeSFVec3f(QvSFVec3f* field, int, std::ostream& outfile) {
+    outfile << " " << field->value[0] << " " << field->value[1] << " " << field->value[2] << std::endl;
 }
 
-static void writeSFMatrix(QvSFMatrix* field, int indent, ostream& outfile) {
-    outfile << endl;
+static void writeSFMatrix(QvSFMatrix* field, int indent, std::ostream& outfile) {
+    outfile << std::endl;
     for (int i = 0; i < 4; ++i) {
         printIndent(indent + 1, outfile);
         outfile << " " << field->value[i][0] << "  " << field->value[i][1] << "  " << field->value[i][2] << "  "
-                << field->value[i][3] << endl;
+                << field->value[i][3] << std::endl;
     }
 }
 
-static void writeSFRotation(QvSFRotation* field, int, ostream& outfile) {
+static void writeSFRotation(QvSFRotation* field, int, std::ostream& outfile) {
     outfile << " " << field->axis[0] << " " << field->axis[1] << " " << field->axis[2] << "     " << field->angle
-            << endl;
+            << std::endl;
 }
 
-static void writeSFEnum(QvSFEnum* field, int, ostream& outfile) {
+static void writeSFEnum(QvSFEnum* field, int, std::ostream& outfile) {
     QvName name;
     QvBool found = field->findEnumName(field->value, name);
     if (found == TRUE)
-        outfile << " " << name.getString() << endl;
+        outfile << " " << name.getString() << std::endl;
     else
-        outfile << " " << field->value << endl;
+        outfile << " " << field->value << std::endl;
 }
 
-static void writeMFColor(QvMFColor* field, int, ostream& outfile) {
+static void writeMFColor(QvMFColor* field, int, std::ostream& outfile) {
     outfile << " ";
     for (int i = 0; i < 3 * field->num; ++i)
         outfile << field->values[i] << " ";
-    outfile << endl;
+    outfile << std::endl;
 }
 
-static void writeSFUShort(QvSFUShort* field, int, ostream& outfile) { outfile << " " << field->value << endl; }
+static void writeSFUShort(QvSFUShort* field, int, std::ostream& outfile) {
+    outfile << " " << field->value << std::endl;
+}
 
-static void writeField(QvField* field, int indent, ostream& outfile) {
+static void writeField(QvField* field, int indent, std::ostream& outfile) {
     QvMFFloat* fieldMFFloat = 0;
     QvMFInt32* fieldMFInt32 = 0;
     QvMFVec3f* fieldMFVec3f = 0;
@@ -276,7 +278,7 @@ static void writeField(QvField* field, int indent, ostream& outfile) {
         writeSFLong(fieldSFLong, indent, outfile);
 
     else {
-        cerr << "QvOut: unknown field!" << endl;
+        std::cerr << "QvOut: unknown field!" << std::endl;
         QvOut::_error = true;
     }
 }
@@ -284,19 +286,19 @@ static void writeField(QvField* field, int indent, ostream& outfile) {
 //---------------------------------------------------------------------
 // write nodes
 
-static void writeFieldDef(QvNode* node, int indent, ostream& outfile) {
+static void writeFieldDef(QvNode* node, int indent, std::ostream& outfile) {
     printIndent(indent, outfile);
-    outfile << "fields [" << endl;
+    outfile << "fields [" << std::endl;
     for (int i = 0; i < node->getFieldData()->getNumFields(); ++i) {
         printIndent(indent + 1, outfile);
         outfile << getFieldDefName(node->getFieldData()->getField(node, i)) << " ";
-        outfile << node->getFieldData()->getFieldName(i).getString() << "," << endl;
+        outfile << node->getFieldData()->getFieldName(i).getString() << "," << std::endl;
     }
     printIndent(indent, outfile);
-    outfile << "]" << endl;
+    outfile << "]" << std::endl;
 }
 
-static void writeNodeData(QvNode* node, int indent, ostream& outfile) {
+static void writeNodeData(QvNode* node, int indent, std::ostream& outfile) {
     for (int i = 0; i < node->getFieldData()->getNumFields(); ++i) {
         printIndent(indent, outfile);
         outfile << node->getFieldData()->getFieldName(i).getString();
@@ -305,7 +307,7 @@ static void writeNodeData(QvNode* node, int indent, ostream& outfile) {
 
     QvGroup* group;
     if ((group = dynamic_cast<QvGroup*>(node))) {
-        outfile << endl;
+        outfile << std::endl;
         for (int i = 0; i < group->getNumChildren(); ++i) {
             printIndent(indent, outfile);
             writeNode(group->getChild(i), indent, outfile);
@@ -313,81 +315,81 @@ static void writeNodeData(QvNode* node, int indent, ostream& outfile) {
     }
 }
 
-static void writeDrawStyle(QvDrawStyle* node, int indent, ostream& outfile) {
+static void writeDrawStyle(QvDrawStyle* node, int indent, std::ostream& outfile) {
     outfile << "DrawStyle"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeMaterial(QvMaterial* node, int indent, ostream& outfile) {
+static void writeMaterial(QvMaterial* node, int indent, std::ostream& outfile) {
     outfile << "Material"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeSeparator(QvSeparator* node, int indent, ostream& outfile) {
+static void writeSeparator(QvSeparator* node, int indent, std::ostream& outfile) {
     outfile << "Separator"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writePerspectiveCamera(QvPerspectiveCamera* node, int indent, ostream& outfile) {
+static void writePerspectiveCamera(QvPerspectiveCamera* node, int indent, std::ostream& outfile) {
     outfile << "PerspectiveCamera"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeCoordinate3(QvCoordinate3* node, int indent, ostream& outfile) {
+static void writeCoordinate3(QvCoordinate3* node, int indent, std::ostream& outfile) {
     outfile << "Coordinate3"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeIndexedFaceSet(QvIndexedFaceSet* node, int indent, ostream& outfile) {
+static void writeIndexedFaceSet(QvIndexedFaceSet* node, int indent, std::ostream& outfile) {
     outfile << "IndexedFaceSet"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeIndexedLineSet(QvIndexedLineSet* node, int indent, ostream& outfile) {
+static void writeIndexedLineSet(QvIndexedLineSet* node, int indent, std::ostream& outfile) {
     outfile << "IndexedLineSet"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeMatrixTransformNode(QvMatrixTransform* node, int indent, ostream& outfile) {
+static void writeMatrixTransformNode(QvMatrixTransform* node, int indent, std::ostream& outfile) {
     outfile << "MatrixTransform"
-            << " {" << endl;
+            << " {" << std::endl;
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
-static void writeUnknownNode(QvUnknownNode* node, int indent, ostream& outfile) {
-    outfile << node->className << " {" << endl;
+static void writeUnknownNode(QvUnknownNode* node, int indent, std::ostream& outfile) {
+    outfile << node->className << " {" << std::endl;
     writeFieldDef(node, indent + 1, outfile);
     writeNodeData(node, indent + 1, outfile);
     printIndent(indent, outfile);
-    outfile << "}" << endl;
+    outfile << "}" << std::endl;
 }
 
 //---------------------------------------------------------------------
 
-void writeNode(QvNode* node, int indent, ostream& outfile) {
+void writeNode(QvNode* node, int indent, std::ostream& outfile) {
 
     if (strlen(node->getName().getString()) != 0)
         outfile << "DEF " << node->getName().getString() << " ";
@@ -421,9 +423,9 @@ void writeNode(QvNode* node, int indent, ostream& outfile) {
     else if ((nodeMatrixTransform = dynamic_cast<QvMatrixTransform*>(node)))
         writeMatrixTransformNode(nodeMatrixTransform, indent, outfile);
     else {
-        cerr << "QvOut: unknown node" << endl;
+        std::cerr << "QvOut: unknown node" << std::endl;
         QvOut::_error = true;
     }
 
-    outfile << endl;
+    outfile << std::endl;
 }

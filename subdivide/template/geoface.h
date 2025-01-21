@@ -33,44 +33,44 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 template <class Face> class GeoFaceTp : public Face {
   public:
     virtual ~GeoFaceTp() { ; }
-    const cvec3f& pos(VnoType v, int d) const { return vert(v)->getPos(d); }
+    const cvec3f& pos(VnoType v, int d) const { return this->vert(v)->getPos(d); }
 
-    const cvec3f& midPos(EnoType e, int d) const { return midVert(e)->getPos(d + 1); }
+    const cvec3f& midPos(EnoType e, int d) const { return this->midVert(e)->getPos(d + 1); }
 
-    const cvec3f& tailPos(EnoType e, int d) const { return tailVert(e)->getPos(d); }
+    const cvec3f& tailPos(EnoType e, int d) const { return this->tailVert(e)->getPos(d); }
 
-    const cvec3f& headPos(EnoType e, int d) const { return headVert(e)->getPos(d); }
+    const cvec3f& headPos(EnoType e, int d) const { return this->headVert(e)->getPos(d); }
 
     void setPos(VnoType v, int d, const cvec3f& p) {
-        vert(v)->setPos(d, p);
-        vert(v)->set(d);
+        this->vert(v)->setPos(d, p);
+        this->vert(v)->set(d);
     }
 
     void setMidPos(EnoType e, int d, const cvec3f& p) {
-        midVert(e)->setPos(d + 1, p);
-        assert(d + 1 > midVert(e)->currentDepth());
-        midVert(e)->set(d + 1);
+        this->midVert(e)->setPos(d + 1, p);
+        assert(d + 1 > this->midVert(e)->currentDepth());
+        this->midVert(e)->set(d + 1);
     }
 
     void setTailPos(EnoType e, int d, const cvec3f& p) {
-        tailVert(e)->setPos(d, p);
-        assert(d > tailVert(e)->currentDepth());
-        tailVert(e)->set(d);
+        this->tailVert(e)->setPos(d, p);
+        assert(d > this->tailVert(e)->currentDepth());
+        this->tailVert(e)->set(d);
     }
 
     void setHeadPos(EnoType e, int d, const cvec3f& p) {
-        headVert(e)->setPos(d, p);
-        assert(d > headVert(e)->currentDepth());
-        headVert(e)->set(d);
+        this->headVert(e)->setPos(d, p);
+        assert(d > this->headVert(e)->currentDepth());
+        this->headVert(e)->set(d);
     }
 
-    bool hasPos(VnoType v, int d) const { return vert(v)->isSet(d); }
+    bool hasPos(VnoType v, int d) const { return this->vert(v)->isSet(d); }
 
-    bool hasHeadPos(EnoType e, int d) const { return headVert(e)->isSet(d); }
+    bool hasHeadPos(EnoType e, int d) const { return this->headVert(e)->isSet(d); }
 
-    bool hasTailPos(EnoType e, int d) const { return tailVert(e)->isSet(d); }
+    bool hasTailPos(EnoType e, int d) const { return this->tailVert(e)->isSet(d); }
 
-    bool hasMidPos(EnoType e, int d) const { return midVert(e)->isSet(d + 1); }
+    bool hasMidPos(EnoType e, int d) const { return this->midVert(e)->isSet(d + 1); }
 };
 
 #endif /* __GEOFACE_H__ */

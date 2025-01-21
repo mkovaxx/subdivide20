@@ -116,8 +116,8 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
     // find coord and index nodes
     im->Cleanup();
 
-    set<uint> vset;
-    pair<set<uint>::iterator, bool> res;
+    std::set<uint> vset;
+    std::pair<std::set<uint>::iterator, bool> res;
 
     QvCoordinate3* coord3 = NULL;
     QvIndexedFaceSet* indexSet = NULL;
@@ -169,10 +169,10 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
             vset.erase(vset.begin(), vset.end());
             if (im->poly_v.size() > 0 && im->poly_v[im->poly_v.size() - 1].novtx() < 3) {
                 // skip polygons with < 3 vertices
-                cerr << "skipping polygon with " << im->poly_v[im->poly_v.size() - 1].novtx() << " vertices ";
+                std::cerr << "skipping polygon with " << im->poly_v[im->poly_v.size() - 1].novtx() << " vertices ";
                 for (uint l = 0; l < im->poly_v[im->poly_v.size() - 1].novtx(); l++)
-                    cerr << im->index_v[im->poly_v[im->poly_v.size() - 1].start() + l] << " ";
-                cerr << endl;
+                    std::cerr << im->index_v[im->poly_v[im->poly_v.size() - 1].start() + l] << " ";
+                std::cerr << std::endl;
                 im->poly_v[im->poly_v.size() - 1] = IPoly(im->index_v.size(), 0);
                 im->triindex_v.push_back(-1);
             } else {
@@ -186,7 +186,7 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
                     im->poly_v[im->poly_v.size() - 1].incnovtx();
                     im->index_v.push_back(indices.values[i++]);
                 } else {
-                    cerr << "\t\t skipping duplicate vertex " << endl;
+                    std::cerr << "\t\t skipping duplicate vertex " << std::endl;
                     i++;
                 }
             }
@@ -260,7 +260,7 @@ static void addIndex(QvMFLong& index, long v) {
     index.values[index.num - 1] = v;
 }
 
-QvNode* IvGraph::createCoordinate3Node(const vector<Vertex*>& v, int d) {
+QvNode* IvGraph::createCoordinate3Node(const std::vector<Vertex*>& v, int d) {
     QvCoordinate3* node = new QvCoordinate3();
 
     node->point.allocValues(v.size());

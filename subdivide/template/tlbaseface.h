@@ -53,7 +53,7 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
     }
 
     Face* neighbor(EnoType e, EnoType& ne) const {
-        checkEno(e);
+        this->checkEno(e);
         if (e > 0) {
             ne = _neighborEno[e - 1];
             return _neighborFace[e - 1];
@@ -66,10 +66,10 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
     void link(EnoType e, TLBaseFaceTp* nt, EnoType ne) {
         assert(nt);
         assert(ne);
-        assert(headVert(e) == nt->headVert(ne));
-        assert(tailVert(e) == nt->tailVert(ne));
-        assert(headVert(-e) == nt->headVert(-ne));
-        assert(tailVert(-e) == nt->tailVert(-ne));
+        assert(this->headVert(e) == nt->headVert(ne));
+        assert(this->tailVert(e) == nt->tailVert(ne));
+        assert(this->headVert(-e) == nt->headVert(-ne));
+        assert(this->tailVert(-e) == nt->tailVert(-ne));
         if (e > 0) {
             _neighborFace[e - 1] = nt;
             _neighborEno[e - 1] = ne;
@@ -98,8 +98,8 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
 
     void unlink(EnoType e) {
         assert(this);
-        _neighborTri[abs(e) - 1] = 0;
-        _neighborEno[abs(e) - 1] = 0;
+        this->_neighborTri[abs(e) - 1] = 0;
+        this->_neighborEno[abs(e) - 1] = 0;
     }
 
     static void ref(TLBaseFaceTp* t) {

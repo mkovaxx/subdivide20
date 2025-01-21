@@ -1,0 +1,184 @@
+##############################################################################
+#
+# Makefile for libviewer
+#
+#
+# $Id: Makefile.macos,v 1.2 2000/04/30 07:35:48 dzorin Exp $
+# $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/Makefile.macos,v $
+#
+##############################################################################
+
+SHELL = /bin/sh
+##############################################################################
+# Application file definitions -- EDIT THESE
+##############################################################################
+
+# You may need to make sub-definitions for these definitions if you have
+# multiple languages, or other requirements.
+
+# All your source files
+SWSRCS= arcball.cpp \
+	ballviewer.cpp \
+	camera.cpp \
+	geoobject.cpp \
+	pickobject.cpp \
+	pickviewer.cpp \
+	pickableparam.cpp \
+	pickabletri.cpp \
+	pickablequad.cpp \
+	viewer.cpp \
+	pickobject.cpp
+
+
+SRCS=$(SWSRCS) $(ARCHSRCS)
+
+# C-language source, to compile with cc
+SWCSRCS=
+
+CSRCS=$(SWCSRCS) $(ARCHCSRCS)
+# source files with no associated .o
+SRCSNOO=
+
+
+# source files with no associated .h
+SRCSNOH=
+
+HDRSNOS=
+
+# sources that are #include'd, and have no associated .o
+TABLESRCS=
+
+ALLSRCS=$(SRCSNOH) $(CSRCS) $(SRCS) $(SRCSNOO) $(TABLESRCS)
+
+# All the local .h files (these are not automatically depended)
+HDRS=$(HDRSNOS) ${SRCS:.cpp=.h} ${CSRCS:.c=.h} ${SRCSNOO:.cpp=.h}
+
+# All .o files generated
+COBJS=${CSRCS:.c=.o}
+OBJS= $(COBJS) ${SRCS:.cpp=.o}
+ALLOBJS=$(OBJS) ${SRCSNOH:.cpp=.o}
+PROTOOBJS = ${PROTOS:.cpp=.o}
+
+# Man pages, etc. (leave blank if none)
+DOCS=
+
+# Application name
+TARGET= libviewer.a
+
+##############################################################################
+# Application-specific definitions  -- EDIT THESE
+##############################################################################
+
+DEFS=
+
+#include directories
+INCS = -I. -I../template -I../include -I../../qvlib/include
+
+# other C and C++ common options
+
+# CC options
+INOPTS=
+#-DNDEBUG -O3
+DEBUGOPTS= -g
+
+
+OPTS=  $(INOPTS) $(DEBUGOPTS)
+
+# C specific options
+COPTS=
+
+# C++ specific options
+CCOPTS = -Wall -pedantic -std=c++11
+
+# linker options
+LIBS=
+
+
+DEPOPTS= -M -I..
+
+DEPLINE=  1> Makedepend.macos
+
+# ----------------------------------------------------------------------------
+# -- You shouldn't need to edit anything below here, unless you have more
+# -- than one target or are building a library, or you're doing something
+# -- nonstandard.
+# ----------------------------------------------------------------------------
+
+##############################################################################
+# Language definitions
+##############################################################################
+
+CFLAGS= $(INCS) $(DEFS) $(DEBUG) $(OPTS) $(COPTS)
+CCFLAGS=$(INCS) $(DEFS) $(DEBUG) $(OPTS) $(CCOPTS)
+
+CC=g++
+cc=g++
+
+TARGET_COMPILER_FLAGS=$(CCFLAGS) $(LIBOPTS)
+TARGET_COMPILER=$(CC)
+
+##############################################################################
+# extra default rules
+##############################################################################
+
+.SUFFIXES: .C .cpp .c .sl .slo
+
+.cpp:
+	$(CC) $(CCFLAGS) -o $@ $<
+
+.C:
+	$(CC) $(CFLAGS) -o $@ $<
+
+.c:
+	$(cc) $(CFLAGS) -o $@ $<
+
+.C.o:
+	$(CC) $(CCFLAGS) -c $<
+
+.cpp.o:
+	$(CC) $(CCFLAGS) -c $<
+
+.c.o:
+	$(cc) $(CFLAGS) -c $<
+
+.sl:
+	$(SHADECOM) $@ $<
+
+.sl.slo:
+	$(SHADECOM) $<
+
+
+# This rule must be first.  It insures that the desired target is the default.
+
+all: depend $(TARGET)
+
+
+##############################################################################
+# Application-specific rules and dependencies - may need editing
+##############################################################################
+
+$(TARGET): $(ALLOBJS)
+	@echo COMPILER $(CC)
+	ar csr $(TARGET) $(ALLOBJS)
+	@echo $@ is made.
+
+##############################################################################
+# General-purpose targets - do not edit, in general:
+##############################################################################
+
+depend: $(ALLSRCS)
+	$(CC) $(CCFLAGS) $(DEPOPTS) $(ALLSRCS) $(DEPLINE)
+
+clean:
+	rm -f $(TARGET) $(OBJS) *.slo *.o *~ *.s \
+		*.a *..c ptrepository/* TAGS \
+		core a.out \#* *.bak *.BAK *.CKP \
+		*.l *.Addrs *.Counts *.pixie .\#*;
+	rm -rf ii_files;
+	rm -f Makedepend.macos; touch Makedepend.macos
+
+.IGNORE:
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+include Makedepend.macos

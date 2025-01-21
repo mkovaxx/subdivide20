@@ -32,27 +32,27 @@ class QuadEdgeCoef {
   public:
     float cf[6];
     void print() const {
-        cerr << "c = { " << cf[0] << ", " << cf[1] << ", " << cf[2] << ", " << cf[3] << ", " << cf[4] << ", " << cf[5]
-             << "} " << endl;
+        std::cerr << "c = { " << cf[0] << ", " << cf[1] << ", " << cf[2] << ", " << cf[3] << ", " << cf[4] << ", "
+                  << cf[5] << "} " << std::endl;
     }
 };
 
 class QuadCoef {
   public:
     float centerC;
-    vector<float> edgeC;
-    vector<float> faceC;
+    std::vector<float> edgeC;
+    std::vector<float> faceC;
     float dot(const QuadCoef& coef) const;
     float dotOne() const;
     void print() const {
-        cerr << "{ centerC = " << centerC;
+        std::cerr << "{ centerC = " << centerC;
         uint i;
         for (i = 0; i < edgeC.size(); ++i)
-            cerr << ", " << edgeC[i];
-        cerr << ". faceC = ";
+            std::cerr << ", " << edgeC[i];
+        std::cerr << ". faceC = ";
         for (i = 0; i < faceC.size(); ++i)
-            cerr << ", " << faceC[i];
-        cerr << "} " << endl;
+            std::cerr << ", " << faceC[i];
+        std::cerr << "} " << std::endl;
     }
 };
 
@@ -92,7 +92,7 @@ class QuadRule {
     float lambda1() const { return _lambda1; }
     float lambda2() const { return _lambda2; }
 
-    virtual void printName() const { cerr << "QuadRule" << endl; }
+    virtual void printName() const { std::cerr << "QuadRule" << std::endl; }
 
   protected:
     CoefType _sub, _l0, _l1, _l2, _x1, _x2;
@@ -103,7 +103,7 @@ class QuadRule {
 class InteriorQuadRule : public QuadRule {
   public:
     InteriorQuadRule(int k);
-    virtual void printName() const { cerr << "InteriorQuadRule" << endl; }
+    virtual void printName() const { std::cerr << "InteriorQuadRule" << std::endl; }
 
   private:
     void computeSubCoef();
@@ -122,7 +122,7 @@ class CreaseQuadRule : public QuadRule {
   public:
     CreaseQuadRule(int k);
     virtual ~CreaseQuadRule() { ; }
-    virtual void printName() const { cerr << "CreaseQuadRule" << endl; }
+    virtual void printName() const { std::cerr << "CreaseQuadRule" << std::endl; }
 
   private:
     void computeSubCoef();
@@ -141,7 +141,7 @@ class ConvexQuadRule : public QuadRule {
   public:
     ConvexQuadRule(int k, float theta);
     virtual ~ConvexQuadRule() { ; }
-    virtual void printName() const { cerr << "ConvexQuadRule" << endl; }
+    virtual void printName() const { std::cerr << "ConvexQuadRule" << std::endl; }
     float getTheta() { return theta; }
 
   private:
@@ -162,7 +162,7 @@ class ConcaveQuadRule : public QuadRule {
   public:
     ConcaveQuadRule(int k, float theta);
     virtual ~ConcaveQuadRule() { ; }
-    virtual void printName() const { cerr << "ConcaveQuadRule" << endl; }
+    virtual void printName() const { std::cerr << "ConcaveQuadRule" << std::endl; }
     float getTheta() { return theta; }
 
   private:
@@ -203,7 +203,7 @@ class InteriorQuadRuleTable {
     }
 
   private:
-    vector<InteriorQuadRule*> ruleVec;
+    std::vector<InteriorQuadRule*> ruleVec;
 };
 
 class CreaseQuadRuleTable {
@@ -226,7 +226,7 @@ class CreaseQuadRuleTable {
     }
 
   private:
-    vector<CreaseQuadRule*> ruleVec;
+    std::vector<CreaseQuadRule*> ruleVec;
 };
 
 class ConvexQuadRuleTable {
@@ -252,7 +252,7 @@ class ConvexQuadRuleTable {
     }
 
   private:
-    vector<ConvexQuadRule*> ruleVec;
+    std::vector<ConvexQuadRule*> ruleVec;
 };
 
 class ConcaveQuadRuleTable {
@@ -278,7 +278,7 @@ class ConcaveQuadRuleTable {
     }
 
   private:
-    vector<ConcaveQuadRule*> ruleVec;
+    std::vector<ConcaveQuadRule*> ruleVec;
 };
 
 #endif /* __QUADRULE_H__ */

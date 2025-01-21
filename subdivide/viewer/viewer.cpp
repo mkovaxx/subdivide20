@@ -24,16 +24,24 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "compat.h"
 #include "glcheck.h"
+
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "geoobject.h"
 #include "viewer.h"
 
-vector<Viewer*> Viewer::_viewer;
+std::vector<Viewer*> Viewer::_viewer;
 
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
@@ -213,7 +221,7 @@ void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
     camera->setViewport(vp);
     cvec3f mid = 0.5f * (_mi + _ma);
 
-    float f = max(_ma.x() - _mi.x(), _ma.y() - _mi.y()) / 2.0f / tan(0.5f * camera->fovy() * M_PI / 180.0f);
+    float f = std::max(_ma.x() - _mi.x(), _ma.y() - _mi.y()) / 2.0f / tan(0.5f * camera->fovy() * M_PI / 180.0f);
 
     cvec3f trans(mid.x(), mid.y(), _ma.z() + 2 * f);
 

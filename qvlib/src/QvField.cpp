@@ -8,7 +8,7 @@
 #define VALUE_SEPARATOR_CHAR ','
 
 QvField::QvField() {
-    //  cerr<<"QvField::QvField("<<this<<")"<<endl;
+    //  std::cerr<<"QvField::QvField("<<this<<")"<<std::endl;
     flags.hasDefault = TRUE;
 }
 
@@ -20,7 +20,7 @@ void QvField::setContainer(QvNode* cont) {
 }
 
 QvBool QvField::read(QvInput* in, const QvName& name) {
-    //  cerr<<"QvField::read("<<this<<","<<in<<","<<name.getString()<<")"<<endl;
+    //  std::cerr<<"QvField::read("<<this<<","<<in<<","<<name.getString()<<")"<<std::endl;
     setDefault(FALSE);
 
     if (!readValue(in)) {
@@ -32,7 +32,7 @@ QvBool QvField::read(QvInput* in, const QvName& name) {
 }
 
 QvField* QvField::createInstanceFromName(const QvName& className) {
-    //  cerr<<"QvField::createInstanceFormName("<<className.getString()<<")"<<endl;
+    //  std::cerr<<"QvField::createInstanceFormName("<<className.getString()<<")"<<std::endl;
 #define TRY_CLASS(name, class) else if (className == name) inst = new class
 
     QvField* inst = NULL;

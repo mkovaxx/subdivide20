@@ -26,7 +26,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "ballviewer.h"
 #include "pickobject.h"
+
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
+#endif
 
 class PickViewer : public BallViewer {
 
@@ -41,7 +46,7 @@ class PickViewer : public BallViewer {
     typedef void (*CBFuncType)(DataType);
 
     // use this type to pass callbacks to  registration functions
-    typedef pair<CBFuncType, DataType> CBPairType;
+    typedef std::pair<CBFuncType, DataType> CBPairType;
 
     // keyboard callback registration
     void addKeyCallback(unsigned char k, CBPairType cbPair) { _cbMap[k] = cbPair; }
@@ -60,10 +65,10 @@ class PickViewer : public BallViewer {
         _uiState = (_uiState == PICK_STATE) ? MOVE_STATE : PICK_STATE;
         switch (_uiState) {
         case PICK_STATE:
-            cerr << "pickState" << endl;
+            std::cerr << "pickState" << std::endl;
             break;
         case MOVE_STATE:
-            cerr << "moveState" << endl;
+            std::cerr << "moveState" << std::endl;
             break;
         }
     }
@@ -79,8 +84,8 @@ class PickViewer : public BallViewer {
     PickedStuff* _pickedStuff;
     void* _pickData;
 
-    map<unsigned char, CBPairType> _cbMap;
-    map<int, CBPairType> _specialMap;
+    std::map<unsigned char, CBPairType> _cbMap;
+    std::map<int, CBPairType> _specialMap;
 
     typedef enum { PICK_STATE, MOVE_STATE } UIStateType;
     UIStateType _uiState;

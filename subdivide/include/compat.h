@@ -41,9 +41,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <iostream>
 #include <strstream>
 #else
-#include <fstream.h>
-#include <iostream.h>
-#include <strstream.h>
+#include <fstream>
+#include <iostream>
+#include <strstream>
 #endif
 
 // 2.8.1 gcc does not support namespaces
@@ -101,7 +101,7 @@ template <class _Ty> inline const _Ty& min(const _Ty& _X, const _Ty& _Y) { retur
 
 inline void die() {
 #ifndef NDEBUG
-    cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << endl;
+    std::cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << std::endl;
 #endif
     abort();
 }

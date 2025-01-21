@@ -28,6 +28,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "hmatrix.h"
 #include "quat.h"
 
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#else
+#include <GL/gl.h>
+#endif
+
 #define MAX_SET_SIZE 3
 
 //: Arcball rotation for UI

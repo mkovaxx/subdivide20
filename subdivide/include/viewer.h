@@ -82,7 +82,7 @@ class Viewer {
     static void motionWrapper(int x, int y);
     static void keyWrapper(unsigned char k, int x, int y);
     static void specialKeyWrapper(int k, int x, int y);
-    static vector<Viewer*> _viewer;
+    static std::vector<Viewer*> _viewer;
 
   protected:
     void positionCamera();

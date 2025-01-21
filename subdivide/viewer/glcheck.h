@@ -25,15 +25,21 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __GL_CHECK_H__
 #define __GL_CHECK_H__
 #include "compat.h"
+
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 
 #define glCheck() __glCheck__(__FILE__, __LINE__)
 
 inline int __glCheck__(char* fileName, int n) {
     int e = glGetError();
     if (e)
-        cerr << (char*)gluErrorString(e) << "  " << fileName << ", #" << n << endl;
+        std::cerr << (char*)gluErrorString(e) << "  " << fileName << ", #" << n << std::endl;
     return (e);
 }
 

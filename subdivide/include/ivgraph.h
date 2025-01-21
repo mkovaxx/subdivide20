@@ -59,7 +59,7 @@ class IvGraph {
 
   private:
     QvSeparator* root;
-    QvNode* createCoordinate3Node(const vector<Vertex*>& v, int d);
+    QvNode* createCoordinate3Node(const std::vector<Vertex*>& v, int d);
     QvNode* createIndexedFaceSet(FlatMesh* flatMesh);
 };
 

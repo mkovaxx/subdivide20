@@ -42,7 +42,7 @@ void PickViewer::mouse(int button, int state, int x, int y) {
 }
 
 void PickViewer::key(unsigned char k, int x, int y) {
-    map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
+    std::map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();
@@ -51,7 +51,7 @@ void PickViewer::key(unsigned char k, int x, int y) {
 }
 
 void PickViewer::specialKey(int k, int x, int y) {
-    map<int, CBPairType>::iterator it = _specialMap.find(k);
+    std::map<int, CBPairType>::iterator it = _specialMap.find(k);
     if (it != _specialMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();
@@ -77,7 +77,7 @@ void PickViewer::pick(GLint x, GLint y) {
     glGetIntegerv(GL_GREEN_BITS, &gbits);
     glGetIntegerv(GL_BLUE_BITS, &bbits);
     int shift = 1;
-    for (int i = 0; i < 8 - min(min(rbits, gbits), bbits); ++i)
+    for (int i = 0; i < 8 - std::min(std::min(rbits, gbits), bbits); ++i)
         shift *= 2;
 
     if (getObject()) {

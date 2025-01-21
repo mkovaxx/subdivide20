@@ -40,18 +40,18 @@ template <class BaseFace> class TLBQuadTp : public BaseFace {
     typedef typename BaseFace::TLFace TLFace;
 
     TLBQuadTp(VnoType nVtx, Vertex** v) : _noVtx(nVtx) {
-        _v = new Vertex*[nVtx];
+        this->_v = new Vertex*[nVtx];
         for (VnoType i = 0; i < nVtx; ++i) {
             Vertex::ref(v[i]);
-            _v[i] = v[i];
+            this->_v[i] = v[i];
         }
     }
     virtual ~TLBQuadTp() {
-        if (_v != 0) {
+        if (this->_v != 0) {
             for (VnoType v = 0; v < noVtx(); ++v)
-                Vertex::unref(_v[v]);
-            delete[] _v;
-            _v = 0;
+                Vertex::unref(this->_v[v]);
+            delete[] this->_v;
+            this->_v = 0;
         }
     }
     VnoType noVtx() const { return _noVtx; }
@@ -81,15 +81,15 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
             delete[] _v;
             _v = 0;
         }
-        if (_c != 0)
-            delete[] _c;
+        if (this->_c != 0)
+            delete[] this->_c;
     }
 
   public:
-    VnoType childCount() const { return (_c == 0) ? 0 : noVtx(); }
+    VnoType childCount() const { return (this->_c == 0) ? 0 : noVtx(); }
 
     VnoType noVtx() const {
-        VnoType v = (_p != 0) ? 4 : ((TLBQuadTp<Face>*)this)->noVtx();
+        VnoType v = (this->_p != 0) ? 4 : ((TLBQuadTp<Face>*)this)->noVtx();
         return v;
     }
 
@@ -97,70 +97,70 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
 
     Face* headSubEdge(EnoType e, EnoType& se) const {
         assert(((Face*)this)->checkEno(e));
-        if (_c == 0) {
+        if (this->_c == 0) {
             se = 0;
             return 0;
         } else {
             CnoType c = (e > 0) ? (e % noVtx()) : ((-e) - 1);
             se = (e > 0) ? 4 : -1;
-            return &_c[c];
+            return &this->_c[c];
         }
     }
 
     Face* tailSubEdge(EnoType e, EnoType& se) const {
         assert(((Face*)this)->checkEno(e));
-        if (_c == 0) {
+        if (this->_c == 0) {
             se = 0;
             return 0;
         } else {
             CnoType c = (e > 0) ? (e - 1) : ((-e) % noVtx());
             se = (e > 0) ? 1 : -4;
-            return &_c[c];
+            return &this->_c[c];
         }
     }
 
     Face* midEdge(EnoType e, EnoType& me) const {
         assert(((Face*)this)->checkEno(e));
         me = 0;
-        if (_c == 0) {
+        if (this->_c == 0) {
             return 0;
         } else {
             me = 1;
-            return (Face*)&_c[abs(e) - 1];
+            return (Face*)&this->_c[abs(e) - 1];
         }
     }
 
     Face* centerEdge(EnoType& ce) const {
         ce = 0;
-        if (_c == 0)
+        if (this->_c == 0)
             return 0;
         else {
             ce = 2;
-            return (Face*)_c;
+            return (Face*)this->_c;
         }
     }
 
-    Vertex* centerVert() const { return (_c == 0) ? 0 : _c[0].v()[2]; }
+    Vertex* centerVert() const { return (this->_c == 0) ? 0 : this->_c[0].v()[2]; }
 
     Face* parentEdge(EnoType e, EnoType& pe) const {
         assert(((Face*)this)->checkEno(e));
         switch (e) {
         case 1:
-            pe = _no + 1;
+            pe = this->_no + 1;
             break;
         case -1:
-            pe = -(_no + 1);
+            pe = -(this->_no + 1);
             break;
         case 4:
-            pe = (_no == 0) ? ((Face*)_p)->noVtx() : _no;
+            pe = (this->_no == 0) ? ((Face*)this->_p)->noVtx() : this->_no;
             break;
         case -4:
-            pe = -((_no == 0) ? ((Face*)_p)->noVtx() : _no);
+            pe = -((this->_no == 0) ? ((Face*)this->_p)->noVtx() : this->_no);
             break;
         default:
             pe = 0;
         }
-        return (Face*)_p;
+        return (Face*)this->_p;
     }
 
     typedef typename BaseFace::Face BaseFaceType;
@@ -168,7 +168,7 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
     BaseFaceType* neighbor(EnoType e, EnoType& ne) const {
         assert(((Face*)this)->checkEno(e));
         ne = 0;
-        if (_p == 0)
+        if (this->_p == 0)
             return ((TLFace*)this)->neighbor(e, ne);
         else {
 
@@ -176,24 +176,24 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
             switch (e) {
             case 2:
                 ne = -3;
-                nc = (_no + 1) % ((Face*)_p)->noVtx();
+                nc = (this->_no + 1) % ((Face*)this->_p)->noVtx();
                 break;
             case -2:
                 ne = 3;
-                nc = (_no + 1) % ((Face*)_p)->noVtx();
+                nc = (this->_no + 1) % ((Face*)this->_p)->noVtx();
                 break;
             case 3:
                 ne = -2;
-                nc = (_no + ((Face*)_p)->noVtx() - 1) % ((Face*)_p)->noVtx();
+                nc = (this->_no + ((Face*)this->_p)->noVtx() - 1) % ((Face*)this->_p)->noVtx();
                 break;
             case -3:
                 ne = 2;
-                nc = (_no + ((Face*)_p)->noVtx() - 1) % ((Face*)_p)->noVtx();
+                nc = (this->_no + ((Face*)this->_p)->noVtx() - 1) % ((Face*)this->_p)->noVtx();
                 break;
             }
 
             if (ne != 0)
-                return ((Face*)_p)->child(nc);
+                return ((Face*)this->_p)->child(nc);
             else {
                 EnoType pe;
                 Face* pt = parentEdge(e, pe);

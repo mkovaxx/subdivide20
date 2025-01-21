@@ -38,7 +38,7 @@ template <class Mesh> class FaceManipulatorTp {
   public:
     typedef typename Mesh::FaceType FaceType;
     typedef typename Mesh::FaceType::FaceRingType FaceRingType;
-    typedef typename set<FaceType*>::iterator FaceIter;
+    typedef typename std::set<FaceType*>::iterator FaceIter;
 
     FaceManipulatorTp(FaceType* f0) : f(f0) { ; }
 
@@ -67,8 +67,8 @@ template <class Mesh> class FaceManipulatorTp {
 
 template <class Mesh> void FaceManipulatorTp<Mesh>::recomputeNeighbors() {
     // three ring face set
-    set<FaceType*> s0;
-    set<FaceType*> s1;
+    std::set<FaceType*> s0;
+    std::set<FaceType*> s1;
 
     s0.insert(f);
 

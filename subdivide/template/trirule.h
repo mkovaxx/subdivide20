@@ -31,20 +31,22 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 class EdgeCoef {
   public:
     float c[4];
-    void print() const { cerr << "c = { " << c[0] << ", " << c[1] << ", " << c[2] << ", " << c[3] << "}" << endl; }
+    void print() const {
+        std::cerr << "c = { " << c[0] << ", " << c[1] << ", " << c[2] << ", " << c[3] << "}" << std::endl;
+    }
 };
 
 class Coef {
   public:
     float centerC;
-    vector<float> edgeC;
+    std::vector<float> edgeC;
     float dot(const Coef& coef) const;
     float dotOne() const;
     void print() const {
-        cerr << "{ centerC = " << centerC;
+        std::cerr << "{ centerC = " << centerC;
         for (uint i = 0; i < edgeC.size(); ++i)
-            cerr << ", " << edgeC[i];
-        cerr << "} " << endl;
+            std::cerr << ", " << edgeC[i];
+        std::cerr << "} " << std::endl;
     }
 };
 
@@ -83,7 +85,7 @@ class TriRule {
     float lambda1() const { return _lambda1; }
     float lambda2() const { return _lambda2; }
 
-    virtual void printName() const { cerr << "TriRule" << endl; }
+    virtual void printName() const { std::cerr << "TriRule" << std::endl; }
 
   protected:
     Coef _sub, _l0, _l1, _l2, _x1, _x2;
@@ -98,7 +100,7 @@ class InteriorTriRule : public TriRule {
   public:
     InteriorTriRule(int k);
     virtual ~InteriorTriRule() { ; }
-    virtual void printName() const { cerr << "InteriorTriRule" << endl; }
+    virtual void printName() const { std::cerr << "InteriorTriRule" << std::endl; }
 
   private:
     void computeSubCoef();
@@ -117,7 +119,7 @@ class CreaseTriRule : public TriRule {
   public:
     CreaseTriRule(int k);
     ~CreaseTriRule() { ; }
-    virtual void printName() const { cerr << "CreaseTriRule" << endl; }
+    virtual void printName() const { std::cerr << "CreaseTriRule" << std::endl; }
 
   private:
     void computeSubCoef();
@@ -136,7 +138,7 @@ class ConvexTriRule : public TriRule {
   public:
     ConvexTriRule(int k, float theta);
     virtual ~ConvexTriRule() { ; }
-    virtual void printName() const { cerr << "ConvexTriRule" << endl; }
+    virtual void printName() const { std::cerr << "ConvexTriRule" << std::endl; }
     float getTheta() { return theta; }
 
   private:
@@ -157,7 +159,7 @@ class ConcaveTriRule : public TriRule {
   public:
     ConcaveTriRule(int k, float theta);
     virtual ~ConcaveTriRule() { ; }
-    virtual void printName() const { cerr << "ConcaveTriRule" << endl; }
+    virtual void printName() const { std::cerr << "ConcaveTriRule" << std::endl; }
     float getTheta() { return theta; }
 
   private:
@@ -198,7 +200,7 @@ class InteriorTriRuleTable {
     }
 
   private:
-    vector<InteriorTriRule*> ruleVec;
+    std::vector<InteriorTriRule*> ruleVec;
 };
 
 class CreaseTriRuleTable {
@@ -221,7 +223,7 @@ class CreaseTriRuleTable {
     }
 
   private:
-    vector<CreaseTriRule*> ruleVec;
+    std::vector<CreaseTriRule*> ruleVec;
 };
 
 class ConvexTriRuleTable {
@@ -247,7 +249,7 @@ class ConvexTriRuleTable {
     }
 
   private:
-    vector<ConvexTriRule*> ruleVec;
+    std::vector<ConvexTriRule*> ruleVec;
 };
 
 class ConcaveTriRuleTable {
@@ -273,7 +275,7 @@ class ConcaveTriRuleTable {
     }
 
   private:
-    vector<ConcaveTriRule*> ruleVec;
+    std::vector<ConcaveTriRule*> ruleVec;
 };
 
 #endif /* __TRIRULE_H__ */

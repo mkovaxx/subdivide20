@@ -34,14 +34,14 @@ template <class F> class CVec3T;
 // another VC 6.0 problem: would not accept this definition
 // after the class
 
-template <class F> istream& operator>>(istream& is, CVec3T<F>& v) {
+template <class F> std::istream& operator>>(std::istream& is, CVec3T<F>& v) {
     is >> v.x();
     is >> v.y();
     is >> v.z();
     return is;
 }
 
-template <class F> ostream& operator<<(ostream& os, const CVec3T<F>& v) {
+template <class F> std::ostream& operator<<(std::ostream& os, const CVec3T<F>& v) {
     return os << v(0) << " " << v(1) << " " << v(2);
 }
 
@@ -72,7 +72,7 @@ template <class F> class CVec3T {
     operator F*(void) { return &v[X]; }
     operator const F*(void) const { return &v[X]; }
 
-    bool read(istream& is) { return is >> *this; }
+    bool read(std::istream& is) { return is >> *this; }
     CVec3T& operator=(const CVec3T& c) {
         v[X] = c.v[X];
         v[Y] = c.v[Y];
@@ -125,16 +125,16 @@ template <class F> class CVec3T {
     }
     //: returns the componentwise minimum
     CVec3T min(const CVec3T& o) const {
-        F a = ::min(v[X], o.v[X]);
-        F b = ::min(v[Y], o.v[Y]);
-        F c = ::min(v[Z], o.v[Z]);
+        F a = std::min(v[X], o.v[X]);
+        F b = std::min(v[Y], o.v[Y]);
+        F c = std::min(v[Z], o.v[Z]);
         return CVec3T(a, b, c);
     }
     //: returns the componentwise maximum
     CVec3T max(const CVec3T& o) const {
-        F a = ::max(v[X], o.v[X]);
-        F b = ::max(v[Y], o.v[Y]);
-        F c = ::max(v[Z], o.v[Z]);
+        F a = std::max(v[X], o.v[X]);
+        F b = std::max(v[Y], o.v[Y]);
+        F c = std::max(v[Z], o.v[Z]);
         return CVec3T(a, b, c);
     }
 
@@ -150,8 +150,8 @@ template <class F> class CVec3T {
     //: l infinity norm (max of abs values of the components)
     F linfty(void) const {
         F a = fabs(v[X]);
-        a = ::max(a, F(abs(v[Y])));
-        a = ::max(a, F(abs(v[Z])));
+        a = std::max(a, F(abs(v[Y])));
+        a = std::max(a, F(abs(v[Z])));
         return a;
     }
     //: l infinity norm (sqrt of the sum of squares )

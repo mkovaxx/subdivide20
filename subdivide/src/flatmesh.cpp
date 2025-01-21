@@ -48,7 +48,7 @@ FlatMesh& FlatMesh::operator=(const FlatMesh& fm) {
 }
 
 void FlatMesh::Cleanup() {
-    vector<Vertex*>::iterator vi;
+    std::vector<Vertex*>::iterator vi;
     for (vi = vert_v.begin(); vi != vert_v.end(); ++vi)
         Vertex::unref(*vi);
 

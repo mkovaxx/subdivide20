@@ -44,14 +44,14 @@ template <class TLBaseFace> class TLTagFaceTp : public TLBaseFace {
         _edgeTag = new EdgeTagType[nVtx];
         _sectorInfo = new SectorInfo*[nVtx];
         for (int i = 0; i < nVtx; ++i) {
-            _vertexTag[i] = NOTAG_VERTEX;
-            _edgeTag[i] = NOTAG_EDGE;
+            _vertexTag[i] = VertexTagType::NOTAG_VERTEX;
+            _edgeTag[i] = EdgeTagType::NOTAG_EDGE;
             _sectorInfo[i] = 0;
         }
     }
 
     virtual ~TLTagFaceTp() {
-        for (int i = 0; i < noVtx(); ++i)
+        for (int i = 0; i < this->noVtx(); ++i)
             SectorInfo::unref(_sectorInfo[i]);
         delete[] _vertexTag;
         delete[] _edgeTag;
@@ -59,73 +59,73 @@ template <class TLBaseFace> class TLTagFaceTp : public TLBaseFace {
     }
 
     void setVertexTag(VnoType vno, VertexTagType vertexTag) {
-        vert(vno)->makeSpecial();
-        EnoType eno = enoTo(vno);
+        this->vert(vno)->makeSpecial();
+        EnoType eno = this->enoTo(vno);
         FaceRingType tr;
         tr.collectRing(this, eno);
         for (uint i = 0; i < tr.noFace(); ++i) {
             EnoType te;
             TLFace* tf = (TLFace*)tr.face(i, te);
-            assert(tf->tailVert(te) == vert(vno));
+            assert(tf->tailVert(te) == this->vert(vno));
             tf->setTLVertexTag(tf->tailVno(te), vertexTag);
         }
     }
 
     void setEdgeTag(EnoType eno, EdgeTagType edgeTag) {
         EnoType ne;
-        Face* nf = neighbor(eno, ne);
+        Face* nf = this->neighbor(eno, ne);
 
         setTLEdgeTag(eno, edgeTag);
         if (nf != 0)
             ((TLFace*)nf)->setTLEdgeTag(ne, edgeTag);
 
-        headVert(eno)->makeSpecial();
-        tailVert(eno)->makeSpecial();
+        this->headVert(eno)->makeSpecial();
+        this->tailVert(eno)->makeSpecial();
     }
 
     void setSectorInfo(VnoType vno, SectorInfo* sectorInfo) {
-        vert(vno)->makeSpecial();
-        EnoType eno = enoTo(vno);
+        this->vert(vno)->makeSpecial();
+        EnoType eno = this->enoTo(vno);
         FaceRingType tr;
         tr.collectSector(this, eno);
         for (uint i = 0; i < tr.noFace(); ++i) {
             EnoType te;
             TLFace* tf = (TLFace*)tr.face(i, te);
-            assert(tf->tailVert(te) == vert(vno));
+            assert(tf->tailVert(te) == this->vert(vno));
             tf->setTLSectorInfo(tf->tailVno(te), sectorInfo);
         }
     }
 
   public:
     EdgeTagType edgeTag(EnoType e) const {
-        assert(checkEno(e));
+        assert(this->checkEno(e));
         return _edgeTag[abs(e) - 1];
     }
     VertexTagType vertexTag(VnoType v) const {
-        assert(checkVno(v));
+        assert(this->checkVno(v));
         return _vertexTag[v];
     }
     SectorTagType sectorTag(VnoType v) const {
-        assert(checkVno(v));
+        assert(this->checkVno(v));
         return (_sectorInfo[v] == 0) ? SectorInfo::NOTAG_SECTOR : _sectorInfo[v]->sectorTag();
     }
     SectorInfo* sectorInfo(VnoType v) const {
-        checkVno(v);
+        this->checkVno(v);
         return _sectorInfo[v];
     }
 
     void setTLVertexTag(VnoType v, VertexTagType vertexTag) {
-        checkVno(v);
+        this->checkVno(v);
         _vertexTag[v] = vertexTag;
     }
     void setTLEdgeTag(EnoType e, EdgeTagType edgeTag) {
-        checkEno(e);
+        this->checkEno(e);
         _edgeTag[abs(e) - 1] = edgeTag;
     }
     void setTLSectorInfo(VnoType v, SectorInfo* sectorInfo) {
         SectorInfo::ref(sectorInfo);
         SectorInfo::unref(_sectorInfo[v]);
-        checkVno(v);
+        this->checkVno(v);
         _sectorInfo[v] = sectorInfo;
     }
 

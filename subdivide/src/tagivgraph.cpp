@@ -42,15 +42,15 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "sectorinfo.h"
 #include "tagivgraph.h"
 
-static void addVert(QvSeparator* n, const char* className, const vector<int>& indexVec);
-static void addCreaseEdge(QvSeparator* n, const vector<int>& indexVec);
-static void addSector(QvSeparator* n, const vector<TagFlatMesh::FlatSectorType>& secVec);
+static void addVert(QvSeparator* n, const char* className, const std::vector<int>& indexVec);
+static void addCreaseEdge(QvSeparator* n, const std::vector<int>& indexVec);
+static void addSector(QvSeparator* n, const std::vector<TagFlatMesh::FlatSectorType>& secVec);
 static void addDrawStyleNode(QvSeparator* n, float linewidth);
 static void addMaterialNode(QvSeparator* n, const cvec3f& color);
 
-static void getSector(QvNode* n, vector<TagFlatMesh::FlatSectorType>& secVec);
-static void getVert(QvNode* n, const char* className, vector<int>& vertVec);
-static void getCreaseEdge(QvNode* n, vector<int>& creaseEdgeVec);
+static void getSector(QvNode* n, std::vector<TagFlatMesh::FlatSectorType>& secVec);
+static void getVert(QvNode* n, const char* className, std::vector<int>& vertVec);
+static void getCreaseEdge(QvNode* n, std::vector<int>& creaseEdgeVec);
 
 TagIvGraph::TagIvGraph() { ; }
 
@@ -108,7 +108,7 @@ static TagFlatMesh::FlatSectorType convertToFlatSector(QvUnknownNode* n) {
     findField(n, "normalT", normalTField);
 
     if ((faceIndexField == 0) || (vertexIndexField == 0))
-        return TagFlatMesh::FlatSectorType(pair<int, int>(0, 0), 0);
+        return TagFlatMesh::FlatSectorType(std::pair<int, int>(0, 0), 0);
 
     int fIndex = faceIndexField->value;
     int vIndex = vertexIndexField->value;
@@ -129,7 +129,7 @@ static TagFlatMesh::FlatSectorType convertToFlatSector(QvUnknownNode* n) {
     if (normalField)
         si->setModifiedNormal(cvec3f(normalField->value[0], normalField->value[1], normalField->value[2]));
 
-    return TagFlatMesh::FlatSectorType(pair<int, int>(fIndex, vIndex), si);
+    return TagFlatMesh::FlatSectorType(std::pair<int, int>(fIndex, vIndex), si);
 }
 
 static QvSFFloat* makeSFFloat(float f) {
@@ -152,7 +152,7 @@ static QvSFLong* makeSFLong(long l) {
     return field;
 }
 
-static QvMFLong* makeMFLong(const vector<int>& v) {
+static QvMFLong* makeMFLong(const std::vector<int>& v) {
     QvMFLong* field = new QvMFLong();
     field->allocValues(v.size());
     for (uint i = 0; i < v.size(); ++i)
@@ -176,14 +176,14 @@ static QvUnknownNode* convertFromFlatSector(TagFlatMesh::FlatSectorType fs) {
     return n;
 }
 
-void addSector(QvSeparator* n, const vector<TagFlatMesh::FlatSectorType>& secVec) {
+void addSector(QvSeparator* n, const std::vector<TagFlatMesh::FlatSectorType>& secVec) {
     for (uint i = 0; i < secVec.size(); ++i) {
         QvUnknownNode* u = convertFromFlatSector(secVec[i]);
         n->getChildren()->append(u);
     }
 }
 
-void addVert(QvSeparator* n, const char* className, const vector<int>& indexVec) {
+void addVert(QvSeparator* n, const char* className, const std::vector<int>& indexVec) {
     QvUnknownNode* v = new QvUnknownNode();
     v->ref();
     v->setClassName(className);
@@ -208,7 +208,7 @@ void addMaterialNode(QvSeparator* n, const cvec3f& color) {
     n->getChildren()->append(node);
 }
 
-void addCreaseEdge(QvSeparator* n, const vector<int>& indexVec) {
+void addCreaseEdge(QvSeparator* n, const std::vector<int>& indexVec) {
     QvIndexedLineSet* ls = new QvIndexedLineSet();
     ls->ref();
     ls->coordIndex.allocValues(indexVec.size());
@@ -218,7 +218,7 @@ void addCreaseEdge(QvSeparator* n, const vector<int>& indexVec) {
     n->getChildren()->append(ls);
 }
 
-void getVert(QvNode* n, const char* className, vector<int>& vertVec) {
+void getVert(QvNode* n, const char* className, std::vector<int>& vertVec) {
     QvGroup* grp;
     QvUnknownNode* un;
     if ((un = dynamic_cast<QvUnknownNode*>(n))) {
@@ -237,7 +237,7 @@ void getVert(QvNode* n, const char* className, vector<int>& vertVec) {
                 getVert(grp->getChild(i), className, vertVec);
 }
 
-void getCreaseEdge(QvNode* n, vector<int>& creaseEdgeVec) {
+void getCreaseEdge(QvNode* n, std::vector<int>& creaseEdgeVec) {
     QvGroup* grp;
     QvIndexedLineSet* un;
     if ((un = dynamic_cast<QvIndexedLineSet*>(n))) {
@@ -252,7 +252,7 @@ void getCreaseEdge(QvNode* n, vector<int>& creaseEdgeVec) {
     }
 }
 
-void getSector(QvNode* n, vector<TagFlatMesh::FlatSectorType>& secVec) {
+void getSector(QvNode* n, std::vector<TagFlatMesh::FlatSectorType>& secVec) {
     QvGroup* grp;
     QvUnknownNode* un;
 

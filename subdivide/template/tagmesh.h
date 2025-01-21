@@ -46,8 +46,8 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
 
         EMapType _eMap;
         EdgeMapType _edgeMap;
-        typename set<FaceType*>::const_iterator fi;
-        for (fi = faceSet().begin(); fi != faceSet().end(); ++fi)
+        typename std::set<FaceType*>::const_iterator fi;
+        for (fi = this->faceSet().begin(); fi != this->faceSet().end(); ++fi)
             for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
                 Vertex* headVert = (*fi)->headVert(e);
                 Vertex* tailVert = (*fi)->tailVert(e);
@@ -65,7 +65,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     }
 
     void toTagFlatMesh(TagFlatMesh* flatMesh) {
-        toFlatMesh(flatMesh);
+        this->toFlatMesh(flatMesh);
         setVertTag(flatMesh, flatMesh->creaseVertVec, FaceType::CREASE_VERTEX);
         setVertTag(flatMesh, flatMesh->cornerVertVec, FaceType::CORNER_VERTEX);
         setVertTag(flatMesh, flatMesh->dartVertVec, FaceType::NOTAG_VERTEX);
@@ -73,7 +73,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         // build vertex map
         VertexMapType _vertexMap;
 
-        typename map<Vertex*, pair<int, VertexType>>::const_iterator it = vertMap().begin();
+        typename std::map<Vertex*, std::pair<int, VertexType>>::const_iterator it = this->vertMap().begin();
         for (uint i = 0; i < flatMesh->vert_v.size(); ++i) {
             assert(flatMesh->vert_v[i] == (*it).first);
             _vertexMap[flatMesh->vert_v[i]] = i;
@@ -85,15 +85,15 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     }
 
     TagMeshTp* clone() const;
-    TagMeshTp* clone(map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) const;
-    void setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap);
+    TagMeshTp* clone(std::map<Vertex*, Vertex*>& vvMap, std::map<FaceType*, FaceType*>& ttMap) const;
+    void setClone(const TagMeshTp& m, std::map<Vertex*, Vertex*>& vvMap, std::map<FaceType*, FaceType*>& ttMap);
     void setClone(const TagMeshTp& m);
 
     void midsub(int maxl = -1) {
         FaceIterType it;
 
         if (maxl == -1) {
-            FaceType* f = (*faceBegin(0));
+            FaceType* f = (*this->faceBegin(0));
             maxl = 0;
             while (f->childCount() != 0) {
                 f = f->child(0);
@@ -101,11 +101,11 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
             }
         }
 
-        for (it = faceBegin(0); it != faceEnd(0); ++it)
+        for (it = this->faceBegin(0); it != this->faceEnd(0); ++it)
             (*it)->clearFace(0);
 
         for (int l = 0; l < maxl; ++l) {
-            for (it = faceBegin(l); (it != faceEnd(l)); ++it)
+            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it)
                 if (it.depth() == l) {
                     (*it)->midSub(l);
                 }
@@ -115,13 +115,13 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     void subdivide(int maxl = -1) {
         FaceIterType it;
 
-        for (it = faceBegin(maxl); it != faceEnd(maxl); ++it) {
+        for (it = this->faceBegin(maxl); it != this->faceEnd(maxl); ++it) {
             (*it)->clearFace(0);
             (*it)->clearNormal();
         }
 
         if (maxl == -1) {
-            FaceType* f = (*faceBegin(0));
+            FaceType* f = (*this->faceBegin(0));
             maxl = 0;
             while (f->childCount() != 0) {
                 f = f->child(0);
@@ -130,12 +130,12 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         }
 
         for (int l = 0; l < maxl; ++l) {
-            for (it = faceBegin(l); (it != faceEnd(l)); ++it)
+            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it)
                 if (it.depth() == l)
                     (*it)->subdivide(l);
         }
 
-        for (it = faceBegin(maxl); it != faceEnd(maxl); ++it)
+        for (it = this->faceBegin(maxl); it != this->faceEnd(maxl); ++it)
             for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e)
                 //	if((*it)->isLeaf())
                 if (it.depth() == maxl)
@@ -146,26 +146,27 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     void cleanup();
 
   private:
-    typedef map<Vertex*, int> VertexMapType;
-    typedef map<Vertex*, EdgeType> EMapType;
-    typedef pair<Vertex*, Vertex*> VertPairType;
-    typedef map<VertPairType, EdgeType> EdgeMapType;
+    typedef std::map<Vertex*, int> VertexMapType;
+    typedef std::map<Vertex*, EdgeType> EMapType;
+    typedef std::pair<Vertex*, Vertex*> VertPairType;
+    typedef std::map<VertPairType, EdgeType> EdgeMapType;
     typedef typename Face::VertexTagType VertexTagType;
 
     void buildMaps(const TagFlatMesh* flatMesh);
 
     void applyCreaseEdge(const TagFlatMesh& flatMesh, const EdgeMapType& _edgeMap);
-    void applyVertTag(const TagFlatMesh& flatMesh, const vector<int>& index, VertexTagType tag, const EMapType& _eMap);
+    void applyVertTag(const TagFlatMesh& flatMesh, const std::vector<int>& index, VertexTagType tag,
+                      const EMapType& _eMap);
     void applySector(const TagFlatMesh& flatMesh, const EdgeMapType& _eMap);
     void fixBoundaryTag();
     void fixSector();
 
-    void setVertTag(TagFlatMesh* flatMesh, vector<int>& index, VertexTagType tag) const;
+    void setVertTag(TagFlatMesh* flatMesh, std::vector<int>& index, VertexTagType tag) const;
 
     void setCreaseEdge(TagFlatMesh* flatMesh, const VertexMapType& _vertexMap) const;
     void setSector(TagFlatMesh* flatMesh) const;
 
-    void cloneTag(map<FaceType*, FaceType*>& ttMap);
+    void cloneTag(std::map<FaceType*, FaceType*>& ttMap);
 
     void fixVertexToggle(FaceType* f, EnoType e) {
         typename Face::FaceRingType fr;
@@ -222,17 +223,17 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
     }
 
     EdgeMapType _edgeMap;
-    map<SectorInfo*, EdgeType> _sectorMap;
+    std::map<SectorInfo*, EdgeType> _sectorMap;
 };
 
 template <class Face>
-void TagMeshTp<Face>::applyVertTag(const TagFlatMesh& m, const vector<int>& tagVertVec, VertexTagType tag,
+void TagMeshTp<Face>::applyVertTag(const TagFlatMesh& m, const std::vector<int>& tagVertVec, VertexTagType tag,
                                    const EMapType& _eMap) {
 
     for (uint i = 0; i < tagVertVec.size(); ++i) {
         Vertex* v = m.vert_v[tagVertVec[i]];
 
-        typename map<Vertex*, EdgeType>::const_iterator it = _eMap.find(v);
+        typename std::map<Vertex*, EdgeType>::const_iterator it = _eMap.find(v);
         if (it != _eMap.end()) {
             TLFaceType* f = (TLFaceType*)((*it).second.face());
             VnoType vno = f->headVno((*it).second.eno());
@@ -267,7 +268,7 @@ template <class Face> void TagMeshTp<Face>::applyCreaseEdge(const TagFlatMesh& m
 
 template <class Face> void TagMeshTp<Face>::fixSector() {
     FaceIterType fi;
-    for (fi = faceBegin(); fi != faceEnd(); ++fi) {
+    for (fi = this->faceBegin(); fi != this->faceEnd(); ++fi) {
         for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
             TLFaceType* f = (TLFaceType*)(*fi);
             if ((f->vertexTag(f->headVno(e)) == Face::CREASE_VERTEX) && (f->sectorInfo(f->headVno(e)) == 0)) {
@@ -292,7 +293,7 @@ template <class Face> void TagMeshTp<Face>::fixSector() {
 template <class Face> void TagMeshTp<Face>::fixBoundaryTag() {
     // fix edges
     FaceIterType fi;
-    for (fi = faceBegin(); fi != faceEnd(); ++fi) {
+    for (fi = this->faceBegin(); fi != this->faceEnd(); ++fi) {
         for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
             TLFaceType* f = (TLFaceType*)(*fi);
             EnoType ne;
@@ -305,7 +306,7 @@ template <class Face> void TagMeshTp<Face>::fixBoundaryTag() {
         }
     }
 
-    for (fi = faceBegin(); fi != faceEnd(); ++fi) {
+    for (fi = this->faceBegin(); fi != this->faceEnd(); ++fi) {
         for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
             FaceType* f = (*fi);
             EnoType ne;
@@ -315,7 +316,7 @@ template <class Face> void TagMeshTp<Face>::fixBoundaryTag() {
     }
 
     // fix boundary vertices
-    for (fi = faceBegin(); fi != faceEnd(); ++fi) {
+    for (fi = this->faceBegin(); fi != this->faceEnd(); ++fi) {
         for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
             TLFaceType* f = (TLFaceType*)(*fi);
             if ((f->edgeTag(e) == Face::CREASE_EDGE) && (f->vertexTag(f->headVno(e)) == Face::NOTAG_VERTEX)) {
@@ -396,10 +397,10 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
         }
 
         if (f->vertexTag(fv) == FaceType::NOTAG_VERTEX) {
-            cerr << "ERROR: SECTOR FOR UNTAGGED VERTEX!" << endl;
-            cerr << "vert: " << f->vert(fv) << endl;
+            std::cerr << "ERROR: SECTOR FOR UNTAGGED VERTEX!" << std::endl;
+            std::cerr << "vert: " << f->vert(fv) << std::endl;
             for (VnoType a = 0; a < f->noVtx(); ++a)
-                cerr << "\tvert(a): " << f->vert(a) << "\t" << (int)f->vertexTag(a) << endl;
+                std::cerr << "\tvert(a): " << f->vert(a) << "\t" << (int)f->vertexTag(a) << std::endl;
         }
 
         ((TLFaceType*)f)->setSectorInfo(fv, si);
@@ -407,10 +408,10 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
 }
 
 template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
-    map<SectorInfo*, pair<int, int>> _sMap;
+    std::map<SectorInfo*, std::pair<int, int>> _sMap;
     int fcnt = 0;
-    typename set<FaceType*>::const_iterator it;
-    for (it = faceSet().begin(); it != faceSet().end(); ++it) {
+    typename std::set<FaceType*>::const_iterator it;
+    for (it = this->faceSet().begin(); it != this->faceSet().end(); ++it) {
         EnoType e = (*it)->directEno(1);
         VnoType i;
         for (i = 0; i < (*it)->noVtx(); ++i, e = (*it)->nextEno(e)) {
@@ -419,22 +420,22 @@ template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
                 if ((*it)->sectorInfo(v)->sectorTag() != SectorInfo::NOTAG_SECTOR)
                     assert((*it)->vertexTag(v) != FaceType::NOTAG_VERTEX);
 
-                _sMap[(*it)->sectorInfo(v)] = pair<int, int>(fcnt, i);
+                _sMap[(*it)->sectorInfo(v)] = std::pair<int, int>(fcnt, i);
             }
         }
         ++fcnt;
     }
 
-    map<SectorInfo*, pair<int, int>>::iterator mi;
+    std::map<SectorInfo*, std::pair<int, int>>::iterator mi;
     for (mi = _sMap.begin(); mi != _sMap.end(); ++mi) {
-        m->sectorInfoVec.push_back(TagFlatMesh::FlatSectorType(pair<int, int>((*mi).second), (*mi).first));
+        m->sectorInfoVec.push_back(TagFlatMesh::FlatSectorType(std::pair<int, int>((*mi).second), (*mi).first));
         SectorInfo::ref((*mi).first);
     }
 }
 
 template <class Face> void TagMeshTp<Face>::setCreaseEdge(TagFlatMesh* m, const VertexMapType& _vertexMap) const {
-    typename set<FaceType*>::const_iterator it;
-    for (it = faceSet().begin(); it != faceSet().end(); ++it) {
+    typename std::set<FaceType*>::const_iterator it;
+    for (it = this->faceSet().begin(); it != this->faceSet().end(); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
             if ((*it)->edgeTag(e) == Face::CREASE_EDGE) {
                 EnoType ne;
@@ -459,10 +460,11 @@ template <class Face> void TagMeshTp<Face>::setCreaseEdge(TagFlatMesh* m, const 
     }
 }
 
-template <class Face> void TagMeshTp<Face>::setVertTag(TagFlatMesh*, vector<int>& tagVertVec, VertexTagType tag) const {
-    typename map<Vertex*, pair<int, VertexType>>::const_iterator it;
+template <class Face>
+void TagMeshTp<Face>::setVertTag(TagFlatMesh*, std::vector<int>& tagVertVec, VertexTagType tag) const {
+    typename std::map<Vertex*, std::pair<int, VertexType>>::const_iterator it;
     int cnt = 0;
-    for (it = vertMap().begin(); it != vertMap().end(); ++it) {
+    for (it = this->vertMap().begin(); it != this->vertMap().end(); ++it) {
         FaceType* f = (*it).second.second.face();
         VnoType vno = (*it).second.second.vno();
         if (f->vert(vno)->isSpecial() && (f->vertexTag(vno) == tag))
@@ -472,20 +474,22 @@ template <class Face> void TagMeshTp<Face>::setVertTag(TagFlatMesh*, vector<int>
 }
 
 template <class Face> TagMeshTp<Face>* TagMeshTp<Face>::clone() const {
-    map<Vertex*, Vertex*> vvMap;
-    map<FaceType*, FaceType*> ttMap;
+    std::map<Vertex*, Vertex*> vvMap;
+    std::map<FaceType*, FaceType*> ttMap;
     return clone(vvMap, ttMap);
 }
 
 template <class Face>
-TagMeshTp<Face>* TagMeshTp<Face>::clone(map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) const {
+TagMeshTp<Face>* TagMeshTp<Face>::clone(std::map<Vertex*, Vertex*>& vvMap,
+                                        std::map<FaceType*, FaceType*>& ttMap) const {
     TagMeshTp* m = new TagMeshTp();
     m->setClone(*this, vvMap, ttMap);
     return m;
 }
 
 template <class Face>
-void TagMeshTp<Face>::setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap, map<FaceType*, FaceType*>& ttMap) {
+void TagMeshTp<Face>::setClone(const TagMeshTp& m, std::map<Vertex*, Vertex*>& vvMap,
+                               std::map<FaceType*, FaceType*>& ttMap) {
     if (this != &m) {
         MeshTp<Face>::setClone(m, vvMap, ttMap);
         cloneTag(ttMap);
@@ -494,15 +498,15 @@ void TagMeshTp<Face>::setClone(const TagMeshTp& m, map<Vertex*, Vertex*>& vvMap,
 
 template <class Face> void TagMeshTp<Face>::setClone(const TagMeshTp& m) {
     if (this != &m) {
-        map<Vertex*, Vertex*> vvMap;
-        map<FaceType*, FaceType*> ttMap;
+        std::map<Vertex*, Vertex*> vvMap;
+        std::map<FaceType*, FaceType*> ttMap;
         MeshTp<Face>::setClone(m, vvMap, ttMap);
         cloneTag(ttMap);
     }
 }
 
-template <class Face> void TagMeshTp<Face>::cloneTag(map<FaceType*, FaceType*>& ttMap) {
-    typename map<FaceType*, FaceType*>::iterator it;
+template <class Face> void TagMeshTp<Face>::cloneTag(std::map<FaceType*, FaceType*>& ttMap) {
+    typename std::map<FaceType*, FaceType*>::iterator it;
     for (it = ttMap.begin(); it != ttMap.end(); ++it) {
         FaceType* fOrig = (*it).first;
         TLFaceType* fClone = (TLFaceType*)((*it).second);

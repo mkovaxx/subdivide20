@@ -24,6 +24,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "meshobject.h"
 #include "pickedstuff.h"
 #include "pickobject.h"
+#include "sectorinfo.h"
 
 // TODO: rename to PickMeshObject
 
@@ -138,7 +139,7 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
         }
         unsigned int base = 256 / shift;
         if (_cnt > base * base * base)
-            cerr << "WARNING: not enough colors for picking!" << endl;
+            std::cerr << "WARNING: not enough colors for picking!" << std::endl;
 
         if (targetCnt == 0)
             glColor3ub(shift * (_cnt % base), shift * ((_cnt / base) % base), shift * ((_cnt / base / base) % base));

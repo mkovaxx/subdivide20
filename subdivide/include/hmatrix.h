@@ -28,8 +28,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <math.h>
 #include <string.h>
 
-inline ostream& operator<<(ostream& os, const HMatrix& M);
-inline istream& operator>>(istream& os, HMatrix& M);
+inline std::ostream& operator<<(std::ostream& os, const HMatrix& M);
+inline std::istream& operator>>(std::istream& os, HMatrix& M);
 
 class HMatrix {
   private:
@@ -263,14 +263,14 @@ class HMatrix {
                        M1(3, 0) - M2(3, 0), M1(3, 1) - M2(3, 1), M1(3, 2) - M2(3, 2), M1(3, 3) - M2(3, 3));
     }
 
-    friend inline ostream& operator<<(ostream& os, const HMatrix& M);
-    friend inline istream& operator>>(istream& is, HMatrix& M);
+    friend inline std::ostream& operator<<(std::ostream& os, const HMatrix& M);
+    friend inline std::istream& operator>>(std::istream& is, HMatrix& M);
 
   private:
     double _m[16];
 };
 
-inline istream& operator>>(istream& is, HMatrix& M) {
+inline std::istream& operator>>(std::istream& is, HMatrix& M) {
     int i;
     char c;
     is >> c; // read '['
@@ -289,7 +289,7 @@ inline istream& operator>>(istream& is, HMatrix& M) {
     return is;
 }
 
-inline ostream& operator<<(ostream& os, const HMatrix& M) {
+inline std::ostream& operator<<(std::ostream& os, const HMatrix& M) {
     os << "[ " << M._m[0] << " " << M._m[1] << " " << M._m[2] << " " << M._m[3] << "; ";
     os << M._m[4] << " " << M._m[5] << " " << M._m[6] << " " << M._m[7] << "; ";
     os << M._m[8] << " " << M._m[9] << " " << M._m[10] << " " << M._m[11] << "; ";
