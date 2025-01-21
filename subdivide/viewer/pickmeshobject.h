@@ -24,6 +24,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "meshobject.h"
 #include "pickedstuff.h"
 #include "pickobject.h"
+#include "sectorinfo.h"
 
 // TODO: rename to PickMeshObject
 
