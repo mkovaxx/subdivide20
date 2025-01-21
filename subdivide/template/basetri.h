@@ -39,7 +39,7 @@ template <class Face> class TLBTriTp : public Face {
         assert(nVtx == 3);
         for (VnoType i = 0; i < nVtx; ++i) {
             Vertex::ref(v[i]);
-            _v[i] = v[i];
+            this->_v[i] = v[i];
         }
     }
     virtual ~TLBTriTp() { ; }
@@ -63,65 +63,65 @@ template <class BFace> class BaseTriTp : public BFace {
     virtual ~BaseTriTp() {
         for (VnoType v = 0; v < noVtx(); ++v)
             Vertex::unref(_v[v]);
-        if (_c != 0)
-            delete[] _c;
+        if (this->_c != 0)
+            delete[] this->_c;
     }
 
   public:
     VnoType noVtx() const { return 3; }
-    VnoType childCount() const { return (_c == 0) ? 0 : 4; }
+    VnoType childCount() const { return (this->_c == 0) ? 0 : 4; }
 
     void makeChildren(int d = 0);
 
     FaceType* headSubEdge(EnoType e, EnoType& se) const {
         assert(((FaceType*)this)->checkEno(e));
-        if (_c == 0) {
+        if (this->_c == 0) {
             se = 0;
             return 0;
         } else {
             se = _headSubEno[e + 3];
-            return &_c[_headSubCno[e + 3]];
+            return &this->_c[_headSubCno[e + 3]];
         }
     }
 
     FaceType* tailSubEdge(EnoType e, EnoType& se) const {
         assert(((FaceType*)this)->checkEno(e));
-        if (_c == 0) {
+        if (this->_c == 0) {
             se = 0;
             return 0;
         } else {
             se = _tailSubEno[e + 3];
-            return &_c[_tailSubCno[e + 3]];
+            return &this->_c[_tailSubCno[e + 3]];
         }
     }
 
     FaceType* midEdge(EnoType e, EnoType& me) const {
-        if (_c == 0) {
+        if (this->_c == 0) {
             return 0;
         } else {
             me = (abs(e) == 3) ? 1 : (abs(e) + 1);
-            return (FaceType*)&_c[0];
+            return (FaceType*)&this->_c[0];
         }
     }
 
     FaceType* parentEdge(EnoType e, EnoType& pe) const {
         assert(((FaceType*)this)->checkEno(e));
-        pe = (_no == 0) ? 0 : _parentEno[_no - 1][e + 3];
-        return (FaceType*)_p;
+        pe = (this->_no == 0) ? 0 : _parentEno[this->_no - 1][e + 3];
+        return (FaceType*)this->_p;
     }
 
     FaceType* neighbor(EnoType e, EnoType& ne) const {
         assert(((FaceType*)this)->checkEno(e));
         ne = 0;
-        if (_p == 0)
+        if (this->_p == 0)
             return ((TLFace*)this)->neighbor(e, ne);
         else {
 
-            CnoType nc = _neiCno[_no][e + 3];
-            ne = _neiEno[_no][e + 3];
+            CnoType nc = _neiCno[this->_no][e + 3];
+            ne = _neiEno[this->_no][e + 3];
 
             if (ne != 0)
-                return ((FaceType*)_p)->child(nc);
+                return ((FaceType*)this->_p)->child(nc);
             else {
                 EnoType pe;
                 FaceType* pt = parentEdge(e, pe);

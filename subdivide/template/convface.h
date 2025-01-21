@@ -44,21 +44,21 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
     ConvenientFaceTp() { ; }
     virtual ~ConvenientFaceTp() { ; }
 
-    Face* parent() const { return (Face*)_p; }
+    Face* parent() const { return (Face*)this->_p; }
     Face* child(CnoType c) const {
         assert(checkCno(c));
-        return &_c[c];
+        return &this->_c[c];
     }
     Vertex* vert(VnoType v) const {
         assert(checkVno(v));
-        return _v[v];
+        return this->_v[v];
     }
 
-    bool isLeaf() const { return childCount() == 0; }
-    bool isToplevel() const { return _p == 0; }
-    CnoType no() const { return _no; }
+    bool isLeaf() const { return this->childCount() == 0; }
+    bool isToplevel() const { return this->_p == 0; }
+    CnoType no() const { return this->_no; }
 
-    Face* toplevelFace() const { return isRoot() ? ((Face*)this) : parent->toplevelFace(); }
+    Face* toplevelFace() const { return this->isRoot() ? ((Face*)this) : this->parent->toplevelFace(); }
 
     int depth() const {
         if (!isToplevel())
@@ -70,12 +70,12 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
     // vertex methods
     VnoType nextVno(VnoType v) const {
         assert(checkVno(v));
-        return (v + 1) % noVtx();
+        return (v + 1) % this->noVtx();
     }
 
     VnoType prevVno(VnoType v) const {
         assert(checkVno(v));
-        return (v + noVtx() - 1) % noVtx();
+        return (v + this->noVtx() - 1) % this->noVtx();
     }
     Face* parentVertex(VnoType v, VnoType& pv) const {
         Face* pf = parent();
@@ -104,20 +104,24 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
         }
     }
     // edge methods
-    EnoType nextEno(EnoType e) const { return (e < 0) ? (-(-e + noVtx() - 2) % noVtx() - 1) : (e % noVtx() + 1); }
-    EnoType prevEno(EnoType e) const { return (e < 0) ? (-(-e) % noVtx() - 1) : ((e + noVtx() - 2) % noVtx() + 1); }
+    EnoType nextEno(EnoType e) const {
+        return (e < 0) ? (-(-e + this->noVtx() - 2) % this->noVtx() - 1) : (e % this->noVtx() + 1);
+    }
+    EnoType prevEno(EnoType e) const {
+        return (e < 0) ? (-(-e) % this->noVtx() - 1) : ((e + this->noVtx() - 2) % this->noVtx() + 1);
+    }
     EnoType reverseEno(EnoType e) const { return -e; }
     EnoType enoTo(VnoType v) const {
         assert(checkVno(v));
-        return (v == 0) ? noVtx() : v;
+        return (v == 0) ? this->noVtx() : v;
     }
-    VnoType headVno(EnoType e) const { return (e > 0) ? (e % noVtx()) : ((-e) - 1); }
-    VnoType tailVno(EnoType e) const { return (e > 0) ? (e - 1) : ((-e) % noVtx()); }
+    VnoType headVno(EnoType e) const { return (e > 0) ? (e % this->noVtx()) : ((-e) - 1); }
+    VnoType tailVno(EnoType e) const { return (e > 0) ? (e - 1) : ((-e) % this->noVtx()); }
     Vertex* headVert(EnoType e) const { return vert(headVno(e)); }
     Vertex* tailVert(EnoType e) const { return vert(tailVno(e)); }
     Vertex* midVert(EnoType e) const {
         EnoType me;
-        Face* mf = midEdge(e, me);
+        Face* mf = this->midEdge(e, me);
         assert(mf);
         return mf->headVert(me);
     }
@@ -128,7 +132,7 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
             return (Face*)this;
         } else {
             EnoType pe;
-            Face* pf = parentEdge(e, pe);
+            Face* pf = this->parentEdge(e, pe);
             if (pe)
                 return pf->toplevelEdge(pe, te);
             else {
@@ -138,26 +142,26 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
         }
     }
 
-    OrientationType orientation() const { return _orient; }
+    OrientationType orientation() const { return this->_orient; }
     EnoType directEno(EnoType e, OrientationType o = CCW) const {
-        if (o == _orient)
+        if (o == this->_orient)
             return abs(e);
         else
             return -abs(e);
     }
-    OrientationType edgeDir(EnoType e) const { return (e > 0) ? _orient : reverseOrientation(_orient); }
+    OrientationType edgeDir(EnoType e) const { return (e > 0) ? this->_orient : reverseOrientation(this->_orient); }
 
-    bool checkCno(CnoType c) const { return (this != 0) && (c < childCount()); }
-    bool checkEno(EnoType e) const { return (this != 0) && (0 < abs(e)) && (abs(e) < noVtx() + 1); }
-    bool checkVno(VnoType v) const { return (this != 0) && (v < noVtx()); }
+    bool checkCno(CnoType c) const { return (this != 0) && (c < this->childCount()); }
+    bool checkEno(EnoType e) const { return (this != 0) && (0 < abs(e)) && (abs(e) < this->noVtx() + 1); }
+    bool checkVno(VnoType v) const { return (this != 0) && (v < this->noVtx()); }
 
     // method for replacing a vertex...
     void setVert(VnoType v, Vertex* vert) {
         assert(checkVno(v));
         assert(v < 4);
         Vertex::ref(vert);
-        Vertex::unref(_v[v]);
-        _v[v] = vert;
+        Vertex::unref(this->_v[v]);
+        this->_v[v] = vert;
     }
 };
 
