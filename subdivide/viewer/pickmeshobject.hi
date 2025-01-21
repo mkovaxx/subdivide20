@@ -36,7 +36,7 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderTri() {
         int lastNoVtx = 3;
         glBegin(GL_TRIANGLES);
         typename Mesh::FaceIterType it;
-        for (it = getMesh().faceBegin(); it != getMesh().faceEnd(); ++it) {
+        for (it = this->getMesh().faceBegin(); it != this->getMesh().faceEnd(); ++it) {
 
             if ((*it)->isLeaf()) {
 
@@ -81,7 +81,7 @@ void PickMeshObjectTp<Mesh>::renderTLVertex(bool pick, unsigned int targetCnt, u
     typedef typename Mesh::FaceType FaceType;
 
     glBegin(GL_TRIANGLES);
-    for (it = getMesh().faceBegin(0); it != getMesh().faceEnd(0); ++it) {
+    for (it = this->getMesh().faceBegin(0); it != this->getMesh().faceEnd(0); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
 
             EnoType e1 = (*it)->directEno(e);
@@ -126,7 +126,7 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderTLEdge(bool pick, unsig
     typedef typename Mesh::FaceType FaceType;
 
     glBegin(GL_QUADS);
-    for (it = getMesh().faceBegin(0); it != getMesh().faceEnd(0); ++it) {
+    for (it = this->getMesh().faceBegin(0); it != this->getMesh().faceEnd(0); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
 
             EnoType e1 = (*it)->directEno(e);
@@ -171,7 +171,7 @@ void PickMeshObjectTp<Mesh>::renderTLSector(bool pick, unsigned int targetCnt, u
     float gamma = 0.3;  //
     typename Mesh::FaceIterType it;
     glBegin(GL_QUADS);
-    for (it = getMesh().faceBegin(0); it != getMesh().faceEnd(0); ++it) {
+    for (it = this->getMesh().faceBegin(0); it != this->getMesh().faceEnd(0); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
 
             EnoType e1 = (*it)->directEno(e);
@@ -227,7 +227,7 @@ void PickMeshObjectTp<Mesh>::renderTLSector(bool pick, unsigned int targetCnt, u
 template <class Mesh> void PickMeshObjectTp<Mesh>::renderNormal() {
     typename Mesh::FaceIterType it;
     glBegin(GL_LINES);
-    for (it = getMesh().faceBegin(); it != getMesh().faceEnd(); ++it) {
+    for (it = this->getMesh().faceBegin(); it != this->getMesh().faceEnd(); ++it) {
         if ((*it)->isLeaf()) {
             for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
 
@@ -254,7 +254,7 @@ template <class Mesh>
 void PickMeshObjectTp<Mesh>::renderTLNormal(bool pick, unsigned int targetCnt, unsigned int shift) {
     typename Mesh::FaceIterType it;
     glBegin(GL_LINES);
-    for (it = getMesh().faceBegin(0); it != getMesh().faceEnd(0); ++it) {
+    for (it = this->getMesh().faceBegin(0); it != this->getMesh().faceEnd(0); ++it) {
         for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
 
             cvec3f p0 = (*it)->tailVert((*it)->prevEno(e))->getPos(0);

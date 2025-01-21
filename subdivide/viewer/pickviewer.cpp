@@ -77,7 +77,7 @@ void PickViewer::pick(GLint x, GLint y) {
     glGetIntegerv(GL_GREEN_BITS, &gbits);
     glGetIntegerv(GL_BLUE_BITS, &bbits);
     int shift = 1;
-    for (int i = 0; i < 8 - std::min(min(rbits, gbits), bbits); ++i)
+    for (int i = 0; i < 8 - std::min(std::min(rbits, gbits), bbits); ++i)
         shift *= 2;
 
     if (getObject()) {
