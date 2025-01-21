@@ -48,8 +48,9 @@ template <class BaseFace> void BaseQuadTp<BaseFace>::makeChildren(int d) {
         if (nt && !nt->isLeaf()) {
             midV = nt->midVert(ne);
         }
-        if (midV == 0)
+        if (midV == 0) {
             midV = new Vertex(d + 1);
+        }
 
         assert(((Face*)this)->headVert(e));
         assert(midV);

@@ -25,34 +25,41 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "subquad.h"
 
 void Quad::midSub(int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
     cvec3f centerPos(0);
     for (EnoType e = 1; e < noVtx() + 1; ++e) {
         centerPos += headPos(e, d);
-        if (!hasMidPos(e, d))
+        if (!hasMidPos(e, d)) {
             setMidPos(e, d, 0.5f * (headPos(e, d) + tailPos(e, d)));
-        if (!hasHeadPos(e, d + 1))
+        }
+        if (!hasHeadPos(e, d + 1)) {
             setHeadPos(e, d + 1, headPos(e, d));
+        }
     }
-    if (!hasCenterPos(d))
+    if (!hasCenterPos(d)) {
         setCenterPos(d, 1 / float(noVtx()) * centerPos);
+    }
 
     // clear children mid points points
-    for (CnoType c = 0; c < childCount(); ++c)
+    for (CnoType c = 0; c < childCount(); ++c) {
         child(c)->clearFace(d + 1);
+    }
 }
 
 void Quad::subdivide(int d) {
     setCenterPos(d, computeFacePoint(d));
 
     EnoType e;
-    for (e = 1; e < noVtx() + 1; ++e)
+    for (e = 1; e < noVtx() + 1; ++e) {
         computeVertexPoint(e, d);
+    }
 
-    for (e = 1; e < noVtx() + 1; ++e)
+    for (e = 1; e < noVtx() + 1; ++e) {
         computeEdgePoint(e, d);
+    }
 
     //  for(e = 1; e < noVtx()+1; ++e)
     //    computeEdgeNormal(e, d);
@@ -60,8 +67,9 @@ void Quad::subdivide(int d) {
     //  computeFaceNormal(d);
 
     // clear children mid points points
-    for (CnoType c = 0; c < childCount(); ++c)
+    for (CnoType c = 0; c < childCount(); ++c) {
         child(c)->clearFace(d + 1);
+    }
 }
 
 void Quad::clearFace(int d) {
@@ -82,12 +90,13 @@ void Quad::clearFace(int d) {
 }
 
 cvec3f Quad::computeVertexPoint(EnoType e, int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
-    if (hasHeadPos(e, d + 1))
+    if (hasHeadPos(e, d + 1)) {
         return headPos(e, d + 1);
-    else {
+    } else {
         cvec3f tmp;
         if (headVert(e)->isSpecial()) {
             SubdivideType subdiv;
@@ -199,23 +208,25 @@ void Quad::computeNormalAndLimit(int d) {
 }
 
 cvec3f Quad::computeFacePoint(int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
-    if (hasCenterPos(d))
+    if (hasCenterPos(d)) {
         return centerPos(d);
-    else {
+    } else {
 
         // compute average...
         cvec3f tmp;
-        for (VnoType v = 0; v < noVtx(); ++v)
+        for (VnoType v = 0; v < noVtx(); ++v) {
             tmp += pos(v, d);
+        }
         tmp = 1.0f / float(noVtx()) * tmp;
 
         // modify average...
         int relevantCnt = 0;
         cvec3f relevantPos(0);
-        for (EnoType e = 1; e < noVtx() + 1; ++e)
+        for (EnoType e = 1; e < noVtx() + 1; ++e) {
             if (this->headVert(e)->isSpecial()) {
                 SectorInfo* si = sectorInfo(headVno(e));
                 if (si && (si->hasModifiedNormal() || si->hasModifiedFlatness())) {
@@ -245,21 +256,24 @@ cvec3f Quad::computeFacePoint(int d) {
                     relevantPos += res;
                 }
             }
+        }
 
-        if (relevantCnt != 0)
+        if (relevantCnt != 0) {
             tmp = 1.0f / float(relevantCnt) * relevantPos;
+        }
         setCenterPos(d, tmp);
         return tmp;
     }
 }
 
 cvec3f Quad::computeEdgePoint(EnoType e, int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
-    if (hasMidPos(e, d))
+    if (hasMidPos(e, d)) {
         return midPos(e, d);
-    else {
+    } else {
         cvec3f tmp;
         if (headVert(e)->isSpecial() || tailVert(e)->isSpecial()) {
             SubdivideType subdiv;

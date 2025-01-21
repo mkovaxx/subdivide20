@@ -68,8 +68,9 @@ class ArcBall {
     }
 
     void UseSet(AxisSet aset) {
-        if (!dragging)
+        if (!dragging) {
             axisSet = aset;
+        }
     }
 
     // appearance

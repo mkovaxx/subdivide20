@@ -61,10 +61,11 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
     Face* toplevelFace() const { return this->isRoot() ? ((Face*)this) : this->parent->toplevelFace(); }
 
     int depth() const {
-        if (!isToplevel())
+        if (!isToplevel()) {
             return 1 + parent()->depth();
-        else
+        } else {
             return 0;
+        }
     }
 
     // vertex methods
@@ -80,10 +81,11 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
     Face* parentVertex(VnoType v, VnoType& pv) const {
         Face* pf = parent();
         if (pf) {
-            for (pv = 0; pv < pf->noVtx(); ++pv)
+            for (pv = 0; pv < pf->noVtx(); ++pv) {
                 if (pf->vert(pv) == vert(v)) {
                     return pf;
                 }
+            }
         }
         pf = 0;
         pv = 0;
@@ -97,10 +99,11 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
         } else {
             VnoType pv;
             Face* pf = parentVertex(v, pv);
-            if (pf)
+            if (pf) {
                 return pf->toplevelVertex(pv, tv);
-            else
+            } else {
                 return 0;
+            }
         }
     }
     // edge methods
@@ -133,9 +136,9 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
         } else {
             EnoType pe;
             Face* pf = this->parentEdge(e, pe);
-            if (pe)
+            if (pe) {
                 return pf->toplevelEdge(pe, te);
-            else {
+            } else {
                 te = 0;
                 return 0;
             }
@@ -144,10 +147,11 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
 
     OrientationType orientation() const { return this->_orient; }
     EnoType directEno(EnoType e, OrientationType o = CCW) const {
-        if (o == this->_orient)
+        if (o == this->_orient) {
             return abs(e);
-        else
+        } else {
             return -abs(e);
+        }
     }
     OrientationType edgeDir(EnoType e) const { return (e > 0) ? this->_orient : reverseOrientation(this->_orient); }
 

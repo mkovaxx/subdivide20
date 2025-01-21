@@ -93,18 +93,19 @@ template <class Face> class FaceRingTp {
     int edgeIndex() const { return _edge; }
     Vertex* vert(uint i) const {
         assert(i < noVtx());
-        if (i < _enoVec.size())
+        if (i < _enoVec.size()) {
             return _faceVec[i]->headVert(_enoVec[i]);
-        else {
+        } else {
             assert(!_closed);
             return _faceVec[i - 1]->tailVert(_faceVec[i - 1]->prevEno(_enoVec[i - 1]));
         }
     }
     Vertex* centerVert() const {
-        if (_face == 0)
+        if (_face == 0) {
             return 0;
-        else
+        } else {
             return _face->headVert(_eno);
+        }
     }
     FaceType* centerEdge(EnoType& e) const;
     FaceType* centerVertex(VnoType& vno) const {

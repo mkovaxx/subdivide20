@@ -183,11 +183,13 @@ void CreaseQuadRule::computeSubCoef() {
     _sub.edgeC[0] = 1.0 / 8.0;
     _sub.edgeC[k] = 1.0 / 8.0;
 
-    for (i = 0; i < k; i++)
+    for (i = 0; i < k; i++) {
         _sub.faceC[i] = 0.0;
+    }
 
-    for (i = 1; i < k; i++)
+    for (i = 1; i < k; i++) {
         _sub.edgeC[i] = 0.0;
+    }
 }
 
 void CreaseQuadRule::computeLambda1() { _lambda1 = (k == 1) ? 0.25 : 0.5; }
@@ -251,10 +253,12 @@ void CreaseQuadRule::computeL2() {
         _l2.edgeC[0] = 0.5;
         _l2.edgeC[k] = -0.5;
         int i;
-        for (i = 1; i <= k - 1; i++)
+        for (i = 1; i <= k - 1; i++) {
             _l2.edgeC[i] = 0.0;
-        for (i = 0; i <= k - 1; i++)
+        }
+        for (i = 0; i <= k - 1; i++) {
             _l2.faceC[i] = 0.0;
+        }
     }
 }
 
@@ -273,11 +277,13 @@ void CreaseQuadRule::computeX1() {
         _x1.centerC = 0.0;
 
         int i;
-        for (i = 0; i <= k; i++)
+        for (i = 0; i <= k; i++) {
             _x1.edgeC[i] = sin(thetaK * i);
+        }
 
-        for (i = 0; i <= k - 1; i++)
+        for (i = 0; i <= k - 1; i++) {
             _x1.faceC[i] = sin(thetaK * i) + sin(thetaK * (i + 1));
+        }
     }
 }
 
@@ -296,11 +302,13 @@ void CreaseQuadRule::computeX2() {
 
         _x2.centerC = 0.0;
         int i;
-        for (i = 0; i <= k; i++)
+        for (i = 0; i <= k; i++) {
             _x2.edgeC[i] = cos(thetaK * i);
+        }
 
-        for (i = 0; i <= k - 1; i++)
+        for (i = 0; i <= k - 1; i++) {
             _x2.faceC[i] = cos(thetaK * i) + cos(thetaK * (i + 1));
+        }
     }
 }
 
@@ -337,11 +345,13 @@ void ConvexQuadRule::computeSubCoef() {
     _sub.centerC = 1.0;
 
     int i;
-    for (i = 0; i < k; i++)
+    for (i = 0; i < k; i++) {
         _sub.faceC[i] = 0.0;
+    }
 
-    for (i = 1; i < k + 1; i++)
+    for (i = 1; i < k + 1; i++) {
         _sub.edgeC[i] = 0.0;
+    }
 }
 
 void ConvexQuadRule::computeLambda1() { _lambda1 = 0.5; }
@@ -355,10 +365,12 @@ void ConvexQuadRule::computeL2() {
 
     _l2.edgeC[0] = 1.0;
     int i;
-    for (i = 1; i < k + 1; i++)
+    for (i = 1; i < k + 1; i++) {
         _l2.edgeC[i] = 0.0;
-    for (i = 0; i < k; i++)
+    }
+    for (i = 0; i < k; i++) {
         _l2.faceC[i] = 0.0;
+    }
 }
 
 void ConvexQuadRule::computeL0() {
@@ -380,10 +392,12 @@ void ConvexQuadRule::computeL1() {
 
     _l1.edgeC[k] = 1.0;
     int i;
-    for (i = 0; i < k; i++)
+    for (i = 0; i < k; i++) {
         _l1.edgeC[i] = 0.0;
-    for (i = 0; i < k; i++)
+    }
+    for (i = 0; i < k; i++) {
         _l1.faceC[i] = 0.0;
+    }
 }
 
 void ConvexQuadRule::computeX2() {
@@ -452,11 +466,13 @@ void ConcaveQuadRule::computeSubCoef() {
     _sub.centerC = 1.0;
 
     int i;
-    for (i = 0; i < k; i++)
+    for (i = 0; i < k; i++) {
         _sub.faceC[i] = 0.0;
+    }
 
-    for (i = 1; i < k + 1; i++)
+    for (i = 1; i < k + 1; i++) {
         _sub.edgeC[i] = 0.0;
+    }
 }
 
 void ConcaveQuadRule::computeLambda1() { _lambda1 = 0.5; }
@@ -482,10 +498,12 @@ void ConcaveQuadRule::computeL1() {
 
     _l1.edgeC[0] = 1.0;
     int i;
-    for (i = 1; i < k + 1; i++)
+    for (i = 1; i < k + 1; i++) {
         _l1.edgeC[i] = 0.0;
-    for (i = 0; i < k; i++)
+    }
+    for (i = 0; i < k; i++) {
         _l1.faceC[i] = 0.0;
+    }
 }
 
 void ConcaveQuadRule::computeL2() {
@@ -495,10 +513,12 @@ void ConcaveQuadRule::computeL2() {
 
     _l2.edgeC[k] = 1.0;
     int i;
-    for (i = 0; i < k; i++)
+    for (i = 0; i < k; i++) {
         _l2.edgeC[i] = 0.0;
-    for (i = 0; i < k; i++)
+    }
+    for (i = 0; i < k; i++) {
         _l2.faceC[i] = 0.0;
+    }
 }
 
 void ConcaveQuadRule::computeX1() {

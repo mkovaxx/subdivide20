@@ -81,10 +81,11 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
 
         glVertex3fv((float*)p2);
         SectorInfo* si = f->sectorInfo(f->headVno(e));
-        if ((si == 0) || (si->modifiedNormal().l1() == 0))
+        if ((si == 0) || (si->modifiedNormal().l1() == 0)) {
             glVertex3fv((float*)(p2 + fac * l * f->normal(f->headVno(e))));
-        else
+        } else {
             glVertex3fv((float*)(p2 + fac * l * si->modifiedNormal()));
+        }
 
         glEnd();
         glLineWidth(1.0);
@@ -138,11 +139,13 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
             _pickedStuff = PickedStuff(pickElement, t, e);
         }
         unsigned int base = 256 / shift;
-        if (_cnt > base * base * base)
+        if (_cnt > base * base * base) {
             std::cerr << "WARNING: not enough colors for picking!" << std::endl;
+        }
 
-        if (targetCnt == 0)
+        if (targetCnt == 0) {
             glColor3ub(shift * (_cnt % base), shift * ((_cnt / base) % base), shift * ((_cnt / base / base) % base));
+        }
     }
 
     unsigned int _cnt;

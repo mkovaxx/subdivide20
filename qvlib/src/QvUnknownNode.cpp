@@ -28,6 +28,7 @@ QvUnknownNode::~QvUnknownNode() {
 
     delete unknownFieldData;
 
-    if (className != NULL)
+    if (className != NULL) {
         free((void*)className);
+    }
 }

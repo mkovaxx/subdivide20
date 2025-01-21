@@ -1,8 +1,9 @@
 #include <QvString.h>
 
 QvString::~QvString() {
-    if (string != staticStorage)
+    if (string != staticStorage) {
         delete[] string;
+    }
 }
 
 void QvString::expand(int bySize) {
@@ -14,8 +15,9 @@ void QvString::expand(int bySize) {
 
         strcpy(newString, string);
 
-        if (string != staticStorage)
+        if (string != staticStorage) {
             delete[] string;
+        }
 
         string = newString;
         storageSize = newSize;
@@ -29,8 +31,9 @@ unsigned long QvString::hash(const char* s) {
     while (*s) {
         total = total ^ ((*s) << shift);
         shift += 5;
-        if (shift > 24)
+        if (shift > 24) {
             shift -= 24;
+        }
         s++;
     }
 
@@ -39,8 +42,9 @@ unsigned long QvString::hash(const char* s) {
 
 void QvString::makeEmpty(QvBool freeOld) {
     if (string != staticStorage) {
-        if (freeOld)
+        if (freeOld) {
             delete[] string;
+        }
         string = staticStorage;
     }
     string[0] = '\0';
@@ -57,12 +61,14 @@ QvString& QvString::operator=(const char* str) {
     }
 
     if (size < QV_STRING_STATIC_STORAGE_SIZE) {
-        if (string != staticStorage)
+        if (string != staticStorage) {
             makeEmpty();
+        }
     }
 
-    else if (string == staticStorage)
+    else if (string == staticStorage) {
         string = new char[size];
+    }
 
     else if (size > storageSize) {
         delete[] string;

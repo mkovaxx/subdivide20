@@ -20,8 +20,9 @@ void QvNameEntry::initClass() {
     nameTableSize = 1999;
     nameTable = new QvNameEntry*[nameTableSize];
 
-    for (i = 0; i < nameTableSize; i++)
+    for (i = 0; i < nameTableSize; i++) {
         nameTable[i] = NULL;
+    }
 
     chunk = NULL;
 }
@@ -32,15 +33,17 @@ const QvNameEntry* QvNameEntry::insert(const char* s) {
     QvNameEntry* entry;
     QvNameEntry* head;
 
-    if (nameTableSize == 0)
+    if (nameTableSize == 0) {
         initClass();
+    }
 
     i = h % nameTableSize;
     entry = head = nameTable[i];
 
     while (entry != NULL) {
-        if (entry->hashValue == h && entry->isEqual(s))
+        if (entry->hashValue == h && entry->isEqual(s)) {
             break;
+        }
         entry = entry->next;
     }
 
@@ -81,22 +84,25 @@ const QvNameEntry* QvNameEntry::insert(const char* s) {
 QvName::QvName() { entry = QvNameEntry::insert(""); }
 
 QvBool QvName::isIdentStartChar(char c) {
-    if (isdigit(c))
+    if (isdigit(c)) {
         return FALSE;
+    }
 
     return isIdentChar(c);
 }
 
 QvBool QvName::isIdentChar(char c) {
-    if (isalnum(c) || c == '_')
+    if (isalnum(c) || c == '_') {
         return TRUE;
+    }
 
     return FALSE;
 }
 
 QvBool QvName::isNodeNameStartChar(char c) {
-    if (isdigit(c))
+    if (isdigit(c)) {
         return FALSE;
+    }
 
     return isIdentChar(c);
 }
@@ -104,11 +110,13 @@ QvBool QvName::isNodeNameStartChar(char c) {
 static const char badCharacters[] = "+\'\"\\{}";
 
 QvBool QvName::isNodeNameChar(char c) {
-    if (isalnum(c))
+    if (isalnum(c)) {
         return TRUE;
+    }
 
-    if ((strchr(badCharacters, c) != NULL) || isspace(c) || iscntrl(c))
+    if ((strchr(badCharacters, c) != NULL) || isspace(c) || iscntrl(c)) {
         return FALSE;
+    }
 
     return TRUE;
 }

@@ -84,8 +84,9 @@ void TagIvGraph::fromTagFlatMesh(TagFlatMesh* tagFlatMesh) {
 template <class QV_FIELDPTR> void findField(QvNode* node, QvName name, QV_FIELDPTR& f) {
     f = 0;
     for (int i = 0; i < node->getFieldData()->getNumFields(); ++i) {
-        if (node->getFieldData()->getFieldName(i) == name)
+        if (node->getFieldData()->getFieldName(i) == name) {
             f = dynamic_cast<QV_FIELDPTR>(node->getFieldData()->getField(node, i));
+        }
     }
 }
 
@@ -107,27 +108,33 @@ static TagFlatMesh::FlatSectorType convertToFlatSector(QvUnknownNode* n) {
     findField(n, "normal", normalField);
     findField(n, "normalT", normalTField);
 
-    if ((faceIndexField == 0) || (vertexIndexField == 0))
+    if ((faceIndexField == 0) || (vertexIndexField == 0)) {
         return TagFlatMesh::FlatSectorType(std::pair<int, int>(0, 0), 0);
+    }
 
     int fIndex = faceIndexField->value;
     int vIndex = vertexIndexField->value;
 
     SectorInfo* si = new SectorInfo();
-    if (sectorTagField)
+    if (sectorTagField) {
         si->setSectorTag(SectorInfo::SectorTagType(sectorTagField->value));
+    }
 
-    if (flatnessField)
+    if (flatnessField) {
         si->setModifiedFlatness(flatnessField->value);
+    }
 
-    if (thetaField)
+    if (thetaField) {
         si->setTheta(thetaField->value);
+    }
 
-    if (normalTField)
+    if (normalTField) {
         si->setModifiedNormalT(normalTField->value);
+    }
 
-    if (normalField)
+    if (normalField) {
         si->setModifiedNormal(cvec3f(normalField->value[0], normalField->value[1], normalField->value[2]));
+    }
 
     return TagFlatMesh::FlatSectorType(std::pair<int, int>(fIndex, vIndex), si);
 }
@@ -155,8 +162,9 @@ static QvSFLong* makeSFLong(long l) {
 static QvMFLong* makeMFLong(const std::vector<int>& v) {
     QvMFLong* field = new QvMFLong();
     field->allocValues(v.size());
-    for (uint i = 0; i < v.size(); ++i)
+    for (uint i = 0; i < v.size(); ++i) {
         field->values[i] = v[i];
+    }
     return field;
 }
 
@@ -213,8 +221,9 @@ void addCreaseEdge(QvSeparator* n, const std::vector<int>& indexVec) {
     ls->ref();
     ls->coordIndex.allocValues(indexVec.size());
     ls->setName("creaseEdge");
-    for (uint i = 0; i < indexVec.size(); ++i)
+    for (uint i = 0; i < indexVec.size(); ++i) {
         ls->coordIndex.values[i] = indexVec[i];
+    }
     n->getChildren()->append(ls);
 }
 
@@ -226,23 +235,28 @@ void getVert(QvNode* n, const char* className, std::vector<int>& vertVec) {
             QvMFLong* indexField = 0;
             findField(un, "vertexIndex", indexField);
             assert(indexField);
-            for (int i = 0; i < indexField->num; ++i)
+            for (int i = 0; i < indexField->num; ++i) {
                 vertVec.push_back(indexField->values[i]);
+            }
         }
     }
 
-    if (vertVec.size() == 0)
-        if ((grp = dynamic_cast<QvGroup*>(n)))
-            for (int i = 0; i < grp->getNumChildren(); i++)
+    if (vertVec.size() == 0) {
+        if ((grp = dynamic_cast<QvGroup*>(n))) {
+            for (int i = 0; i < grp->getNumChildren(); i++) {
                 getVert(grp->getChild(i), className, vertVec);
+            }
+        }
+    }
 }
 
 void getCreaseEdge(QvNode* n, std::vector<int>& creaseEdgeVec) {
     QvGroup* grp;
     QvIndexedLineSet* un;
     if ((un = dynamic_cast<QvIndexedLineSet*>(n))) {
-        for (int i = 0; i < un->coordIndex.num; ++i)
+        for (int i = 0; i < un->coordIndex.num; ++i) {
             creaseEdgeVec.push_back(un->coordIndex.values[i]);
+        }
     }
 
     if ((grp = dynamic_cast<QvGroup*>(n))) {
@@ -261,8 +275,9 @@ void getSector(QvNode* n, std::vector<TagFlatMesh::FlatSectorType>& secVec) {
             TagFlatMesh::FlatSectorType fs = convertToFlatSector(un);
             assert(fs.second);
             SectorInfo::ref(fs.second);
-            if (fs.second != 0)
+            if (fs.second != 0) {
                 secVec.push_back(fs);
+            }
         }
     }
     if ((grp = dynamic_cast<QvGroup*>(n))) {

@@ -111,8 +111,9 @@ static void DrawAnyArc(CVec3T<float> vFrom, CVec3T<float> vTo) {
     float dp;
     pts[0] = vFrom;
     pts[1] = pts[NSEGS] = vTo;
-    for (i = 0; i < LG_NSEGS; i++)
+    for (i = 0; i < LG_NSEGS; i++) {
         pts[1] = (pts[0] + pts[1]).dir();
+    }
 
     dp = 2.0f * pts[0].dot(pts[1]);
 
@@ -121,8 +122,9 @@ static void DrawAnyArc(CVec3T<float> vFrom, CVec3T<float> vTo) {
     }
 
     glBegin(GL_LINE_STRIP);
-    for (i = 0; i <= NSEGS; i++)
+    for (i = 0; i <= NSEGS; i++) {
         glVertex3fv((float*)pts[i]);
+    }
     glEnd();
 }
 
@@ -211,12 +213,15 @@ void ArcBall::Update() {
     qDown.ballPoints(vrFrom, vrTo);
     SetRotation(HMatrix(qNow));
 
-    if (X != axisIndex)
+    if (X != axisIndex) {
         sets[BodyAxes][X] = mNow.col(X);
-    if (Y != axisIndex)
+    }
+    if (Y != axisIndex) {
         sets[BodyAxes][Y] = mNow.col(Y);
-    if (Z != axisIndex)
+    }
+    if (Z != axisIndex) {
         sets[BodyAxes][Z] = mNow.col(Z);
+    }
 }
 
 void ArcBall::BeginDrag() {
@@ -256,8 +261,9 @@ void ArcBall::Draw(const CVec3T<float>& camerapos) {
     glPushMatrix();
     glTranslatef(center.x(), center.y(), center.z());
 
-    if (axisSet != NoAxes)
+    if (axisSet != NoAxes) {
         DrawOuterRing(camerapos);
+    }
 
     glScalef(radius, radius, radius);
 
@@ -271,8 +277,9 @@ void ArcBall::Draw(const CVec3T<float>& camerapos) {
 // Draw all constraint arcs.
 void ArcBall::DrawConstraints() {
 
-    if (axisSet == NoAxes)
+    if (axisSet == NoAxes) {
         return;
+    }
 
     CVec3T<float>* axset = sets[axisSet];
 
@@ -282,8 +289,9 @@ void ArcBall::DrawConstraints() {
         if (axisIndex != axisI) {
             //        if (dragging) continue;
             glColor3fv((float*)inactiveColor);
-        } else
+        } else {
             glColor3fv((float*)activeColor);
+        }
         DrawFullArc(axset[axisI]);
     }
 }
@@ -315,6 +323,7 @@ void ArcBall::DrawDragArc() {
 // Draw arc for result of all drags.
 void ArcBall::DrawResultArc() {
     glColor3fv((float*)resultColor);
-    if (showResult)
+    if (showResult) {
         DrawAnyArc(vrFrom, vrTo);
+    }
 }

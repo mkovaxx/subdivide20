@@ -20,8 +20,9 @@ QvDict* QvNode::nameDict = NULL;
 #define NULL_KEYWORD "NULL"
 
 void QvNode::init() {
-    if (nameDict == NULL)
+    if (nameDict == NULL) {
         nameDict = new QvDict;
+    }
     //    std::cerr<<"QvNode::init()"<<std::endl;
 }
 
@@ -32,16 +33,18 @@ QvNode::QvNode() {
 }
 
 QvNode::~QvNode() {
-    if (!!(*objName))
+    if (!!(*objName)) {
         removeName(this, objName->getString());
+    }
     delete objName;
 }
 
 void QvNode::ref() const { ((QvNode*)this)->refCount++; }
 
 void QvNode::unref() const {
-    if (--((QvNode*)this)->refCount == 0)
+    if (--((QvNode*)this)->refCount == 0) {
         delete (QvNode*)this;
+    }
 }
 
 void QvNode::unrefNoDelete() const { ((QvNode*)this)->refCount--; }
@@ -57,8 +60,9 @@ void QvNode::setName(const QvName& newName) {
     const char* str = newName.getString();
     QvBool isBad = 0;
 
-    if (newName.getLength() > 0 && !QvName::isNodeNameStartChar(str[0]))
+    if (newName.getLength() > 0 && !QvName::isNodeNameStartChar(str[0])) {
         isBad = TRUE;
+    }
 
     int i;
     for (i = 1; i < newName.getLength() && !isBad; i++) {
@@ -75,10 +79,11 @@ void QvNode::setName(const QvName& newName) {
             char temp[2];
             temp[0] = str[i];
             temp[1] = '\0';
-            if (!QvName::isNodeNameChar(str[i]))
+            if (!QvName::isNodeNameChar(str[i])) {
                 goodString += "_";
-            else
+            } else {
                 goodString += temp;
+            }
         }
 #ifdef DEBUG
         QvDebugError::post("QvNode::setName",
@@ -120,15 +125,18 @@ void QvNode::removeName(QvNode* b, const char* name) {
         list = (QvPList*)t;
         i = list->find(b);
 
-        if (i < 0)
+        if (i < 0) {
             found = FALSE;
+        }
 
-        else
+        else {
             list->remove(i);
+        }
     }
 
-    if (!found)
+    if (!found) {
         QvDebugError::post("QvNode::removeName", "Name \"%s\" (node %x) is not in dictionary", name, b);
+    }
 }
 
 QvBool QvNode::read(QvInput* in, QvNode*& node) {
@@ -182,8 +190,9 @@ QvBool QvNode::readInstance(QvInput* in) {
         //      std::cerr<<"got no string!"<<std::endl;
     }
 
-    if (!fieldData->read(in, this))
+    if (!fieldData->read(in, this)) {
         return FALSE;
+    }
 
     return TRUE;
 }
@@ -200,8 +209,9 @@ QvNode* QvNode::readReference(QvInput* in) {
         node = NULL;
     }
 
-    else if ((node = in->findReference(refName)) == NULL)
+    else if ((node = in->findReference(refName)) == NULL) {
         QvReadError::post(in, "Unknown reference \"%s\"", refName.getString());
+    }
 
     return node;
 }
@@ -238,31 +248,35 @@ QvBool QvNode::readNode(QvInput* in, QvName& className, QvNode*& node) {
     if (ret) {
 
         if (!(gotChar = in->read(c)) || c != OPEN_BRACE) {
-            if (gotChar)
+            if (gotChar) {
                 QvReadError::post(in, "Expected '%c'; got '%c'", OPEN_BRACE, c);
-            else
+            } else {
                 QvReadError::post(in, "Expected '%c'; got EOF", OPEN_BRACE);
+            }
             ret = FALSE;
         }
 
         else {
             ret = readNodeInstance(in, className, refName, node);
 
-            if (!ret)
+            if (!ret) {
                 flush = TRUE;
+            }
 
             else if (!(gotChar = in->read(c)) || c != CLOSE_BRACE) {
-                if (gotChar)
+                if (gotChar) {
                     QvReadError::post(in, "Expected '%c'; got '%c'", CLOSE_BRACE, c);
-                else
+                } else {
                     QvReadError::post(in, "Expected '%c'; got EOF", CLOSE_BRACE);
+                }
                 ret = FALSE;
             }
         }
     }
 
-    if (!ret && flush)
+    if (!ret && flush) {
         flushInput(in);
+    }
 
     //  std::cerr<<"<-QvNode::readNode("<<","<<in<<","<<className.getString()<<","
     //      <<node<<")"<<std::endl;
@@ -279,11 +293,13 @@ QvBool QvNode::readNodeInstance(QvInput* in, const QvName& className, const QvNa
     //      <<refName.getString()<<","<<node<<")"<<std::endl;
 
     node = createInstance(in, className);
-    if (node == NULL)
+    if (node == NULL) {
         return FALSE;
+    }
 
-    if (!(!refName))
+    if (!(!refName)) {
         in->addReference(refName, node);
+    }
 
     return node->readInstance(in);
 }
@@ -377,11 +393,13 @@ void QvNode::flushInput(QvInput* in) {
 
     while (nestLevel > 0 && in->get(c)) {
 
-        if (c == CLOSE_BRACE)
+        if (c == CLOSE_BRACE) {
             nestLevel--;
+        }
 
-        else if (c == OPEN_BRACE)
+        else if (c == OPEN_BRACE) {
             nestLevel++;
+        }
     }
 }
 

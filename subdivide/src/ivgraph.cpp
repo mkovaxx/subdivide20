@@ -48,8 +48,9 @@ template <class NodeType> QvNode* findNode(QvNode* node, NodeType* dummy) {
     QvGroup* grp;
     if ((grp = dynamic_cast<QvGroup*>(node))) {
         for (int i = 0; i < grp->getNumChildren(); i++) {
-            if ((res = findNode(grp->getChild(i), dummy)))
+            if ((res = findNode(grp->getChild(i), dummy))) {
                 return res;
+            }
         }
         return 0;
     } else {
@@ -63,18 +64,22 @@ static QvNode* findNamedNode(QvNode* node, const QvName& name) {
     QvNode* res;
     QvGroup* grp;
 
-    if (node->getName() == name)
+    if (node->getName() == name) {
         return node;
+    }
 
     else if ((grp = dynamic_cast<QvGroup*>(node))) {
-        for (int i = 0; i < grp->getNumChildren(); i++)
-            if ((res = findNamedNode(grp->getChild(i), name)))
+        for (int i = 0; i < grp->getNumChildren(); i++) {
+            if ((res = findNamedNode(grp->getChild(i), name))) {
                 return res;
+            }
+        }
         return 0;
     }
 
-    else
+    else {
         return 0;
+    }
 }
 
 IvGraph::IvGraph() {
@@ -83,8 +88,9 @@ IvGraph::IvGraph() {
 }
 
 IvGraph::~IvGraph() {
-    if (root)
+    if (root) {
         root->unref();
+    }
 }
 
 void IvGraph::clear() {
@@ -101,13 +107,16 @@ void IvGraph::write(char* fileName) {
 
 bool IvGraph::read(char* fileName) {
     QvIn qvIn(fileName);
-    if (qvIn.error())
+    if (qvIn.error()) {
         return !qvIn.error();
-    if (root)
+    }
+    if (root) {
         root->unref();
+    }
     root = qvIn.read();
-    if (qvIn.error())
+    if (qvIn.error()) {
         root = 0;
+    }
     return !qvIn.error();
 }
 
@@ -125,8 +134,9 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
     QvNode* pathToCoords = findNode(root, (QvCoordinate3*)0);
 
     if (pathToCoords == 0) {
-        if (root)
+        if (root) {
             root->unref();
+        }
         im->Cleanup();
         return false;
     } else {
@@ -170,8 +180,9 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
             if (im->poly_v.size() > 0 && im->poly_v[im->poly_v.size() - 1].novtx() < 3) {
                 // skip polygons with < 3 vertices
                 std::cerr << "skipping polygon with " << im->poly_v[im->poly_v.size() - 1].novtx() << " vertices ";
-                for (uint l = 0; l < im->poly_v[im->poly_v.size() - 1].novtx(); l++)
+                for (uint l = 0; l < im->poly_v[im->poly_v.size() - 1].novtx(); l++) {
                     std::cerr << im->index_v[im->poly_v[im->poly_v.size() - 1].start() + l] << " ";
+                }
                 std::cerr << std::endl;
                 im->poly_v[im->poly_v.size() - 1] = IPoly(im->index_v.size(), 0);
                 im->triindex_v.push_back(-1);
@@ -204,24 +215,29 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
     } else { // split all polygons into triangles
         int first_vertex, second_vertex, third_vertex;
         while (i < indices.num) {
-            while (i < indices.num && indices.values[i] == -1)
+            while (i < indices.num && indices.values[i] == -1) {
                 i++;
+            }
             first_vertex = indices.values[i];
             i++;
-            while (i < indices.num && indices.values[i] != -1 && indices.values[i] == first_vertex)
+            while (i < indices.num && indices.values[i] != -1 && indices.values[i] == first_vertex) {
                 i++;
-            if (i < indices.num && indices.values[i] != -1)
+            }
+            if (i < indices.num && indices.values[i] != -1) {
                 second_vertex = indices.values[i];
-            else
+            } else {
                 continue;
+            }
             i++;
             while (i < indices.num && indices.values[i] != -1 &&
-                   (indices.values[i] == second_vertex || indices.values[i] == first_vertex))
+                   (indices.values[i] == second_vertex || indices.values[i] == first_vertex)) {
                 i++;
-            if (i < indices.num && indices.values[i] != -1)
+            }
+            if (i < indices.num && indices.values[i] != -1) {
                 third_vertex = indices.values[i];
-            else
+            } else {
                 continue;
+            }
             assert(i < indices.num && indices.values[i] != -1 && first_vertex < indices.num &&
                    second_vertex < indices.num);
             i++;
@@ -233,12 +249,14 @@ bool IvGraph::toFlatMesh(FlatMesh* im, bool split) {
             while (i < indices.num && indices.values[i] != -1) {
                 second_vertex = third_vertex;
                 while (i < indices.num && indices.values[i] != -1 &&
-                       (indices.values[i] == first_vertex || indices.values[i] == second_vertex))
+                       (indices.values[i] == first_vertex || indices.values[i] == second_vertex)) {
                     i++;
-                if (i < indices.num && indices.values[i] != -1)
+                }
+                if (i < indices.num && indices.values[i] != -1) {
                     third_vertex = indices.values[i];
-                else
+                } else {
                     break;
+                }
                 i++;
                 im->poly_v.push_back(IPoly(im->index_v.size(), 3));
                 im->index_v.push_back(first_vertex);
@@ -281,8 +299,9 @@ QvNode* IvGraph::createIndexedFaceSet(FlatMesh* flatMesh) {
     uint v;
     node->coordIndex.allocValues(0);
     for (p = 0; p < flatMesh->poly_v.size(); ++p) {
-        for (v = flatMesh->poly_v[p].start(); v < flatMesh->poly_v[p].start() + flatMesh->poly_v[p].novtx(); ++v)
+        for (v = flatMesh->poly_v[p].start(); v < flatMesh->poly_v[p].start() + flatMesh->poly_v[p].novtx(); ++v) {
             addIndex(node->coordIndex, (long)flatMesh->index_v[v]);
+        }
         addIndex(node->coordIndex, -1);
     }
 
@@ -291,8 +310,9 @@ QvNode* IvGraph::createIndexedFaceSet(FlatMesh* flatMesh) {
 
 void IvGraph::fromFlatMesh(FlatMesh* flatMesh) {
 
-    if (root)
+    if (root) {
         root->unref();
+    }
     root = new QvSeparator();
     root->ref();
 

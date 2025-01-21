@@ -47,12 +47,13 @@ template <class Mesh> void MeshObjectTp<Mesh>::render() {
             int novtx = (*it)->noVtx();
             if (novtx != lastNoVtx) {
                 glEnd();
-                if (novtx == 3)
+                if (novtx == 3) {
                     glBegin(GL_TRIANGLES);
-                else if (novtx == 4)
+                } else if (novtx == 4) {
                     glBegin(GL_QUADS);
-                else
+                } else {
                     glBegin(GL_POLYGON);
+                }
             }
 
             EnoType e = (*it)->directEno(1, CCW);
@@ -61,10 +62,11 @@ template <class Mesh> void MeshObjectTp<Mesh>::render() {
                 glVertex3fv(((*it)->headVert(e))->getPos(it.depth()));
             }
 
-            if ((novtx == 3) || (novtx == 4))
+            if ((novtx == 3) || (novtx == 4)) {
                 lastNoVtx = novtx;
-            else
+            } else {
                 lastNoVtx = 0;
+            }
         }
     }
     glEnd();

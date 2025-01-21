@@ -51,8 +51,9 @@ template <class TLBaseFace> class TLTagFaceTp : public TLBaseFace {
     }
 
     virtual ~TLTagFaceTp() {
-        for (int i = 0; i < this->noVtx(); ++i)
+        for (int i = 0; i < this->noVtx(); ++i) {
             SectorInfo::unref(_sectorInfo[i]);
+        }
         delete[] _vertexTag;
         delete[] _edgeTag;
         delete[] _sectorInfo;
@@ -76,8 +77,9 @@ template <class TLBaseFace> class TLTagFaceTp : public TLBaseFace {
         Face* nf = this->neighbor(eno, ne);
 
         setTLEdgeTag(eno, edgeTag);
-        if (nf != 0)
+        if (nf != 0) {
             ((TLFace*)nf)->setTLEdgeTag(ne, edgeTag);
+        }
 
         this->headVert(eno)->makeSpecial();
         this->tailVert(eno)->makeSpecial();

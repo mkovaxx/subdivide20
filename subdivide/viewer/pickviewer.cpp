@@ -33,8 +33,9 @@ void PickViewer::mouse(int button, int state, int x, int y) {
     if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
         pick(x, getHeight() - y);
         // callback to mesh class
-        if (_pickCB)
+        if (_pickCB) {
             _pickCB(_pickedStuff, _pickData);
+        }
         glutPostRedisplay();
     } else {
         BallViewer::mouse(button, state, x, y);
@@ -46,8 +47,9 @@ void PickViewer::key(unsigned char k, int x, int y) {
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();
-    } else
+    } else {
         BallViewer::key(k, x, y);
+    }
 }
 
 void PickViewer::specialKey(int k, int x, int y) {
@@ -55,8 +57,9 @@ void PickViewer::specialKey(int k, int x, int y) {
     if (it != _specialMap.end()) {
         ((*it).second.first)((*it).second.second);
         glutPostRedisplay();
-    } else
+    } else {
         BallViewer::specialKey(k, x, y);
+    }
 }
 
 void PickViewer::pick(GLint x, GLint y) {
@@ -77,8 +80,9 @@ void PickViewer::pick(GLint x, GLint y) {
     glGetIntegerv(GL_GREEN_BITS, &gbits);
     glGetIntegerv(GL_BLUE_BITS, &bbits);
     int shift = 1;
-    for (int i = 0; i < 8 - std::min(std::min(rbits, gbits), bbits); ++i)
+    for (int i = 0; i < 8 - std::min(std::min(rbits, gbits), bbits); ++i) {
         shift *= 2;
+    }
 
     if (getObject()) {
         unsigned char picks =

@@ -29,8 +29,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 TriMesh::TriMesh() { _triTagMesh = new TagMeshTp<Tri>(); }
 
 TriMesh::~TriMesh() {
-    if (_triTagMesh)
+    if (_triTagMesh) {
         delete _triTagMesh;
+    }
 }
 
 TriMesh::TriMesh(const TagFlatMesh& flatMesh) { _triTagMesh = new TagMeshTp<Tri>(flatMesh); }
@@ -67,8 +68,9 @@ TriMesh* TriMesh::leafMesh() const {
 
     TagMeshTp<Tri>::FaceIterType fi;
     for (fi = _triTagMesh->faceBegin(); fi != _triTagMesh->faceEnd(); ++fi) {
-        if ((*fi)->isLeaf())
+        if ((*fi)->isLeaf()) {
             tm->insertFace(*fi);
+        }
     }
 
     TriMesh* m = new TriMesh();

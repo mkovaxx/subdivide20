@@ -22,8 +22,9 @@
 template <class Mesh> PickMeshObjectTp<Mesh>::PickMeshObjectTp() : _tlPicks(PickObject::PICK_ALL), _listNo(-1) { ; }
 
 template <class Mesh> PickMeshObjectTp<Mesh>::~PickMeshObjectTp() {
-    if (glIsList(_listNo))
+    if (glIsList(_listNo)) {
         glDeleteLists(_listNo, 2);
+    }
 }
 
 template <class Mesh> void PickMeshObjectTp<Mesh>::renderTri() {
@@ -44,12 +45,13 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderTri() {
                 int novtx = (*it)->noVtx();
                 if (novtx != lastNoVtx) {
                     glEnd();
-                    if (novtx == 3)
+                    if (novtx == 3) {
                         glBegin(GL_TRIANGLES);
-                    else if (novtx == 4)
+                    } else if (novtx == 4) {
                         glBegin(GL_QUADS);
-                    else
+                    } else {
                         glBegin(GL_POLYGON);
+                    }
                 }
 
                 EnoType e = (*it)->directEno(1, CCW);
@@ -58,10 +60,11 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderTri() {
                     glNormal3fv((*it)->normal((*it)->headVno(e)));
                     glVertex3fv((*it)->headVert(e)->getPos(it.depth()));
                 }
-                if ((novtx == 3) || (novtx == 4))
+                if ((novtx == 3) || (novtx == 4)) {
                     lastNoVtx = novtx;
-                else
+                } else {
                     lastNoVtx = 0;
+                }
             }
         }
         glEnd();
@@ -93,9 +96,9 @@ void PickMeshObjectTp<Mesh>::renderTLVertex(bool pick, unsigned int targetCnt, u
             cvec3f q0 = alpha * p0 + (1.0f - alpha) * p1;
             cvec3f q1 = (1.0f - alpha) * p1 + alpha * p2;
 
-            if (pick)
+            if (pick) {
                 setColor(*it, (*it)->prevEno(e), PickedStuff::PICK_VERTEX, targetCnt, shift);
-            else {
+            } else {
                 switch ((*it)->vertexTag((*it)->tailVno(e))) {
                 case FaceType::NOTAG_VERTEX:
                     glColor3fv(PickableParam::vertexColor);
@@ -142,9 +145,9 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderTLEdge(bool pick, unsig
             cvec3f q3 = alpha * p3 + (1.0f - alpha) * p2;
 
             bool f = false;
-            if (pick)
+            if (pick) {
                 setColor(*it, e, PickedStuff::PICK_EDGE, targetCnt, shift);
-            else {
+            } else {
                 if ((*it)->edgeTag(e) == FaceType::CREASE_EDGE) {
                     glColor3fv(PickableParam::creaseEdgeColor);
                     f = true;
@@ -190,9 +193,9 @@ void PickMeshObjectTp<Mesh>::renderTLSector(bool pick, unsigned int targetCnt, u
             cvec3f s0 = s * p0 + (1.0f - s) * p1;
             cvec3f s1 = (1.0f - s) * p1 + s * p2;
 
-            if (pick)
+            if (pick) {
                 setColor(*it, (*it)->prevEno(e), PickedStuff::PICK_SECTOR, targetCnt, shift);
-            else {
+            } else {
                 switch ((*it)->sectorTag((*it)->tailVno(e1))) {
                 case SectorInfo::NOTAG_SECTOR:
                     glColor4fv(PickableParam::sectorColor);
@@ -241,10 +244,11 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::renderNormal() {
 
                 glVertex3fv(p2);
                 SectorInfo* si = (*it)->sectorInfo((*it)->headVno(e));
-                if ((si == 0) || (si->modifiedNormal().l1() == 0))
+                if ((si == 0) || (si->modifiedNormal().l1() == 0)) {
                     glVertex3fv(p2 + fac * l * (*it)->normal((*it)->headVno(e)));
-                else
+                } else {
                     glVertex3fv(p2 + fac * l * si->modifiedNormal());
+                }
             }
         }
     }
@@ -265,15 +269,17 @@ void PickMeshObjectTp<Mesh>::renderTLNormal(bool pick, unsigned int targetCnt, u
             float fac = 0.5f;
             float l = 1.0f / 3.0f * ((p1 - p0).l2() + (p1 - p2).l2() + (p2 - p0).l2());
 
-            if (pick)
+            if (pick) {
                 setColor(*it, e, PickedStuff::PICK_NORMAL, targetCnt, shift);
+            }
             glVertex3fv((float*)p2);
             SectorInfo* si = (*it)->sectorInfo((*it)->headVno(e));
             if (targetCnt == 0) {
-                if ((si == 0) || (si->modifiedNormal().l1() == 0))
+                if ((si == 0) || (si->modifiedNormal().l1() == 0)) {
                     glVertex3fv((float*)(p2 + fac * l * (*it)->normal((*it)->headVno(e))));
-                else
+                } else {
                     glVertex3fv((float*)(p2 + fac * l * si->modifiedNormal()));
+                }
             }
         }
     }
@@ -294,17 +300,20 @@ template <class Mesh>
 void PickMeshObjectTp<Mesh>::renderPick(unsigned char picks, unsigned int targetCnt, unsigned int shift) {
     _cnt = 0;
 
-    if (picks & PickedStuff::PICK_VERTEX)
+    if (picks & PickedStuff::PICK_VERTEX) {
         renderTLVertex(true, targetCnt, shift);
-    if (picks & PickedStuff::PICK_EDGE)
+    }
+    if (picks & PickedStuff::PICK_EDGE) {
         renderTLEdge(true, targetCnt, shift);
+    }
     if (picks & PickedStuff::PICK_NORMAL) {
         glLineWidth(5.0f);
         renderTLNormal(true, targetCnt, shift);
         glLineWidth(1.0f);
     }
-    if (picks & PickedStuff::PICK_SECTOR)
+    if (picks & PickedStuff::PICK_SECTOR) {
         renderTLSector(true, targetCnt, shift);
+    }
 }
 
 template <class Mesh> void PickMeshObjectTp<Mesh>::renderTL(unsigned char picks) {
@@ -378,9 +387,9 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::rerender() {
 
 template <class Mesh> void PickMeshObjectTp<Mesh>::render() {
     // the code for hiding the mesh is only showing sectors..
-    if (_tlPicks == PickedStuff::PICK_SECTOR)
+    if (_tlPicks == PickedStuff::PICK_SECTOR) {
         renderTL(PickObject::PICK_ALL);
-    else {
+    } else {
         // this number actually depends on the cameramodel.  Here we fix
         // it to some reasonable imperical level.
         float zOffset = float(0.001 / (2.0 * 100.0));

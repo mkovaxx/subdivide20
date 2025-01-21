@@ -26,8 +26,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "vertex.h"
 
 FlatMesh::FlatMesh(const FlatMesh& fm) {
-    for (uint i = 0; i < fm.vert_v.size(); ++i)
+    for (uint i = 0; i < fm.vert_v.size(); ++i) {
         Vertex::ref(fm.vert_v[i]);
+    }
     Cleanup();
     vert_v = fm.vert_v;
     index_v = fm.index_v;
@@ -49,8 +50,9 @@ FlatMesh& FlatMesh::operator=(const FlatMesh& fm) {
 
 void FlatMesh::Cleanup() {
     std::vector<Vertex*>::iterator vi;
-    for (vi = vert_v.begin(); vi != vert_v.end(); ++vi)
+    for (vi = vert_v.begin(); vi != vert_v.end(); ++vi) {
         Vertex::unref(*vi);
+    }
 
     vert_v.erase(vert_v.begin(), vert_v.end());
     poly_v.erase(poly_v.begin(), poly_v.end());

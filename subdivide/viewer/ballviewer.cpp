@@ -61,8 +61,9 @@ void BallViewer::renderObject() {
     glColor3f(1.0, 1.0, 0.0);
 
     // render object
-    if (getObject())
+    if (getObject()) {
         getObject()->render();
+    }
     glCheck();
 }
 
@@ -93,12 +94,14 @@ void BallViewer::display() {
 void BallViewer::mouse(int button, int state, int x, int y) {
     y = getHeight() - y;
     if (state == GLUT_DOWN) {
-        if (_uiAction)
+        if (_uiAction) {
             delete _uiAction;
+        }
 
         // map left+shift to right button
-        if ((button == GLUT_LEFT_BUTTON) && (glutGetModifiers() & GLUT_ACTIVE_ALT))
+        if ((button == GLUT_LEFT_BUTTON) && (glutGetModifiers() & GLUT_ACTIVE_ALT)) {
             button = GLUT_RIGHT_BUTTON;
+        }
 
         switch (button) {
         case GLUT_LEFT_BUTTON:
@@ -120,8 +123,9 @@ void BallViewer::mouse(int button, int state, int x, int y) {
 
 void BallViewer::motion(int x, int y) {
     y = getHeight() - y;
-    if (_uiAction)
+    if (_uiAction) {
         _uiAction->update(x, y);
+    }
     glutPostRedisplay();
 }
 

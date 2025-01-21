@@ -61,10 +61,11 @@ QvBool QvGroup::readChildren(QvInput* in) {
 
     while (TRUE) {
         if (read(in, child)) {
-            if (child != NULL)
+            if (child != NULL) {
                 children->append(child);
-            else
+            } else {
                 break;
+            }
         } else {
             ret = FALSE;
             break;

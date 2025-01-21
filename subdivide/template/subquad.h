@@ -63,8 +63,9 @@ class Quad : public TagFaceTp<                        // normals and tags
 
     void clearFace(int d = 0);
     void clearNormal() {
-        for (VnoType v = 0; v < noVtx(); ++v)
+        for (VnoType v = 0; v < noVtx(); ++v) {
             setNormal(v, 0);
+        }
     }
     void midSub(int d = 0);
 
@@ -103,8 +104,9 @@ class TLQuad : public TLTagFaceTp< // top level tag information
     // needed for cloning
     static TLQuad* createFromFace(Face* f) {
         Vertex** v = new Vertex*[f->noVtx()];
-        for (int i = 0; i < f->noVtx(); ++i)
+        for (int i = 0; i < f->noVtx(); ++i) {
             v[i] = f->vert(i);
+        }
         TLQuad* nf = new TLQuad(f->noVtx(), v);
         nf->_orient = f->orientation();
         delete[] v;

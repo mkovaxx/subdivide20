@@ -47,10 +47,11 @@ static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
 Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoObject(0) {
 
-    if (t == 0)
+    if (t == 0) {
         sprintf(_title, "Viewer#%d", _viewer.size());
-    else
+    } else {
         strcpy(_title, t);
+    }
 
     _viewer.push_back(this);
 
@@ -103,8 +104,9 @@ void Viewer::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glCheck();
 
-    if (_geoObject)
+    if (_geoObject) {
         _geoObject->render();
+    }
     glCheck();
 
     glutSwapBuffers();
@@ -167,46 +169,54 @@ void Viewer::setWindow() {
 
 Viewer* Viewer::getCurrentViewer() {
     int id = glutGetWindow();
-    for (uint i = 0; i < Viewer::_viewer.size(); ++i)
-        if (_viewer[i]->getId() == id)
+    for (uint i = 0; i < Viewer::_viewer.size(); ++i) {
+        if (_viewer[i]->getId() == id) {
             return _viewer[i];
+        }
+    }
     return 0;
 }
 
 void Viewer::displayWrapper() {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->display();
+    }
 }
 
 void Viewer::reshapeWrapper(int x, int y) {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->reshape(x, y);
+    }
 }
 
 void Viewer::mouseWrapper(int button, int state, int x, int y) {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->mouse(button, state, x, y);
+    }
 }
 
 void Viewer::motionWrapper(int x, int y) {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->motion(x, y);
+    }
 }
 
 void Viewer::keyWrapper(unsigned char k, int x, int y) {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->key(k, x, y);
+    }
 }
 
 void Viewer::specialKeyWrapper(int k, int x, int y) {
     Viewer* v = getCurrentViewer();
-    if (v)
+    if (v) {
         v->specialKey(k, x, y);
+    }
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {

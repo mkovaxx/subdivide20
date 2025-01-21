@@ -9,15 +9,17 @@ const char* QvState::stackNames[NumStacks] = {
 QvState::QvState() {
     stacks = new QvElement*[NumStacks];
 
-    for (int i = 0; i < NumStacks; i++)
+    for (int i = 0; i < NumStacks; i++) {
         stacks[i] = NULL;
+    }
 
     depth = 0;
 }
 
 QvState::~QvState() {
-    while (depth > 0)
+    while (depth > 0) {
         pop();
+    }
 
     delete[] stacks;
 }
@@ -33,9 +35,11 @@ void QvState::push() { depth++; }
 void QvState::pop() {
     depth--;
 
-    for (int i = 0; i < NumStacks; i++)
-        while (stacks[i] != NULL && stacks[i]->depth > depth)
+    for (int i = 0; i < NumStacks; i++) {
+        while (stacks[i] != NULL && stacks[i]->depth > depth) {
             popElement((StackIndex)i);
+        }
+    }
 }
 
 void QvState::popElement(StackIndex stackIndex) {
@@ -51,11 +55,14 @@ void QvState::print() {
 
         printf("\tStack [%2d] (%s):\n", i, stackNames[i]);
 
-        if (stacks[i] == NULL)
+        if (stacks[i] == NULL) {
             printf("\t\tNULL\n");
+        }
 
-        else
-            for (QvElement* elt = stacks[i]; elt != NULL; elt = elt->next)
+        else {
+            for (QvElement* elt = stacks[i]; elt != NULL; elt = elt->next) {
                 elt->print();
+            }
+        }
     }
 }

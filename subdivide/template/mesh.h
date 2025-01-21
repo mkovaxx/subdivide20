@@ -90,8 +90,9 @@ template <class Face> class FaceIterTp {
     int _cl, _l;
     typename std::set<FaceType*>::iterator _it;
     void next() {
-        if (_t == 0)
+        if (_t == 0) {
             _t = (*_it);
+        }
         if ((!_t->isLeaf()) && ((_cl < _l) || (_l == -1))) {
             // go deeper if possible
             ++_cl;
@@ -149,10 +150,11 @@ template <class Face> class MeshTp {
     const std::vector<Vertex*> vertVector() const { return _vertVec; }
 
     FaceIterType faceBegin(int l = -1) {
-        if (_faceSet.begin() == _faceSet.end())
+        if (_faceSet.begin() == _faceSet.end()) {
             return FaceIterType(l, 0, _faceSet.begin());
-        else
+        } else {
             return FaceIterType(l, (*_faceSet.begin()), _faceSet.begin());
+        }
     }
     FaceIterType faceEnd(int l = -1) { return FaceIterType(l, 0, _faceSet.end()); }
 
@@ -193,8 +195,9 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
 
         int novtx = flatMesh.poly_v[i].novtx();
         Vertex** _v = new Vertex*[novtx];
-        for (int u = 0; u < novtx; ++u)
+        for (int u = 0; u < novtx; ++u) {
             _v[u] = flatMesh.vert_v[flatMesh.index_v[start + u]];
+        }
         TLFaceType* t = new TLFaceType(novtx, _v);
         delete[] _v;
 
@@ -214,8 +217,9 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
 
         insertFace(t);
 
-        for (e = 1; e < t->noVtx() + 1; ++e)
+        for (e = 1; e < t->noVtx() + 1; ++e) {
             edgeMap[VertPairType(t->tailVert(e), t->headVert(e))] = EdgeType(t, e);
+        }
     }
 
     // now we want to renumber all the vertices in the same order as in
@@ -237,8 +241,9 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
         Vertex* v = flatMesh.vert_v[i];
         _vertVec.push_back(v); // keep this vertex
         typename std::map<Vertex*, std::pair<int, VertexType>>::iterator it = _vertMap.find(v);
-        if (it != _vertMap.end())
+        if (it != _vertMap.end()) {
             _vertMap[v] = std::pair<int, VertexType>(i, (*it).second.second); // change index to point into table
+        }
     }
 }
 
@@ -246,8 +251,9 @@ template <class Face> MeshTp<Face>::MeshTp(const MeshTp& m) {
     typename std::set<Face*>::iterator it;
     for (it = _faceSet.begin(); it != _faceSet.end(); ++it) {
         Face* t = (*it);
-        if (t->isToplevel())
+        if (t->isToplevel()) {
             TLFaceType::ref((TLFaceType*)t);
+        }
     }
     _faceSet = m._faceSet;
     _vertMap = m._vertMap;
@@ -264,8 +270,9 @@ template <class Face> MeshTp<Face>& MeshTp<Face>::operator=(MeshTp& m) {
         // ref all faceangles from m
         for (it = m._faceSet.begin(); it != m._faceSet.end(); ++it) {
             Face* t = (*it);
-            if (t->isToplevel())
+            if (t->isToplevel()) {
                 TLFaceType::ref((TLFaceType*)t);
+            }
         }
 
         cleanup();
@@ -322,21 +329,24 @@ void MeshTp<Face>::setClone(const MeshTp& m, std::map<Vertex*, Vertex*>& vvMap, 
                 EdgeType ne0(tmp, ne);
                 if (ne0.face() != 0) {
                     typename std::map<Face*, Face*>::iterator it = ttMap.find(ne0.face());
-                    if (it != ttMap.end())
+                    if (it != ttMap.end()) {
                         t1->linkBothWays(e, (TLFaceType*)(*it).second, ne0.eno());
+                    }
                 }
             }
         }
 
         // replace vertices
         typename std::map<Vertex*, std::pair<int, VertexType>>::const_iterator vi;
-        for (vi = m._vertMap.begin(); vi != m._vertMap.end(); ++vi)
+        for (vi = m._vertMap.begin(); vi != m._vertMap.end(); ++vi) {
             vvMap[(*vi).first] = (*vi).first->clone((*vi).second.second.face()->depth());
+        }
 
         for (mi = ttMap.begin(); mi != ttMap.end(); ++mi) {
             Face* t = (*mi).second;
-            for (VnoType v = 0; v < t->noVtx(); ++v)
+            for (VnoType v = 0; v < t->noVtx(); ++v) {
                 t->setVert(v, vvMap[t->vert(v)]);
+            }
             insertFace(t);
         }
     }
@@ -344,8 +354,9 @@ void MeshTp<Face>::setClone(const MeshTp& m, std::map<Vertex*, Vertex*>& vvMap, 
 
 template <class Face> void MeshTp<Face>::insertFace(Face* t) {
     _faceSet.insert(t);
-    if (t->isToplevel())
+    if (t->isToplevel()) {
         TLFaceType::ref((TLFaceType*)t);
+    }
     for (VnoType v = 0; v < t->noVtx(); ++v) {
         typename std::map<Vertex*, std::pair<int, VertexType>>::iterator it = _vertMap.find(t->vert(v));
         if (it == _vertMap.end()) {

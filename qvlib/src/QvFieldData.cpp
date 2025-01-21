@@ -80,22 +80,25 @@ static QvName stripWhite(const char* name) {
 
     int i;
     for (i = 0; name[i]; i++) {
-        if (isspace(name[i]))
+        if (isspace(name[i])) {
             lastwhite = i;
-        else {
-            if (firstchar == -1)
+        } else {
+            if (firstchar == -1) {
                 firstchar = i;
+            }
             lastchar = i;
         }
     }
 
-    if (lastchar > lastwhite)
+    if (lastchar > lastwhite) {
         return QvName(&name[firstchar]);
+    }
 
     char buf[500];
     int b;
-    for (b = 0, i = firstchar; i <= lastchar; i++, b++)
+    for (b = 0, i = firstchar; i <= lastchar; i++, b++) {
         buf[b] = name[i];
+    }
     buf[b] = 0;
     return QvName(buf);
 }
@@ -107,10 +110,11 @@ void QvFieldData::addEnumValue(const char* typeNameArg, const char* valNameArg, 
 
     for (int i = 0; i < enums.getLength(); i++) {
         e = (struct QvEnumEntry*)enums[i];
-        if (e->typeName == typeName)
+        if (e->typeName == typeName) {
             break;
-        else
+        } else {
             e = NULL;
+        }
     }
     if (e == NULL) {
         e = new QvEnumEntry(typeName);
@@ -157,11 +161,13 @@ QvBool QvFieldData::readFieldTypes(QvInput* in, QvNode* object) {
     QvName fieldType, fieldName;
     char c;
 
-    if (!((in->read(c)) || c != OPEN_BRACE_CHAR))
+    if (!((in->read(c)) || c != OPEN_BRACE_CHAR)) {
         return FALSE;
+    }
 
-    if (in->read(c) && c == CLOSE_BRACE_CHAR)
+    if (in->read(c) && c == CLOSE_BRACE_CHAR) {
         return TRUE;
+    }
 
     in->putBack(c);
 
@@ -169,31 +175,36 @@ QvBool QvFieldData::readFieldTypes(QvInput* in, QvNode* object) {
 
     while (TRUE) {
 
-        if (!in->read(fieldType, TRUE) || !in->read(fieldName, TRUE))
+        if (!in->read(fieldType, TRUE) || !in->read(fieldName, TRUE)) {
             return FALSE;
+        }
 
         if (!alreadyHasFields) {
             QvField* fld = QvField::createInstanceFromName(fieldType);
-            if (fld == 0)
+            if (fld == 0) {
                 return FALSE;
+            }
             fld->setContainer(object);
             addField(object, fieldName.getString(), fld);
         }
 
-        if (!in->read(c))
+        if (!in->read(c)) {
             return FALSE;
+        }
         if (c == VALUE_SEPARATOR_CHAR) {
 
             if (in->read(c)) {
-                if (c == CLOSE_BRACE_CHAR)
+                if (c == CLOSE_BRACE_CHAR) {
                     return TRUE;
-                else
+                } else {
                     in->putBack(c);
+                }
             }
-        } else if (c == CLOSE_BRACE_CHAR)
+        } else if (c == CLOSE_BRACE_CHAR) {
             return TRUE;
-        else
+        } else {
             return FALSE;
+        }
     }
 }
 
@@ -201,17 +212,20 @@ QvBool QvFieldData::read(QvInput* in, QvNode* object, QvBool errorOnUnknownField
 
     QvName fieldName;
 
-    if (fields.getLength() == 0)
+    if (fields.getLength() == 0) {
         return TRUE;
+    }
 
     while (TRUE) {
 
-        if (!in->read(fieldName, TRUE) || !fieldName)
+        if (!in->read(fieldName, TRUE) || !fieldName) {
             return TRUE;
+        }
 
         QvBool foundName;
-        if (!read(in, object, fieldName, foundName))
+        if (!read(in, object, fieldName, foundName)) {
             return FALSE;
+        }
 
         if (!foundName) {
             if (errorOnUnknownField) {
@@ -230,15 +244,17 @@ QvBool QvFieldData::read(QvInput* in, QvNode* object, const QvName& fieldName, Q
     int i;
     for (i = 0; i < fields.getLength(); i++) {
         if (fieldName == getFieldName(i)) {
-            if (!getField(object, i)->read(in, fieldName))
+            if (!getField(object, i)->read(in, fieldName)) {
                 return FALSE;
+            }
             break;
         }
     }
-    if (i == fields.getLength())
+    if (i == fields.getLength()) {
         foundName = FALSE;
-    else
+    } else {
         foundName = TRUE;
+    }
 
     return TRUE;
 }

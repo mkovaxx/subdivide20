@@ -94,13 +94,16 @@ class SectorInfo {
     }
 
     static void ref(SectorInfo* si) {
-        if (si)
+        if (si) {
             ++si->_refCount;
+        }
     }
     static void unref(SectorInfo* si) {
-        if (si)
-            if ((0 == (--si->_refCount)))
+        if (si) {
+            if ((0 == (--si->_refCount))) {
                 delete (si);
+            }
+        }
     }
 
   private:

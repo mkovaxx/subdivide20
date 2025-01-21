@@ -25,8 +25,9 @@ QvBool QvSFBitMask::readValue(QvInput* in) {
     value = 0;
 
     // Read first character
-    if (!in->read(c))
+    if (!in->read(c)) {
         return FALSE;
+    }
 
     // Check for parenthesized list of bitwise-or'ed flags
     if (c == OPEN_PAREN) {
@@ -35,8 +36,9 @@ QvBool QvSFBitMask::readValue(QvInput* in) {
         while (TRUE) {
             if (in->read(n, TRUE) && !(!n)) {
 
-                if (findEnumValue(n, v))
+                if (findEnumValue(n, v)) {
                     value |= v;
+                }
 
                 else {
                     QvReadError::post(in,
@@ -55,8 +57,9 @@ QvBool QvSFBitMask::readValue(QvInput* in) {
                 return FALSE;
             }
 
-            if (c == CLOSE_PAREN)
+            if (c == CLOSE_PAREN) {
                 break;
+            }
 
             else if (c != BITWISE_OR) {
                 QvReadError::post(in, "Expected '%c' or '%c', got '%c' ", "in QvSFBitMask value", BITWISE_OR,
@@ -70,8 +73,9 @@ QvBool QvSFBitMask::readValue(QvInput* in) {
         in->putBack(c);
 
         // Read mnemonic value as a character string identifier
-        if (!in->read(n, TRUE))
+        if (!in->read(n, TRUE)) {
             return FALSE;
+        }
 
         if (!findEnumValue(n, value)) {
             QvReadError::post(in,

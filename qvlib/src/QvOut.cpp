@@ -60,45 +60,47 @@ char* getFieldDefName(QvField* field) {
 
     char* name;
 
-    if (dynamic_cast<QvMFColor*>(field))
+    if (dynamic_cast<QvMFColor*>(field)) {
         name = "MFColor";
-    else if (dynamic_cast<QvMFVec3f*>(field))
+    } else if (dynamic_cast<QvMFVec3f*>(field)) {
         name = "MFVec3f";
-    else if (dynamic_cast<QvMFVec2f*>(field))
+    } else if (dynamic_cast<QvMFVec2f*>(field)) {
         name = "MFVec2f";
-    else if (dynamic_cast<QvMFString*>(field))
+    } else if (dynamic_cast<QvMFString*>(field)) {
         name = "MFString";
-    else if (dynamic_cast<QvMFLong*>(field))
+    } else if (dynamic_cast<QvMFLong*>(field)) {
         name = "MFLong";
-    else if (dynamic_cast<QvMFInt32*>(field))
+    } else if (dynamic_cast<QvMFInt32*>(field)) {
         name = "MFInt32";
-    else if (dynamic_cast<QvMFFloat*>(field))
+    } else if (dynamic_cast<QvMFFloat*>(field)) {
         name = "MFFloat";
+    }
 
-    else if (dynamic_cast<QvSFMatrix*>(field))
+    else if (dynamic_cast<QvSFMatrix*>(field)) {
         name = "SFMatrix";
-    else if (dynamic_cast<QvSFLong*>(field))
+    } else if (dynamic_cast<QvSFLong*>(field)) {
         name = "SFLong";
-    else if (dynamic_cast<QvSFImage*>(field))
+    } else if (dynamic_cast<QvSFImage*>(field)) {
         name = "SFImage";
-    else if (dynamic_cast<QvSFFloat*>(field))
+    } else if (dynamic_cast<QvSFFloat*>(field)) {
         name = "SFFloat";
-    else if (dynamic_cast<QvSFEnum*>(field))
+    } else if (dynamic_cast<QvSFEnum*>(field)) {
         name = "SFEnum";
-    else if (dynamic_cast<QvSFColor*>(field))
+    } else if (dynamic_cast<QvSFColor*>(field)) {
         name = "SFColor";
-    else if (dynamic_cast<QvSFBool*>(field))
+    } else if (dynamic_cast<QvSFBool*>(field)) {
         name = "SFBool";
-    else if (dynamic_cast<QvSFBitMask*>(field))
+    } else if (dynamic_cast<QvSFBitMask*>(field)) {
         name = "SFBitMask";
-    else if (dynamic_cast<QvSFRotation*>(field))
+    } else if (dynamic_cast<QvSFRotation*>(field)) {
         name = "SFRotation";
-    else if (dynamic_cast<QvSFString*>(field))
+    } else if (dynamic_cast<QvSFString*>(field)) {
         name = "SFString";
-    else if (dynamic_cast<QvSFVec2f*>(field))
+    } else if (dynamic_cast<QvSFVec2f*>(field)) {
         name = "SFVec2f";
-    else if (dynamic_cast<QvSFVec3f*>(field))
+    } else if (dynamic_cast<QvSFVec3f*>(field)) {
         name = "SFVec3f";
+    }
 
     else {
         std::cerr << "QvOut: unknown field" << std::endl;
@@ -111,8 +113,9 @@ char* getFieldDefName(QvField* field) {
 
 static void printIndent(int indent, std::ostream& outfile) {
     int i;
-    for (i = 0; i < indent; i++)
+    for (i = 0; i < indent; i++) {
         outfile << "\t";
+    }
 }
 
 static void writeMFFloat(QvMFFloat* field, int indent, std::ostream& outfile) {
@@ -205,16 +208,18 @@ static void writeSFRotation(QvSFRotation* field, int, std::ostream& outfile) {
 static void writeSFEnum(QvSFEnum* field, int, std::ostream& outfile) {
     QvName name;
     QvBool found = field->findEnumName(field->value, name);
-    if (found == TRUE)
+    if (found == TRUE) {
         outfile << " " << name.getString() << std::endl;
-    else
+    } else {
         outfile << " " << field->value << std::endl;
+    }
 }
 
 static void writeMFColor(QvMFColor* field, int, std::ostream& outfile) {
     outfile << " ";
-    for (int i = 0; i < 3 * field->num; ++i)
+    for (int i = 0; i < 3 * field->num; ++i) {
         outfile << field->values[i] << " ";
+    }
     outfile << std::endl;
 }
 
@@ -238,44 +243,57 @@ static void writeField(QvField* field, int indent, std::ostream& outfile) {
     QvSFMatrix* fieldSFMatrix = 0;
     QvSFRotation* fieldSFRotation = 0;
 
-    if ((fieldMFFloat = dynamic_cast<QvMFFloat*>(field)))
+    if ((fieldMFFloat = dynamic_cast<QvMFFloat*>(field))) {
         writeMFFloat(fieldMFFloat, indent, outfile);
+    }
 
-    else if ((fieldMFInt32 = dynamic_cast<QvMFInt32*>(field)))
+    else if ((fieldMFInt32 = dynamic_cast<QvMFInt32*>(field))) {
         writeMFInt32(fieldMFInt32, indent, outfile);
+    }
 
-    else if ((fieldMFVec3f = dynamic_cast<QvMFVec3f*>(field)))
+    else if ((fieldMFVec3f = dynamic_cast<QvMFVec3f*>(field))) {
         writeMFVec3f(fieldMFVec3f, indent, outfile);
+    }
 
-    else if ((fieldMFString = dynamic_cast<QvMFString*>(field)))
+    else if ((fieldMFString = dynamic_cast<QvMFString*>(field))) {
         writeMFString(fieldMFString, indent, outfile);
+    }
 
-    else if ((fieldMFLong = dynamic_cast<QvMFLong*>(field)))
+    else if ((fieldMFLong = dynamic_cast<QvMFLong*>(field))) {
         writeMFLong(fieldMFLong, indent, outfile);
+    }
 
-    else if ((fieldSFFloat = dynamic_cast<QvSFFloat*>(field)))
+    else if ((fieldSFFloat = dynamic_cast<QvSFFloat*>(field))) {
         writeSFFloat(fieldSFFloat, indent, outfile);
+    }
 
-    else if ((fieldSFMatrix = dynamic_cast<QvSFMatrix*>(field)))
+    else if ((fieldSFMatrix = dynamic_cast<QvSFMatrix*>(field))) {
         writeSFMatrix(fieldSFMatrix, indent, outfile);
+    }
 
-    else if ((fieldSFRotation = dynamic_cast<QvSFRotation*>(field)))
+    else if ((fieldSFRotation = dynamic_cast<QvSFRotation*>(field))) {
         writeSFRotation(fieldSFRotation, indent, outfile);
+    }
 
-    else if ((fieldSFVec3f = dynamic_cast<QvSFVec3f*>(field)))
+    else if ((fieldSFVec3f = dynamic_cast<QvSFVec3f*>(field))) {
         writeSFVec3f(fieldSFVec3f, indent, outfile);
+    }
 
-    else if ((fieldMFColor = dynamic_cast<QvMFColor*>(field)))
+    else if ((fieldMFColor = dynamic_cast<QvMFColor*>(field))) {
         writeMFColor(fieldMFColor, indent, outfile);
+    }
 
-    else if ((fieldSFEnum = dynamic_cast<QvSFEnum*>(field)))
+    else if ((fieldSFEnum = dynamic_cast<QvSFEnum*>(field))) {
         writeSFEnum(fieldSFEnum, indent, outfile);
+    }
 
-    else if ((fieldSFUShort = dynamic_cast<QvSFUShort*>(field)))
+    else if ((fieldSFUShort = dynamic_cast<QvSFUShort*>(field))) {
         writeSFUShort(fieldSFUShort, indent, outfile);
+    }
 
-    else if ((fieldSFLong = dynamic_cast<QvSFLong*>(field)))
+    else if ((fieldSFLong = dynamic_cast<QvSFLong*>(field))) {
         writeSFLong(fieldSFLong, indent, outfile);
+    }
 
     else {
         std::cerr << "QvOut: unknown field!" << std::endl;
@@ -391,8 +409,9 @@ static void writeUnknownNode(QvUnknownNode* node, int indent, std::ostream& outf
 
 void writeNode(QvNode* node, int indent, std::ostream& outfile) {
 
-    if (strlen(node->getName().getString()) != 0)
+    if (strlen(node->getName().getString()) != 0) {
         outfile << "DEF " << node->getName().getString() << " ";
+    }
 
     QvUnknownNode* nodeUnknown;
     QvCoordinate3* nodeCoordinate3;
@@ -404,25 +423,25 @@ void writeNode(QvNode* node, int indent, std::ostream& outfile) {
     QvSeparator* nodeSeparator;
     QvMatrixTransform* nodeMatrixTransform;
 
-    if ((nodeSeparator = dynamic_cast<QvSeparator*>(node)))
+    if ((nodeSeparator = dynamic_cast<QvSeparator*>(node))) {
         writeSeparator(nodeSeparator, indent, outfile);
-    else if ((nodeCoordinate3 = dynamic_cast<QvCoordinate3*>(node)))
+    } else if ((nodeCoordinate3 = dynamic_cast<QvCoordinate3*>(node))) {
         writeCoordinate3(nodeCoordinate3, indent, outfile);
-    else if ((nodeDrawStyle = dynamic_cast<QvDrawStyle*>(node)))
+    } else if ((nodeDrawStyle = dynamic_cast<QvDrawStyle*>(node))) {
         writeDrawStyle(nodeDrawStyle, indent, outfile);
-    else if ((nodeMaterial = dynamic_cast<QvMaterial*>(node)))
+    } else if ((nodeMaterial = dynamic_cast<QvMaterial*>(node))) {
         writeMaterial(nodeMaterial, indent, outfile);
-    else if ((nodeIndexedLineSet = dynamic_cast<QvIndexedLineSet*>(node)))
+    } else if ((nodeIndexedLineSet = dynamic_cast<QvIndexedLineSet*>(node))) {
         writeIndexedLineSet(nodeIndexedLineSet, indent, outfile);
-    else if ((nodeIndexedFaceSet = dynamic_cast<QvIndexedFaceSet*>(node)))
+    } else if ((nodeIndexedFaceSet = dynamic_cast<QvIndexedFaceSet*>(node))) {
         writeIndexedFaceSet(nodeIndexedFaceSet, indent, outfile);
-    else if ((nodePerspectiveCamera = dynamic_cast<QvPerspectiveCamera*>(node)))
+    } else if ((nodePerspectiveCamera = dynamic_cast<QvPerspectiveCamera*>(node))) {
         writePerspectiveCamera(nodePerspectiveCamera, indent, outfile);
-    else if ((nodeUnknown = dynamic_cast<QvUnknownNode*>(node)))
+    } else if ((nodeUnknown = dynamic_cast<QvUnknownNode*>(node))) {
         writeUnknownNode(nodeUnknown, indent, outfile);
-    else if ((nodeMatrixTransform = dynamic_cast<QvMatrixTransform*>(node)))
+    } else if ((nodeMatrixTransform = dynamic_cast<QvMatrixTransform*>(node))) {
         writeMatrixTransformNode(nodeMatrixTransform, indent, outfile);
-    else {
+    } else {
         std::cerr << "QvOut: unknown node" << std::endl;
         QvOut::_error = true;
     }

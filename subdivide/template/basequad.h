@@ -48,8 +48,9 @@ template <class BaseFace> class TLBQuadTp : public BaseFace {
     }
     virtual ~TLBQuadTp() {
         if (this->_v != 0) {
-            for (VnoType v = 0; v < noVtx(); ++v)
+            for (VnoType v = 0; v < noVtx(); ++v) {
                 Vertex::unref(this->_v[v]);
+            }
             delete[] this->_v;
             this->_v = 0;
         }
@@ -76,13 +77,15 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
     BaseQuadTp() : _v(0) { ; }
     virtual ~BaseQuadTp() {
         if (_v != 0) {
-            for (VnoType v = 0; v < 4; ++v)
+            for (VnoType v = 0; v < 4; ++v) {
                 Vertex::unref(_v[v]);
+            }
             delete[] _v;
             _v = 0;
         }
-        if (this->_c != 0)
+        if (this->_c != 0) {
             delete[] this->_c;
+        }
     }
 
   public:
@@ -132,9 +135,9 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
 
     Face* centerEdge(EnoType& ce) const {
         ce = 0;
-        if (this->_c == 0)
+        if (this->_c == 0) {
             return 0;
-        else {
+        } else {
             ce = 2;
             return (Face*)this->_c;
         }
@@ -168,9 +171,9 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
     BaseFaceType* neighbor(EnoType e, EnoType& ne) const {
         assert(((Face*)this)->checkEno(e));
         ne = 0;
-        if (this->_p == 0)
+        if (this->_p == 0) {
             return ((TLFace*)this)->neighbor(e, ne);
-        else {
+        } else {
 
             CnoType nc = 0;
             switch (e) {
@@ -192,9 +195,9 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
                 break;
             }
 
-            if (ne != 0)
+            if (ne != 0) {
                 return ((Face*)this->_p)->child(nc);
-            else {
+            } else {
                 EnoType pe;
                 Face* pt = parentEdge(e, pe);
                 EnoType npe;
@@ -203,10 +206,11 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
                 if ((npt == 0) || npt->isLeaf()) {
                     return 0;
                 } else {
-                    if (((Face*)this)->headVert(e) == npt->headVert(npe))
+                    if (((Face*)this)->headVert(e) == npt->headVert(npe)) {
                         return npt->headSubEdge(npe, ne);
-                    else
+                    } else {
                         return npt->tailSubEdge(npe, ne);
+                    }
                 }
             }
         }

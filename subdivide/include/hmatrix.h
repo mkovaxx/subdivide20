@@ -133,16 +133,17 @@ class HMatrix {
         for (i = 0; i < 4; i++) {
             V = A(i, i); /* Find the new pivot. */
             k = i;
-            for (j = i + 1; j < 4; j++)
+            for (j = i + 1; j < 4; j++) {
                 if (fabs(A(j, i)) > fabs(V)) {
                     /* Find maximum on col i, row i+1..n */
                     V = A(j, i);
                     k = j;
                 }
+            }
             j = k;
 
             double tmp;
-            if (i != j)
+            if (i != j) {
                 for (k = 0; k < 4; k++) {
                     tmp = A(i, k);
                     A(i, k) = A(j, k);
@@ -151,6 +152,7 @@ class HMatrix {
                     (*this)(i, k) = (*this)(j, k);
                     (*this)(j, k) = tmp;
                 }
+            }
 
             for (j = i + 1; j < 4; j++) { /* Eliminate col i from row i+1..n. */
                 if (A(j, i) != 0) {
@@ -165,8 +167,9 @@ class HMatrix {
         }
 
         for (i = 3; i >= 0; i--) { /* Back Substitution. */
-            if (A(i, i) == 0)
+            if (A(i, i) == 0) {
                 return false; /* Error. */
+            }
 
             for (j = 0; j < i; j++) { /* Eliminate col i from row 1..i-1. */
                 V = A(j, i) / A(i, i);
@@ -178,9 +181,11 @@ class HMatrix {
             }
         }
 
-        for (i = 0; i < 4; i++) /* Normalize the inverse Matrix. */
-            for (j = 0; j < 4; j++)
+        for (i = 0; i < 4; i++) { /* Normalize the inverse Matrix. */
+            for (j = 0; j < 4; j++) {
                 (*this)(i, j) /= A(i, i);
+            }
+        }
 
         return true;
     }
@@ -274,17 +279,21 @@ inline std::istream& operator>>(std::istream& is, HMatrix& M) {
     int i;
     char c;
     is >> c; // read '['
-    for (i = 0; i < 4; ++i)
+    for (i = 0; i < 4; ++i) {
         is >> M._m[i];
+    }
     is >> c; // read ';'
-    for (i = 4; i < 8; ++i)
+    for (i = 4; i < 8; ++i) {
         is >> M._m[i];
+    }
     is >> c; // read ';'
-    for (i = 8; i < 12; ++i)
+    for (i = 8; i < 12; ++i) {
         is >> M._m[i];
+    }
     is >> c; // read ';'
-    for (i = 12; i < 16; ++i)
+    for (i = 12; i < 16; ++i) {
         is >> M._m[i];
+    }
     is >> c; // read ']'
     return is;
 }

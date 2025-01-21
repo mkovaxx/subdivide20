@@ -46,10 +46,12 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
         }
     }
     virtual ~TLBaseFaceTp() {
-        if (_neighborFace)
+        if (_neighborFace) {
             delete[] _neighborFace;
-        if (_neighborEno)
+        }
+        if (_neighborEno) {
             delete[] _neighborEno;
+        }
     }
 
     Face* neighbor(EnoType e, EnoType& ne) const {
@@ -91,8 +93,9 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
     void unlinkBothWays(EnoType e) {
         EnoType ne;
         Face* nt = neighbor(e, ne);
-        if (nt)
+        if (nt) {
             ((TLBaseFaceTp*)nt)->unlink(ne);
+        }
         unlink(e);
     }
 
@@ -103,14 +106,17 @@ template <class TLBFace> class TLBaseFaceTp : public TLBFace {
     }
 
     static void ref(TLBaseFaceTp* t) {
-        if (t)
+        if (t) {
             ++t->_refCount;
+        }
     }
 
     static void unref(TLBaseFaceTp* t) {
-        if (t)
-            if ((0 == (--t->_refCount)))
+        if (t) {
+            if ((0 == (--t->_refCount))) {
                 delete (t);
+            }
+        }
     }
 
   protected:

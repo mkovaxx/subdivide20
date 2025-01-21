@@ -31,8 +31,9 @@ QvBool QvTexture2::readInstance(QvInput* in) {
     QvBool readOK = QvNode::readInstance(in);
 
     if (readOK && !filename.isDefault()) {
-        if (!readImage())
+        if (!readImage()) {
             readOK = FALSE;
+        }
         image.setDefault(TRUE);
     }
 

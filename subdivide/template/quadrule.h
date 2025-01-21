@@ -47,11 +47,13 @@ class QuadCoef {
     void print() const {
         std::cerr << "{ centerC = " << centerC;
         uint i;
-        for (i = 0; i < edgeC.size(); ++i)
+        for (i = 0; i < edgeC.size(); ++i) {
             std::cerr << ", " << edgeC[i];
+        }
         std::cerr << ". faceC = ";
-        for (i = 0; i < faceC.size(); ++i)
+        for (i = 0; i < faceC.size(); ++i) {
             std::cerr << ", " << faceC[i];
+        }
         std::cerr << "} " << std::endl;
     }
 };
@@ -187,17 +189,21 @@ class InteriorQuadRuleTable {
   public:
     InteriorQuadRuleTable() { ; }
     ~InteriorQuadRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     InteriorQuadRule* getRule(uint k) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new InteriorQuadRule(k);
+        }
 
         return ruleVec[k];
     }
@@ -210,17 +216,21 @@ class CreaseQuadRuleTable {
   public:
     CreaseQuadRuleTable() { ; }
     ~CreaseQuadRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     CreaseQuadRule* getRule(uint k) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new CreaseQuadRule(k);
+        }
 
         return ruleVec[k];
     }
@@ -233,18 +243,21 @@ class ConvexQuadRuleTable {
   public:
     ConvexQuadRuleTable() { ; }
     ~ConvexQuadRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     ConvexQuadRule* getRule(uint k, float theta) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new ConvexQuadRule(k, theta);
-        else if (ruleVec[k]->getTheta() != theta) {
+        } else if (ruleVec[k]->getTheta() != theta) {
             delete ruleVec[k];
             ruleVec[k] = new ConvexQuadRule(k, theta);
         }
@@ -259,18 +272,21 @@ class ConcaveQuadRuleTable {
   public:
     ConcaveQuadRuleTable() { ; }
     ~ConcaveQuadRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     ConcaveQuadRule* getRule(uint k, float theta) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new ConcaveQuadRule(k, theta);
-        else if (ruleVec[k]->getTheta() != theta) {
+        } else if (ruleVec[k]->getTheta() != theta) {
             delete ruleVec[k];
             ruleVec[k] = new ConcaveQuadRule(k, theta);
         }

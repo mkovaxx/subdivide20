@@ -74,8 +74,9 @@ QvMField::QvMField() { maxNum = num = 0; }
 QvMField::~QvMField() {}
 
 void QvMField::makeRoom(int newNum) {
-    if (newNum != num)
+    if (newNum != num) {
         allocValues(newNum);
+    }
 }
 
 QvBool QvMField::readValue(QvInput* in) {
@@ -91,8 +92,9 @@ QvBool QvMField::readValue(QvInput* in) {
 
             while (TRUE) {
 
-                if (curIndex >= num)
+                if (curIndex >= num) {
                     makeRoom(curIndex + 1);
+                }
 
                 if (!read1Value(in, curIndex++) || !in->read(c)) {
                     QvReadError::post(in, "Couldn't read value %d of field", curIndex);
@@ -101,15 +103,17 @@ QvBool QvMField::readValue(QvInput* in) {
 
                 if (c == VALUE_SEPARATOR_CHAR) {
                     if (in->read(c)) {
-                        if (c == CLOSE_BRACE_CHAR)
+                        if (c == CLOSE_BRACE_CHAR) {
                             break;
-                        else
+                        } else {
                             in->putBack(c);
+                        }
                     }
                 }
 
-                else if (c == CLOSE_BRACE_CHAR)
+                else if (c == CLOSE_BRACE_CHAR) {
                     break;
+                }
 
                 else {
                     QvReadError::post(in,
@@ -121,15 +125,17 @@ QvBool QvMField::readValue(QvInput* in) {
             }
         }
 
-        if (curIndex < num)
+        if (curIndex < num) {
             makeRoom(curIndex);
+        }
     }
 
     else {
         in->putBack(c);
         makeRoom(1);
-        if (!read1Value(in, 0))
+        if (!read1Value(in, 0)) {
             return FALSE;
+        }
     }
 
     return TRUE;

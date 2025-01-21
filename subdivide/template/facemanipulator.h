@@ -141,8 +141,9 @@ template <class Mesh> bool FaceManipulatorTp<Mesh>::toggleVertex(EnoType e) {
     for (i = 0; i < fr.noVtx(); ++i) {
         EnoType ringEno;
         FaceType* ringFace = fr.face(i, ringEno);
-        if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE)
+        if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE) {
             ++creaseCount;
+        }
     }
 
     res = (creaseCount >= 2);
@@ -156,23 +157,26 @@ template <class Mesh> bool FaceManipulatorTp<Mesh>::toggleVertex(EnoType e) {
 
     // new tag
     typename FaceType::VertexTagType vertexTag = f->vertexTag(f->headVno(e));
-    if (vertexTag == FaceType::CORNER_VERTEX)
-        if (fr.isClosed())
+    if (vertexTag == FaceType::CORNER_VERTEX) {
+        if (fr.isClosed()) {
             vertexTag = FaceType::NOTAG_VERTEX;
-        else
+        } else {
             vertexTag = FaceType::CREASE_VERTEX;
-    else if (vertexTag == FaceType::NOTAG_VERTEX) {
-        if (creaseCount == 2)
+        }
+    } else if (vertexTag == FaceType::NOTAG_VERTEX) {
+        if (creaseCount == 2) {
             vertexTag = FaceType::CREASE_VERTEX;
-        else if (creaseCount > 2)
+        } else if (creaseCount > 2) {
             vertexTag = FaceType::CORNER_VERTEX;
-    } else if (vertexTag == FaceType::CREASE_VERTEX)
+        }
+    } else if (vertexTag == FaceType::CREASE_VERTEX) {
         vertexTag = FaceType::CORNER_VERTEX;
+    }
 
     ((typename Mesh::TLFaceType*)f)->setVertexTag(f->headVno(e), vertexTag);
 
     // add sectors
-    if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX))
+    if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX)) {
         for (i = 0; i < fr.noFace(); ++i) {
             EnoType ringEno;
             FaceType* ringFace = fr.face(i, ringEno);
@@ -180,11 +184,13 @@ template <class Mesh> bool FaceManipulatorTp<Mesh>::toggleVertex(EnoType e) {
             assert(ringFace->tailVert(ringEno) == fr.centerVert());
             if ((si = ringFace->sectorInfo(ringFace->tailVno(ringEno))) == 0) {
                 si = new SectorInfo();
-                if (vertexTag == FaceType::CORNER_VERTEX)
+                if (vertexTag == FaceType::CORNER_VERTEX) {
                     si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+                }
                 ((typename Mesh::TLFaceType*)ringFace)->setSectorInfo(ringFace->tailVno(ringEno), si);
             }
         }
+    }
 
     return res;
 }
@@ -200,10 +206,11 @@ template <class Mesh> bool FaceManipulatorTp<Mesh>::toggleSector(EnoType e) {
     if (tlf->vertexTag(tlf->headVno(e)) == FaceType::CORNER_VERTEX) {
         SectorInfo* si = tlf->sectorInfo(tlf->headVno(e));
         res = true;
-        if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+        if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
             si->setSectorTag(SectorInfo::CONCAVE_SECTOR);
-        else
+        } else {
             si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+        }
     }
     return res;
 }
@@ -220,16 +227,18 @@ template <class Mesh> void FaceManipulatorTp<Mesh>::fixVertexToggle(EnoType e) {
     for (i = 0; i < fr.noVtx(); ++i) {
         EnoType ringEno;
         FaceType* ringFace = fr.face(i, ringEno);
-        if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE)
+        if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE) {
             ++creaseCount;
+        }
     }
     assert(f->headVert(e) == fr.centerVert());
-    if (creaseCount < 2)
+    if (creaseCount < 2) {
         ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::NOTAG_VERTEX);
-    else if (creaseCount == 2)
+    } else if (creaseCount == 2) {
         ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CREASE_VERTEX);
-    else
+    } else {
         ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CORNER_VERTEX);
+    }
 
     for (i = 0; i < fr.noFace(); ++i) {
         EnoType ringEno;
@@ -238,7 +247,7 @@ template <class Mesh> void FaceManipulatorTp<Mesh>::fixVertexToggle(EnoType e) {
     }
 
     typename FaceType::VertexTagType vertexTag = f->vertexTag(f->headVno(e));
-    if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX))
+    if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX)) {
         for (i = 0; i < fr.noFace(); ++i) {
             EnoType ringEno;
             FaceType* ringFace = fr.face(i, ringEno);
@@ -246,11 +255,13 @@ template <class Mesh> void FaceManipulatorTp<Mesh>::fixVertexToggle(EnoType e) {
             assert(ringFace->tailVert(ringEno) == fr.centerVert());
             if ((si = ringFace->sectorInfo(ringFace->tailVno(ringEno))) == 0) {
                 si = new SectorInfo();
-                if (vertexTag == FaceType::CORNER_VERTEX)
+                if (vertexTag == FaceType::CORNER_VERTEX) {
                     si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+                }
                 ((TLFaceType*)ringFace)->setSectorInfo(ringFace->tailVno(ringEno), si);
             }
         }
+    }
 }
 
 #endif /* __FACEMANIPULATOR_H__ */

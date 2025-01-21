@@ -63,8 +63,9 @@ void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
             exit(1);
         }
 
-        if (argc > 2)
+        if (argc > 2) {
             depth = std::min(std::max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
+        }
     }
 
     TagFlatMesh tagFlatMesh;
@@ -179,10 +180,11 @@ void triThetaUpCB(void* triObject) {
             assert(si);
             float f = si->theta();
             f += 0.05;
-            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
                 f = std::min(float(M_PI), std::max(f, 0.0f));
-            else
+            } else {
                 f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
+            }
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -201,10 +203,11 @@ void quadThetaUpCB(void* quadObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->theta();
             f += 0.05;
-            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
                 f = std::min(float(M_PI), std::max(f, 0.0f));
-            else
+            } else {
                 f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
+            }
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -223,10 +226,11 @@ void triThetaDownCB(void* triObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->theta();
             f -= 0.05;
-            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
                 f = std::min(float(M_PI), std::max(f, 0.0f));
-            else
+            } else {
                 f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
+            }
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -245,10 +249,11 @@ void quadThetaDownCB(void* quadObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->theta();
             f -= 0.05;
-            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
                 f = std::min(float(M_PI), std::max(f, 0.0f));
-            else
+            } else {
                 f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
+            }
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -406,12 +411,13 @@ void toggleTriViewerStateCB(void* o) {
                             PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;
 
     unsigned char& c = ((PickableTri*)o)->tlRenderMode();
-    if (c == pickall)
+    if (c == pickall) {
         c = PickedStuff::PICK_NOTHING; // show mesh
-    else if (c == PickedStuff::PICK_NOTHING)
+    } else if (c == PickedStuff::PICK_NOTHING) {
         c = PickedStuff::PICK_SECTOR; // show tl mesh
-    else if (c == PickedStuff::PICK_SECTOR)
+    } else if (c == PickedStuff::PICK_SECTOR) {
         c = pickall; // show both
+    }
 
     ((PickableTri*)o)->rerender();
 }
@@ -421,12 +427,13 @@ void toggleQuadViewerStateCB(void* o) {
                             PickedStuff::PICK_SECTOR | PickedStuff::PICK_NORMAL;
 
     unsigned char& c = ((PickableQuad*)o)->tlRenderMode();
-    if (c == pickall)
+    if (c == pickall) {
         c = PickedStuff::PICK_NOTHING; // show mesh
-    else if (c == PickedStuff::PICK_NOTHING)
+    } else if (c == PickedStuff::PICK_NOTHING) {
         c = PickedStuff::PICK_SECTOR; // show tl mesh
-    else if (c == PickedStuff::PICK_SECTOR)
+    } else if (c == PickedStuff::PICK_SECTOR) {
         c = pickall; // show both
+    }
 
     ((PickableQuad*)o)->rerender();
 }

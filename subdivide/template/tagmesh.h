@@ -47,13 +47,14 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         EMapType _eMap;
         EdgeMapType _edgeMap;
         typename std::set<FaceType*>::const_iterator fi;
-        for (fi = this->faceSet().begin(); fi != this->faceSet().end(); ++fi)
+        for (fi = this->faceSet().begin(); fi != this->faceSet().end(); ++fi) {
             for (EnoType e = 1; e < (*fi)->noVtx() + 1; ++e) {
                 Vertex* headVert = (*fi)->headVert(e);
                 Vertex* tailVert = (*fi)->tailVert(e);
                 _edgeMap[VertPairType(tailVert, headVert)] = EdgeType((*fi), e);
                 _eMap[headVert] = EdgeType((*fi), e);
             }
+        }
 
         applyCreaseEdge(flatMesh, _edgeMap);
         applyVertTag(flatMesh, flatMesh.creaseVertVec, FaceType::CREASE_VERTEX, _eMap);
@@ -101,14 +102,16 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
             }
         }
 
-        for (it = this->faceBegin(0); it != this->faceEnd(0); ++it)
+        for (it = this->faceBegin(0); it != this->faceEnd(0); ++it) {
             (*it)->clearFace(0);
+        }
 
         for (int l = 0; l < maxl; ++l) {
-            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it)
+            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it) {
                 if (it.depth() == l) {
                     (*it)->midSub(l);
                 }
+            }
         }
     }
 
@@ -130,16 +133,21 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         }
 
         for (int l = 0; l < maxl; ++l) {
-            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it)
-                if (it.depth() == l)
+            for (it = this->faceBegin(l); (it != this->faceEnd(l)); ++it) {
+                if (it.depth() == l) {
                     (*it)->subdivide(l);
+                }
+            }
         }
 
-        for (it = this->faceBegin(maxl); it != this->faceEnd(maxl); ++it)
-            for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e)
+        for (it = this->faceBegin(maxl); it != this->faceEnd(maxl); ++it) {
+            for (EnoType e = 1; e < (*it)->noVtx() + 1; ++e) {
                 //	if((*it)->isLeaf())
-                if (it.depth() == maxl)
+                if (it.depth() == maxl) {
                     (*it)->computeNormalAndLimit(it.depth());
+                }
+            }
+        }
     }
 
   protected:
@@ -176,16 +184,18 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         for (i = 0; i < fr.noVtx(); ++i) {
             EnoType ringEno;
             FaceType* ringFace = fr.face(i, ringEno);
-            if (ringFace->edgeTag(ringEno) == Face::CREASE_EDGE)
+            if (ringFace->edgeTag(ringEno) == Face::CREASE_EDGE) {
                 ++creaseCount;
+            }
         }
         assert(f->headVert(e) == fr.centerVert());
-        if (creaseCount < 2)
+        if (creaseCount < 2) {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::NOTAG_VERTEX);
-        else if (creaseCount == 2)
+        } else if (creaseCount == 2) {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CREASE_VERTEX);
-        else
+        } else {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CORNER_VERTEX);
+        }
 
         for (i = 0; i < fr.noFace(); ++i) {
             EnoType ringEno;
@@ -194,7 +204,7 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
         }
 
         VertexTagType vertexTag = f->vertexTag(f->headVno(e));
-        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX))
+        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX)) {
             for (i = 0; i < fr.noFace(); ++i) {
                 EnoType ringEno;
                 FaceType* ringFace = fr.face(i, ringEno);
@@ -202,11 +212,13 @@ template <class Face> class TagMeshTp : public MeshTp<Face> {
                 assert(ringFace->tailVert(ringEno) == fr.centerVert());
                 if ((si = ringFace->sectorInfo(ringFace->tailVno(ringEno))) == 0) {
                     si = new SectorInfo();
-                    if (vertexTag == FaceType::CORNER_VERTEX)
+                    if (vertexTag == FaceType::CORNER_VERTEX) {
                         si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+                    }
                     ((TLFaceType*)ringFace)->setSectorInfo(ringFace->tailVno(ringEno), si);
                 }
             }
+        }
     }
 
     void specializeEdge(FaceType* f, EnoType e) {
@@ -255,8 +267,9 @@ template <class Face> void TagMeshTp<Face>::applyCreaseEdge(const TagFlatMesh& m
             Vertex* v0 = m.vert_v[lastIndex];
             Vertex* v1 = m.vert_v[currentIndex];
             typename EdgeMapType::const_iterator it = _edgeMap.find(VertPairType(v0, v1));
-            if (it == _edgeMap.end())
+            if (it == _edgeMap.end()) {
                 it = _edgeMap.find(VertPairType(v1, v0));
+            }
             if (it != _edgeMap.end()) {
                 TLFaceType* f = (TLFaceType*)((*it).second.face());
                 f->setEdgeTag((*it).second.eno(), Face::CREASE_EDGE);
@@ -326,8 +339,9 @@ template <class Face> void TagMeshTp<Face>::fixBoundaryTag() {
                 for (uint i = 0; i < fr.noVtx(); ++i) {
                     EnoType ringE;
                     FaceType* ringF = fr.face(i, ringE);
-                    if (ringF->edgeTag(ringE) == Face::CREASE_EDGE)
+                    if (ringF->edgeTag(ringE) == Face::CREASE_EDGE) {
                         ++incedentCreaseCount;
+                    }
                 }
                 if (incedentCreaseCount == 1) {
                     ;
@@ -399,8 +413,9 @@ template <class Face> void TagMeshTp<Face>::applySector(const TagFlatMesh& flatM
         if (f->vertexTag(fv) == FaceType::NOTAG_VERTEX) {
             std::cerr << "ERROR: SECTOR FOR UNTAGGED VERTEX!" << std::endl;
             std::cerr << "vert: " << f->vert(fv) << std::endl;
-            for (VnoType a = 0; a < f->noVtx(); ++a)
+            for (VnoType a = 0; a < f->noVtx(); ++a) {
                 std::cerr << "\tvert(a): " << f->vert(a) << "\t" << (int)f->vertexTag(a) << std::endl;
+            }
         }
 
         ((TLFaceType*)f)->setSectorInfo(fv, si);
@@ -417,8 +432,9 @@ template <class Face> void TagMeshTp<Face>::setSector(TagFlatMesh* m) const {
         for (i = 0; i < (*it)->noVtx(); ++i, e = (*it)->nextEno(e)) {
             VnoType v = (*it)->headVno(e);
             if (((*it)->sectorInfo((v)) != 0) && !((*it)->sectorInfo(v)->isDefault())) {
-                if ((*it)->sectorInfo(v)->sectorTag() != SectorInfo::NOTAG_SECTOR)
+                if ((*it)->sectorInfo(v)->sectorTag() != SectorInfo::NOTAG_SECTOR) {
                     assert((*it)->vertexTag(v) != FaceType::NOTAG_VERTEX);
+                }
 
                 _sMap[(*it)->sectorInfo(v)] = std::pair<int, int>(fcnt, i);
             }
@@ -467,8 +483,9 @@ void TagMeshTp<Face>::setVertTag(TagFlatMesh*, std::vector<int>& tagVertVec, Ver
     for (it = this->vertMap().begin(); it != this->vertMap().end(); ++it) {
         FaceType* f = (*it).second.second.face();
         VnoType vno = (*it).second.second.vno();
-        if (f->vert(vno)->isSpecial() && (f->vertexTag(vno) == tag))
+        if (f->vert(vno)->isSpecial() && (f->vertexTag(vno) == tag)) {
             tagVertVec.push_back(cnt);
+        }
         ++cnt;
     }
 }
@@ -512,11 +529,13 @@ template <class Face> void TagMeshTp<Face>::cloneTag(std::map<FaceType*, FaceTyp
         TLFaceType* fClone = (TLFaceType*)((*it).second);
         for (EnoType e = 1; e < fOrig->noVtx() + 1; ++e) {
             VnoType headVno = fOrig->headVno(e);
-            if (fOrig->edgeTag(e) != Face::NOTAG_EDGE)
+            if (fOrig->edgeTag(e) != Face::NOTAG_EDGE) {
                 fClone->setEdgeTag(e, fOrig->edgeTag(e));
+            }
             typename Face::VertexTagType tag = fOrig->vertexTag(headVno);
-            if (tag != Face::NOTAG_VERTEX)
+            if (tag != Face::NOTAG_VERTEX) {
                 fClone->setVertexTag(headVno, tag);
+            }
         }
     }
 

@@ -105,14 +105,15 @@ class CameraTransZAction : public UiAction {
     virtual void update(int x, int y) {
         cvec3f p0 = _camera->unproject(cvec3f(x, _y, _camera->project(_arcball->Position()).z()));
         cvec3f p1 = _camera->unproject(cvec3f(x, y, _camera->project(_arcball->Position()).z()));
-        if (y < _y)
+        if (y < _y) {
             _camera->model() =
                 _camera->model() *
                 HMatrix::Translation((p0 - p1).l2() * (_camera->viewWorldPosition() - _arcball->Position()).dir());
-        else
+        } else {
             _camera->model() =
                 _camera->model() *
                 HMatrix::Translation(-(p0 - p1).l2() * (_camera->viewWorldPosition() - _arcball->Position()).dir());
+        }
         _x = x;
         _y = y;
         _camera->computeModelview();
