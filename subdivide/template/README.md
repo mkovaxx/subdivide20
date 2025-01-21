@@ -1,54 +1,58 @@
+# template
+
 This directory contains header and template implementation files
 for mesh connectivity, tag and geometry management
 for meshes, as well as Loop and Catmull-Clark subdivision rule
 implementation extended to handle piecewise smooth boundaries
 as described in the paper.
 
+```
 H. Biermann, A. Levin, D. Zorin.
 Piecewise smooth subdivision surfaces with normal control.
 SIGGRAPH 2000 Conference Proceedings.
+```
 
-Large template instantiations are separated into .impl.h files with the
-same names as .h files containing the template definition.
-Template classes have names ending in Tp.
+Large template instantiations are separated into `.impl.h` files with the
+same names as `.h` files containing the template definition.
+Template classes have names ending in `Tp`.
 
 The primary data structure is a face, which represents a node in
 a quad or triangular hierarchical mesh obtained by subdivision.
 Different functionality (mesh connectivity, hierarchy, tags and
 geometry) is separated into a number of templates.
 
-Templates here are  used to create interfaces
+Templates here are used to create interfaces
 that can be shared by triangular and quadrilateral hierarchical meshes,
-and to be able to create  member functions in base classes that are able
-to return pointers to the derived classes (this is achieved by
+and to be able to create member functions in base classes that are able
+to return pointers to the derived classes. (This is achieved by
 parameterizing the base class templates by the derived class, see
-for example subquad.h)
+for example `subquad.h`.)
 
 In the dependency lists we do not enumerate dependencies
-on global headers, such as general.h, compat.h and cvec3t.h
+on global headers, such as `general.h`, `compat.h`, and `cvec3t.h`
 containing information shared throughout the application.
 
-The files in this directory depend on  external files
-from ../include: general.h, compat.h,cvec3t.h, sectorinfo.h,
-flatmesh.h,  tagflatmesh.h
+The files in this directory depend on external files
+from `../include`: `general.h`, `compat.h`, `cvec3t.h`, `sectorinfo.h`,
+`flatmesh.h`, and `tagflatmesh.h`.
 
-The following files have corresponding .cpp files in ../src directory:
-subquad.h, subtri.h, quadrule.h trirule.h
+The following files have corresponding `.cpp` files in `../src` directory:
+`subquad.h`, `subtri.h`, `quadrule.h`, and `trirule.h`.
 
+The file contents are as follows.
 
+## Vertices
 
-
-The file contents are as follows:
-
-*** Vertices ***
-
+```
 basevertex.h            BaseVertex: vertex class.
 vertex.h                Vertex: class with reference counting added to
                         BaseVertex.
                         Depends on basevertex.h
+```
 
-*** Faces: Base ***
+## Faces: Base
 
+```
 baseface.h              BaseFaceTp: base template for all faces.
 
 convface.h              ConvenientFaceTp: contains
@@ -56,9 +60,11 @@ convface.h              ConvenientFaceTp: contains
 
 tlbaseface.h            TLBaseFaceTp: template class to support pointers
                         to neighbors for top-level faces.
+```
 
-*** Faces: Tags ***
+## Faces: Tags
 
+```
 tagface.h               TagFaceTp: encapsulates accessors to tags
                         for all faces.
                         Depends on sectorinfo.h facering.h
@@ -66,11 +72,11 @@ tagface.h               TagFaceTp: encapsulates accessors to tags
 tltagface.h             TlTagFaceTp: stores tags and prescribed normals
                         at top-level faces.
                         Depends on sectorinfo.h
+```
 
+## Faces: Quad and Triangle-Specific
 
-
-*** Faces: Quad and Triangle-specific ***
-
+```
 basequad.h              BaseQuadTp: base for all faces of a
                         quad hierarchy (including top-level);
                         TLBaseQuadTp: a specialization for top-level faces.
@@ -84,13 +90,17 @@ basetri.h               BaseTriTp: base template class for all faces of a
                         Functionality specific to quad-based hierarchies,
                         such as finding neighbors of faces across edges.
                         Depends on vertex.h
+```
 
-*** Faces: Geometry ***
+## Faces: Geometry
 
+```
 geoface.h               GeoFaceTp: encapsulates accessors to vertex positions.
+```
 
-*** Faces: assembly and subdivision ***
+## Faces: Assembly and Subdivision
 
+```
 subquad.h               Quad and TLQuad: classes assembling together
                         and instantiating templates to handle connectivity,
                         geometry and tags, as well as quad hierarchy specific
@@ -105,21 +115,25 @@ subtri.h                Tri and TLTri: classes assembling together
                         geometry and tags, as well as triangle hierarchy
                         specific functions. with member functions to perform
                         subdivision.
+                        Depends on
                         baseface.h basetri.h convface.h geoface.h tagface.h
                         tlbaseface.h tltagface.h triruletable.h subdivide.h
+```
 
+## Auxiliary Structures
 
-*** Auxiliary structures ***
-
+```
 facering.h              FaceRingTp: represents rings of faces adjacent to
                         a vertex.
 
 subdivide.h             SubdivideTp: Ring extended with
                         a collection of functions to apply subdivision rules.
                         Depends on sectorinfo.h
+```
 
-*** Subdivision rules ***
+## Subdivision Rules
 
+```
 quadrule.h              QuadRule and derived classes:
                         quadrilateral subdivision coefficients
                         (extends Catmull Clark).
@@ -136,9 +150,11 @@ triruletable.h          TriRuleTableTp:
                         All rule tables for the triangular scheme and
                         functions to apply the rules to rings.
                         Depends on trirule.h
+```
 
-*** Meshes ****
+## Meshes
 
+```
 mesh.h                  MeshTp: base mesh class: set of faces +
                         set of vertices.
                         Depends on flatmesh.h
@@ -149,8 +165,11 @@ tagmesh.h               TagMeshTp: extends mesh to handle tags.
 facemanipulator.h       FaceManipulatorTp: support for modifying tags
                         on vertices and edges of a face.
                         Depends on sectorinfo.h
+```
 
-*** Miscellaneous ***
+## Miscellaneous
 
+```
 optdeque.h              An implementation of deque used to store
                         rings of faces.
+```
