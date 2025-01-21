@@ -20,7 +20,7 @@ ivgraph.cpp             Conversion from VRML 1.0 to FlatMesh and back.
 tagivgraph.cpp          Same but with tags.
 
 subquad.cpp             Subdivision for quads.
-quadrule.cpp            Rule coefficient computations, Catmull-Clark
+quadrule.cpp            Rule coefficient computations, Catmull-Clark.
 quadmesh.cpp            Quad subdivision surface wrapper.
 
 subtri.cpp              Subdivision for triangles.
