@@ -218,6 +218,6 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
     Vertex** _v;
 };
 
-#include "basequad.hi"
+#include "basequad.impl.h"
 
 #endif /* __BASEQUAD_H__ */

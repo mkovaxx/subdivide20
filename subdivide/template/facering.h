@@ -149,6 +149,6 @@ template <class Face> class FaceRingTp {
     bool _closed;                 // is it closed?
 };
 
-#include "facering.hi"
+#include "facering.impl.h"
 
 #endif /* __FACERING_H__ */

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickmeshobject.hi,v 1.7 2001/02/07 15:12:50 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickmeshobject.hi,v $
+// $Id: pickmeshobject.impl.h,v 1.7 2001/02/07 15:12:50 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickmeshobject.impl.h,v $
 
 #include "glcheck.h"
 #include "pickableparam.h"

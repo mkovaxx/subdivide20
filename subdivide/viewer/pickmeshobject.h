@@ -152,6 +152,6 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
     PickedStuff _pickedStuff;
 };
 
-#include "pickmeshobject.hi"
+#include "pickmeshobject.impl.h"
 
 #endif /* __SOBJECT_H__ */

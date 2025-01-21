@@ -154,6 +154,6 @@ template <class BFace> class BaseTriTp : public BFace {
     static const EnoType _tailSubEno[7];
 };
 
-#include "basetri.hi"
+#include "basetri.impl.h"
 
 #endif /* _BASETRI_H__ */

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: meshobject.hi,v 1.1 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/meshobject.hi,v $
+// $Id: meshobject.impl.h,v 1.1 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/meshobject.impl.h,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU

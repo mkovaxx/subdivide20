@@ -58,6 +58,6 @@ template <class ConvenientFace> class TagFaceTp : public ConvenientFace {
     bool hasNormal(VnoType v) const { return (normal(v).l1() != 0); }
 };
 
-#include "tagface.hi"
+#include "tagface.impl.h"
 
 #endif /* __TAGFACE_H__ */
