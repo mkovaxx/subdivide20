@@ -75,25 +75,25 @@ class IPoly {
     // the first entry of a polygon
     uint start() const { return _sindex; }
 
-    // move to the next vertex (represented by number in the polygon)?
+    // move to the next vertex (represented by number in the polygon)
     uint NextV(uint vno) const {
         assert(vno < _novtx);
         return (vno + 1) % _novtx;
     }
 
-    // move to the previous vertex (represented by number in the polygon)?
+    // move to the previous vertex (represented by number in the polygon)
     uint PrevV(uint vno) const {
         assert(vno < _novtx);
         return (vno + _novtx - 1) % _novtx;
     }
 
-    // move to the next vertex (represented by number in the whole mesh array )
+    // move to the next vertex (represented by number in the whole mesh array)
     uint iNextVi(uint vi) const {
         assert(vi >= _sindex && vi < _sindex + _novtx);
         return NextV(vi - _sindex) + _sindex;
     }
 
-    // move to the previous vertex (represented by number in the whole mesh array )
+    // move to the previous vertex (represented by number in the whole mesh array)
     uint iPrevVi(uint vi) const {
         assert(vi >= _sindex && vi < _sindex + _novtx);
         return PrevV(vi - _sindex) + _sindex;
