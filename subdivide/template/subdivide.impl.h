@@ -39,19 +39,23 @@ bool SubdivideTp<RuleTable, FaceRing>::hdRelevantToMidpoint(FaceType* t, EnoType
 
     int vn = t->headVno(e);
 
-    if (!t->vert(vn)->isSpecial())
+    if (!t->vert(vn)->isSpecial()) {
         return false;
+    }
 
     SectorInfo* si = t->sectorInfo(vn);
-    if (si && (si->hasModifiedNormal() || si->hasModifiedFlatness()))
+    if (si && (si->hasModifiedNormal() || si->hasModifiedFlatness())) {
         return true;
+    }
 
-    if ((t->edgeTag(e) == FaceType::NOTAG_EDGE) && (t->vertexTag(vn) == FaceType::NOTAG_VERTEX))
+    if ((t->edgeTag(e) == FaceType::NOTAG_EDGE) && (t->vertexTag(vn) == FaceType::NOTAG_VERTEX)) {
         return false;
+    }
 
     if ((t->edgeTag(e) == FaceType::CREASE_EDGE) &&
-        ((t->vertexTag(vn) == FaceType::CREASE_VERTEX) || (t->vertexTag(vn) == FaceType::NOTAG_VERTEX)))
+        ((t->vertexTag(vn) == FaceType::CREASE_VERTEX) || (t->vertexTag(vn) == FaceType::NOTAG_VERTEX))) {
         return false;
+    }
 
     return true;
 }
@@ -108,12 +112,14 @@ template <class RuleTable, class FaceRing> cvec3f SubdivideTp<RuleTable, FaceRin
 
     assert(t->headVert(e) == _faceRing.centerVert());
 
-    if (si && si->hasModifiedFlatness())
+    if (si && si->hasModifiedFlatness()) {
         res = modifyFlatness(res, _rule->x1().centerC, _rule->x2().centerC);
+    }
 
-    if (si && si->hasModifiedNormal())
+    if (si && si->hasModifiedNormal()) {
         res = ((_faceRing.isClosed()) ? modifyClosedNormal(res, _rule->x1().centerC, _rule->x2().centerC)
                                       : modifyOpenNormal(res, _rule->x1().centerC, _rule->x2().centerC));
+    }
 
     return res;
 }
@@ -125,10 +131,11 @@ template <class RuleTable, class FaceRing> cvec3f SubdivideTp<RuleTable, FaceRin
 
     cvec3f res;
 
-    if (t->edgeTag(e) == FaceType::CREASE_EDGE)
+    if (t->edgeTag(e) == FaceType::CREASE_EDGE) {
         res = RuleTable::applyEdgeCoef(_faceRing, _rule->creaseSubCoef(), _depth);
-    else
+    } else {
         res = RuleTable::applyEdgeCoef(_faceRing, _rule->edgeSubCoef(), _depth);
+    }
 
     float x1 = _rule->x1().edgeC[_faceRing.edgeIndex()];
     float x2 = _rule->x2().edgeC[_faceRing.edgeIndex()];
@@ -139,8 +146,9 @@ template <class RuleTable, class FaceRing> cvec3f SubdivideTp<RuleTable, FaceRin
         res = modifyFlatness(res, x1, x2);
     }
 
-    if ((si = t->sectorInfo(t->headVno(e))) && si->hasModifiedNormal())
+    if ((si = t->sectorInfo(t->headVno(e))) && si->hasModifiedNormal()) {
         res = (_faceRing.isClosed()) ? modifyClosedNormal(res, x1, x2) : modifyOpenNormal(res, x1, x2);
+    }
 
     return res;
 }
@@ -153,10 +161,11 @@ template <class RuleTable, class FaceRing> cvec3f SubdivideTp<RuleTable, FaceRin
     cvec3f n;
     EnoType ce;
     FaceType* cf = _faceRing.centerFace(ce);
-    if (cf->orientation() == CW)
+    if (cf->orientation() == CW) {
         n = a2.cross(a1).dir();
-    else
+    } else {
         n = a1.cross(a2).dir();
+    }
     return n.dir();
 }
 
@@ -246,10 +255,13 @@ cvec3f SubdivideTp<RuleTable, FaceRing>::modifyOpenNormal(const cvec3f& p, float
 
     bool twoSectorCorner = false;
 
-    if (t1->vertexTag(t1->headVno(e1)) != FaceType::NOTAG_VERTEX)
-        if (t0 && t2)
-            if (t0->sectorInfo(t0->tailVno(e0)) == t2->sectorInfo(t2->headVno(e2)))
+    if (t1->vertexTag(t1->headVno(e1)) != FaceType::NOTAG_VERTEX) {
+        if (t0 && t2) {
+            if (t0->sectorInfo(t0->tailVno(e0)) == t2->sectorInfo(t2->headVno(e2))) {
                 twoSectorCorner = true;
+            }
+        }
+    }
 
     if (!twoSectorCorner) {
 
@@ -272,10 +284,11 @@ cvec3f SubdivideTp<RuleTable, FaceRing>::modifyOpenNormal(const cvec3f& p, float
                     break;
                 case FaceType::CORNER_VERTEX: {
                     SectorInfo* s1 = t1->sectorInfo(t1->headVno(e1));
-                    if (s1->sectorTag() == SectorInfo::CONCAVE_SECTOR)
+                    if (s1->sectorTag() == SectorInfo::CONCAVE_SECTOR) {
                         tan1 = (n0.cross(n1)).dir();
-                    else
+                    } else {
                         tan2 = (n0.cross(n1)).dir();
+                    }
                     break;
                 }
                 }

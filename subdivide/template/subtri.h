@@ -51,8 +51,9 @@ class Tri : public TagFaceTp<GeoFaceTp<ConvenientFaceTp<BaseTriTp<BaseFaceTp<Tri
 
     void clearFace(int d = 0);
     void clearNormal() {
-        for (VnoType v = 0; v < noVtx(); ++v)
+        for (VnoType v = 0; v < noVtx(); ++v) {
             setNormal(v, 0);
+        }
     }
 
     // midpoint subdivision
@@ -89,8 +90,9 @@ class TLTri : public TLTagFaceTp<TLBaseFaceTp<TLBTriTp<Tri>>> {
 
     static TLTri* createFromFace(Face* f) {
         Vertex** v = new Vertex*[f->noVtx()];
-        for (int i = 0; i < f->noVtx(); ++i)
+        for (int i = 0; i < f->noVtx(); ++i) {
             v[i] = f->vert(i);
+        }
         TLTri* nf = new TLTri(f->noVtx(), v);
         assert(nf);
         nf->_orient = f->orientation();

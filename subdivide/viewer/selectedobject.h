@@ -63,8 +63,9 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
         EnoType e = _selectedEdge.eno();
         if ((_selectedType == PickObject::PICK_SECTOR) && (f->vertexTag(f->headVno(e)) == FaceType::CORNER_VERTEX)) {
             SectorInfo* si = f->sectorInfo(f->headVno(e));
-            if (si->sectorTag() == SectorInfo::CONCAVE_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONCAVE_SECTOR) {
                 return true;
+            }
         }
         return false;
     }
@@ -101,15 +102,17 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
 
     virtual bool toggle() {
         bool res = false;
-        if (_selectedType == PickObject::PICK_EDGE)
+        if (_selectedType == PickObject::PICK_EDGE) {
             res = toggleEdge(_selectedEdge.face(), _selectedEdge.eno());
-        else if (_selectedType == PickObject::PICK_VERTEX)
+        } else if (_selectedType == PickObject::PICK_VERTEX) {
             res = toggleVertex(_selectedEdge.face(), _selectedEdge.eno());
-        else if (_selectedType == PickObject::PICK_SECTOR)
+        } else if (_selectedType == PickObject::PICK_SECTOR) {
             res = toggleSector(_selectedEdge.face(), _selectedEdge.eno());
+        }
 
-        if (res)
+        if (res) {
             localSub(_selectedEdge.face());
+        }
 
         return res;
     }
@@ -194,8 +197,9 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
         for (i = 0; i < fr.noVtx(); ++i) {
             EnoType ringEno;
             FaceType* ringFace = fr.face(i, ringEno);
-            if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE)
+            if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE) {
                 ++creaseCount;
+            }
         }
 
         res = (creaseCount >= 2);
@@ -209,23 +213,26 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
 
         // new tag
         typename FaceType::VertexTagType vertexTag = f->vertexTag(f->headVno(e));
-        if (vertexTag == FaceType::CORNER_VERTEX)
-            if (fr.isClosed())
+        if (vertexTag == FaceType::CORNER_VERTEX) {
+            if (fr.isClosed()) {
                 vertexTag = FaceType::NOTAG_VERTEX;
-            else
+            } else {
                 vertexTag = FaceType::CREASE_VERTEX;
-        else if (vertexTag == FaceType::NOTAG_VERTEX) {
-            if (creaseCount == 2)
+            }
+        } else if (vertexTag == FaceType::NOTAG_VERTEX) {
+            if (creaseCount == 2) {
                 vertexTag = FaceType::CREASE_VERTEX;
-            else if (creaseCount > 2)
+            } else if (creaseCount > 2) {
                 vertexTag = FaceType::CORNER_VERTEX;
-        } else if (vertexTag == FaceType::CREASE_VERTEX)
+            }
+        } else if (vertexTag == FaceType::CREASE_VERTEX) {
             vertexTag = FaceType::CORNER_VERTEX;
+        }
 
         ((typename Mesh::TLFaceType*)f)->setVertexTag(f->headVno(e), vertexTag);
 
         // add sectors
-        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX))
+        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX)) {
             for (i = 0; i < fr.noFace(); ++i) {
                 EnoType ringEno;
                 FaceType* ringFace = fr.face(i, ringEno);
@@ -233,11 +240,13 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
                 assert(ringFace->tailVert(ringEno) == fr.centerVert());
                 if ((si = ringFace->sectorInfo(ringFace->tailVno(ringEno))) == 0) {
                     si = new SectorInfo();
-                    if (vertexTag == FaceType::CORNER_VERTEX)
+                    if (vertexTag == FaceType::CORNER_VERTEX) {
                         si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+                    }
                     ((typename Mesh::TLFaceType*)ringFace)->setSectorInfo(ringFace->tailVno(ringEno), si);
                 }
             }
+        }
 
         return res;
     }
@@ -252,10 +261,11 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
         if (tlf->vertexTag(tlf->headVno(e)) == FaceType::CORNER_VERTEX) {
             SectorInfo* si = tlf->sectorInfo(tlf->headVno(e));
             res = true;
-            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
+            if (si->sectorTag() == SectorInfo::CONVEX_SECTOR) {
                 si->setSectorTag(SectorInfo::CONCAVE_SECTOR);
-            else
+            } else {
                 si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+            }
         }
         return res;
     }
@@ -272,16 +282,18 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
         for (i = 0; i < fr.noVtx(); ++i) {
             EnoType ringEno;
             FaceType* ringFace = fr.face(i, ringEno);
-            if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE)
+            if (ringFace->edgeTag(ringEno) == FaceType::CREASE_EDGE) {
                 ++creaseCount;
+            }
         }
         assert(f->headVert(e) == fr.centerVert());
-        if (creaseCount < 2)
+        if (creaseCount < 2) {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::NOTAG_VERTEX);
-        else if (creaseCount == 2)
+        } else if (creaseCount == 2) {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CREASE_VERTEX);
-        else
+        } else {
             ((TLFaceType*)f)->setVertexTag(f->headVno(e), FaceType::CORNER_VERTEX);
+        }
 
         for (i = 0; i < fr.noFace(); ++i) {
             EnoType ringEno;
@@ -290,7 +302,7 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
         }
 
         typename FaceType::VertexTagType vertexTag = f->vertexTag(f->headVno(e));
-        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX))
+        if ((vertexTag == FaceType::CREASE_VERTEX) || (vertexTag == FaceType::CORNER_VERTEX)) {
             for (i = 0; i < fr.noFace(); ++i) {
                 EnoType ringEno;
                 FaceType* ringFace = fr.face(i, ringEno);
@@ -298,11 +310,13 @@ template <class Mesh> class SelectedObjectTp : public SelectedPart {
                 assert(ringFace->tailVert(ringEno) == fr.centerVert());
                 if ((si = ringFace->sectorInfo(ringFace->tailVno(ringEno))) == 0) {
                     si = new SectorInfo();
-                    if (vertexTag == FaceType::CORNER_VERTEX)
+                    if (vertexTag == FaceType::CORNER_VERTEX) {
                         si->setSectorTag(SectorInfo::CONVEX_SECTOR);
+                    }
                     ((TLFaceType*)ringFace)->setSectorInfo(ringFace->tailVno(ringEno), si);
                 }
             }
+        }
     }
 
     void specializeEdge(typename Mesh::FaceType* f, EnoType e) {

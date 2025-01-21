@@ -54,16 +54,18 @@ template <class T> class optdeque {
 
     optdeque(const optdeque& q) {
         optdeque::const_iterator it;
-        for (it = q.begin(); it != q.end(); ++it)
+        for (it = q.begin(); it != q.end(); ++it) {
             push_back(*it);
+        }
     }
 
     optdeque* operator=(const optdeque& q) {
         if ((&q) != this) {
             erase(begin(), end());
             optdeque::const_iterator it;
-            for (it = q.begin(); it != q.end(); ++it)
+            for (it = q.begin(); it != q.end(); ++it) {
                 push_back(*it);
+            }
         }
         return this;
     }
@@ -95,8 +97,9 @@ template <class T> class optdeque {
             }
         } else {
             iterator result = first;
-            while (last != finish)
+            while (last != finish) {
                 *result++ = *last++;
+            }
         }
     }
 

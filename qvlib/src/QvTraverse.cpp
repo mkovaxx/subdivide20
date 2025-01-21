@@ -14,8 +14,9 @@
 // For debugging
 static int indent = 0;
 static void announce(const char* className) {
-    for (int i = 0; i < indent; i++)
+    for (int i = 0; i < indent; i++) {
         printf("\t");
+    }
     printf("Traversing a %s\n", className);
 }
 #define ANNOUNCE(className) announce(QV__QUOTE(className))
@@ -32,8 +33,9 @@ static void announce(const char* className) {
 void QvGroup::traverse(QvState* state) {
     ANNOUNCE(QvGroup);
     indent++;
-    for (int i = 0; i < getNumChildren(); i++)
+    for (int i = 0; i < getNumChildren(); i++) {
         getChild(i)->traverse(state);
+    }
     indent--;
 }
 
@@ -43,8 +45,9 @@ void QvLOD::traverse(QvState* state) {
 
     // ??? In a real implementation, this would choose a child based
     // ??? on the distance to the eye point.
-    if (getNumChildren() > 0)
+    if (getNumChildren() > 0) {
         getChild(0)->traverse(state);
+    }
 
     indent--;
 }
@@ -53,8 +56,9 @@ void QvSeparator::traverse(QvState* state) {
     ANNOUNCE(QvSeparator);
     state->push();
     indent++;
-    for (int i = 0; i < getNumChildren(); i++)
+    for (int i = 0; i < getNumChildren(); i++) {
         getChild(i)->traverse(state);
+    }
     indent--;
     state->pop();
 }
@@ -68,12 +72,15 @@ void QvSwitch::traverse(QvState* state) {
     if (which == QV_SWITCH_NONE)
         ;
 
-    else if (which == QV_SWITCH_ALL)
-        for (int i = 0; i < getNumChildren(); i++)
+    else if (which == QV_SWITCH_ALL) {
+        for (int i = 0; i < getNumChildren(); i++) {
             getChild(i)->traverse(state);
+        }
+    }
 
-    else if (which < getNumChildren())
+    else if (which < getNumChildren()) {
         getChild(which)->traverse(state);
+    }
 
     indent--;
 }
@@ -92,13 +99,15 @@ void QvTransformSeparator::traverse(QvState* state) {
     state->addElement(QvState::TransformationIndex, markerElt);
 
     indent++;
-    for (int i = 0; i < getNumChildren(); i++)
+    for (int i = 0; i < getNumChildren(); i++) {
         getChild(i)->traverse(state);
+    }
     indent--;
 
     // Now do the "pop"
-    while (state->getTopElement(QvState::TransformationIndex) != markerElt)
+    while (state->getTopElement(QvState::TransformationIndex) != markerElt) {
         state->popElement(QvState::TransformationIndex);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////

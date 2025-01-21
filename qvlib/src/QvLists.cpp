@@ -10,16 +10,19 @@ void QvNodeList::append(QvNode* node) {
 }
 
 void QvNodeList::remove(int which) {
-    if ((*this)[which] != NULL)
+    if ((*this)[which] != NULL) {
         (*this)[which]->unref();
+    }
 
     QvPList::remove(which);
 }
 
 void QvNodeList::truncate(int start) {
-    for (int i = start; i < getLength(); i++)
-        if ((*this)[i] != NULL)
+    for (int i = start; i < getLength(); i++) {
+        if ((*this)[i] != NULL) {
             (*this)[i]->unref();
+        }
+    }
 
     QvPList::truncate(start);
 }

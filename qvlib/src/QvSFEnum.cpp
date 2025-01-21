@@ -51,11 +51,13 @@ QvBool QvSFEnum::readValue(QvInput* in) {
 #endif /* DEBUG */
 
     // Read mnemonic value as a character string identifier
-    if (!in->read(n, TRUE))
+    if (!in->read(n, TRUE)) {
         return FALSE;
+    }
 
-    if (findEnumValue(n, value))
+    if (findEnumValue(n, value)) {
         return TRUE;
+    }
 
     // Not found? Too bad
     QvReadError::post(in, "Unknown QvSFEnum enumeration value \"%s\"", n.getString());

@@ -38,8 +38,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 inline int __glCheck__(char* fileName, int n) {
     int e = glGetError();
-    if (e)
+    if (e) {
         std::cerr << (char*)gluErrorString(e) << "  " << fileName << ", #" << n << std::endl;
+    }
     return (e);
 }
 

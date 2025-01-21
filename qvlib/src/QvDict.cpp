@@ -8,8 +8,9 @@ struct QvDictListThing {
 QvDict::QvDict(int entries) {
     tableSize = entries;
     buckets = new QvDictEntry*[tableSize];
-    for (int i = 0; i < tableSize; i++)
+    for (int i = 0; i < tableSize; i++) {
         buckets[i] = NULL;
+    }
 }
 
 QvDict::~QvDict() {
@@ -62,8 +63,9 @@ QvDictEntry*& QvDict::findEntry(unsigned long key) const {
     entry = &buckets[key % tableSize];
 
     while (*entry != NULL) {
-        if ((*entry)->key == key)
+        if ((*entry)->key == key) {
             break;
+        }
         entry = &(*entry)->next;
     }
     return *entry;
@@ -73,9 +75,9 @@ QvBool QvDict::remove(unsigned long key) {
     QvDictEntry*& entry = findEntry(key);
     QvDictEntry* tmp;
 
-    if (entry == NULL)
+    if (entry == NULL) {
         return FALSE;
-    else {
+    } else {
         tmp = entry;
         entry = entry->next;
         delete tmp;

@@ -57,13 +57,16 @@ class Vertex : public BaseVertex {
     bool isSpecial() const { return _special; }
     void makeSpecial() { _special = true; }
     static void ref(Vertex* vert) {
-        if (vert)
+        if (vert) {
             ++vert->_refCount;
+        }
     }
     static void unref(Vertex* vert) {
-        if (vert)
-            if ((0 == (--vert->_refCount)))
+        if (vert) {
+            if ((0 == (--vert->_refCount))) {
                 delete vert;
+            }
+        }
     }
 
   private:

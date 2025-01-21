@@ -54,8 +54,9 @@ class Quat {
         double s;
         s = sqrt(x * x + y * y);
         arcFrom = (s == 0.0) ? CVec3f(0.0f, 1.0f, 0.0f) : CVec3f(-y / s, x / s, 0.0f);
-        if (w < 0.0f)
+        if (w < 0.0f) {
             arcFrom = -arcFrom;
+        }
 
         arcTo = CVec3f(w * arcFrom.x() - z * arcFrom.y(), w * arcFrom.y() + z * arcFrom.x(),
                        x * arcFrom.y() - y * arcFrom.x());

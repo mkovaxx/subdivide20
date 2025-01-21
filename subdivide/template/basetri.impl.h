@@ -44,8 +44,9 @@ template <class BFace> void BaseTriTp<BFace>::makeChildren(int d) {
         if (nt && !nt->isLeaf()) {
             midV = nt->midVert(ne);
         }
-        if (midV == 0)
+        if (midV == 0) {
             midV = new Vertex(d + 1);
+        }
 
         assert(((FaceType*)this)->headVert(e));
         assert(midV);

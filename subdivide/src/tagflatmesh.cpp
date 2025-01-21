@@ -28,8 +28,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 TagFlatMesh::TagFlatMesh(const TagFlatMesh& fm) {
     uint i;
-    for (i = 0; i < fm.vert_v.size(); ++i)
+    for (i = 0; i < fm.vert_v.size(); ++i) {
         Vertex::ref(fm.vert_v[i]);
+    }
     for (i = 0; i < fm.sectorInfoVec.size(); ++i) {
         SectorInfo::ref(fm.sectorInfoVec[i].second);
     }
@@ -71,8 +72,9 @@ TagFlatMesh& TagFlatMesh::operator=(const TagFlatMesh& fm) {
 void TagFlatMesh::Cleanup() {
     std::vector<Vertex*>::iterator vi;
 
-    for (vi = vert_v.begin(); vi != vert_v.end(); ++vi)
+    for (vi = vert_v.begin(); vi != vert_v.end(); ++vi) {
         Vertex::unref(*vi);
+    }
 
     for (uint i = 0; i < sectorInfoVec.size(); ++i) {
         SectorInfo::unref(sectorInfoVec[i].second);

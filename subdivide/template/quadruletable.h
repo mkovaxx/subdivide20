@@ -65,8 +65,9 @@ template <class FaceRing> class QuadRuleTableTp {
             cvec3f a0, a1;
             cvec3f pos[6];
             int i;
-            for (i = 0; i < cf->noVtx(); ++i)
+            for (i = 0; i < cf->noVtx(); ++i) {
                 a0 += 1 / float(cf->noVtx()) * cf->pos(i, d);
+            }
             pos[0] = cf->headPos(ce, d);
             pos[1] = cf->headPos(cf->nextEno(ce), d);
             pos[3] = cf->tailPos(ce, d);
@@ -74,8 +75,9 @@ template <class FaceRing> class QuadRuleTableTp {
 
             if (nf) {
                 int i;
-                for (i = 0; i < nf->noVtx(); ++i)
+                for (i = 0; i < nf->noVtx(); ++i) {
                     a1 += 1 / float(nf->noVtx()) * nf->pos(i, d);
+                }
                 pos[5] = nf->headPos(nf->nextEno(ne), d);
                 pos[4] = 4 * a1 - pos[0] - pos[3] - pos[5];
             }
@@ -85,9 +87,10 @@ template <class FaceRing> class QuadRuleTableTp {
 
         } else {
             cvec3f tmp(0);
-            if (nf)
+            if (nf) {
                 tmp = coef.cf[4] * nf->headPos(nf->nextEno(-ne), d) +
                       coef.cf[5] * nf->headPos(nf->nextEno(nf->nextEno(-ne)), d);
+            }
             return coef.cf[0] * cf->headPos(ce, d) + coef.cf[1] * cf->headPos(cf->nextEno(ce), d) +
                    coef.cf[2] * cf->headPos(cf->nextEno(cf->nextEno(ce)), d) + coef.cf[3] * cf->tailPos(ce, d) + tmp;
         }
@@ -97,8 +100,9 @@ template <class FaceRing> class QuadRuleTableTp {
 
         cvec3f tmp = coef.centerC * tr.centerVert()->getPos(d);
         uint i;
-        for (i = 0; i < tr.noVtx(); ++i)
+        for (i = 0; i < tr.noVtx(); ++i) {
             tmp += coef.edgeC[i] * tr.vert(i)->getPos(d);
+        }
 
         for (i = 0; i < tr.noFace(); ++i) {
 
@@ -108,8 +112,9 @@ template <class FaceRing> class QuadRuleTableTp {
             cvec3f t = f->headVert(f->nextEno(fe))->getPos(d);
             if (d == 0) {
                 cvec3f a(0);
-                for (VnoType v = 0; v < f->noVtx(); ++v)
+                for (VnoType v = 0; v < f->noVtx(); ++v) {
                     a += 1 / float(f->noVtx()) * f->pos(v, d);
+                }
                 t = 4 * a - f->headPos(fe, d) - f->headPos(f->nextEno(fe), d) - f->tailPos(fe, d);
             }
 

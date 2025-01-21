@@ -26,39 +26,46 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 void Tri::subdivide(int d) {
     EnoType e;
-    for (e = 1; e < noVtx() + 1; ++e)
+    for (e = 1; e < noVtx() + 1; ++e) {
         computeEven(e, d);
+    }
 
-    for (e = 1; e < noVtx() + 1; ++e)
+    for (e = 1; e < noVtx() + 1; ++e) {
         computeOdd(e, d);
+    }
 
     // compute odd normals
     //  for(e = 1; e < noVtx()+1; ++e)
     //    computeOddNormal(e, d);
 
     // clear children mid points points
-    for (CnoType c = 0; c < childCount(); ++c)
+    for (CnoType c = 0; c < childCount(); ++c) {
         child(c)->clearFace(d + 1);
+    }
 }
 
 void Tri::midSub(int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
     for (EnoType e = 1; e < noVtx() + 1; ++e) {
-        if (!hasMidPos(e, d))
+        if (!hasMidPos(e, d)) {
             setMidPos(e, d, 0.5f * (headPos(e, d) + tailPos(e, d)));
-        if (!hasHeadPos(e, d + 1))
+        }
+        if (!hasHeadPos(e, d + 1)) {
             setHeadPos(e, d + 1, headPos(e, d));
+        }
     }
 
     // clear children mid points points
-    for (CnoType c = 0; c < childCount(); ++c)
+    for (CnoType c = 0; c < childCount(); ++c) {
         child(c)->clearFace(d + 1);
+    }
 }
 
 void Tri::clearFace(int d) {
-    if (childCount() > 0)
+    if (childCount() > 0) {
         for (EnoType e = 1; e < noVtx() + 1; ++e) {
             EnoType me;
             Face* mt = midEdge(e, me);
@@ -68,15 +75,17 @@ void Tri::clearFace(int d) {
             }
             headVert(e)->set(d);
         }
+    }
 }
 
 cvec3f Tri::computeEven(EnoType e, int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
-    if (hasHeadPos(e, d + 1))
+    if (hasHeadPos(e, d + 1)) {
         return headPos(e, d + 1);
-    else {
+    } else {
         cvec3f tmp;
         if (headVert(e)->isSpecial()) {
             SubdivideType subdiv;
@@ -103,12 +112,13 @@ cvec3f Tri::computeEven(EnoType e, int d) {
 }
 
 cvec3f Tri::computeOdd(EnoType e, int d) {
-    if (isLeaf())
+    if (isLeaf()) {
         makeChildren(d);
+    }
 
-    if (hasMidPos(e, d))
+    if (hasMidPos(e, d)) {
         return midPos(e, d);
-    else {
+    } else {
         cvec3f tmp;
         if (headVert(e)->isSpecial() || tailVert(e)->isSpecial()) {
             SubdivideType subdiv;

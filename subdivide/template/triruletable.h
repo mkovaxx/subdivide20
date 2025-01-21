@@ -41,8 +41,9 @@ template <class FaceRing> class TriRuleTableTp {
         FaceType* cf = tr.centerFace(ce);
         FaceType* nf = cf->neighbor(ce, ne);
         cvec3f tmp(0);
-        if (nf)
+        if (nf) {
             tmp = nf->headPos(nf->nextEno(-ne), d);
+        }
         return coef.c[0] * cf->headPos(ce, d) + coef.c[1] * cf->headPos(cf->nextEno(ce), d) +
                coef.c[2] * cf->tailPos(ce, d) + coef.c[3] * tmp;
     }

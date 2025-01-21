@@ -90,8 +90,9 @@ class PointRing {
 
     void print() const {
         std::cerr << _center << "  " << std::endl;
-        for (int i = 0; i < noPts(); ++i)
+        for (int i = 0; i < noPts(); ++i) {
             std::cerr << "\t" << _ring[i] << std::endl;
+        }
         std::cerr << std::endl;
     }
 
@@ -137,8 +138,9 @@ PointRing PointRingStack::_pr[MAX_STACK];
 
 void setRing(Tri::FaceRingType& tr, PointRing& pt) {
     pt.setCenter(tr.centerVert()->getPos(0));
-    for (int i = 0; i < tr.noVtx(); ++i)
+    for (int i = 0; i < tr.noVtx(); ++i) {
         pt.addPoint(tr.vert(i)->getPos(0));
+    }
 }
 
 void writeRec(int l, const PointRing& r0, const PointRing& r1, const PointRing& r2) {
@@ -231,8 +233,9 @@ class MyObject : public GeoObject {
         cvec3f ma = (*(_m)->faceBegin())->pos(0, 0);
         MeshType::FaceIterType fi;
         for (fi = (_m)->faceBegin(0); fi != (_m)->faceEnd(0); ++fi) {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i) {
                 ma = ma.max((*fi)->pos(i, 0));
+            }
         }
         return ma;
     }
@@ -241,16 +244,17 @@ class MyObject : public GeoObject {
         cvec3f mi = (*(_m)->faceBegin())->pos(0, 0);
         MeshType::FaceIterType fi;
         for (fi = (_m)->faceBegin(0); fi != (_m)->faceEnd(0); ++fi) {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i) {
                 mi = mi.min((*fi)->pos(i, 0));
+            }
         }
         return mi;
     }
 
     virtual void render() {
-        if (glIsList(_listId))
+        if (glIsList(_listId)) {
             glCallList(_listId);
-        else {
+        } else {
             _listId = glGenLists(1);
             glNewList(_listId, GL_COMPILE_AND_EXECUTE);
             glBegin(GL_TRIANGLES);
@@ -288,8 +292,9 @@ int main(int argc, char** argv) {
         // timing for meshless subdivision
         //
         StartTimer();
-        for (i = 0; i < 10; ++i)
+        for (i = 0; i < 10; ++i) {
             writeTri(&triMesh, d);
+        }
         EndTimer();
         PrintDeltaTimer(std::cerr);
 
@@ -305,8 +310,9 @@ int main(int argc, char** argv) {
 
         // and 10 subdivivision iterations
         StartTimer();
-        for (i = 0; i < 10; ++i)
+        for (i = 0; i < 10; ++i) {
             triMesh.subdivide(d);
+        }
         EndTimer();
         std::cerr << "10 subdivision iterations: ";
         PrintDeltaTimer(std::cerr);

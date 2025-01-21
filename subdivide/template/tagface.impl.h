@@ -26,8 +26,9 @@ template <class F> void TagFaceTp<F>::makeChildren(int d) {
     assert(this->isLeaf());
     ((F*)this)->makeChildren(d);
     for (EnoType e = 1; e < this->noVtx() + 1; ++e) {
-        if (edgeTag(e) != NOTAG_EDGE)
+        if (edgeTag(e) != NOTAG_EDGE) {
             this->midVert(e)->makeSpecial();
+        }
     }
 }
 
@@ -35,17 +36,20 @@ template <class F> TagFaceTp<F>::EdgeTagType TagFaceTp<F>::edgeTag(EnoType e) co
 
     if (this->headVert(e)->isSpecial()) {
 
-        if (this->isToplevel())
+        if (this->isToplevel()) {
             return ((TLFace*)this)->edgeTag(e);
+        }
 
         EnoType te;
         Face* tf = this->toplevelEdge(e, te);
-        if (tf == 0)
+        if (tf == 0) {
             return NOTAG_EDGE;
-        else
+        } else {
             return ((TLFace*)tf)->edgeTag(te);
-    } else
+        }
+    } else {
         return NOTAG_EDGE;
+    }
 }
 
 template <class F> TagFaceTp<F>::VertexTagType TagFaceTp<F>::vertexTag(VnoType v) const {
@@ -53,16 +57,18 @@ template <class F> TagFaceTp<F>::VertexTagType TagFaceTp<F>::vertexTag(VnoType v
 
         VnoType tv;
         Face* tf = this->toplevelVertex(v, tv);
-        if (tf)
+        if (tf) {
             return ((TLFace*)tf)->vertexTag(tv);
+        }
 
         Face* pt = this->parent();
         assert(pt);
         EnoType pe = pt->noVtx() + 1;
         while ((pe == pt->noVtx() + 1) && (pt != 0)) {
             pe = 1;
-            while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v)))
+            while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v))) {
                 ++pe;
+            }
             if (pe == pt->noVtx() + 1) {
                 pt = pt->parent();
                 pe = pt->noVtx() + 1;
@@ -70,48 +76,54 @@ template <class F> TagFaceTp<F>::VertexTagType TagFaceTp<F>::vertexTag(VnoType v
         }
         assert(pt);
         assert(pt->midVert(pe) == this->vert(v));
-        if (pt->edgeTag(pe) == NOTAG_EDGE)
+        if (pt->edgeTag(pe) == NOTAG_EDGE) {
             return NOTAG_VERTEX;
-        else
+        } else {
             return CREASE_VERTEX;
-    } else
+        }
+    } else {
         return NOTAG_VERTEX;
+    }
 }
 
 template <class F> TagFaceTp<F>::SectorTagType TagFaceTp<F>::sectorTag(VnoType v) const {
 
     SectorInfo* s = sectorInfo(v);
-    if (s == 0)
+    if (s == 0) {
         return SectorInfo::NOTAG_SECTOR;
-    else
+    } else {
         return s->sectorTag();
+    }
 }
 
 template <class F> SectorInfo* TagFaceTp<F>::sectorInfo(VnoType v) const {
     if (this->vert(v)->isSpecial()) {
 
-        if (this->isToplevel())
+        if (this->isToplevel()) {
             return ((TLFace*)this)->sectorInfo(v);
+        }
 
         VnoType tv;
         Face* tf = this->toplevelVertex(v, tv);
-        if (tf != 0)
+        if (tf != 0) {
             return ((TLFace*)tf)->sectorInfo(tv);
-        else
+        } else {
             return 0;
+        }
 
-    } else
+    } else {
         return 0;
+    }
 }
 
 template <class F> const cvec3f& TagFaceTp<F>::normal(VnoType v) const {
     if (this->vert(v)->isSpecial()) {
         SectorInfo* s = sectorInfo(v);
-        if (s != 0)
+        if (s != 0) {
             return s->normal();
-        else if (vertexTag(v) == NOTAG_VERTEX)
+        } else if (vertexTag(v) == NOTAG_VERTEX) {
             return this->vert(v)->normal0();
-        else {
+        } else {
             assert(vertexTag(v) == CREASE_VERTEX);
             assert(!this->isToplevel());
             // we need to find an edge for this vertex...
@@ -121,8 +133,9 @@ template <class F> const cvec3f& TagFaceTp<F>::normal(VnoType v) const {
             EnoType pe = pt->noVtx() + 1;
             while ((pe == pt->noVtx() + 1) && (pt != 0)) {
                 pe = 1;
-                while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v)))
+                while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v))) {
                     ++pe;
+                }
                 if (pe == pt->noVtx() + 1) {
                     pt = pt->parent();
                     pe = pt->noVtx() + 1;
@@ -133,23 +146,25 @@ template <class F> const cvec3f& TagFaceTp<F>::normal(VnoType v) const {
 
             EnoType ne;
             Face* nf = pt->neighbor(pe, ne);
-            if (nf < pt)
+            if (nf < pt) {
                 return this->vert(v)->normal0();
-            else
+            } else {
                 return this->vert(v)->normal1();
+            }
         }
-    } else
+    } else {
         return this->vert(v)->normal0();
+    }
 }
 
 template <class F> void TagFaceTp<F>::setNormal(VnoType v, const cvec3f& n) {
     if (this->vert(v)->isSpecial()) {
         SectorInfo* s = sectorInfo(v);
-        if (s != 0)
+        if (s != 0) {
             s->setNormal(n);
-        else if (vertexTag(v) == NOTAG_VERTEX)
+        } else if (vertexTag(v) == NOTAG_VERTEX) {
             this->vert(v)->setNormal0(n);
-        else {
+        } else {
             assert(vertexTag(v) == CREASE_VERTEX);
             assert(!this->isToplevel());
             // we need to find an edge for this vertex...
@@ -158,8 +173,9 @@ template <class F> void TagFaceTp<F>::setNormal(VnoType v, const cvec3f& n) {
             EnoType pe = pt->noVtx() + 1;
             while ((pe == pt->noVtx() + 1) && (pt != 0)) {
                 pe = 1;
-                while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v)))
+                while ((pe < pt->noVtx() + 1) && (pt->midVert(pe) != this->vert(v))) {
                     ++pe;
+                }
                 if (pe == pt->noVtx() + 1) {
                     pt = pt->parent();
                     pe = pt->noVtx() + 1;
@@ -170,11 +186,13 @@ template <class F> void TagFaceTp<F>::setNormal(VnoType v, const cvec3f& n) {
 
             EnoType ne;
             Face* nf = pt->neighbor(pe, ne);
-            if (nf < pt)
+            if (nf < pt) {
                 this->vert(v)->setNormal0(n);
-            else
+            } else {
                 this->vert(v)->setNormal1(n);
+            }
         }
-    } else
+    } else {
         this->vert(v)->setNormal0(n);
+    }
 }

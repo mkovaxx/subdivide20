@@ -18,8 +18,9 @@ QvBool QvSFBool::readValue(QvInput* in) {
 
     // read TRUE/FALSE keyword
     QvName n;
-    if (!in->read(n, TRUE))
+    if (!in->read(n, TRUE)) {
         return FALSE;
+    }
 
     if (n == "TRUE") {
         value = TRUE;

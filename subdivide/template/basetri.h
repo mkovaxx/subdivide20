@@ -61,10 +61,12 @@ template <class BFace> class BaseTriTp : public BFace {
     BaseTriTp() { _v[0] = _v[1] = _v[2] = 0; }
 
     virtual ~BaseTriTp() {
-        for (VnoType v = 0; v < noVtx(); ++v)
+        for (VnoType v = 0; v < noVtx(); ++v) {
             Vertex::unref(_v[v]);
-        if (this->_c != 0)
+        }
+        if (this->_c != 0) {
             delete[] this->_c;
+        }
     }
 
   public:
@@ -113,16 +115,16 @@ template <class BFace> class BaseTriTp : public BFace {
     FaceType* neighbor(EnoType e, EnoType& ne) const {
         assert(((FaceType*)this)->checkEno(e));
         ne = 0;
-        if (this->_p == 0)
+        if (this->_p == 0) {
             return ((TLFace*)this)->neighbor(e, ne);
-        else {
+        } else {
 
             CnoType nc = _neiCno[this->_no][e + 3];
             ne = _neiEno[this->_no][e + 3];
 
-            if (ne != 0)
+            if (ne != 0) {
                 return ((FaceType*)this->_p)->child(nc);
-            else {
+            } else {
                 EnoType pe;
                 FaceType* pt = parentEdge(e, pe);
 
@@ -132,10 +134,11 @@ template <class BFace> class BaseTriTp : public BFace {
                 if ((npt == 0) || npt->isLeaf()) {
                     return 0;
                 } else {
-                    if (((FaceType*)this)->headVert(e) == npt->headVert(npe))
+                    if (((FaceType*)this)->headVert(e) == npt->headVert(npe)) {
                         return npt->headSubEdge(npe, ne);
-                    else
+                    } else {
                         return npt->tailSubEdge(npe, ne);
+                    }
                 }
             }
         }

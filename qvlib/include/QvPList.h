@@ -8,8 +8,9 @@ class QvPList {
     QvPList();
     virtual ~QvPList();
     void append(void* ptr) {
-        if (nPtrs + 1 > ptrsSize)
+        if (nPtrs + 1 > ptrsSize) {
             expand(nPtrs + 1);
+        }
         ptrs[nPtrs++] = ptr;
     }
     int find(const void* ptr) const;
@@ -23,8 +24,9 @@ class QvPList {
     int nPtrs;
     int ptrsSize;
     void setSize(int size) {
-        if (size > ptrsSize)
+        if (size > ptrsSize) {
             expand(size);
+        }
         nPtrs = size;
     }
     void expand(int size);

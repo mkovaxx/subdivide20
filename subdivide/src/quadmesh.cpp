@@ -29,8 +29,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 QuadMesh::QuadMesh() { _quadTagMesh = new TagMeshTp<Quad>(); }
 
 QuadMesh::~QuadMesh() {
-    if (_quadTagMesh)
+    if (_quadTagMesh) {
         delete _quadTagMesh;
+    }
 }
 
 QuadMesh::QuadMesh(const QuadMesh& m) {
@@ -67,8 +68,9 @@ QuadMesh* QuadMesh::leafMesh() const {
 
     TagMeshTp<Quad>::FaceIterType fi;
     for (fi = _quadTagMesh->faceBegin(); fi != _quadTagMesh->faceEnd(); ++fi) {
-        if ((*fi)->isLeaf())
+        if ((*fi)->isLeaf()) {
             tm->insertFace(*fi);
+        }
     }
 
     QuadMesh* m = new QuadMesh();

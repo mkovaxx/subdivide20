@@ -33,16 +33,18 @@ class PointRing {
     PointRing(const PointRing& pr) {
         _start = pr._start;
         _center = pr._center;
-        for (int i = 0; i < pr.noPts(); ++i)
+        for (int i = 0; i < pr.noPts(); ++i) {
             addPoint(pr._ring[i]);
+        }
     }
 
     PointRing& operator=(const PointRing& pr) {
         _start = pr._start;
         _center = pr._center;
         _noPts = pr._noPts;
-        for (int i = 0; i < MAX_VALENCE; ++i)
+        for (int i = 0; i < MAX_VALENCE; ++i) {
             _ring[i] = pr._ring[i];
+        }
         return (*this);
     }
 
@@ -94,8 +96,9 @@ class PointRing {
 
     void print() const {
         std::cerr << _center << "  " << std::endl;
-        for (int i = 0; i < noPts(); ++i)
+        for (int i = 0; i < noPts(); ++i) {
             std::cerr << "\t" << _ring[i] << std::endl;
+        }
         std::cerr << std::endl;
     }
 
@@ -131,8 +134,9 @@ class UL {
     virtual ~UL() { delete[] _f; }
 
     void clear(cvec3f f = cvec3f(-99.0f, -99.0f, -99.0f)) {
-        for (int i = 0; i < _n * (_n + 1) / 2; ++i)
+        for (int i = 0; i < _n * (_n + 1) / 2; ++i) {
             _f[i] = f;
+        }
     }
 
     UL(const UL&) { assert(0); }
@@ -157,11 +161,13 @@ class UL {
 
     void print() const {
         for (int i = 0; i < size(); ++i) {
-            for (int j = 0; (j < size() - i); ++j)
-                if ((*this)(i, j).x() == -99)
+            for (int j = 0; (j < size() - i); ++j) {
+                if ((*this)(i, j).x() == -99) {
                     std::cerr << ". ";
-                else
+                } else {
                     std::cerr << (*this)(i, j) << ",   ";
+                }
+            }
             std::cerr << std::endl;
         }
     }
@@ -191,21 +197,29 @@ class LoopUL : public UL {
         assert(m1.size() == 2 * (m0.size() - 2));
         // even points
 
-        for (i = 1; i < m0.size() - 1; ++i)
-            for (int j = 1; j < m0.size() - i - 1; ++j)
+        for (i = 1; i < m0.size() - 1; ++i) {
+            for (int j = 1; j < m0.size() - i - 1; ++j) {
                 m1(2 * i - 1, 2 * j - 1) = m0.vertexPoint(i, j);
+            }
+        }
 
-        for (i = 1; i < m0.size() - 1; ++i)
-            for (int j = 0; j < m0.size() - i - 1; ++j)
+        for (i = 1; i < m0.size() - 1; ++i) {
+            for (int j = 0; j < m0.size() - i - 1; ++j) {
                 m1(2 * i - 1, 2 * j) = m0.edgeHPoint(i, j);
+            }
+        }
 
-        for (i = 0; i < m0.size() - 2; ++i)
-            for (int j = 1; j < m0.size() - i - 1; ++j)
+        for (i = 0; i < m0.size() - 2; ++i) {
+            for (int j = 1; j < m0.size() - i - 1; ++j) {
                 m1(2 * i, 2 * j - 1) = m0.edgeVPoint(i, j);
+            }
+        }
 
-        for (i = 0; i < m0.size() - 2; ++i)
-            for (int j = 0; j < m0.size() - i - 2; ++j)
+        for (i = 0; i < m0.size() - 2; ++i) {
+            for (int j = 0; j < m0.size() - i - 2; ++j) {
                 m1(2 * i, 2 * j) = m0.edgeDPoint(i, j);
+            }
+        }
 
         _r0.subdivide(m1._r0);
         _r1.subdivide(m1._r1);
@@ -266,14 +280,16 @@ LoopUL* normals;
 
 void createULVec(int l) {
     ulvec.push_back(new LoopUL(5));
-    for (int i = 0; i < l; ++i)
+    for (int i = 0; i < l; ++i) {
         ulvec.push_front(new LoopUL(2 * ulvec.front()->size() - 4));
+    }
     normals = new LoopUL(ulvec.front()->size());
 }
 
 void deleteULVec() {
-    for (int i = 0; i < ulvec.size(); ++i)
+    for (int i = 0; i < ulvec.size(); ++i) {
         delete ulvec[i];
+    }
     delete normals;
 }
 
@@ -286,19 +302,20 @@ void subdiv(int l, LoopUL& m0) {
         int i;
 
         // compute normals...
-        for (i = 1; i < m0.size() - 1; ++i)
+        for (i = 1; i < m0.size() - 1; ++i) {
             for (int j = 1; j < m0.size() - i - 1; ++j) {
                 cvec3f t0 = m0.average(i, j, 0.0f, PointRing::s6);
                 cvec3f t1 = m0.average(i, j, 0.0f, PointRing::c6);
                 (*normals)(i, j) = t0.cross(t1).dir();
             }
+        }
 
         (*normals)(1, 1) = m0._r0.n();
         (*normals)(1, m0.size() - 3) = m0._r1.n();
         (*normals)(m0.size() - 3, 1) = m0._r2.n();
         ;
 
-        for (i = 1; i < m0.size() - 2; ++i)
+        for (i = 1; i < m0.size() - 2; ++i) {
             for (int j = 1; j < m0.size() - i - 2; ++j) {
                 cvec3f p0 = m0(i, j);
                 cvec3f p1 = m0(i + 1, j);
@@ -313,7 +330,8 @@ void subdiv(int l, LoopUL& m0) {
                 glNormal3fv(n0);
                 glVertex3fv(p0);
             }
-        for (i = 1; i < m0.size() - 2; ++i)
+        }
+        for (i = 1; i < m0.size() - 2; ++i) {
             for (int j = 1; j < m0.size() - i - 3; ++j) {
                 cvec3f p0 = m0(i + 1, j);
                 cvec3f p1 = m0(i + 1, j + 1);
@@ -328,6 +346,7 @@ void subdiv(int l, LoopUL& m0) {
                 glNormal3fv(n0);
                 glVertex3fv(p0);
             }
+        }
     }
 }
 
@@ -365,8 +384,9 @@ void subdivRings(int l, const PointRing& r0, const PointRing& r1, const PointRin
 void setRing(Tri::FaceRingType& tr, PointRing& pt) {
     pt.clear();
     pt.setCenter(tr.centerVert()->getPos(0));
-    for (int i = 0; i < tr.noVtx(); ++i)
+    for (int i = 0; i < tr.noVtx(); ++i) {
         pt.addPoint(tr.vert(i)->getPos(0));
+    }
 }
 
 void writeTri(MeshType* m, int l) {
@@ -394,8 +414,9 @@ class MyObject : public GeoObject {
         cvec3f ma = (*(_m)->faceBegin())->pos(0, 0);
         MeshType::FaceIterType fi;
         for (fi = (_m)->faceBegin(0); fi != (_m)->faceEnd(0); ++fi) {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i) {
                 ma = ma.max((*fi)->pos(i, 0));
+            }
         }
         return ma;
     }
@@ -404,16 +425,17 @@ class MyObject : public GeoObject {
         cvec3f mi = (*(_m)->faceBegin())->pos(0, 0);
         MeshType::FaceIterType fi;
         for (fi = (_m)->faceBegin(0); fi != (_m)->faceEnd(0); ++fi) {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i) {
                 mi = mi.min((*fi)->pos(i, 0));
+            }
         }
         return mi;
     }
 
     virtual void render() {
-        if (glIsList(_listId))
+        if (glIsList(_listId)) {
             glCallList(_listId);
-        else {
+        } else {
             _listId = glGenLists(1);
             glNewList(_listId, GL_COMPILE_AND_EXECUTE);
             glBegin(GL_TRIANGLES);

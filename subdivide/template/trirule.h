@@ -44,8 +44,9 @@ class Coef {
     float dotOne() const;
     void print() const {
         std::cerr << "{ centerC = " << centerC;
-        for (uint i = 0; i < edgeC.size(); ++i)
+        for (uint i = 0; i < edgeC.size(); ++i) {
             std::cerr << ", " << edgeC[i];
+        }
         std::cerr << "} " << std::endl;
     }
 };
@@ -184,17 +185,20 @@ class InteriorTriRuleTable {
   public:
     InteriorTriRuleTable() { ; }
     ~InteriorTriRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     InteriorTriRule* getRule(uint k) {
         if (k >= ruleVec.size()) {
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
         }
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new InteriorTriRule(k);
+        }
 
         return ruleVec[k];
     }
@@ -207,17 +211,21 @@ class CreaseTriRuleTable {
   public:
     CreaseTriRuleTable() { ; }
     ~CreaseTriRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     CreaseTriRule* getRule(uint k) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new CreaseTriRule(k);
+        }
 
         return ruleVec[k];
     }
@@ -230,18 +238,21 @@ class ConvexTriRuleTable {
   public:
     ConvexTriRuleTable() { ; }
     ~ConvexTriRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     ConvexTriRule* getRule(uint k, float theta) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new ConvexTriRule(k, theta);
-        else if (ruleVec[k]->getTheta() != theta) {
+        } else if (ruleVec[k]->getTheta() != theta) {
             delete ruleVec[k];
             ruleVec[k] = new ConvexTriRule(k, theta);
         }
@@ -256,18 +267,21 @@ class ConcaveTriRuleTable {
   public:
     ConcaveTriRuleTable() { ; }
     ~ConcaveTriRuleTable() {
-        for (uint i = 0; i < ruleVec.size(); ++i)
+        for (uint i = 0; i < ruleVec.size(); ++i) {
             delete ruleVec[i];
+        }
     }
 
     ConcaveTriRule* getRule(uint k, float theta) {
-        if (k >= ruleVec.size())
-            for (uint i = ruleVec.size(); i < k + 1; ++i)
+        if (k >= ruleVec.size()) {
+            for (uint i = ruleVec.size(); i < k + 1; ++i) {
                 ruleVec.push_back(0);
+            }
+        }
 
-        if (ruleVec[k] == 0)
+        if (ruleVec[k] == 0) {
             ruleVec[k] = new ConcaveTriRule(k, theta);
-        else if (ruleVec[k]->getTheta() != theta) {
+        } else if (ruleVec[k]->getTheta() != theta) {
             delete ruleVec[k];
             ruleVec[k] = new ConcaveTriRule(k, theta);
         }

@@ -36,12 +36,13 @@ template <class Mesh> class MeshObjectTp : public GeoObject {
         typename Mesh::FaceIterType ti = _mesh.faceBegin();
         _maxPoint = _minPoint = (*ti)->vert(0)->getPos();
         for (ti = _mesh.faceBegin(); ti != _mesh.faceEnd(); ++ti) {
-            for (VnoType v = 0; v < (*ti)->noVtx(); ++v)
+            for (VnoType v = 0; v < (*ti)->noVtx(); ++v) {
                 if ((*ti)->isLeaf()) {
                     cvec3f p = (*ti)->vert(v)->getPos();
                     _maxPoint = _maxPoint.max(p);
                     _minPoint = _minPoint.min(p);
                 }
+            }
         }
     }
 
