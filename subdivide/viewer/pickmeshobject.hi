@@ -15,6 +15,7 @@
 #include <GL/glut.h>
 #endif
 
+#include "sectorinfo.h"
 #include "tagflatmesh.h"
 #include "tagivgraph.h"
 
