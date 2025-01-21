@@ -3,7 +3,7 @@
 This is the include directory defining the interface to the subdivision
 surface library and rendering/picking support library.
 
-The main interface files, that should be included by applications are
+The main interface files, that should be included by applications, are as follows.
 
 ## For `libsub`
 
