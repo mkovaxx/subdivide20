@@ -98,7 +98,7 @@ void triFlatUpCB(void* triObject) {
             assert(si);
             float f = si->modifiedFlatness();
             f += 0.1;
-            f = std::in(f, 1.0f);
+            f = std::min(f, 1.0f);
             std::cerr << "set flatness: " << f << std::endl;
             f = std::min(f, 1.0f);
             si->setModifiedFlatness(f);
