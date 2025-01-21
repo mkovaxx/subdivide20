@@ -1,32 +1,40 @@
-Files in this directory implement rendering and simple interaction 
-for subdivision surfaces. 
+# viewer
 
-The interface is provided by two main classes: 
-QuadMeshObject and TriMeshObject
+Files in this directory implement rendering and simple interaction
+for subdivision surfaces.
 
-*** Math classes ***
+The interface is provided by two main classes:
+`QuadMeshObject` and `TriMeshObject`.
 
+## Math Classes
+
+```
 quat.h          Quaternions (for the arcball).
 hmatrix.h       4x4 matrices representing homogeneous transforms
                 (for the arcball).
+```
 
-*** General GUI functionality ***
+## General GUI Functionality
 
+```
 arcball.h               Arcball: based on Ken Shoemake's code.
 camera.h                Camera: a perspective camera model
 uiaction.h              Camera-ArcBall interaction.
 glcheck.h               A macro to check for OpenGL errors.
 pickableparam.h         Colors for rendering and picking.
+```
 
-*** Viewers ***
+## Viewers
 
+```
 viewer.h                Viewer: basic viewer class.
-ballviewer.h            BallViewer: ArcBall point of view manipulation added. 
+ballviewer.h            BallViewer: ArcBall point of view manipulation added.
 pickviewer.h            PickViewer: interaction with mesh added.
+```
 
+## Renderable and Pickable Meshes
 
-*** Renderable and pickable meshes ***
-
+```
 geoobject.cpp           GeoObject: Base class for renderable objects.
 pickobject.cpp          PickObject: Pickable object base class.
 pickedstuff.cpp         Default result of a picking operation.
@@ -35,16 +43,13 @@ meshobject.h            MeshObjectTp rendarable mesh template.
 
 pickmeshobject.h        PickMeshObjectTp: pickable mesh template.
 
-selectedobject.h        SelectedObjectTp: stores and manipulates 
+selectedobject.h        SelectedObjectTp: stores and manipulates
                         current selection information; enforces
                         consistency of tag modification.
 
-quadmeshobject.cpp      QuadMeshObject: wrapper for quad subdivision 
+quadmeshobject.cpp      QuadMeshObject: wrapper for quad subdivision
                         surface implementation.
- 
-trimeshobject.cpp       TriMeshObject:  wrapper for triangle subdivision 
-                        surface implementation.              
 
-
-
-
+trimeshobject.cpp       TriMeshObject:  wrapper for triangle subdivision
+                        surface implementation.
+```
