@@ -27,7 +27,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "compat.h"
 #include "cvec3t.h"
+
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 class GeoObject {
   public:

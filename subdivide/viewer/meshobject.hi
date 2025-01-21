@@ -22,55 +22,50 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include<GL/gl.h>
-#include<GL/glu.h>
-#include<GL/glut.h>
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
 
-template<class Mesh>
-MeshObjectTp<Mesh>::MeshObjectTp() : _mesh(), _minPoint(0), _maxPoint(0) {
-}
+template <class Mesh> MeshObjectTp<Mesh>::MeshObjectTp() : _mesh(), _minPoint(0), _maxPoint(0) {}
 
+template <class Mesh> void MeshObjectTp<Mesh>::render() {
 
-template<class Mesh>
-void MeshObjectTp<Mesh>::render() {
+    int lastNoVtx = 3;
 
-  int lastNoVtx = 3;
-  
-  glBegin(GL_TRIANGLES);
-  typename Mesh::FaceIterType it;
-  for(it = _mesh.faceBegin(); it != _mesh.faceEnd(); ++it) {
-    
-    if((*it)->isLeaf()) {
-      
-      int novtx = (*it)->noVtx();
-      if(novtx != lastNoVtx) {
-	glEnd();
-	if(novtx == 3) 
-	  glBegin(GL_TRIANGLES);
-	else if(novtx == 4) 
-	  glBegin(GL_QUADS);
-	else 
-	  glBegin(GL_POLYGON);
-      }
-      
-      EnoType e = (*it)->directEno(1, CCW);
-      for(VnoType v = 0; v < (*it)->noVtx(); ++v, e = (*it)->nextEno(e)) {
-	glNormal3fv((*it)->normal((*it)->headVno(e)));
-	glVertex3fv(((*it)->headVert(e))->getPos(it.depth()));
-      }
+    glBegin(GL_TRIANGLES);
+    typename Mesh::FaceIterType it;
+    for (it = _mesh.faceBegin(); it != _mesh.faceEnd(); ++it) {
 
-      if((novtx == 3) || (novtx == 4))
-	lastNoVtx = novtx;
-      else
-	lastNoVtx = 0;
+        if ((*it)->isLeaf()) {
+
+            int novtx = (*it)->noVtx();
+            if (novtx != lastNoVtx) {
+                glEnd();
+                if (novtx == 3)
+                    glBegin(GL_TRIANGLES);
+                else if (novtx == 4)
+                    glBegin(GL_QUADS);
+                else
+                    glBegin(GL_POLYGON);
+            }
+
+            EnoType e = (*it)->directEno(1, CCW);
+            for (VnoType v = 0; v < (*it)->noVtx(); ++v, e = (*it)->nextEno(e)) {
+                glNormal3fv((*it)->normal((*it)->headVno(e)));
+                glVertex3fv(((*it)->headVert(e))->getPos(it.depth()));
+            }
+
+            if ((novtx == 3) || (novtx == 4))
+                lastNoVtx = novtx;
+            else
+                lastNoVtx = 0;
+        }
     }
-  }
-  glEnd();
+    glEnd();
 }
-
-
-
-
-
-
-

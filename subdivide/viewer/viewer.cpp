@@ -24,9 +24,17 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "compat.h"
 #include "glcheck.h"
+
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 

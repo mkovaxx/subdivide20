@@ -24,8 +24,15 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "arcball.h"
 #include "compat.h"
+
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
+
 #include <algorithm>
 
 #define LG_NSEGS 6
