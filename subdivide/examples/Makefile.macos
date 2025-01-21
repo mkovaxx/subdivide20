@@ -92,9 +92,9 @@ DEPLINE=  1> Makedepend.macos
 
 # linker options
 
-LIBS= -L/usr/X11R6/lib  -L../../qvlib/src -L../src  -lsub -lqv  -lm -lstdc++
+LIBS= -L../../qvlib/src -L../src  -lsub -lqv  -lm -lstdc++
 
-VIEWERLIBS= -L../viewer -lviewer  -lglut -lGLU -lGL -lX11 -lXmu
+VIEWERLIBS= -L../viewer -lviewer  -framework GLUT -framework OpenGL
 
 # ----------------------------------------------------------------------------
 # -- You shouldn't need to edit anything below here, unless you have more
