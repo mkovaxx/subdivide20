@@ -68,7 +68,7 @@ DOCS=
 DEFS=
 
 #include directories
-INCS= -I. -I../include  -I/usr/X11R6/include
+INCS= -I. -I../include
 
 # other C and C++ common options
 
