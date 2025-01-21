@@ -98,9 +98,9 @@ void triFlatUpCB(void* triObject) {
             assert(si);
             float f = si->modifiedFlatness();
             f += 0.1;
-            f = min(f, 1.0f);
+            f = std::in(f, 1.0f);
             std::cerr << "set flatness: " << f << std::endl;
-            f = min(f, 1.0f);
+            f = std::min(f, 1.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
             ((PickableTri*)triObject)->rerender();
@@ -118,9 +118,9 @@ void quadFlatUpCB(void* quadObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->modifiedFlatness();
             f += 0.1;
-            f = min(f, 1.0f);
+            f = std::min(f, 1.0f);
             std::cerr << "set flatness: " << f << std::endl;
-            f = min(f, 1.0f);
+            f = std::min(f, 1.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
             ((PickableQuad*)quadObject)->rerender();
@@ -138,7 +138,7 @@ void triFlatDownCB(void* triObject) {
             SectorInfo* si = tm.getSectorInfo(vno);
             float f = si->modifiedFlatness();
             f -= 0.1;
-            f = max(f, 0.0f);
+            f = std::max(f, 0.0f);
             std::cerr << "set flatness: " << f << std::endl;
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
@@ -158,7 +158,7 @@ void quadFlatDownCB(void* quadObject) {
             float f = si->modifiedFlatness();
             f -= 0.1;
             std::cerr << "set flatness: " << f << std::endl;
-            f = max(f, 0.0f);
+            f = std::max(f, 0.0f);
             si->setModifiedFlatness(f);
             tm.recomputeNeighbors();
             ((PickableQuad*)quadObject)->rerender();
@@ -180,9 +180,9 @@ void triThetaUpCB(void* triObject) {
             float f = si->theta();
             f += 0.05;
             if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
-                f = min(float(M_PI), max(f, 0.0f));
+                f = std::min(float(M_PI), std::max(f, 0.0f));
             else
-                f = min(2.0f * float(M_PI), max(f, float(M_PI)));
+                f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -202,9 +202,9 @@ void quadThetaUpCB(void* quadObject) {
             float f = si->theta();
             f += 0.05;
             if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
-                f = min(float(M_PI), max(f, 0.0f));
+                f = std::min(float(M_PI), std::max(f, 0.0f));
             else
-                f = min(2.0f * float(M_PI), max(f, float(M_PI)));
+                f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -224,9 +224,9 @@ void triThetaDownCB(void* triObject) {
             float f = si->theta();
             f -= 0.05;
             if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
-                f = min(float(M_PI), max(f, 0.0f));
+                f = std::min(float(M_PI), std::max(f, 0.0f));
             else
-                f = min(2.0f * float(M_PI), max(f, float(M_PI)));
+                f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();
@@ -246,9 +246,9 @@ void quadThetaDownCB(void* quadObject) {
             float f = si->theta();
             f -= 0.05;
             if (si->sectorTag() == SectorInfo::CONVEX_SECTOR)
-                f = min(float(M_PI), max(f, 0.0f));
+                f = std::min(float(M_PI), std::max(f, 0.0f));
             else
-                f = min(2.0f * float(M_PI), max(f, float(M_PI)));
+                f = std::min(2.0f * float(M_PI), std::max(f, float(M_PI)));
             std::cerr << "set theta: " << f << std::endl;
             si->setTheta(f);
             tm.recomputeNeighbors();

@@ -221,7 +221,7 @@ void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
     camera->setViewport(vp);
     cvec3f mid = 0.5f * (_mi + _ma);
 
-    float f = max(_ma.x() - _mi.x(), _ma.y() - _mi.y()) / 2.0f / tan(0.5f * camera->fovy() * M_PI / 180.0f);
+    float f = std::max(_ma.x() - _mi.x(), _ma.y() - _mi.y()) / 2.0f / tan(0.5f * camera->fovy() * M_PI / 180.0f);
 
     cvec3f trans(mid.x(), mid.y(), _ma.z() + 2 * f);
 

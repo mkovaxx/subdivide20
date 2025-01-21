@@ -57,7 +57,7 @@ CVec3T<float> ArcBall::RayOnSphere(const CVec3T<float>& ray_start, const CVec3T<
         ballpoint = ray_perp.dir();
     } else {
         float start_center_distsq = (center - ray_start).dot();
-        float Discr = max(0.0f, float(ray_proj * ray_proj - start_center_distsq + radius * radius));
+        float Discr = std::max(0.0f, float(ray_proj * ray_proj - start_center_distsq + radius * radius));
         float t1 = -ray_proj + sqrt(Discr);
         float t2 = -ray_proj - sqrt(Discr);
         float t = (fabs(t1) > fabs(t2)) ? t2 : t1;

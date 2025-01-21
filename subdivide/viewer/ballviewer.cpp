@@ -166,8 +166,8 @@ void BallViewer::centerArcBall() {
     float cy = getWidth() * 0.5;
 
     cvec3f pos = getCamera()->unproject(cvec3f(cx, cy, z));
-    float rad = min((getCamera()->unproject(cvec3f(right, cy, z)) - pos).l2(),
-                    (getCamera()->unproject(cvec3f(cx, top, z)) - pos).l2());
+    float rad = std::min((getCamera()->unproject(cvec3f(right, cy, z)) - pos).l2(),
+                         (getCamera()->unproject(cvec3f(cx, top, z)) - pos).l2());
 
     getArcBall()->Init();
     getArcBall()->SetPosition(pos);
