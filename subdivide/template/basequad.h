@@ -193,7 +193,7 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
             }
 
             if (ne != 0)
-                return ((Face*)_p)->child(nc);
+                return ((Face*)this->_p)->child(nc);
             else {
                 EnoType pe;
                 Face* pt = parentEdge(e, pe);

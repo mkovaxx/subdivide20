@@ -196,7 +196,7 @@ template <class Face> MeshTp<Face>::MeshTp(const FlatMesh& flatMesh) {
         for (int u = 0; u < novtx; ++u)
             _v[u] = flatMesh.vert_v[flatMesh.index_v[start + u]];
         TLFaceType* t = new TLFaceType(novtx, _v);
-        delete _v;
+        delete[] _v;
 
         EnoType e;
 
@@ -280,8 +280,8 @@ template <class Face> MeshTp<Face>& MeshTp<Face>::operator=(MeshTp& m) {
 }
 
 template <class Face> MeshTp<Face>* MeshTp<Face>::clone() const {
-    std::map<Vertex*, Vertex*>& vvMap;
-    std::map<Face*, Face*>& ttMap;
+    std::map<Vertex*, Vertex*> vvMap;
+    std::map<Face*, Face*> ttMap;
     return clone(vvMap, ttMap);
 }
 template <class Face>
