@@ -22,121 +22,106 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-template<class F>
-void FaceRingTp<F>::collectRing(F* t, EnoType eno) {
+template <class F> void FaceRingTp<F>::collectRing(F* t, EnoType eno) {
 
+    _enoVec.erase(_enoVec.begin(), _enoVec.end());
+    _faceVec.erase(_faceVec.begin(), _faceVec.end());
 
-  _enoVec.erase(_enoVec.begin(), _enoVec.end());
-  _faceVec.erase(_faceVec.begin(), _faceVec.end());
+    _face = t;
+    _eno = eno;
+    _edge = 0;
+    _closed = true;
 
-  _face = t;
-  _eno = eno;
-  _edge = 0;
-  _closed = true;
+    EnoType currentEno = -eno;
+    F* currentTri = t;
 
-  EnoType currentEno = -eno;
-  F* currentTri = t;
-
-  do {
-    // make sure that the tail of the current edge is the center
-    assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
-    _enoVec.push_back(currentEno);
-    _faceVec.push_back(currentTri);
-
-    // get the name of the current edge from the point of view
-    // of the adjacent polygon, and get the other edge of the
-    // adjacent polygon which has _center as an endpoint;
-    // the direction is chosen so that center is the tail of the other edge
-
-    currentTri = currentTri->
-      neighbor(currentTri->nextEno(-currentEno), currentEno);
-    // until we run into the boundary or return to the initial vertex
-  } while( currentTri && currentTri != _face);
-
-  // if we hit the boundary, return to the original edge
-  // and go in the opppsite direction;
-  // as we go, update the edge number edge(), so that it
-  // always points to the initial edge
-
-  if(! currentTri) {
-    _closed = false;
-    currentTri = _face;
-    currentEno = -_eno;
-    assert( currentTri->tailVert(currentEno) ==
-	    _face->headVert(_eno));
     do {
-      currentTri = currentTri->neighbor(currentEno, currentEno);
-      if( currentTri ) {
-	currentEno = currentTri->nextEno(-currentEno);
-	assert( currentTri->tailVert(currentEno ) ==
-		_face->headVert(_eno));
-	_enoVec.push_front(currentEno);
-	_faceVec.push_front(currentTri);
-	_edge++;
-      }
-    } while(currentTri);
-  }
+        // make sure that the tail of the current edge is the center
+        assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+        _enoVec.push_back(currentEno);
+        _faceVec.push_back(currentTri);
+
+        // get the name of the current edge from the point of view
+        // of the adjacent polygon, and get the other edge of the
+        // adjacent polygon which has _center as an endpoint;
+        // the direction is chosen so that center is the tail of the other edge
+
+        currentTri = currentTri->neighbor(currentTri->nextEno(-currentEno), currentEno);
+        // until we run into the boundary or return to the initial vertex
+    } while (currentTri && currentTri != _face);
+
+    // if we hit the boundary, return to the original edge
+    // and go in the opppsite direction;
+    // as we go, update the edge number edge(), so that it
+    // always points to the initial edge
+
+    if (!currentTri) {
+        _closed = false;
+        currentTri = _face;
+        currentEno = -_eno;
+        assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+        do {
+            currentTri = currentTri->neighbor(currentEno, currentEno);
+            if (currentTri) {
+                currentEno = currentTri->nextEno(-currentEno);
+                assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+                _enoVec.push_front(currentEno);
+                _faceVec.push_front(currentTri);
+                _edge++;
+            }
+        } while (currentTri);
+    }
 }
 
-template<class F>
-void FaceRingTp<F>::collectSector(F* t, EnoType eno) {
+template <class F> void FaceRingTp<F>::collectSector(F* t, EnoType eno) {
 
-  //    cerr<<"collectSector!"<<endl;
+    //    cerr<<"collectSector!"<<endl;
 
-  _enoVec.erase(_enoVec.begin(), _enoVec.end());
-  _faceVec.erase(_faceVec.begin(), _faceVec.end());
+    _enoVec.erase(_enoVec.begin(), _enoVec.end());
+    _faceVec.erase(_faceVec.begin(), _faceVec.end());
 
-  _face = t;
-  _eno = eno;
-  _edge = 0;
-  _closed = true;
+    _face = t;
+    _eno = eno;
+    _edge = 0;
+    _closed = true;
 
-  EnoType currentEno = -eno;
-  F* currentTri = t;
+    EnoType currentEno = -eno;
+    F* currentTri = t;
 
-  do {
-    // make sure that the tail of the current edge is the center
-    assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
-    _enoVec.push_back(currentEno);
-    _faceVec.push_back(currentTri);
-
-    // get the name of the current edge from the point of view
-    // of the adjacent polygon, and get the other edge of the
-    // adjacent polygon which has _center as an endpoint;
-    // the direction is chosen so that center is the tail of the other edge
-
-    currentTri = currentTri->
-      neighbor(currentTri->nextEno(-currentEno), currentEno);
-    // until we run into the boundary or return to the initial vertex
-  } while (currentTri &&
-	   (currentTri != _face) &&
-	   (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE));
-
-  // if we hit the boundary, return to the original edge
-  // and go in the opppsite direction;
-  // as we go, update the edge number edge(), so that it
-  // always points to the initial edge
-
-  if ((!currentTri) ||
-      (currentTri->edgeTag(currentEno) != F::NOTAG_EDGE)) {
-    _closed = false;
-    currentTri = _face;
-    currentEno = -_eno;
-    assert( currentTri->tailVert(currentEno) ==
-	    _face->headVert(_eno));
     do {
-      currentTri = currentTri->neighbor(currentEno, currentEno);
-      if(currentTri &&
-	 (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE)) {
-	currentEno = currentTri->nextEno(-currentEno);
-	assert( currentTri->tailVert(currentEno ) ==
-		_face->headVert(_eno));
-	_enoVec.push_front(currentEno);
-	_faceVec.push_front(currentTri);
-	_edge++;
+        // make sure that the tail of the current edge is the center
+        assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+        _enoVec.push_back(currentEno);
+        _faceVec.push_back(currentTri);
 
-      }
-    } while(currentTri && (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE));
-  }
+        // get the name of the current edge from the point of view
+        // of the adjacent polygon, and get the other edge of the
+        // adjacent polygon which has _center as an endpoint;
+        // the direction is chosen so that center is the tail of the other edge
 
+        currentTri = currentTri->neighbor(currentTri->nextEno(-currentEno), currentEno);
+        // until we run into the boundary or return to the initial vertex
+    } while (currentTri && (currentTri != _face) && (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE));
+
+    // if we hit the boundary, return to the original edge
+    // and go in the opppsite direction;
+    // as we go, update the edge number edge(), so that it
+    // always points to the initial edge
+
+    if ((!currentTri) || (currentTri->edgeTag(currentEno) != F::NOTAG_EDGE)) {
+        _closed = false;
+        currentTri = _face;
+        currentEno = -_eno;
+        assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+        do {
+            currentTri = currentTri->neighbor(currentEno, currentEno);
+            if (currentTri && (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE)) {
+                currentEno = currentTri->nextEno(-currentEno);
+                assert(currentTri->tailVert(currentEno) == _face->headVert(_eno));
+                _enoVec.push_front(currentEno);
+                _faceVec.push_front(currentTri);
+                _edge++;
+            }
+        } while (currentTri && (currentTri->edgeTag(currentEno) == F::NOTAG_EDGE));
+    }
 }
