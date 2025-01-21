@@ -55,6 +55,6 @@ template <class RuleTable, class FaceRing> class SubdivideTp {
     FaceRing _faceRing;
 };
 
-#include "subdivide.hi"
+#include "subdivide.impl.h"
 
 #endif /* __SUBDIVIDE_H__ */

@@ -57,6 +57,6 @@ template <class Mesh> class MeshObjectTp : public GeoObject {
     cvec3f _minPoint, _maxPoint;
 };
 
-#include "meshobject.hi"
+#include "meshobject.impl.h"
 
 #endif /* __MESHOBJECT_H__ */
