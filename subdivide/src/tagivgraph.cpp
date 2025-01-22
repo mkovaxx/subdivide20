@@ -24,23 +24,23 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include <vector>
 
-#include <QvChildList.h>
-#include <QvIndexedLineSet.h>
-#include <QvNode.h>
-#include <QvSeparator.h>
-#include <QvUnknownNode.h>
+#include <QvChildList.hpp>
+#include <QvIndexedLineSet.hpp>
+#include <QvNode.hpp>
+#include <QvSeparator.hpp>
+#include <QvUnknownNode.hpp>
 
-#include <QvDrawStyle.h>
-#include <QvMaterial.h>
+#include <QvDrawStyle.hpp>
+#include <QvMaterial.hpp>
 
-#include <QvGroup.h>
-#include <QvMFLong.h>
-#include <QvSFFloat.h>
-#include <QvSFLong.h>
-#include <QvSFVec3f.h>
+#include <QvGroup.hpp>
+#include <QvMFLong.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSFLong.hpp>
+#include <QvSFVec3f.hpp>
 
-#include "sectorinfo.h"
-#include "tagivgraph.h"
+#include "sectorinfo.hpp"
+#include "tagivgraph.hpp"
 
 static void addVert(QvSeparator* n, const char* className, const std::vector<int>& indexVec);
 static void addCreaseEdge(QvSeparator* n, const std::vector<int>& indexVec);

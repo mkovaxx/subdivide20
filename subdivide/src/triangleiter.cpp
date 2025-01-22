@@ -21,11 +21,11 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "subtri.h"
-#include "triangle.h"
+#include "subtri.hpp"
+#include "triangle.hpp"
 
-#include "mesh.h"
-#include "trimesh.h"
+#include "mesh.hpp"
+#include "trimesh.hpp"
 
 TriangleIter::TriangleIter(TriIter ti) { _ti = new TriIter(ti); }
 

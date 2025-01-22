@@ -133,31 +133,31 @@ SOURCE=..\viewer\viewer.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\viewer\glcheck.h
+SOURCE=..\viewer\glcheck.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\meshobject.h
+SOURCE=..\viewer\meshobject.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\meshobject.impl.h
+SOURCE=..\viewer\meshobject.impl.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\pickableparam.h
+SOURCE=..\viewer\pickableparam.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\pickmeshobject.h
+SOURCE=..\viewer\pickmeshobject.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\pickmeshobject.impl.h
+SOURCE=..\viewer\pickmeshobject.impl.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\selectedobject.h
+SOURCE=..\viewer\selectedobject.hpp
 # End Source File
 # Begin Source File
 
@@ -169,7 +169,7 @@ SOURCE=..\viewer\sobject.impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\viewer\uiaction.h
+SOURCE=..\viewer\uiaction.hpp
 # End Source File
 # End Group
 # End Target

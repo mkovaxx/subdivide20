@@ -26,150 +26,150 @@ that can be shared by triangular and quadrilateral hierarchical meshes,
 and to be able to create member functions in base classes that are able
 to return pointers to the derived classes. (This is achieved by
 parameterizing the base class templates by the derived class, see
-for example `subquad.h`.)
+for example `subquad.hpp`.)
 
 In the dependency lists we do not enumerate dependencies
-on global headers, such as `general.h`, `compat.h`, and `cvec3t.h`
+on global headers, such as `general.hpp`, `compat.hpp`, and `cvec3t.hpp`
 containing information shared throughout the application.
 
 The files in this directory depend on external files
-from `../include`: `general.h`, `compat.h`, `cvec3t.h`, `sectorinfo.h`,
-`flatmesh.h`, and `tagflatmesh.h`.
+from `../include`: `general.hpp`, `compat.hpp`, `cvec3t.hpp`, `sectorinfo.hpp`,
+`flatmesh.hpp`, and `tagflatmesh.hpp`.
 
 The following files have corresponding `.cpp` files in `../src` directory:
-`subquad.h`, `subtri.h`, `quadrule.h`, and `trirule.h`.
+`subquad.hpp`, `subtri.hpp`, `quadrule.hpp`, and `trirule.hpp`.
 
 The file contents are as follows.
 
 ## Vertices
 
 ```
-basevertex.h            BaseVertex: vertex class.
-vertex.h                Vertex: class with reference counting added to
+basevertex.hpp          BaseVertex: vertex class.
+vertex.hpp              Vertex: class with reference counting added to
                         BaseVertex.
-                        Depends on basevertex.h
+                        Depends on basevertex.hpp
 ```
 
 ## Faces: Base
 
 ```
-baseface.h              BaseFaceTp: base template for all faces.
+baseface.hpp            BaseFaceTp: base template for all faces.
 
-convface.h              ConvenientFaceTp: contains
+convface.hpp            ConvenientFaceTp: contains
                         accessors common for triangles and quads.
 
-tlbaseface.h            TLBaseFaceTp: template class to support pointers
+tlbaseface.hpp          TLBaseFaceTp: template class to support pointers
                         to neighbors for top-level faces.
 ```
 
 ## Faces: Tags
 
 ```
-tagface.h               TagFaceTp: encapsulates accessors to tags
+tagface.hpp             TagFaceTp: encapsulates accessors to tags
                         for all faces.
-                        Depends on sectorinfo.h facering.h
+                        Depends on sectorinfo.hpp facering.hpp
 
-tltagface.h             TlTagFaceTp: stores tags and prescribed normals
+tltagface.hpp           TlTagFaceTp: stores tags and prescribed normals
                         at top-level faces.
-                        Depends on sectorinfo.h
+                        Depends on sectorinfo.hpp
 ```
 
 ## Faces: Quad and Triangle-Specific
 
 ```
-basequad.h              BaseQuadTp: base for all faces of a
+basequad.hpp            BaseQuadTp: base for all faces of a
                         quad hierarchy (including top-level);
                         TLBaseQuadTp: a specialization for top-level faces.
                         Functionality specific to quad-based hierarchies,
                         such as finding neighbors of faces across edges.
-                        Depends on vertex.h
+                        Depends on vertex.hpp
 
-basetri.h               BaseTriTp: base template class for all faces of a
+basetri.hpp             BaseTriTp: base template class for all faces of a
                         triangle hierarchy (including top-level).
                         TLBaseTriTp: a specialization for top-level faces.
                         Functionality specific to quad-based hierarchies,
                         such as finding neighbors of faces across edges.
-                        Depends on vertex.h
+                        Depends on vertex.hpp
 ```
 
 ## Faces: Geometry
 
 ```
-geoface.h               GeoFaceTp: encapsulates accessors to vertex positions.
+geoface.hpp             GeoFaceTp: encapsulates accessors to vertex positions.
 ```
 
 ## Faces: Assembly and Subdivision
 
 ```
-subquad.h               Quad and TLQuad: classes assembling together
+subquad.hpp             Quad and TLQuad: classes assembling together
                         and instantiating templates to handle connectivity,
                         geometry and tags, as well as quad hierarchy specific
                         functions. with member functions to perform
                         subdivision.
                         Depends on
-                        baseface.h basequad.h convface.h geoface.h tagface.h
-                        tlbaseface.h tltagface.h quadruletable.h subdivide.h
+                        baseface.hpp basequad.hpp convface.hpp geoface.hpp tagface.hpp
+                        tlbaseface.hpp tltagface.hpp quadruletable.hpp subdivide.hpp
 
-subtri.h                Tri and TLTri: classes assembling together
+subtri.hpp              Tri and TLTri: classes assembling together
                         and instantiating templates to handle connectivity,
                         geometry and tags, as well as triangle hierarchy
                         specific functions. with member functions to perform
                         subdivision.
                         Depends on
-                        baseface.h basetri.h convface.h geoface.h tagface.h
-                        tlbaseface.h tltagface.h triruletable.h subdivide.h
+                        baseface.hpp basetri.hpp convface.hpp geoface.hpp tagface.hpp
+                        tlbaseface.hpp tltagface.hpp triruletable.hpp subdivide.hpp
 ```
 
 ## Auxiliary Structures
 
 ```
-facering.h              FaceRingTp: represents rings of faces adjacent to
+facering.hpp            FaceRingTp: represents rings of faces adjacent to
                         a vertex.
 
-subdivide.h             SubdivideTp: Ring extended with
+subdivide.hpp           SubdivideTp: Ring extended with
                         a collection of functions to apply subdivision rules.
-                        Depends on sectorinfo.h
+                        Depends on sectorinfo.hpp
 ```
 
 ## Subdivision Rules
 
 ```
-quadrule.h              QuadRule and derived classes:
+quadrule.hpp            QuadRule and derived classes:
                         quadrilateral subdivision coefficients
                         (extends Catmull Clark).
 
-quadruletable.h         QuadRuleTableTp:
+quadruletable.hpp       QuadRuleTableTp:
                         All rule tables for the quad scheme and
                         functions to apply the rules to rings.
-                        Depends on quadrule.h
+                        Depends on quadrule.hpp
 
-trirule.h               TriRule: Triangular subdivision coefficients
+trirule.hpp             TriRule: Triangular subdivision coefficients
                         (extends Loop scheme).
 
-triruletable.h          TriRuleTableTp:
+triruletable.hpp        TriRuleTableTp:
                         All rule tables for the triangular scheme and
                         functions to apply the rules to rings.
-                        Depends on trirule.h
+                        Depends on trirule.hpp
 ```
 
 ## Meshes
 
 ```
-mesh.h                  MeshTp: base mesh class: set of faces +
+mesh.hpp                MeshTp: base mesh class: set of faces +
                         set of vertices.
-                        Depends on flatmesh.h
+                        Depends on flatmesh.hpp
 
-tagmesh.h               TagMeshTp: extends mesh to handle tags.
-                        Depends on mesh.h sectorinfo.h tagflatmesh.h
+tagmesh.hpp             TagMeshTp: extends mesh to handle tags.
+                        Depends on mesh.hpp sectorinfo.hpp tagflatmesh.hpp
 
-facemanipulator.h       FaceManipulatorTp: support for modifying tags
+facemanipulator.hpp     FaceManipulatorTp: support for modifying tags
                         on vertices and edges of a face.
-                        Depends on sectorinfo.h
+                        Depends on sectorinfo.hpp
 ```
 
 ## Miscellaneous
 
 ```
-optdeque.h              An implementation of deque used to store
+optdeque.hpp            An implementation of deque used to store
                         rings of faces.
 ```

@@ -1,4 +1,4 @@
-#include <QvSFString.h>
+#include <QvSFString.hpp>
 
 QV_SFIELD_SOURCE(QvSFString)
 

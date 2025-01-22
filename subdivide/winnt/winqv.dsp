@@ -397,323 +397,323 @@ SOURCE=.\..\..\qvlib\src\QvWWWInline.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvAsciiText.h
+SOURCE=.\..\..\qvlib\include\QvAsciiText.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvBasic.h
+SOURCE=.\..\..\qvlib\include\QvBasic.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvChildList.h
+SOURCE=.\..\..\qvlib\include\QvChildList.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvCone.h
+SOURCE=.\..\..\qvlib\include\QvCone.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvCoordinate3.h
+SOURCE=.\..\..\qvlib\include\QvCoordinate3.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvCube.h
+SOURCE=.\..\..\qvlib\include\QvCube.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvCylinder.h
+SOURCE=.\..\..\qvlib\include\QvCylinder.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvDB.h
+SOURCE=.\..\..\qvlib\include\QvDB.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvDebugError.h
+SOURCE=.\..\..\qvlib\include\QvDebugError.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvDict.h
+SOURCE=.\..\..\qvlib\include\QvDict.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvDirectionalLight.h
+SOURCE=.\..\..\qvlib\include\QvDirectionalLight.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvDrawStyle.h
+SOURCE=.\..\..\qvlib\include\QvDrawStyle.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvElement.h
+SOURCE=.\..\..\qvlib\include\QvElement.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvField.h
+SOURCE=.\..\..\qvlib\include\QvField.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvFieldData.h
+SOURCE=.\..\..\qvlib\include\QvFieldData.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvFields.h
+SOURCE=.\..\..\qvlib\include\QvFields.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvFontStyle.h
+SOURCE=.\..\..\qvlib\include\QvFontStyle.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvGroup.h
+SOURCE=.\..\..\qvlib\include\QvGroup.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvIn.h
+SOURCE=.\..\..\qvlib\include\QvIn.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvIndexedFaceSet.h
+SOURCE=.\..\..\qvlib\include\QvIndexedFaceSet.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvIndexedLineSet.h
+SOURCE=.\..\..\qvlib\include\QvIndexedLineSet.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvInfo.h
+SOURCE=.\..\..\qvlib\include\QvInfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvInput.h
+SOURCE=.\..\..\qvlib\include\QvInput.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvLists.h
+SOURCE=.\..\..\qvlib\include\QvLists.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvLOD.h
+SOURCE=.\..\..\qvlib\include\QvLOD.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMaterial.h
+SOURCE=.\..\..\qvlib\include\QvMaterial.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMaterialBinding.h
+SOURCE=.\..\..\qvlib\include\QvMaterialBinding.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMatrixTransform.h
+SOURCE=.\..\..\qvlib\include\QvMatrixTransform.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFColor.h
+SOURCE=.\..\..\qvlib\include\QvMFColor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFFloat.h
+SOURCE=.\..\..\qvlib\include\QvMFFloat.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFInt32.h
+SOURCE=.\..\..\qvlib\include\QvMFInt32.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFLong.h
+SOURCE=.\..\..\qvlib\include\QvMFLong.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFString.h
+SOURCE=.\..\..\qvlib\include\QvMFString.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFVec2f.h
+SOURCE=.\..\..\qvlib\include\QvMFVec2f.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvMFVec3f.h
+SOURCE=.\..\..\qvlib\include\QvMFVec3f.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvNode.h
+SOURCE=.\..\..\qvlib\include\QvNode.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvNodes.h
+SOURCE=.\..\..\qvlib\include\QvNodes.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvNormal.h
+SOURCE=.\..\..\qvlib\include\QvNormal.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvNormalBinding.h
+SOURCE=.\..\..\qvlib\include\QvNormalBinding.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvOrthographicCamera.h
+SOURCE=.\..\..\qvlib\include\QvOrthographicCamera.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvOut.h
+SOURCE=.\..\..\qvlib\include\QvOut.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvPerspectiveCamera.h
+SOURCE=.\..\..\qvlib\include\QvPerspectiveCamera.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvPList.h
+SOURCE=.\..\..\qvlib\include\QvPList.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvPointLight.h
+SOURCE=.\..\..\qvlib\include\QvPointLight.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvPointSet.h
+SOURCE=.\..\..\qvlib\include\QvPointSet.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvReadError.h
+SOURCE=.\..\..\qvlib\include\QvReadError.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvRotation.h
+SOURCE=.\..\..\qvlib\include\QvRotation.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvScale.h
+SOURCE=.\..\..\qvlib\include\QvScale.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSeparator.h
+SOURCE=.\..\..\qvlib\include\QvSeparator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFBitMask.h
+SOURCE=.\..\..\qvlib\include\QvSFBitMask.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFBool.h
+SOURCE=.\..\..\qvlib\include\QvSFBool.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFColor.h
+SOURCE=.\..\..\qvlib\include\QvSFColor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFEnum.h
+SOURCE=.\..\..\qvlib\include\QvSFEnum.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFFloat.h
+SOURCE=.\..\..\qvlib\include\QvSFFloat.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFImage.h
+SOURCE=.\..\..\qvlib\include\QvSFImage.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFLong.h
+SOURCE=.\..\..\qvlib\include\QvSFLong.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFMatrix.h
+SOURCE=.\..\..\qvlib\include\QvSFMatrix.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFRotation.h
+SOURCE=.\..\..\qvlib\include\QvSFRotation.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFString.h
+SOURCE=.\..\..\qvlib\include\QvSFString.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFUShort.h
+SOURCE=.\..\..\qvlib\include\QvSFUShort.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFVec2f.h
+SOURCE=.\..\..\qvlib\include\QvSFVec2f.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSFVec3f.h
+SOURCE=.\..\..\qvlib\include\QvSFVec3f.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvShapeHints.h
+SOURCE=.\..\..\qvlib\include\QvShapeHints.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSphere.h
+SOURCE=.\..\..\qvlib\include\QvSphere.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSpotLight.h
+SOURCE=.\..\..\qvlib\include\QvSpotLight.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvState.h
+SOURCE=.\..\..\qvlib\include\QvState.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvString.h
+SOURCE=.\..\..\qvlib\include\QvString.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSubField.h
+SOURCE=.\..\..\qvlib\include\QvSubField.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSubNode.h
+SOURCE=.\..\..\qvlib\include\QvSubNode.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvSwitch.h
+SOURCE=.\..\..\qvlib\include\QvSwitch.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTexture2.h
+SOURCE=.\..\..\qvlib\include\QvTexture2.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTexture2Transform.h
+SOURCE=.\..\..\qvlib\include\QvTexture2Transform.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTextureCoordinate2.h
+SOURCE=.\..\..\qvlib\include\QvTextureCoordinate2.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTextureCoordinateBinding.h
+SOURCE=.\..\..\qvlib\include\QvTextureCoordinateBinding.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTransform.h
+SOURCE=.\..\..\qvlib\include\QvTransform.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTransformSeparator.h
+SOURCE=.\..\..\qvlib\include\QvTransformSeparator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvTranslation.h
+SOURCE=.\..\..\qvlib\include\QvTranslation.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvUnknownNode.h
+SOURCE=.\..\..\qvlib\include\QvUnknownNode.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvWWWAnchor.h
+SOURCE=.\..\..\qvlib\include\QvWWWAnchor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\..\..\qvlib\include\QvWWWInline.h
+SOURCE=.\..\..\qvlib\include\QvWWWInline.hpp
 # End Source File
 # End Group
 # End Target

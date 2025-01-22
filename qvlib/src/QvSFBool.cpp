@@ -1,5 +1,5 @@
-#include <QvReadError.h>
-#include <QvSFBool.h>
+#include <QvReadError.hpp>
+#include <QvSFBool.hpp>
 
 QV_SFIELD_SOURCE(QvSFBool)
 

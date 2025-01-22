@@ -1,6 +1,6 @@
-#include <QvDebugError.h>
-#include <QvReadError.h>
-#include <QvSFEnum.h>
+#include <QvDebugError.hpp>
+#include <QvReadError.hpp>
+#include <QvSFEnum.hpp>
 
 // Can't use macro, since we define a constructor.
 

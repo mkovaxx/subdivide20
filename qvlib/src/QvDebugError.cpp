@@ -1,5 +1,5 @@
-#include <QvDebugError.h>
-#include <QvString.h>
+#include <QvDebugError.hpp>
+#include <QvString.hpp>
 #include <stdarg.h>
 
 void QvDebugError::post(const char* methodName, const char* formatString...) {

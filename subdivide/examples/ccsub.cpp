@@ -22,13 +22,13 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "compat.h"
+#include "compat.hpp"
 #include <stdlib.h>
 
-#include "general.h"
-#include "quadmesh.h"
-#include "tagflatmesh.h"
-#include "tagivgraph.h"
+#include "general.hpp"
+#include "quadmesh.hpp"
+#include "tagflatmesh.hpp"
+#include "tagivgraph.hpp"
 
 int main(int argc, char** argv) {
     if (argc != 4) {

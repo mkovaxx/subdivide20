@@ -1,4 +1,4 @@
-#include <QvState.h>
+#include <QvState.hpp>
 
 const char* QvState::stackNames[NumStacks] = {
     "DrawStyle",          "Camera",         "Coordinate3", "FontStyle",  "Light",    "MaterialBinding",

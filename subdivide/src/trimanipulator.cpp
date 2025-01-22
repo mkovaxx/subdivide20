@@ -22,12 +22,12 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "trimanipulator.h"
-#include "compat.h"
-#include "subtri.h"
+#include "trimanipulator.hpp"
+#include "compat.hpp"
+#include "subtri.hpp"
 
-#include "facemanipulator.h"
-#include "tagmesh.h"
+#include "facemanipulator.hpp"
+#include "tagmesh.hpp"
 
 TriManipulator::TriManipulator(void* f) : _t((Tri*)f) { ; }
 

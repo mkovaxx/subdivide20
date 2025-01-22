@@ -22,11 +22,11 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "pickviewer.h"
-#include "geoobject.h"
-#include "glcheck.h"
+#include "pickviewer.hpp"
+#include "geoobject.hpp"
+#include "glcheck.hpp"
 #include "math.h"
-#include "pickobject.h"
+#include "pickobject.hpp"
 #include "stdlib.h"
 
 void PickViewer::mouse(int button, int state, int x, int y) {

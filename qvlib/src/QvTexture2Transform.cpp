@@ -1,4 +1,4 @@
-#include <QvTexture2Transform.h>
+#include <QvTexture2Transform.hpp>
 
 QV_NODE_SOURCE(QvTexture2Transform);
 

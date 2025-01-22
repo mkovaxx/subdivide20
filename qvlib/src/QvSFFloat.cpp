@@ -1,4 +1,4 @@
-#include <QvSFFloat.h>
+#include <QvSFFloat.hpp>
 
 QV_SFIELD_SOURCE(QvSFFloat)
 

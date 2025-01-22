@@ -18,6 +18,6 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "pickedstuff.h"
+#include "pickedstuff.hpp"
 
 // const unsigned char PickedStuff::PICK_ALL = PICK_NOTHING | PICK_VERTEX | PICK_EDGE | PICK_SECTOR | PICK_NORMAL;

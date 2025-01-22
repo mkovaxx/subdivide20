@@ -1,4 +1,4 @@
-#include <QvIndexedLineSet.h>
+#include <QvIndexedLineSet.hpp>
 
 QV_NODE_SOURCE(QvIndexedLineSet);
 

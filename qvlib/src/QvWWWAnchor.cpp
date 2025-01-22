@@ -1,4 +1,4 @@
-#include <QvWWWAnchor.h>
+#include <QvWWWAnchor.hpp>
 
 QV_NODE_SOURCE(QvWWWAnchor);
 

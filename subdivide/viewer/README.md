@@ -9,27 +9,27 @@ The interface is provided by two main classes:
 ## Math Classes
 
 ```
-quat.h          Quaternions (for the arcball).
-hmatrix.h       4x4 matrices representing homogeneous transforms
+quat.hpp        Quaternions (for the arcball).
+hmatrix.hpp     4x4 matrices representing homogeneous transforms
                 (for the arcball).
 ```
 
 ## General GUI Functionality
 
 ```
-arcball.h               Arcball: based on Ken Shoemake's code.
-camera.h                Camera: a perspective camera model
-uiaction.h              Camera-ArcBall interaction.
-glcheck.h               A macro to check for OpenGL errors.
-pickableparam.h         Colors for rendering and picking.
+arcball.hpp             Arcball: based on Ken Shoemake's code.
+camera.hpp              Camera: a perspective camera model
+uiaction.hpp            Camera-ArcBall interaction.
+glcheck.hpp             A macro to check for OpenGL errors.
+pickableparam.hpp       Colors for rendering and picking.
 ```
 
 ## Viewers
 
 ```
-viewer.h                Viewer: basic viewer class.
-ballviewer.h            BallViewer: ArcBall point of view manipulation added.
-pickviewer.h            PickViewer: interaction with mesh added.
+viewer.hpp              Viewer: basic viewer class.
+ballviewer.hpp          BallViewer: ArcBall point of view manipulation added.
+pickviewer.hpp          PickViewer: interaction with mesh added.
 ```
 
 ## Renderable and Pickable Meshes
@@ -39,11 +39,11 @@ geoobject.cpp           GeoObject: Base class for renderable objects.
 pickobject.cpp          PickObject: Pickable object base class.
 pickedstuff.cpp         Default result of a picking operation.
 
-meshobject.h            MeshObjectTp rendarable mesh template.
+meshobject.hpp          MeshObjectTp rendarable mesh template.
 
-pickmeshobject.h        PickMeshObjectTp: pickable mesh template.
+pickmeshobject.hpp      PickMeshObjectTp: pickable mesh template.
 
-selectedobject.h        SelectedObjectTp: stores and manipulates
+selectedobject.hpp      SelectedObjectTp: stores and manipulates
                         current selection information; enforces
                         consistency of tag modification.
 

@@ -22,11 +22,11 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "pickablequad.h"
+#include "pickablequad.hpp"
 
-#include "pickmeshobject.h"
-#include "subquad.h"
-#include "tagmesh.h"
+#include "pickmeshobject.hpp"
+#include "subquad.hpp"
+#include "tagmesh.hpp"
 
 PickableQuad::PickableQuad() {
     _sobject = new PickMeshObjectType();

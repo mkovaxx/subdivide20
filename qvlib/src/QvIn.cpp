@@ -1,10 +1,10 @@
-#include <QvBasic.h>
-#include <QvChildList.h>
-#include <QvDB.h>
-#include <QvIn.h>
-#include <QvInput.h>
-#include <QvNode.h>
-#include <QvSeparator.h>
+#include <QvBasic.hpp>
+#include <QvChildList.hpp>
+#include <QvDB.hpp>
+#include <QvIn.hpp>
+#include <QvInput.hpp>
+#include <QvNode.hpp>
+#include <QvSeparator.hpp>
 #include <iostream>
 
 QvIn::QvIn(char* filename) : _error(false) {

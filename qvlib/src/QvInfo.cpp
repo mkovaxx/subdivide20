@@ -1,4 +1,4 @@
-#include <QvInfo.h>
+#include <QvInfo.hpp>
 
 QV_NODE_SOURCE(QvInfo);
 

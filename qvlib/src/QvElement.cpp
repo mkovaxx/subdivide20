@@ -1,4 +1,4 @@
-#include <QvElement.h>
+#include <QvElement.hpp>
 
 const char* QvElement::nodeTypeNames[NumNodeTypes] = {
     "Unknown",   "OrthographicCamera", "PerspectiveCamera", "DirectionalLight", "PointLight",

@@ -1,4 +1,4 @@
-#include <QvDrawStyle.h>
+#include <QvDrawStyle.hpp>
 
 QV_NODE_SOURCE(QvDrawStyle);
 

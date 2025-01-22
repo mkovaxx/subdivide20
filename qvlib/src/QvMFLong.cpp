@@ -1,4 +1,4 @@
-#include <QvMFLong.h>
+#include <QvMFLong.hpp>
 
 QV_MFIELD_SOURCE(QvMFLong, long, 1, FALSE)
 

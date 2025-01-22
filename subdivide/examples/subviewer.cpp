@@ -22,7 +22,7 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "compat.h"
+#include "compat.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -34,20 +34,20 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <GL/glut.h>
 #endif
 
-#include "general.h" // maxdepth
+#include "general.hpp" // maxdepth
 
-#include "pickviewer.h" // viewer class
+#include "pickviewer.hpp" // viewer class
 
-#include "tagflatmesh.h" // flatmesh data structure
-#include "tagivgraph.h"  // inventor graph
+#include "tagflatmesh.hpp" // flatmesh data structure
+#include "tagivgraph.hpp"  // inventor graph
 
-#include "pickablequad.h" // quad mesh + rendering + picking
-#include "pickabletri.h"  // triangle mesh + rendering + picking
+#include "pickablequad.hpp" // quad mesh + rendering + picking
+#include "pickabletri.hpp"  // triangle mesh + rendering + picking
 
-#include "quadmanipulator.h" // manipulation of quads
-#include "trimanipulator.h"  // manipulation of triangles
+#include "quadmanipulator.hpp" // manipulation of quads
+#include "trimanipulator.hpp"  // manipulation of triangles
 
-#include "sectorinfo.h" // sector information used for call backs
+#include "sectorinfo.hpp" // sector information used for call backs
 
 int depth = 3;
 

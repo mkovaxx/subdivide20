@@ -1,4 +1,4 @@
-#include <QvCoordinate3.h>
+#include <QvCoordinate3.hpp>
 
 QV_NODE_SOURCE(QvCoordinate3);
 

@@ -1,4 +1,4 @@
-#include "compat.h"
+#include "compat.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -8,15 +8,15 @@
 #include <GL/glut.h>
 #endif
 
-#include "ballviewer.h"
-#include "general.h"
-#include "geoobject.h"
-#include "subtri.h"
-#include "tagflatmesh.h"
-#include "tagivgraph.h"
-#include "tagmesh.h"
+#include "ballviewer.hpp"
+#include "general.hpp"
+#include "geoobject.hpp"
+#include "subtri.hpp"
+#include "tagflatmesh.hpp"
+#include "tagivgraph.hpp"
+#include "tagmesh.hpp"
 
-#include "timer.h"
+#include "timer.hpp"
 
 typedef TagMeshTp<Tri> MeshType;
 

@@ -1,4 +1,4 @@
-#include <QvTextureCoordinateBinding.h>
+#include <QvTextureCoordinateBinding.hpp>
 
 QV_NODE_SOURCE(QvTextureCoordinateBinding);
 

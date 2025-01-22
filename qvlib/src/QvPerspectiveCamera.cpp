@@ -1,4 +1,4 @@
-#include <QvPerspectiveCamera.h>
+#include <QvPerspectiveCamera.hpp>
 
 QV_NODE_SOURCE(QvPerspectiveCamera);
 

@@ -22,8 +22,8 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "flatmesh.h"
-#include "vertex.h"
+#include "flatmesh.hpp"
+#include "vertex.hpp"
 
 FlatMesh::FlatMesh(const FlatMesh& fm) {
     for (uint i = 0; i < fm.vert_v.size(); ++i) {

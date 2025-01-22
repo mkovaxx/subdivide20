@@ -22,8 +22,8 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "arcball.h"
-#include "compat.h"
+#include "arcball.hpp"
+#include "compat.hpp"
 
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>

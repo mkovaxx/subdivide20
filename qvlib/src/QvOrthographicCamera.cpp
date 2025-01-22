@@ -1,4 +1,4 @@
-#include <QvOrthographicCamera.h>
+#include <QvOrthographicCamera.hpp>
 
 QV_NODE_SOURCE(QvOrthographicCamera);
 

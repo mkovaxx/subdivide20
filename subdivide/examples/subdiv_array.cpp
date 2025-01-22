@@ -6,19 +6,19 @@
 #include <GL/glu.h>
 #endif
 
-#include "compat.h"
+#include "compat.hpp"
 
 #include <deque.h>
 
-#include "ballviewer.h"
-#include "general.h"
-#include "geoobject.h"
-#include "subtri.h"
-#include "tagflatmesh.h"
-#include "tagivgraph.h"
-#include "tagmesh.h"
+#include "ballviewer.hpp"
+#include "general.hpp"
+#include "geoobject.hpp"
+#include "subtri.hpp"
+#include "tagflatmesh.hpp"
+#include "tagivgraph.hpp"
+#include "tagmesh.hpp"
 
-#include "timer.h"
+#include "timer.hpp"
 
 #define MAX_VALENCE 20
 #define SIN120 0.86602540378444f

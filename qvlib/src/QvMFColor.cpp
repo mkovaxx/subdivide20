@@ -1,4 +1,4 @@
-#include <QvMFColor.h>
+#include <QvMFColor.hpp>
 
 QV_MFIELD_SOURCE(QvMFColor, float, 3, FALSE)
 

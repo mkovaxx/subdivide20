@@ -1,4 +1,4 @@
-#include <QvSFImage.h>
+#include <QvSFImage.hpp>
 
 // Can't use macro, since we define a constructor.
 

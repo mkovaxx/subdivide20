@@ -1,7 +1,7 @@
-#include <QvElement.h>
-#include <QvNodes.h>
-#include <QvState.h>
-#include <QvUnknownNode.h>
+#include <QvElement.hpp>
+#include <QvNodes.hpp>
+#include <QvState.hpp>
+#include <QvUnknownNode.hpp>
 
 //////////////////////////////////////////////////////////////////////////////
 //

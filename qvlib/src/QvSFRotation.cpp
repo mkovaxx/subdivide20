@@ -1,4 +1,4 @@
-#include <QvSFRotation.h>
+#include <QvSFRotation.hpp>
 
 QV_SFIELD_SOURCE(QvSFRotation)
 

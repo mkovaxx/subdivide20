@@ -1,4 +1,4 @@
-#include <QvSFColor.h>
+#include <QvSFColor.hpp>
 
 QV_SFIELD_SOURCE(QvSFColor)
 

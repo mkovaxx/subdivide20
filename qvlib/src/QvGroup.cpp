@@ -1,8 +1,8 @@
-#include <QvChildList.h>
-#include <QvFieldData.h>
-#include <QvGroup.h>
-#include <QvInput.h>
-#include <QvReadError.h>
+#include <QvChildList.hpp>
+#include <QvFieldData.hpp>
+#include <QvGroup.hpp>
+#include <QvInput.hpp>
+#include <QvReadError.hpp>
 
 QV_NODE_SOURCE(QvGroup);
 
