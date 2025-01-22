@@ -1,3 +1,9 @@
+# Build outputs
+qvlib/src/libqv.a.*
+subdivide/exmaples/ccsub
+subdivide/exmaples/loopsub
+subdivide/exmaples/subviewer
+
 # Makedepend files
 Makedepend.*
 
