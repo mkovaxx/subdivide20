@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: mesh.h,v 1.11 2000/04/30 00:08:30 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/mesh.h,v $
+// $Id: mesh.hpp,v 1.11 2000/04/30 00:08:30 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/mesh.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,12 +25,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __MESH_H__
 #define __MESH_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #include <map>
 #include <set>
 
-#include "flatmesh.h"
-#include "general.h"
+#include "flatmesh.hpp"
+#include "general.hpp"
 
 template <class Face> class MeshTp;
 

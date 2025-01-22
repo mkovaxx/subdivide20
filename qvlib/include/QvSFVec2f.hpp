@@ -1,7 +1,7 @@
 #ifndef _QV_SF_VEC2F_
 #define _QV_SF_VEC2F_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFVec2f : public QvSField {
   public:

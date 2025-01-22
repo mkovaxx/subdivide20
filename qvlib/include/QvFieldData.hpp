@@ -1,9 +1,9 @@
 #ifndef _QV_FIELD_DATA_
 #define _QV_FIELD_DATA_
 
-#include <QvBasic.h>
-#include <QvPList.h>
-#include <QvString.h>
+#include <QvBasic.hpp>
+#include <QvPList.hpp>
+#include <QvString.hpp>
 
 class QvField;
 class QvInput;

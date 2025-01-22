@@ -22,7 +22,7 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "geoobject.h"
+#include "geoobject.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>

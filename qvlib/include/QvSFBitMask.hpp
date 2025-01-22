@@ -1,7 +1,7 @@
 #ifndef _QV_SF_BIT_MASK_
 #define _QV_SF_BIT_MASK_
 
-#include <QvSFEnum.h>
+#include <QvSFEnum.hpp>
 
 class QvSFBitMask : public QvSFEnum {
   public:

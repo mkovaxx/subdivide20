@@ -1,4 +1,4 @@
-#include <QvFontStyle.h>
+#include <QvFontStyle.hpp>
 
 QV_NODE_SOURCE(QvFontStyle);
 

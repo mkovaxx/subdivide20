@@ -21,10 +21,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKMESHOBJECT_H__
 #define __PICKMESHOBJECT_H__
 
-#include "meshobject.h"
-#include "pickedstuff.h"
-#include "pickobject.h"
-#include "sectorinfo.h"
+#include "meshobject.hpp"
+#include "pickedstuff.hpp"
+#include "pickobject.hpp"
+#include "sectorinfo.hpp"
 
 // TODO: rename to PickMeshObject
 
@@ -155,6 +155,6 @@ template <class Mesh> class PickMeshObjectTp : public MeshObjectTp<Mesh>, public
     PickedStuff _pickedStuff;
 };
 
-#include "pickmeshobject.impl.h"
+#include "pickmeshobject.impl.hpp"
 
 #endif /* __SOBJECT_H__ */

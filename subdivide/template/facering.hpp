@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: facering.h,v 1.3 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facering.h,v $
+// $Id: facering.hpp,v 1.3 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facering.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __FACERING_H__
 #define __FACERING_H__
 
-#include "compat.h"
-#include "optdeque.h"
+#include "compat.hpp"
+#include "optdeque.hpp"
 #include <vector>
 
 class Vertex;
@@ -150,6 +150,6 @@ template <class Face> class FaceRingTp {
     bool _closed;                 // is it closed?
 };
 
-#include "facering.impl.h"
+#include "facering.impl.hpp"
 
 #endif /* __FACERING_H__ */

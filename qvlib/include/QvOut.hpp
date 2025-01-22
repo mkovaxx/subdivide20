@@ -1,7 +1,7 @@
 #ifndef _QV_OUT_
 #define _QV_OUT_
 
-#include <QvBasic.h>
+#include <QvBasic.hpp>
 
 // HB: Warning!  This class does not write all Inventor nodes, only
 // the ones which are needed for our subdivision code (indexed face

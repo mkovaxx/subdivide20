@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tlbaseface.h,v 1.4 2000/04/29 07:50:09 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tlbaseface.h,v $
+// $Id: tlbaseface.hpp,v 1.4 2000/04/29 07:50:09 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tlbaseface.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TLBASEFACE_H__
 #define __TLBASEFACE_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 // Top level face functionality common for triangles and quads
 // stores pointers to neighbors, edge names from the point of

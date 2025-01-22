@@ -1,8 +1,8 @@
 #ifndef _QV_TEXTURE_COORDINATE_2_
 #define _QV_TEXTURE_COORDINATE_2_
 
-#include <QvMFVec2f.h>
-#include <QvSubNode.h>
+#include <QvMFVec2f.hpp>
+#include <QvSubNode.hpp>
 
 class QvTextureCoordinate2 : public QvNode {
 

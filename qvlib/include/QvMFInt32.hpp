@@ -1,7 +1,7 @@
 #ifndef _QV_MF_INT32_
 #define _QV_MF_INT32_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvMFInt32 : public QvMField {
   public:

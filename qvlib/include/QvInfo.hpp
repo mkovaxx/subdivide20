@@ -1,8 +1,8 @@
 #ifndef _QV_INFO_
 #define _QV_INFO_
 
-#include <QvSFString.h>
-#include <QvSubNode.h>
+#include <QvSFString.hpp>
+#include <QvSubNode.hpp>
 
 class QvInfo : public QvNode {
 

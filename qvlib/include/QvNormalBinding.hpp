@@ -1,8 +1,8 @@
 #ifndef _QV_NORMAL_BINDING_
 #define _QV_NORMAL_BINDING_
 
-#include <QvSFEnum.h>
-#include <QvSubNode.h>
+#include <QvSFEnum.hpp>
+#include <QvSubNode.hpp>
 
 class QvNormalBinding : public QvNode {
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: ivgraph.h,v 1.4 2000/04/30 07:35:46 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ivgraph.h,v $
+// $Id: ivgraph.hpp,v 1.4 2000/04/30 07:35:46 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ivgraph.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __IVGRAPH_H__
 #define __IVGRAPH_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #include <vector>
 
 //: Inventor graph conversion

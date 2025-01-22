@@ -1,9 +1,9 @@
 #ifndef _QV_TRANSFORM_
 #define _QV_TRANSFORM_
 
-#include <QvSFRotation.h>
-#include <QvSFVec3f.h>
-#include <QvSubNode.h>
+#include <QvSFRotation.hpp>
+#include <QvSFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvTransform : public QvNode {
 

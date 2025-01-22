@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: optdeque.h,v 1.2 2000/04/29 09:27:19 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/optdeque.h,v $
+// $Id: optdeque.hpp,v 1.2 2000/04/29 09:27:19 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/optdeque.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __OPTDEQUE_H__
 #define __OPTDEQUE_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #define OPTDEQUE_SIZE 2000
 #define MAX_RINGS 100
 

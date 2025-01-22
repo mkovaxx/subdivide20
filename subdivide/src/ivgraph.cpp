@@ -22,26 +22,26 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "ivgraph.h"
-#include "compat.h"
+#include "ivgraph.hpp"
+#include "compat.hpp"
 
-#include <QvChildList.h>
-#include <QvNode.h>
-#include <QvSeparator.h>
+#include <QvChildList.hpp>
+#include <QvNode.hpp>
+#include <QvSeparator.hpp>
 
-#include <QvCoordinate3.h>
-#include <QvGroup.h>
-#include <QvIndexedFaceSet.h>
-#include <QvMFLong.h>
-#include <QvMFVec3f.h>
-#include <QvUnknownNode.h>
+#include <QvCoordinate3.hpp>
+#include <QvGroup.hpp>
+#include <QvIndexedFaceSet.hpp>
+#include <QvMFLong.hpp>
+#include <QvMFVec3f.hpp>
+#include <QvUnknownNode.hpp>
 
-#include <QvIn.h>
-#include <QvOut.h>
+#include <QvIn.hpp>
+#include <QvOut.hpp>
 #include <set>
 
-#include "flatmesh.h"
-#include "vertex.h"
+#include "flatmesh.hpp"
+#include "vertex.hpp"
 
 template <class NodeType> QvNode* findNode(QvNode* node, NodeType* dummy) {
     QvNode* res;

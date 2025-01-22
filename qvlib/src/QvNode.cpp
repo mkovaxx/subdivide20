@@ -1,11 +1,11 @@
-#include <QvDB.h>
-#include <QvDebugError.h>
-#include <QvField.h>
-#include <QvFieldData.h>
-#include <QvInput.h>
-#include <QvNodes.h>
-#include <QvReadError.h>
-#include <QvUnknownNode.h>
+#include <QvDB.hpp>
+#include <QvDebugError.hpp>
+#include <QvField.hpp>
+#include <QvFieldData.hpp>
+#include <QvInput.hpp>
+#include <QvNodes.hpp>
+#include <QvReadError.hpp>
+#include <QvUnknownNode.hpp>
 #include <ctype.h>
 #include <stdio.h>
 

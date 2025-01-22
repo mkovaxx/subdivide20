@@ -21,11 +21,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKVIEWER_H__
 #define __PICKVIEWER_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #include <map>
 
-#include "ballviewer.h"
-#include "pickobject.h"
+#include "ballviewer.hpp"
+#include "pickobject.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>

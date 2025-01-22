@@ -1,10 +1,10 @@
 #ifndef _QV_DRAWSTYLE_
 #define _QV_DRAWSTYLE_
 
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSFUShort.h>
-#include <QvSubNode.h>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSFUShort.hpp>
+#include <QvSubNode.hpp>
 
 class QvDrawStyle : public QvNode {
 

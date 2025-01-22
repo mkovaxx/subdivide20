@@ -1,7 +1,7 @@
 #ifndef _QV_STRING_
 #define _QV_STRING_
 
-#include <QvBasic.h>
+#include <QvBasic.hpp>
 #include <string.h>
 
 // forward declarations for VC 6.0, which does not treat friend as

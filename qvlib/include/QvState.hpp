@@ -1,7 +1,7 @@
 #ifndef _QV_STATE_
 #define _QV_STATE_
 
-#include <QvElement.h>
+#include <QvElement.hpp>
 
 class QvState {
 

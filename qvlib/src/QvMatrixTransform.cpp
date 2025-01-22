@@ -1,4 +1,4 @@
-#include <QvMatrixTransform.h>
+#include <QvMatrixTransform.hpp>
 
 QV_NODE_SOURCE(QvMatrixTransform);
 

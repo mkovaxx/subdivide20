@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: geoobject.h,v 1.2 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/geoobject.h,v $
+// $Id: geoobject.hpp,v 1.2 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/geoobject.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __GEOOBJECT_H__
 #define __GEOOBJECT_H__
 
-#include "compat.h"
-#include "cvec3t.h"
+#include "compat.hpp"
+#include "cvec3t.hpp"
 
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>

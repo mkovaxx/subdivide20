@@ -1,8 +1,8 @@
 #ifndef _QV_INDEXED_FACE_SET_
 #define _QV_INDEXED_FACE_SET_
 
-#include <QvMFLong.h>
-#include <QvSubNode.h>
+#include <QvMFLong.hpp>
+#include <QvSubNode.hpp>
 
 #define QV_END_FACE_INDEX (-1)
 

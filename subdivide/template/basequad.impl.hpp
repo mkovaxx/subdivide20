@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: basequad.impl.h,v 1.5 2000/04/30 07:35:48 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basequad.impl.h,v $
+// $Id: basequad.impl.hpp,v 1.5 2000/04/30 07:35:48 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basequad.impl.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU

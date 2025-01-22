@@ -1,7 +1,7 @@
 #ifndef _QV_FIELD_
 #define _QV_FIELD_
 
-#include <QvString.h>
+#include <QvString.hpp>
 
 class QvInput;
 class QvNode;

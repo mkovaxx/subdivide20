@@ -1,10 +1,10 @@
 #ifndef _QV_WWW_INLINE_
 #define _QV_WWW_INLINE_
 
-#include <QvGroup.h>
-#include <QvSFEnum.h>
-#include <QvSFString.h>
-#include <QvSFVec3f.h>
+#include <QvGroup.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFString.hpp>
+#include <QvSFVec3f.hpp>
 
 class QvWWWInline : public QvGroup {
 

@@ -22,9 +22,9 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "trimesh.h"
-#include "subtri.h"
-#include "tagmesh.h"
+#include "trimesh.hpp"
+#include "subtri.hpp"
+#include "tagmesh.hpp"
 
 TriMesh::TriMesh() { _triTagMesh = new TagMeshTp<Tri>(); }
 

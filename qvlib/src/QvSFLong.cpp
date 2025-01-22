@@ -1,4 +1,4 @@
-#include <QvSFLong.h>
+#include <QvSFLong.hpp>
 
 QV_SFIELD_SOURCE(QvSFLong)
 

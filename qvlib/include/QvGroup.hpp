@@ -2,7 +2,7 @@
 #define _QV_GROUP_
 
 class QvChildList;
-#include <QvSubNode.h>
+#include <QvSubNode.hpp>
 
 class QvGroup : public QvNode {
 

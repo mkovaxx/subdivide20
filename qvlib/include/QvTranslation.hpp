@@ -1,8 +1,8 @@
 #ifndef _QV_TRANSLATION_
 #define _QV_TRANSLATION_
 
-#include <QvSFVec3f.h>
-#include <QvSubNode.h>
+#include <QvSFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvTranslation : public QvNode {
 

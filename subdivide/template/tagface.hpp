@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tagface.h,v 1.3 2000/04/29 07:50:09 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagface.h,v $
+// $Id: tagface.hpp,v 1.3 2000/04/29 07:50:09 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagface.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TAGFACE_H__
 #define __TAGFACE_H__
 
-#include "compat.h"
-#include "facering.h"
-#include "sectorinfo.h"
+#include "compat.hpp"
+#include "facering.hpp"
+#include "sectorinfo.hpp"
 
 // Functions to manipulate tags for a face;
 // tags are stored only for top-level faces; for all
@@ -58,6 +58,6 @@ template <class ConvenientFace> class TagFaceTp : public ConvenientFace {
     bool hasNormal(VnoType v) const { return (normal(v).l1() != 0); }
 };
 
-#include "tagface.impl.h"
+#include "tagface.impl.hpp"
 
 #endif /* __TAGFACE_H__ */

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: quadruletable.h,v 1.4 2000/04/30 17:16:22 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/quadruletable.h,v $
+// $Id: quadruletable.hpp,v 1.4 2000/04/30 17:16:22 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/quadruletable.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -45,8 +45,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __QUADRULETABLE_H__
 #define __QUADRULETABLE_H__
 
-#include "compat.h"
-#include "quadrule.h"
+#include "compat.hpp"
+#include "quadrule.hpp"
 
 // All rule tables together + functions to apply rules to rings
 

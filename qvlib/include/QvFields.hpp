@@ -1,26 +1,26 @@
 #ifndef _QV_FIELDS_
 #define _QV_FIELDS_
 
-#include <QvMFColor.h>
-#include <QvMFFloat.h>
-#include <QvMFInt32.h>
-#include <QvMFLong.h>
-#include <QvMFString.h>
-#include <QvMFVec2f.h>
-#include <QvMFVec3f.h>
+#include <QvMFColor.hpp>
+#include <QvMFFloat.hpp>
+#include <QvMFInt32.hpp>
+#include <QvMFLong.hpp>
+#include <QvMFString.hpp>
+#include <QvMFVec2f.hpp>
+#include <QvMFVec3f.hpp>
 
-#include <QvSFBitMask.h>
-#include <QvSFBool.h>
-#include <QvSFColor.h>
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSFImage.h>
-#include <QvSFLong.h>
-#include <QvSFMatrix.h>
-#include <QvSFRotation.h>
-#include <QvSFString.h>
-#include <QvSFUShort.h>
-#include <QvSFVec2f.h>
-#include <QvSFVec3f.h>
+#include <QvSFBitMask.hpp>
+#include <QvSFBool.hpp>
+#include <QvSFColor.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSFImage.hpp>
+#include <QvSFLong.hpp>
+#include <QvSFMatrix.hpp>
+#include <QvSFRotation.hpp>
+#include <QvSFString.hpp>
+#include <QvSFUShort.hpp>
+#include <QvSFVec2f.hpp>
+#include <QvSFVec3f.hpp>
 
 #endif /* _QV_FIELDS_ */

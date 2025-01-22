@@ -7,19 +7,19 @@
 CFG=sublib - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "sublib.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "sublib.mak" CFG="sublib - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "sublib - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "sublib - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -74,7 +74,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -137,111 +137,111 @@ SOURCE=..\src\trirule.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\include\arcball.h
+SOURCE=..\include\arcball.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\ballviewer.h
+SOURCE=..\include\ballviewer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\camera.h
+SOURCE=..\include\camera.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\compat.h
+SOURCE=..\include\compat.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\cvec3t.h
+SOURCE=..\include\cvec3t.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\flatmesh.h
+SOURCE=..\include\flatmesh.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\flatmeshvertex.h
+SOURCE=..\include\flatmeshvertex.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\general.h
+SOURCE=..\include\general.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\geoobject.h
+SOURCE=..\include\geoobject.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\hmatrix.h
+SOURCE=..\include\hmatrix.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\ipoly.h
+SOURCE=..\include\ipoly.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\ivgraph.h
+SOURCE=..\include\ivgraph.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\pickablequad.h
+SOURCE=..\include\pickablequad.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\pickabletri.h
+SOURCE=..\include\pickabletri.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\pickedstuff.h
+SOURCE=..\include\pickedstuff.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\pickobject.h
+SOURCE=..\include\pickobject.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\pickviewer.h
+SOURCE=..\include\pickviewer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\quadmanipulator.h
+SOURCE=..\include\quadmanipulator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\quadmesh.h
+SOURCE=..\include\quadmesh.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\quadmeshobject.h
+SOURCE=..\include\quadmeshobject.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\quat.h
+SOURCE=..\include\quat.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\sectorinfo.h
+SOURCE=..\include\sectorinfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\tagflatmesh.h
+SOURCE=..\include\tagflatmesh.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\tagivgraph.h
+SOURCE=..\include\tagivgraph.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\trimanipulator.h
+SOURCE=..\include\trimanipulator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\trimesh.h
+SOURCE=..\include\trimesh.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\trimeshobject.h
+SOURCE=..\include\trimeshobject.hpp
 # End Source File
 # Begin Source File
 
@@ -249,7 +249,7 @@ SOURCE=..\include\vert.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\include\viewer.h
+SOURCE=..\include\viewer.hpp
 # End Source File
 # End Group
 # End Target

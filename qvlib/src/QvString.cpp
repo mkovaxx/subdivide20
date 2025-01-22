@@ -1,4 +1,4 @@
-#include <QvString.h>
+#include <QvString.hpp>
 
 QvString::~QvString() {
     if (string != staticStorage) {

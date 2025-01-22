@@ -1,10 +1,10 @@
 #ifndef _QV_ORTHOGRAPHIC_CAMERA_
 #define _QV_ORTHOGRAPHIC_CAMERA_
 
-#include <QvSFFloat.h>
-#include <QvSFRotation.h>
-#include <QvSFVec3f.h>
-#include <QvSubNode.h>
+#include <QvSFFloat.hpp>
+#include <QvSFRotation.hpp>
+#include <QvSFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvOrthographicCamera : public QvNode {
 

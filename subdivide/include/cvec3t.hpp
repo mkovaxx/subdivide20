@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: cvec3t.h,v 1.2 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/cvec3t.h,v $
+// $Id: cvec3t.hpp,v 1.2 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/cvec3t.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __CVEC3T_H__
 #define __CVEC3T_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #include <assert.h>
 #include <math.h>
 

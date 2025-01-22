@@ -1,8 +1,8 @@
 #ifndef _QV_ROTATION_
 #define _QV_ROTATION_
 
-#include <QvSFRotation.h>
-#include <QvSubNode.h>
+#include <QvSFRotation.hpp>
+#include <QvSubNode.hpp>
 
 class QvRotation : public QvNode {
 

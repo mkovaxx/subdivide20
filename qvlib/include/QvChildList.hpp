@@ -1,7 +1,7 @@
 #ifndef _QV_CHILD_LIST_
 #define _QV_CHILD_LIST_
 
-#include <QvLists.h>
+#include <QvLists.hpp>
 
 class QvChildList : public QvNodeList {
 

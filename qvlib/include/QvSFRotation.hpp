@@ -1,7 +1,7 @@
 #ifndef _QV_SF_ROTATION_
 #define _QV_SF_ROTATION_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFRotation : public QvSField {
   public:

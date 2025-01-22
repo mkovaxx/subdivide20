@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: viewer.h,v 1.2 2000/04/30 06:06:28 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/viewer.h,v $
+// $Id: viewer.hpp,v 1.2 2000/04/30 06:06:28 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/viewer.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VIEWER_H__
 #define __VIEWER_H__
 
-#include "camera.h"
-#include "compat.h"
+#include "camera.hpp"
+#include "compat.hpp"
 #include <vector>
 
 class GeoObject;

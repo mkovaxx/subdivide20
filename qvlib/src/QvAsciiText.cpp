@@ -1,4 +1,4 @@
-#include <QvAsciiText.h>
+#include <QvAsciiText.hpp>
 
 QV_NODE_SOURCE(QvAsciiText);
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: trimanipulator.h,v 1.4 2000/04/30 12:14:20 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trimanipulator.h,v $
+// $Id: trimanipulator.hpp,v 1.4 2000/04/30 12:14:20 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trimanipulator.hpp,v $
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
 
@@ -24,11 +24,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIMANIPULATOR_H__
 #define __TRIMANIPULATOR_H__
 
-#include "compat.h"
-#include "general.h"
-#include "sectorinfo.h"
+#include "compat.hpp"
+#include "general.hpp"
+#include "sectorinfo.hpp"
 
-#include "cvec3t.h"
+#include "cvec3t.hpp"
 
 // internal representation
 class Tri;

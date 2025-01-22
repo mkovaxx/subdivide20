@@ -22,9 +22,9 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "ballviewer.h"
-#include "compat.h"
-#include "glcheck.h"
+#include "ballviewer.hpp"
+#include "compat.hpp"
+#include "glcheck.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -36,8 +36,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <GL/glut.h>
 #endif
 
-#include "geoobject.h"
-#include "uiaction.h"
+#include "geoobject.hpp"
+#include "uiaction.hpp"
 
 static void setupLight();
 

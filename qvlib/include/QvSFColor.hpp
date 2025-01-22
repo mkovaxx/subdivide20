@@ -1,7 +1,7 @@
 #ifndef _QV_SF_COLOR_
 #define _QV_SF_COLOR_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFColor : public QvSField {
   public:

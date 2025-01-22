@@ -1,7 +1,7 @@
 #ifndef _QV_NODE_
 #define _QV_NODE_
 
-#include <QvString.h>
+#include <QvString.hpp>
 
 class QvChildList;
 class QvDict;

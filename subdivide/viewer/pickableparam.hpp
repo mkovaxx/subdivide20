@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickableparam.h,v 1.1 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickableparam.h,v $
+// $Id: pickableparam.hpp,v 1.1 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickableparam.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU

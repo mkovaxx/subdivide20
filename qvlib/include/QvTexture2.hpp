@@ -1,10 +1,10 @@
 #ifndef _QV_TEXTURE_2_
 #define _QV_TEXTURE_2_
 
-#include <QvSFEnum.h>
-#include <QvSFImage.h>
-#include <QvSFString.h>
-#include <QvSubNode.h>
+#include <QvSFEnum.hpp>
+#include <QvSFImage.hpp>
+#include <QvSFString.hpp>
+#include <QvSubNode.hpp>
 
 class QvTexture2 : public QvNode {
 

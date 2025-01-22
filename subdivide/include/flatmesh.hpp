@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: flatmesh.h,v 1.3 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/flatmesh.h,v $
+// $Id: flatmesh.hpp,v 1.3 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/flatmesh.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __FLATMESH_H__
 #define __FLATMESH_H__
 
-#include "compat.h"
-#include "ipoly.h"
+#include "compat.hpp"
+#include "ipoly.hpp"
 #include <vector>
 
 //: Generic flat mesh representation

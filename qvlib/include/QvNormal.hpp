@@ -1,8 +1,8 @@
 #ifndef _QV_NORMAL_
 #define _QV_NORMAL_
 
-#include <QvMFVec3f.h>
-#include <QvSubNode.h>
+#include <QvMFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvNormal : public QvNode {
 

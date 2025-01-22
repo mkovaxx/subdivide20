@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: vertex.h,v 1.1 2000/04/29 07:50:09 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/vertex.h,v $
+// $Id: vertex.hpp,v 1.1 2000/04/29 07:50:09 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/vertex.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VERTEX_H__
 #define __VERTEX_H__
 
-#include "basevertex.h"
-#include "compat.h"
+#include "basevertex.hpp"
+#include "compat.hpp"
 
 class TagTri;
 class TLTagTri;

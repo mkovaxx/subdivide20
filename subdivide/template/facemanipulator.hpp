@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: facemanipulator.h,v 1.8 2000/04/30 01:39:28 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facemanipulator.h,v $
+// $Id: facemanipulator.hpp,v 1.8 2000/04/30 01:39:28 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facemanipulator.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,11 +25,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __FACEMANIPULATOR_H__
 #define __FACEMANIPULATOR_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 #include <set>
 
-#include "sectorinfo.h"
+#include "sectorinfo.hpp"
 
 // Support for modifying tags
 // on vertices and edges of a face.

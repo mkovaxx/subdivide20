@@ -1,8 +1,8 @@
 #ifndef _QV_SWITCH_
 #define _QV_SWITCH_
 
-#include <QvGroup.h>
-#include <QvSFLong.h>
+#include <QvGroup.hpp>
+#include <QvSFLong.hpp>
 
 #define QV_SWITCH_NONE (-1) /* Don't traverse any children	*/
 #define QV_SWITCH_ALL (-3)  /* Traverse all children	*/

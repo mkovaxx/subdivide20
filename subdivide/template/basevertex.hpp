@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: basevertex.h,v 1.1 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basevertex.h,v $
+// $Id: basevertex.hpp,v 1.1 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basevertex.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BASEVERTEX_H__
 #define __BASEVERTEX_H__
 
-#include "compat.h"
-#include "cvec3t.h"
-#include "general.h"
+#include "compat.hpp"
+#include "cvec3t.hpp"
+#include "general.hpp"
 
 // class for vertices;
 // stores vertex positions at all subdivision levels,

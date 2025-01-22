@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tagivgraph.h,v 1.2 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/tagivgraph.h,v $
+// $Id: tagivgraph.hpp,v 1.2 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/tagivgraph.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __IV_TAGGRAPH_H__
 #define __IV_TAGGRAPH_H__
 
-#include "compat.h"
-#include "ivgraph.h"
-#include "tagflatmesh.h"
+#include "compat.hpp"
+#include "ivgraph.hpp"
+#include "tagflatmesh.hpp"
 
 //: Inventor graph conversion
 //

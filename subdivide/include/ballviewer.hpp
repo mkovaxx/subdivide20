@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: ballviewer.h,v 1.1 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ballviewer.h,v $
+// $Id: ballviewer.hpp,v 1.1 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ballviewer.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BALLVIEWER_H__
 #define __BALLVIEWER_H__
 
-#include "arcball.h"
-#include "compat.h"
-#include "viewer.h"
+#include "arcball.hpp"
+#include "compat.hpp"
+#include "viewer.hpp"
 
 class UiAction;
 

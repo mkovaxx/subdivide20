@@ -1,4 +1,4 @@
-#include <QvString.h>
+#include <QvString.hpp>
 #include <ctype.h>
 
 #define CHUNK_SIZE 4000

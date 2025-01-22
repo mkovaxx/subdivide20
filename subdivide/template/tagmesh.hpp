@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tagmesh.h,v 1.15 2001/02/07 06:42:01 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagmesh.h,v $
+// $Id: tagmesh.hpp,v 1.15 2001/02/07 06:42:01 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagmesh.hpp,v $
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
 
@@ -24,9 +24,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TAGMESH_H__
 #define __TAGMESH_H__
 
-#include "mesh.h"
-#include "sectorinfo.h"
-#include "tagflatmesh.h"
+#include "mesh.hpp"
+#include "sectorinfo.hpp"
+#include "tagflatmesh.hpp"
 
 template <class Face> class TagMeshTp : public MeshTp<Face> {
   public:

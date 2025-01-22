@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: quadmesh.h,v 1.7 2000/04/30 07:35:47 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/quadmesh.h,v $
+// $Id: quadmesh.hpp,v 1.7 2000/04/30 07:35:47 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/quadmesh.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __QUADMESH_H__
 #define __QUADMESH_H__
 
-#include "compat.h"
-#include "cvec3t.h"
-#include "tagflatmesh.h"
+#include "compat.hpp"
+#include "cvec3t.hpp"
+#include "tagflatmesh.hpp"
 
 // the face class for quad meshes -- internal
 class Quad;

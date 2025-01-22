@@ -1,8 +1,8 @@
 #ifndef _QV_CUBE_
 #define _QV_CUBE_
 
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvCube : public QvNode {
 

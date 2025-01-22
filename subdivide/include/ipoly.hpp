@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: ipoly.h,v 1.2 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ipoly.h,v $
+// $Id: ipoly.hpp,v 1.2 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/ipoly.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __IPOLY_H__
 #define __IPOLY_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 //: Indermediate vertex representation
 // A way to specify a vertex (used in functions building the mesh)

@@ -1,8 +1,8 @@
 #ifndef _QV_TEXTURE_COORDINATE_BINDING_
 #define _QV_TEXTURE_COORDINATE_BINDING_
 
-#include <QvSFEnum.h>
-#include <QvSubNode.h>
+#include <QvSFEnum.hpp>
+#include <QvSubNode.hpp>
 
 class QvTextureCoordinateBinding : public QvNode {
 

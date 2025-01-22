@@ -1,8 +1,8 @@
 #ifndef _QV_SCALE_
 #define _QV_SCALE_
 
-#include <QvSFVec3f.h>
-#include <QvSubNode.h>
+#include <QvSFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvScale : public QvNode {
 

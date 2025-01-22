@@ -21,8 +21,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __MESHOBJECT_H__
 #define __MESHOBJECT_H__
 
-#include "compat.h"
-#include "geoobject.h"
+#include "compat.hpp"
+#include "geoobject.hpp"
 
 template <class Mesh> class MeshObjectTp : public GeoObject {
   public:
@@ -58,6 +58,6 @@ template <class Mesh> class MeshObjectTp : public GeoObject {
     cvec3f _minPoint, _maxPoint;
 };
 
-#include "meshobject.impl.h"
+#include "meshobject.impl.hpp"
 
 #endif /* __MESHOBJECT_H__ */

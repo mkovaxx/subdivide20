@@ -1,11 +1,11 @@
 #ifndef _QV_POINT_LIGHT_
 #define _QV_POINT_LIGHT_
 
-#include <QvSFBool.h>
-#include <QvSFColor.h>
-#include <QvSFFloat.h>
-#include <QvSFVec3f.h>
-#include <QvSubNode.h>
+#include <QvSFBool.hpp>
+#include <QvSFColor.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvPointLight : public QvNode {
 

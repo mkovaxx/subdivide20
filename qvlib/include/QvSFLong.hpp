@@ -1,7 +1,7 @@
 #ifndef _QV_SF_LONG_
 #define _QV_SF_LONG_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFLong : public QvSField {
   public:

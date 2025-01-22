@@ -1,8 +1,8 @@
 #ifndef _QV_SF_ENUM_
 #define _QV_SF_ENUM_
 
-#include <QvString.h>
-#include <QvSubField.h>
+#include <QvString.hpp>
+#include <QvSubField.hpp>
 
 class QvSFEnum : public QvSField {
   public:

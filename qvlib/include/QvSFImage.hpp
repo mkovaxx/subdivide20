@@ -1,7 +1,7 @@
 #ifndef _QV_SF_IMAGE_
 #define _QV_SF_IMAGE_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFImage : public QvSField {
   public:

@@ -1,8 +1,8 @@
 #ifndef _QV_MATRIX_TRANSFORM_
 #define _QV_MATRIX_TRANSFORM_
 
-#include <QvSFMatrix.h>
-#include <QvSubNode.h>
+#include <QvSFMatrix.hpp>
+#include <QvSubNode.hpp>
 
 class QvMatrixTransform : public QvNode {
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickabletri.h,v 1.4 2000/04/30 07:35:46 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickabletri.h,v $
+// $Id: pickabletri.hpp,v 1.4 2000/04/30 07:35:46 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickabletri.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,10 +25,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKABLETRI_H__
 #define __PICKABLETRI_H__
 
-#include "geoobject.h"   // renderable object
-#include "pickedstuff.h" // results from picking
-#include "pickobject.h"  // pickable object
-#include "trimesh.h"     // triangle class wrapper
+#include "geoobject.hpp"   // renderable object
+#include "pickedstuff.hpp" // results from picking
+#include "pickobject.hpp"  // pickable object
+#include "trimesh.hpp"     // triangle class wrapper
 
 // internal representation
 template <class Mesh> class PickMeshObjectTp;

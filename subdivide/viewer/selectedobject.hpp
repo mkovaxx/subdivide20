@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: selectedobject.h,v 1.4 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/selectedobject.h,v $
+// $Id: selectedobject.hpp,v 1.4 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/selectedobject.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,12 +25,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __SELECTEDOBJECT_H__
 #define __SELECTEDOBJECT_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 #include <set>
 
-#include "pickobject.h"
-#include "sectorinfo.h"
+#include "pickobject.hpp"
+#include "sectorinfo.hpp"
 
 template <class Mesh> class SelectedObjectTp : public SelectedPart {
   public:

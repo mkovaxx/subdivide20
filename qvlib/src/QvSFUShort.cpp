@@ -1,4 +1,4 @@
-#include <QvSFUShort.h>
+#include <QvSFUShort.hpp>
 
 QV_SFIELD_SOURCE(QvSFUShort)
 

@@ -1,7 +1,7 @@
 #ifndef _QV_IN_
 #define _QV_IN_
 
-#include <QvInput.h>
+#include <QvInput.hpp>
 
 class QvSeparator;
 

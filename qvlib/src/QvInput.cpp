@@ -1,7 +1,7 @@
-#include <QvDebugError.h>
-#include <QvInput.h>
-#include <QvNode.h>
-#include <QvReadError.h>
+#include <QvDebugError.hpp>
+#include <QvInput.hpp>
+#include <QvNode.hpp>
+#include <QvReadError.hpp>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>

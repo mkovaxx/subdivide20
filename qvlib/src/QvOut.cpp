@@ -1,36 +1,36 @@
-#include <QvOut.h>
+#include <QvOut.hpp>
 
-#include <QvNode.h>
+#include <QvNode.hpp>
 
-#include <QvMFColor.h>
-#include <QvMFFloat.h>
-#include <QvMFInt32.h>
-#include <QvMFLong.h>
-#include <QvMFString.h>
-#include <QvMFVec2f.h>
-#include <QvMFVec3f.h>
-#include <QvSFBool.h>
-#include <QvSFColor.h>
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSFImage.h>
-#include <QvSFLong.h>
-#include <QvSFMatrix.h>
-#include <QvSFRotation.h>
-#include <QvSFString.h>
-#include <QvSFUShort.h>
-#include <QvSFVec2f.h>
-#include <QvSFVec3f.h>
+#include <QvMFColor.hpp>
+#include <QvMFFloat.hpp>
+#include <QvMFInt32.hpp>
+#include <QvMFLong.hpp>
+#include <QvMFString.hpp>
+#include <QvMFVec2f.hpp>
+#include <QvMFVec3f.hpp>
+#include <QvSFBool.hpp>
+#include <QvSFColor.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSFImage.hpp>
+#include <QvSFLong.hpp>
+#include <QvSFMatrix.hpp>
+#include <QvSFRotation.hpp>
+#include <QvSFString.hpp>
+#include <QvSFUShort.hpp>
+#include <QvSFVec2f.hpp>
+#include <QvSFVec3f.hpp>
 
-#include <QvCoordinate3.h>
-#include <QvDrawStyle.h>
-#include <QvIndexedFaceSet.h>
-#include <QvIndexedLineSet.h>
-#include <QvMaterial.h>
-#include <QvMatrixTransform.h>
-#include <QvPerspectiveCamera.h>
-#include <QvSeparator.h>
-#include <QvUnknownNode.h>
+#include <QvCoordinate3.hpp>
+#include <QvDrawStyle.hpp>
+#include <QvIndexedFaceSet.hpp>
+#include <QvIndexedLineSet.hpp>
+#include <QvMaterial.hpp>
+#include <QvMatrixTransform.hpp>
+#include <QvPerspectiveCamera.hpp>
+#include <QvSeparator.hpp>
+#include <QvUnknownNode.hpp>
 #include <fstream>
 
 static void writeNode(QvNode* node, int indent, std::ostream& outfile);

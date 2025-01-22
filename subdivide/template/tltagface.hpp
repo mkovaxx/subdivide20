@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tltagface.h,v 1.6 2000/04/29 07:50:09 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tltagface.h,v $
+// $Id: tltagface.hpp,v 1.6 2000/04/29 07:50:09 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tltagface.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TLTAGFACE_H__
 #define __TLTAGFACE_H__
 
-#include "compat.h"
-#include "sectorinfo.h"
+#include "compat.hpp"
+#include "sectorinfo.hpp"
 
 template <class TLBaseFace> class TLTagFaceTp : public TLBaseFace {
   public:

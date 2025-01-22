@@ -1,7 +1,7 @@
 #ifndef _QV_MF_STRING_
 #define _QV_MF_STRING_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvMFString : public QvMField {
   public:

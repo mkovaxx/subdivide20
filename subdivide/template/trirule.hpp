@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: trirule.h,v 1.3 2000/04/29 09:27:20 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/trirule.h,v $
+// $Id: trirule.hpp,v 1.3 2000/04/29 09:27:20 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/trirule.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIRULE_H__
 #define __TRIRULE_H__
 
-#include "compat.h"
+#include "compat.hpp"
 #include <vector>
 
 class EdgeCoef {

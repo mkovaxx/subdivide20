@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: quat.h,v 1.1 2000/04/29 18:10:14 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/quat.h,v $
+// $Id: quat.hpp,v 1.1 2000/04/29 18:10:14 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/quat.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -24,7 +24,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #ifndef __QUAT_H__
 #define __QUAT_H__
-#include "cvec3t.h"
+#include "cvec3t.hpp"
 #include <math.h>
 #include <string.h>
 

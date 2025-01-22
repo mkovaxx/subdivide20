@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: basequad.h,v 1.5 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basequad.h,v $
+// $Id: basequad.hpp,v 1.5 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basequad.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BASEQUAD_H__
 #define __BASEQUAD_H__
 
-#include "compat.h"
-#include "vertex.h"
+#include "compat.hpp"
+#include "vertex.hpp"
 
 // base template class for top level faces
 // in quad-based face hierarchies (e.g. Catmull-Clark)
@@ -222,6 +222,6 @@ template <class BaseFace> class BaseQuadTp : public BaseFace {
     Vertex** _v;
 };
 
-#include "basequad.impl.h"
+#include "basequad.impl.hpp"
 
 #endif /* __BASEQUAD_H__ */

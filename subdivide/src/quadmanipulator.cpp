@@ -22,12 +22,12 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "quadmanipulator.h"
-#include "compat.h"
-#include "subquad.h"
+#include "quadmanipulator.hpp"
+#include "compat.hpp"
+#include "subquad.hpp"
 
-#include "facemanipulator.h"
-#include "tagmesh.h"
+#include "facemanipulator.hpp"
+#include "tagmesh.hpp"
 
 QuadManipulator::QuadManipulator(void* f) : _t((Quad*)f) { ; }
 

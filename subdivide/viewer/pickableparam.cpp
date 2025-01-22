@@ -22,7 +22,7 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "pickableparam.h"
+#include "pickableparam.hpp"
 
 const float PickableParam::normalColor[3] = {0.7f, 0.7f, 0.7f};
 const float PickableParam::vertexColor[3] = {0.4f, 0.4f, 0.4f};

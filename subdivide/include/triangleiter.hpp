@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: triangleiter.h,v 1.1 2000/05/23 01:36:21 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/triangleiter.h,v $
+// $Id: triangleiter.hpp,v 1.1 2000/05/23 01:36:21 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/triangleiter.hpp,v $
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
 
@@ -24,8 +24,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIANGLEITER_H__
 #define __TRIANGLEITER_H__
 
-#include "compat.h"
-#include "triangle.h"
+#include "compat.hpp"
+#include "triangle.hpp"
 
 class TriMesh;
 class TriIter;

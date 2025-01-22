@@ -1,4 +1,4 @@
-#include <QvScale.h>
+#include <QvScale.hpp>
 
 QV_NODE_SOURCE(QvScale);
 

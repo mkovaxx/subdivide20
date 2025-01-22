@@ -1,8 +1,8 @@
 #ifndef _QV_INDEXED_LINE_SET_
 #define _QV_INDEXED_LINE_SET_
 
-#include <QvMFLong.h>
-#include <QvSubNode.h>
+#include <QvMFLong.hpp>
+#include <QvSubNode.hpp>
 
 #define QV_END_LINE_INDEX (-1)
 

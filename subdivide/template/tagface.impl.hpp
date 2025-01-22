@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tagface.impl.h,v 1.4 2000/04/30 07:35:48 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagface.impl.h,v $
+// $Id: tagface.impl.hpp,v 1.4 2000/04/30 07:35:48 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/tagface.impl.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU

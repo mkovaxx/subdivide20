@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickobject.h,v 1.3 2000/04/30 03:32:38 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickobject.h,v $
+// $Id: pickobject.hpp,v 1.3 2000/04/30 03:32:38 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickobject.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKOBJECT_H__
 #define __PICKOBJECT_H__
 
-#include "compat.h"
-#include "pickedstuff.h"
+#include "compat.hpp"
+#include "pickedstuff.hpp"
 
 class PickObject {
   public:

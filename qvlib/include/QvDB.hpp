@@ -1,7 +1,7 @@
 #ifndef _QV_DB_
 #define _QV_DB_
 
-#include <QvBasic.h>
+#include <QvBasic.hpp>
 
 class QvInput;
 class QvNode;

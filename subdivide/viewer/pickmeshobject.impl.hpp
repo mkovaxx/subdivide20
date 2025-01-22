@@ -1,9 +1,9 @@
 // -*- Mode: c++ -*-
-// $Id: pickmeshobject.impl.h,v 1.7 2001/02/07 15:12:50 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickmeshobject.impl.h,v $
+// $Id: pickmeshobject.impl.hpp,v 1.7 2001/02/07 15:12:50 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/pickmeshobject.impl.hpp,v $
 
-#include "glcheck.h"
-#include "pickableparam.h"
+#include "glcheck.hpp"
+#include "pickableparam.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -15,9 +15,9 @@
 #include <GL/glut.h>
 #endif
 
-#include "sectorinfo.h"
-#include "tagflatmesh.h"
-#include "tagivgraph.h"
+#include "sectorinfo.hpp"
+#include "tagflatmesh.hpp"
+#include "tagivgraph.hpp"
 
 template <class Mesh> PickMeshObjectTp<Mesh>::PickMeshObjectTp() : _tlPicks(PickObject::PICK_ALL), _listNo(-1) { ; }
 

@@ -1,8 +1,8 @@
 #ifndef _QV_SUB_FIELD_
 #define _QV_SUB_FIELD_
 
-#include <QvField.h>
-#include <QvInput.h>
+#include <QvField.hpp>
+#include <QvInput.hpp>
 
 #include <assert.h>
 

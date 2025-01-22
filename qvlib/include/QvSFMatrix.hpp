@@ -1,7 +1,7 @@
 #ifndef _QV_SF_MATRIX_
 #define _QV_SF_MATRIX_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFMatrix : public QvSField {
   public:

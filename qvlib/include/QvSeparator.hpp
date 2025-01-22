@@ -1,10 +1,10 @@
 #ifndef _QV_SEPARATOR_
 #define _QV_SEPARATOR_
 
-#include <QvGroup.h>
-#include <QvSFEnum.h>
+#include <QvGroup.hpp>
+#include <QvSFEnum.hpp>
 
-#include <QvSFBitMask.h>
+#include <QvSFBitMask.hpp>
 
 class QvSeparator : public QvGroup {
 

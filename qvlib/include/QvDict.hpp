@@ -1,9 +1,9 @@
 #ifndef _QV_DICT_
 #define _QV_DICT_
 
-#include <QvBasic.h>
-#include <QvPList.h>
-#include <QvString.h>
+#include <QvBasic.hpp>
+#include <QvPList.hpp>
+#include <QvString.hpp>
 
 class QvDictEntry {
   private:

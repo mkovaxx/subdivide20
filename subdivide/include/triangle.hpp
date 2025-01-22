@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: triangle.h,v 1.1 2000/05/23 01:36:21 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/triangle.h,v $
+// $Id: triangle.hpp,v 1.1 2000/05/23 01:36:21 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/triangle.hpp,v $
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
 
@@ -28,10 +28,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // acessors to positions, normals, tags.  Also, it has acessors to
 // neighbors and children.
 
-#include "compat.h"
-#include "cvec3t.h"
-#include "general.h"
-#include "sectorinfo.h"
+#include "compat.hpp"
+#include "cvec3t.hpp"
+#include "general.hpp"
+#include "sectorinfo.hpp"
 
 // internal representation
 class Tri;

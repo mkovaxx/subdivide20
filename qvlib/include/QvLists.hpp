@@ -1,7 +1,7 @@
 #ifndef _QV_LISTS_
 #define _QV_LISTS_
 
-#include <QvPList.h>
+#include <QvPList.hpp>
 
 class QvField;
 class QvNode;

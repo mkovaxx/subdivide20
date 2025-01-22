@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: uiaction.h,v 1.3 2000/04/29 12:29:28 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/uiaction.h,v $
+// $Id: uiaction.hpp,v 1.3 2000/04/29 12:29:28 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/uiaction.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __UIACTION_H__
 #define __UIACTION_H__
 
-#include "arcball.h"
-#include "camera.h"
+#include "arcball.hpp"
+#include "camera.hpp"
 
 class UiAction {
   public:

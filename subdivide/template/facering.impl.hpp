@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: facering.impl.h,v 1.2 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facering.impl.h,v $
+// $Id: facering.impl.hpp,v 1.2 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/facering.impl.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU

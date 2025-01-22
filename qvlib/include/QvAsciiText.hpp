@@ -1,11 +1,11 @@
 #ifndef _QV_ASCII_TEXT_
 #define _QV_ASCII_TEXT_
 
-#include <QvMFFloat.h>
-#include <QvMFString.h>
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvMFFloat.hpp>
+#include <QvMFString.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvAsciiText : public QvNode {
 

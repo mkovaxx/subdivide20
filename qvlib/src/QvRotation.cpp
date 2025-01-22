@@ -1,4 +1,4 @@
-#include <QvRotation.h>
+#include <QvRotation.hpp>
 
 QV_NODE_SOURCE(QvRotation);
 

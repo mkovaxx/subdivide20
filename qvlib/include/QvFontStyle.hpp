@@ -1,10 +1,10 @@
 #ifndef _QV_FONT_STYLE_
 #define _QV_FONT_STYLE_
 
-#include <QvSFBitMask.h>
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvSFBitMask.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvFontStyle : public QvNode {
 

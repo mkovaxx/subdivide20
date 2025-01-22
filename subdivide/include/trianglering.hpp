@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: trianglering.h,v 1.1 2000/05/23 01:36:21 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trianglering.h,v $
+// $Id: trianglering.hpp,v 1.1 2000/05/23 01:36:21 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trianglering.hpp,v $
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
 
@@ -24,8 +24,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIANGLERING_H__
 #define __TRIANGLERING_H__
 
-#include "compat.h"
-#include "triangle.h"
+#include "compat.hpp"
+#include "triangle.hpp"
 
 class Tri;
 template <class Face> class FaceRingTp;

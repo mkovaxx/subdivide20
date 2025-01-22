@@ -1,8 +1,8 @@
 #ifndef _QV_SUB_NODE_
 #define _QV_SUB_NODE_
 
-#include <QvFieldData.h>
-#include <QvNode.h>
+#include <QvFieldData.hpp>
+#include <QvNode.hpp>
 
 // className::
 #define QV_NODE_HEADER(className)                                                                                      \

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: subdivide.impl.h,v 1.5 2000/04/29 14:56:19 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subdivide.impl.h,v $
+// $Id: subdivide.impl.hpp,v 1.5 2000/04/29 14:56:19 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subdivide.impl.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -22,7 +22,7 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "sectorinfo.h"
+#include "sectorinfo.hpp"
 
 template <class RuleTable, class FaceRing> void SubdivideTp<RuleTable, FaceRing>::printRelevance() const {
     EnoType e;

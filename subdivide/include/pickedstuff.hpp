@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickedstuff.h,v 1.3 2000/04/30 07:35:46 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickedstuff.h,v $
+// $Id: pickedstuff.hpp,v 1.3 2000/04/30 07:35:46 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickedstuff.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKEDSTUFF_H__
 #define __PICKEDSTUFF_H__
 
-#include "compat.h"
-#include "general.h"
+#include "compat.hpp"
+#include "general.hpp"
 
 // a class describing the result of a picking operation
 

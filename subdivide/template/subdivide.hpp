@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: subdivide.h,v 1.5 2000/04/29 09:27:20 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subdivide.h,v $
+// $Id: subdivide.hpp,v 1.5 2000/04/29 09:27:20 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subdivide.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __SUBDIVIDE_H__
 #define __SUBDIVIDE_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 // Subdivider: a set of functions to apply subdivision rules
 // to a ring
@@ -55,6 +55,6 @@ template <class RuleTable, class FaceRing> class SubdivideTp {
     FaceRing _faceRing;
 };
 
-#include "subdivide.impl.h"
+#include "subdivide.impl.hpp"
 
 #endif /* __SUBDIVIDE_H__ */

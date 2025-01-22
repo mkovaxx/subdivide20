@@ -1,9 +1,9 @@
 #ifndef _QV_TEXTURE_2_TRANSFORM_
 #define _QV_TEXTURE_2_TRANSFORM_
 
-#include <QvSFFloat.h>
-#include <QvSFVec2f.h>
-#include <QvSubNode.h>
+#include <QvSFFloat.hpp>
+#include <QvSFVec2f.hpp>
+#include <QvSubNode.hpp>
 
 class QvTexture2Transform : public QvNode {
 

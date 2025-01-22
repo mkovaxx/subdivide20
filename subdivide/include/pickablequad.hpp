@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: pickablequad.h,v 1.4 2000/04/30 07:35:46 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickablequad.h,v $
+// $Id: pickablequad.hpp,v 1.4 2000/04/30 07:35:46 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/pickablequad.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __PICKABLEQUAD_H__
 #define __PICKABLEQUAD_H__
 
-#include "geoobject.h"  // renderable object
-#include "pickobject.h" // pickable object
-#include "quadmesh.h"   // quad class wrapper
+#include "geoobject.hpp"  // renderable object
+#include "pickobject.hpp" // pickable object
+#include "quadmesh.hpp"   // quad class wrapper
 
 // internal representation
 template <class Mesh> class PickMeshObjectTp;

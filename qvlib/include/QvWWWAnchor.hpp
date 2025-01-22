@@ -1,9 +1,9 @@
 #ifndef _QV_WWW_ANCHOR_
 #define _QV_WWW_ANCHOR_
 
-#include <QvGroup.h>
-#include <QvSFEnum.h>
-#include <QvSFString.h>
+#include <QvGroup.hpp>
+#include <QvSFEnum.hpp>
+#include <QvSFString.hpp>
 
 class QvWWWAnchor : public QvGroup {
 

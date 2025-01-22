@@ -1,5 +1,5 @@
-#include <QvLists.h>
-#include <QvNode.h>
+#include <QvLists.hpp>
+#include <QvNode.hpp>
 
 QvNodeList::QvNodeList() : QvPList() {}
 

@@ -1,9 +1,9 @@
 #ifndef _QV_SHAPE_HINTS_
 #define _QV_SHAPE_HINTS_
 
-#include <QvSFEnum.h>
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvSFEnum.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvShapeHints : public QvNode {
 

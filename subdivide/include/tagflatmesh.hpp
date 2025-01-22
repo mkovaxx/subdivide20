@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: tagflatmesh.h,v 1.2 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/tagflatmesh.h,v $
+// $Id: tagflatmesh.hpp,v 1.2 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/tagflatmesh.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TAGFLATMESH_H__
 #define __TAGFLATMESH_H__
 
-#include "compat.h"
-#include "flatmesh.h"
-#include "ipoly.h"
+#include "compat.hpp"
+#include "flatmesh.hpp"
+#include "ipoly.hpp"
 #include <vector>
 
 class Vert;

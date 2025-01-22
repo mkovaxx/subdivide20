@@ -1,7 +1,7 @@
 #ifndef _QV_ELEMENT_
 #define _QV_ELEMENT_
 
-#include <QvBasic.h>
+#include <QvBasic.hpp>
 
 class QvNode;
 

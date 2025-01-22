@@ -22,9 +22,9 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "tagflatmesh.h"
-#include "sectorinfo.h"
-#include "vertex.h"
+#include "tagflatmesh.hpp"
+#include "sectorinfo.hpp"
+#include "vertex.hpp"
 
 TagFlatMesh::TagFlatMesh(const TagFlatMesh& fm) {
     uint i;

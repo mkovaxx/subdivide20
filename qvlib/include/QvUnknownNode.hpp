@@ -1,7 +1,7 @@
 #ifndef _QV_UNKNOWN_NODE_
 #define _QV_UNKNOWN_NODE_
 
-#include <QvGroup.h>
+#include <QvGroup.hpp>
 
 class QvUnknownNode : public QvGroup {
 

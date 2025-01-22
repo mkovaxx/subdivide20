@@ -1,4 +1,4 @@
-#include <QvPointLight.h>
+#include <QvPointLight.hpp>
 
 QV_NODE_SOURCE(QvPointLight);
 

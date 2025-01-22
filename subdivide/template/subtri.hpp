@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: subtri.h,v 1.4 2000/04/29 07:50:09 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subtri.h,v $
+// $Id: subtri.hpp,v 1.4 2000/04/29 07:50:09 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/subtri.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,18 +25,18 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __SUBTRI_H__
 #define __SUBTRI_H__
 
-#include "baseface.h"
-#include "basetri.h"
-#include "compat.h"
-#include "convface.h"
-#include "geoface.h"
-#include "tagface.h"
+#include "baseface.hpp"
+#include "basetri.hpp"
+#include "compat.hpp"
+#include "convface.hpp"
+#include "geoface.hpp"
+#include "tagface.hpp"
 
-#include "tlbaseface.h"
-#include "tltagface.h"
+#include "tlbaseface.hpp"
+#include "tltagface.hpp"
 
-#include "subdivide.h"
-#include "triruletable.h"
+#include "subdivide.hpp"
+#include "triruletable.hpp"
 
 class TLTri;
 class Tri;

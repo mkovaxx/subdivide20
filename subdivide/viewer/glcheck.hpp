@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: glcheck.h,v 1.2 2000/04/29 12:29:27 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/glcheck.h,v $
+// $Id: glcheck.hpp,v 1.2 2000/04/29 12:29:27 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/viewer/glcheck.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -24,7 +24,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #ifndef __GL_CHECK_H__
 #define __GL_CHECK_H__
-#include "compat.h"
+#include "compat.hpp"
 
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>

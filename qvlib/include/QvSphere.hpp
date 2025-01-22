@@ -1,8 +1,8 @@
 #ifndef _QV_SPHERE_
 #define _QV_SPHERE_
 
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvSphere : public QvNode {
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: triruletable.h,v 1.3 2000/04/29 09:27:20 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/triruletable.h,v $
+// $Id: triruletable.hpp,v 1.3 2000/04/29 09:27:20 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/triruletable.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIRULETABLE_H__
 #define __TRIRULETABLE_H__
 
-#include "compat.h"
-#include "trirule.h"
+#include "compat.hpp"
+#include "trirule.hpp"
 
 // All rule tables together + functions to apply rules to rings
 

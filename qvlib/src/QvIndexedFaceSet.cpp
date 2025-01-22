@@ -1,4 +1,4 @@
-#include <QvIndexedFaceSet.h>
+#include <QvIndexedFaceSet.hpp>
 
 QV_NODE_SOURCE(QvIndexedFaceSet);
 

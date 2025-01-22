@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: trimesh.h,v 1.10 2001/02/07 05:29:40 biermann Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trimesh.h,v $
+// $Id: trimesh.hpp,v 1.10 2001/02/07 05:29:40 biermann Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/trimesh.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,10 +25,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __TRIMESH_H__
 #define __TRIMESH_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
-#include "cvec3t.h"
-#include "tagflatmesh.h"
+#include "cvec3t.hpp"
+#include "tagflatmesh.hpp"
 
 // the face class for triangle meshes -- internal
 class Tri;

@@ -1,9 +1,9 @@
 #ifndef _QV_MATERIAL_
 #define _QV_MATERIAL_
 
-#include <QvMFColor.h>
-#include <QvMFFloat.h>
-#include <QvSubNode.h>
+#include <QvMFColor.hpp>
+#include <QvMFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvMaterial : public QvNode {
 

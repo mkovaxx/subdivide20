@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: basetri.h,v 1.5 2000/04/29 09:27:19 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basetri.h,v $
+// $Id: basetri.hpp,v 1.5 2000/04/29 09:27:19 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/basetri.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BASETRI_H__
 #define __BASETRI_H__
 
-#include "compat.h"
-#include "vertex.h"
+#include "compat.hpp"
+#include "vertex.hpp"
 
 // base template class for top level faces
 // in triangle-based face hierarchies (e.g. Loop)
@@ -157,6 +157,6 @@ template <class BFace> class BaseTriTp : public BFace {
     static const EnoType _tailSubEno[7];
 };
 
-#include "basetri.impl.h"
+#include "basetri.impl.hpp"
 
 #endif /* _BASETRI_H__ */

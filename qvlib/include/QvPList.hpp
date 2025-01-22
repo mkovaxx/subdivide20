@@ -1,7 +1,7 @@
 #ifndef _QV_PLIST_
 #define _QV_PLIST_
 
-#include <QvBasic.h>
+#include <QvBasic.hpp>
 
 class QvPList {
   public:

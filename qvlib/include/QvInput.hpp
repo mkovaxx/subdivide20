@@ -1,8 +1,8 @@
 #ifndef _QV_INPUT_
 #define _QV_INPUT_
 
-#include <QvDict.h>
-#include <QvString.h>
+#include <QvDict.hpp>
+#include <QvString.hpp>
 
 class QvNode;
 class QvDB;

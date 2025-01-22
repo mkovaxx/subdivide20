@@ -1,4 +1,4 @@
-#include <QvMaterial.h>
+#include <QvMaterial.hpp>
 
 QV_NODE_SOURCE(QvMaterial);
 

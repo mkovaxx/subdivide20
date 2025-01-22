@@ -1,8 +1,8 @@
 #ifndef _QV_POINT_SET_
 #define _QV_POINT_SET_
 
-#include <QvSFLong.h>
-#include <QvSubNode.h>
+#include <QvSFLong.hpp>
+#include <QvSubNode.hpp>
 
 #define QV_POINT_SET_USE_REST_OF_POINTS (-1)
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: arcball.h,v 1.2 2000/04/30 07:35:46 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/arcball.h,v $
+// $Id: arcball.hpp,v 1.2 2000/04/30 07:35:46 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/arcball.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __ARCBALL_H__
 #define __ARCBALL_H__
 
-#include "hmatrix.h"
-#include "quat.h"
+#include "hmatrix.hpp"
+#include "quat.hpp"
 
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>

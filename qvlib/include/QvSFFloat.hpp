@@ -1,7 +1,7 @@
 #ifndef _QV_SF_FLOAT_
 #define _QV_SF_FLOAT_
 
-#include <QvSubField.h>
+#include <QvSubField.hpp>
 
 class QvSFFloat : public QvSField {
   public:

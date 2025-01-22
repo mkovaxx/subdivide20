@@ -1,8 +1,8 @@
 #ifndef _QV_COORDINATE3_
 #define _QV_COORDINATE3_
 
-#include <QvMFVec3f.h>
-#include <QvSubNode.h>
+#include <QvMFVec3f.hpp>
+#include <QvSubNode.hpp>
 
 class QvCoordinate3 : public QvNode {
 

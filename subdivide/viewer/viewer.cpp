@@ -22,8 +22,8 @@ along with Subdivide; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#include "compat.h"
-#include "glcheck.h"
+#include "compat.hpp"
+#include "glcheck.hpp"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -38,8 +38,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "geoobject.h"
-#include "viewer.h"
+#include "geoobject.hpp"
+#include "viewer.hpp"
 
 std::vector<Viewer*> Viewer::_viewer;
 

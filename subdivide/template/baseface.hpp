@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: baseface.h,v 1.3 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/baseface.h,v $
+// $Id: baseface.hpp,v 1.3 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/baseface.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,8 +25,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __BASEFACE_H__
 #define __BASEFACE_H__
 
-#include "compat.h"
-#include "general.h"
+#include "compat.hpp"
+#include "general.hpp"
 
 // least common denominator for all face classes which
 // are nodes in polygon hierarchies

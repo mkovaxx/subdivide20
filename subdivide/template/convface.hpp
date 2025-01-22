@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: convface.h,v 1.2 2000/04/29 07:50:08 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/template/convface.h,v $
+// $Id: convface.hpp,v 1.2 2000/04/29 07:50:08 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/template/convface.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -25,7 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __CONVFACE_H__
 #define __CONVFACE_H__
 
-#include "compat.h"
+#include "compat.hpp"
 
 // a collection of accessors to vertices, children and parent
 // this functions are common for triangular and quad hierarchies.

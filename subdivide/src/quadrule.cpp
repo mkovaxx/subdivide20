@@ -2,8 +2,8 @@
 // $Id: quadrule.cpp,v 1.2 2000/04/29 09:27:19 dzorin Exp $
 // $Source: /tools/cvs-repos/sig00code/nyuSub/src/quadrule.cpp,v $
 
-#include "quadrule.h"
-#include "compat.h"
+#include "quadrule.hpp"
+#include "compat.hpp"
 #include <math.h>
 
 /* Subdivide V2.0

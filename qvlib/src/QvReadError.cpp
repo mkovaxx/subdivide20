@@ -1,6 +1,6 @@
-#include <QvInput.h>
-#include <QvReadError.h>
-#include <QvString.h>
+#include <QvInput.hpp>
+#include <QvReadError.hpp>
+#include <QvString.hpp>
 #include <stdarg.h>
 
 void QvReadError::post(const QvInput* in, const char* formatString...) {

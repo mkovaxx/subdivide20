@@ -1,9 +1,9 @@
 #ifndef _QV_LEVEL_OF_DETAIL_
 #define _QV_LEVEL_OF_DETAIL_
 
-#include <QvGroup.h>
-#include <QvMFFloat.h>
-#include <QvSFVec3f.h>
+#include <QvGroup.hpp>
+#include <QvMFFloat.hpp>
+#include <QvSFVec3f.hpp>
 
 class QvLOD : public QvGroup {
 

@@ -1,6 +1,6 @@
 // -*- Mode: c++ -*-
-// $Id: camera.h,v 1.1 2000/04/29 12:29:26 dzorin Exp $
-// $Source: /tools/cvs-repos/sig00code/nyuSub/include/camera.h,v $
+// $Id: camera.hpp,v 1.1 2000/04/29 12:29:26 dzorin Exp $
+// $Source: /tools/cvs-repos/sig00code/nyuSub/include/camera.hpp,v $
 
 /* Subdivide V2.0
    Copyright (C) 2000 Henning Biermann, Denis Zorin, NYU
@@ -24,10 +24,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
-#include "arcball.h"
-#include "compat.h"
-#include "cvec3t.h"
-#include "hmatrix.h"
+#include "arcball.hpp"
+#include "compat.hpp"
+#include "cvec3t.hpp"
+#include "hmatrix.hpp"
 
 #if defined(__APPLE__)
 #include <OpenGL/glu.h>

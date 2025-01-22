@@ -1,9 +1,9 @@
 #ifndef _QV_CONE_
 #define _QV_CONE_
 
-#include <QvSFBitMask.h>
-#include <QvSFFloat.h>
-#include <QvSubNode.h>
+#include <QvSFBitMask.hpp>
+#include <QvSFFloat.hpp>
+#include <QvSubNode.hpp>
 
 class QvCone : public QvNode {
 
