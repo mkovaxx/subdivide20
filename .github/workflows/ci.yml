@@ -1,0 +1,10 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build-osx:
+    runs-on: macos-latest
+    steps:
+      - run: brew update
+      - uses: actions/checkout@v4
+      - run: make -C subdivide -f Makefile.macos
