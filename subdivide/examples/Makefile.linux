@@ -13,11 +13,11 @@
 # This file defines the following targets:
 # ===========================================================================
 # <null target> or all: makes your application.
-# 
+#
 # clean: removes all the usual stuff (if your Makefile is checked in, it will
 #        be removed too... you might then want to do a "co Makefile")
 #
-############################################################################## 
+##############################################################################
 
 SHELL = /bin/sh
 ##############################################################################
@@ -33,18 +33,18 @@ SWSRCS=
 SRCS=$(SWSRCS) $(ARCHSRCS)
 
 # C-language source, to compile with cc
-SWCSRCS= 
+SWCSRCS=
 
 CSRCS=$(SWCSRCS) $(ARCHCSRCS)
-# source files with no associated .o 
+# source files with no associated .o
 SRCSNOO=
 
-HDRSNOS= 
+HDRSNOS=
 
 # sources that are #include'd, and have no associated .o
 TABLESRCS=
 
-ALLSRCS=$(SRCSNOH) $(CSRCS) $(SRCS) $(SRCSNOO) $(TABLESRCS) 
+ALLSRCS=$(SRCSNOH) $(CSRCS) $(SRCS) $(SRCSNOO) $(TABLESRCS)
 
 # All the local .h files (these are not automatically depended)
 HDRS=$(HDRSNOS) ${SRCS:.cpp=.h} ${CSRCS:.c=.h} ${SRCSNOO:.cpp=.h}
@@ -74,17 +74,17 @@ INCS= -I. -I../include  -I/usr/X11R6/include
 
 # CC options
 
-INOPTS= #-DNDEBUG -Ofast 
-DEBUGOPTS= -g 
+INOPTS= #-DNDEBUG -Ofast
+DEBUGOPTS= -g
 
 
-OPTS=  $(INOPTS) $(DEBUGOPTS) 
+OPTS=  $(INOPTS) $(DEBUGOPTS)
 
 # C specific options
 COPTS=
 
 # C++ specific options
-CCOPTS= -Wall -ansi -pedantic
+CCOPTS= -Wall -pedantic -std=c++11
 
 DEPOPTS= -M -I..
 
@@ -106,7 +106,7 @@ VIEWERLIBS= -L../viewer -lviewer  -lglut -lGLU -lGL -lX11 -lXmu
 # Language definitions
 ##############################################################################
 
-CFLAGS= $(INCS) $(DEFS) $(DEBUG) $(OPTS) $(COPTS) 
+CFLAGS= $(INCS) $(DEFS) $(DEBUG) $(OPTS) $(COPTS)
 CCFLAGS=$(INCS) $(DEFS) $(DEBUG) $(OPTS) $(CCOPTS)
 
 CC=gcc
@@ -187,16 +187,16 @@ ccsub: ccsub.o  ../viewer/libviewer.a ../src/libsub.a
 ##############################################################################
 
 
-clean:	
+clean:
 	rm -f $(TARGETS) $(OBJS) *.slo *.o *~ *.s \
 		*.a *..c ptrepository/* TAGS \
 		core a.out \#* *.bak *.BAK *.CKP \
 		*.l *.Addrs *.Counts *.pixie .\#* \
-		loopsub ccsub; 
-	rm -rf ii_files; 
+		loopsub ccsub;
+	rm -rf ii_files;
 	rm -f Makedepend.linux; touch Makedepend.linux
 
-.IGNORE:    
+.IGNORE:
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
