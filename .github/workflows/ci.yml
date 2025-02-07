@@ -8,3 +8,9 @@ jobs:
       - run: brew update
       - uses: actions/checkout@v4
       - run: make -C subdivide -f Makefile.macos
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make -C subdivide -f Makefile.linux
