@@ -10,9 +10,9 @@ jobs:
       - run: make -C subdivide -f Makefile.macos
       - name: Build Output Check
         if: |
-          ${{ hashFiles('subdivide/examples/ccsub' == '' ||
-              hashFiles('subdivide/examples/loopsub' == '' ||
-              hashFiles('subdivide/examples/subviewer' == '' }}
+          ${{ hashFiles('subdivide/examples/ccsub' == ''
+           || hashFiles('subdivide/examples/loopsub' == ''
+           || hashFiles('subdivide/examples/subviewer' == '' }}
         uses: actions/github-script@v3
         with:
           script: |
