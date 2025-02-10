@@ -52,7 +52,7 @@ template <class F> auto TagFaceTp<F>::edgeTag(EnoType e) const -> TagFaceTp<F>::
     }
 }
 
-template <class F> TagFaceTp<F>::VertexTagType TagFaceTp<F>::vertexTag(VnoType v) const {
+template <class F> auto TagFaceTp<F>::vertexTag(VnoType v) const -> TagFaceTp<F>::VertexTagType {
     if (this->vert(v)->isSpecial()) {
 
         VnoType tv;
@@ -86,7 +86,7 @@ template <class F> TagFaceTp<F>::VertexTagType TagFaceTp<F>::vertexTag(VnoType v
     }
 }
 
-template <class F> TagFaceTp<F>::SectorTagType TagFaceTp<F>::sectorTag(VnoType v) const {
+template <class F> auto TagFaceTp<F>::sectorTag(VnoType v) const -> TagFaceTp<F>::SectorTagType {
 
     SectorInfo* s = sectorInfo(v);
     if (s == 0) {
