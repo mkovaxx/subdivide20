@@ -21,3 +21,12 @@ jobs:
       - run: '[ -f subdivide/examples/ccsub ]'
       - run: '[ -f subdivide/examples/loopsub ]'
       - run: '[ -f subdivide/examples/subviewer ]'
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make -C subdivide -f Makefile.windows
+      - run: '[ -f subdivide/examples/ccsub ]'
+      - run: '[ -f subdivide/examples/loopsub ]'
+      - run: '[ -f subdivide/examples/subviewer ]'
