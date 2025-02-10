@@ -94,7 +94,7 @@ DEPLINE=  1> Makedepend.linux
 
 LIBS= -L/usr/X11R6/lib  -L../../qvlib/src -L../src  -lsub -lqv  -lm -lstdc++
 
-VIEWERLIBS= -L../viewer -lviewer  -lglut -lGLU -lGL -lX11 -lXmu
+VIEWERLIBS= -L../viewer -lviewer  -lglut -lGLU -lGL -lX11
 
 # ----------------------------------------------------------------------------
 # -- You shouldn't need to edit anything below here, unless you have more
