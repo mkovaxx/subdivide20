@@ -32,7 +32,7 @@ template <class F> void TagFaceTp<F>::makeChildren(int d) {
     }
 }
 
-template <class F> TagFaceTp<F>::EdgeTagType TagFaceTp<F>::edgeTag(EnoType e) const {
+template <class F> auto TagFaceTp<F>::edgeTag(EnoType e) const -> TagFaceTp<F>::EdgeTagType {
 
     if (this->headVert(e)->isSpecial()) {
 
