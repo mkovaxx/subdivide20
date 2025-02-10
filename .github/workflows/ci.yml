@@ -8,15 +8,9 @@ jobs:
       - run: brew update
       - uses: actions/checkout@v4
       - run: make -C subdivide -f Makefile.macos
-      - name: Build Output Check
-        if: |
-          ${{ hashFiles('subdivide20/subdivide/examples/ccsub') == ''
-           || hashFiles('subdivide20/subdivide/examples/loopsub') == ''
-           || hashFiles('subdivide20/subdivide/examples/subviewer') == '' }}
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('Expected build outputs are missing')
+      - run: '[ -e subdivide/examples/ccsub ]'
+      - run: '[ -e subdivide/examples/loopsub ]'
+      - run: '[ -e subdivide/examples/subviewer ]'
 
   build-linux:
     runs-on: ubuntu-latest
