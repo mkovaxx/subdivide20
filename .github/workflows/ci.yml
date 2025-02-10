@@ -27,6 +27,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: make -C subdivide -f Makefile.windows
-      - run: 'Test-Path -Path "subdivide\examples\ccsub" -PathType leaf'
-      - run: 'Test-Path -Path "subdivide\examples\loopsub" -PathType leaf'
-      - run: 'Test-Path -Path "subdivide\examples\subviewer" -PathType leaf'
+      - run: 'If (!(Test-Path -Path "subdivide\examples\ccsub" -PathType Leaf)) { exit 1 }'
+      - run: 'If (!(Test-Path -Path "subdivide\examples\loopsub" -PathType Leaf)) { exit 1 }'
+      - run: 'If (!(Test-Path -Path "subdivide\examples\subviewer" -PathType Leaf)) { exit 1 }'
