@@ -8,3 +8,10 @@ jobs:
       - run: brew update
       - uses: actions/checkout@v4
       - run: make -C subdivide -f Makefile.macos
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt install freeglut3-dev
+      - uses: actions/checkout@v4
+      - run: make -C subdivide -f Makefile.linux

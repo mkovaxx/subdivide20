@@ -37,19 +37,19 @@ SRCS=$(SWSRCS) $(ARCHSRCS)
 SWCSRCS=
 
 CSRCS=$(SWCSRCS) $(ARCHCSRCS)
-# source files with no associated .o 
+# source files with no associated .o
 SRCSNOO=
 
 
-# source files with no associated .h 
+# source files with no associated .h
 SRCSNOH=
 
-HDRSNOS= 
+HDRSNOS=
 
 # sources that are #include'd, and have no associated .o
 TABLESRCS=
 
-ALLSRCS=$(SRCSNOH) $(CSRCS) $(SRCS) $(SRCSNOO) $(TABLESRCS) 
+ALLSRCS=$(SRCSNOH) $(CSRCS) $(SRCS) $(SRCSNOO) $(TABLESRCS)
 
 # All the local .h files (these are not automatically depended)
 HDRS=$(HDRSNOS) ${SRCS:.cpp=.h} ${CSRCS:.c=.h} ${SRCSNOO:.cpp=.h}
@@ -66,7 +66,7 @@ DOCS=
 # Application name
 TARGET= libsub.a
 
-DEFS = 
+DEFS =
 
 #include directories
 INCS = -I. -I../include -I../template -I../../qvlib/include
@@ -74,17 +74,17 @@ INCS = -I. -I../include -I../template -I../../qvlib/include
 # other C and C++ common options
 
 # CC options
-INOPTS= -Wall -ansi -pedantic
+INOPTS= -Wall -pedantic -std=c++11
 DEBUGOPTS= -g
 
 
-OPTS=  $(INOPTS) $(DEBUGOPTS) 
+OPTS=  $(INOPTS) $(DEBUGOPTS)
 
 # C specific options
 COPTS=
 
 # C++ specific options
-CCOPTS= 
+CCOPTS=
 
 # linker options
 
@@ -105,7 +105,7 @@ DEPLINE=  1> Makedepend.linux
 # Language definitions
 ##############################################################################
 
-CFLAGS= $(INCS) $(DEFS) $(DEBUG) $(OPTS) $(COPTS) 
+CFLAGS= $(INCS) $(DEFS) $(DEBUG) $(OPTS) $(COPTS)
 CCFLAGS=$(INCS) $(DEFS) $(DEBUG) $(OPTS) $(CCOPTS)
 
 CC=gcc
@@ -163,26 +163,18 @@ $(TARGET): $(ALLOBJS)
 # General-purpose targets - do not edit, in general:
 ##############################################################################
 
-depend: $(ALLSRCS) 
-	$(CC) $(CCFLAGS) $(DEPOPTS) $(ALLSRCS) $(DEPLINE) 
+depend: $(ALLSRCS)
+	$(CC) $(CCFLAGS) $(DEPOPTS) $(ALLSRCS) $(DEPLINE)
 
-clean:	
+clean:
 	rm -f $(TARGET) $(OBJS) *.slo *.o *~ *.s \
 		*.a *..c ptrepository/* TAGS \
 		core a.out \#* *.bak *.BAK *.CKP \
-		*.l *.Addrs *.Counts *.pixie .\#*; 
+		*.l *.Addrs *.Counts *.pixie .\#*;
 	rm -f Makedepend.linux; touch Makedepend.linux
 
-.IGNORE:    
+.IGNORE:
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 include Makedepend.linux
-
-
-
-
-
-
-
-

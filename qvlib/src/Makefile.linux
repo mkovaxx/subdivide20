@@ -4,9 +4,9 @@ CC = gcc
 DEPOPTS= -M
 DEPLINE= 1> Makedepend.linux
 
-DEFS = -ansi -Wall
-DEBUG = 
-OPTS = 
+DEFS = -Wall -std=c++11
+DEBUG =
+OPTS =
 
 INCS = -I ../include
 
@@ -26,12 +26,12 @@ clean:
 # extra default rules
 ##############################################################################
 
-.SUFFIXES: .cpp 
+.SUFFIXES: .cpp
 
 .cpp.o:
 	$(CC) $(CCFLAGS) -c $<
 
-.IGNORE:    
+.IGNORE:
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
