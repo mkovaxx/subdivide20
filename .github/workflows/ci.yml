@@ -8,7 +8,7 @@ jobs:
       - run: brew update
       - uses: actions/checkout@v4
       - run: make -C subdivide -f Makefile.macos
-      - run: '[ -e subdivide/examples/ccsub ]'
+      - run: '[ -e subdivide/examples/testtesttest ]'
       - run: '[ -e subdivide/examples/loopsub ]'
       - run: '[ -e subdivide/examples/subviewer ]'
 
