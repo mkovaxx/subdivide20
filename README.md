@@ -9,6 +9,20 @@ Piecewise smooth subdivision surfaces with normal control.
 SIGGRAPH 2000 Conference Proceedings.
 ```
 
+## Features
+
+Complex geometrical features:
+
+![examples of complex features](doc/images/5.png)
+
+Normal interpolation:
+
+![normal interpolation](doc/images/6.png)
+
+Precise surface manipulation at corners:
+
+![surface manipulation with corners](doc/images/8.png)
+
 ## How to Build
 
 The following platforms are currently supported:
