@@ -3,7 +3,7 @@
 This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision) from the Media Research Lab at NYU.
 
 The improvements contributed here include:
-- build support for Linux and MacOS
+- build support for Linux and macOS
 - compatibility with modern C++ compilers: Clang and GCC
 - conformance with C++11
 - reformatted with a modern C++ style and readability in mind
