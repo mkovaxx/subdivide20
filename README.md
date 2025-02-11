@@ -37,8 +37,8 @@ The `subviewer` GUI app's controls are as follows:
 - `<space>`: toggle control mode between `move`/`pick`
   - in `move` mode, dragging with the pointer changes the orientation
   - in `pick` mode: clicking on a control mesh entity toggles its tag
-    - `edge` tags: `smooth`/`crease`
-    - (boundary) `vertex` tags: `crease`/`corner`
+    - edge tags: `smooth`/`crease`
+    - (boundary) vertex tags: `crease`/`corner`
 - `S`: increase subdivision depth (number of iterations)
 - `W`: write control mesh to file
 - `D`: write subdivided mesh to file
