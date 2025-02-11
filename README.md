@@ -9,7 +9,7 @@ The improvements contributed here include:
 - reformatted with a modern C++ style and readability in mind
 - Markdown-ified README files
 
-It is meant as companion code to the following paper:
+It is meant as companion code to the following [paper](doc/piecewise-smooth.pdf):
 ```
 H. Biermann, A. Levin, D. Zorin.
 Piecewise smooth subdivision surfaces with normal control.
