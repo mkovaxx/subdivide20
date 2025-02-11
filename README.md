@@ -2,19 +2,19 @@
 
 This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision) from the Media Research Lab at NYU.
 
-The improvements contributed here include:
-- build support for Linux and macOS
-- compatibility with modern C++ compilers: Clang and GCC
-- conformance with C++11
-- reformatted with a modern C++ style and readability in mind
-- Markdown-ified README files
-
 It is meant as companion code to the following [paper](doc/piecewise-smooth.pdf):
 ```
 H. Biermann, A. Levin, D. Zorin.
 Piecewise smooth subdivision surfaces with normal control.
 SIGGRAPH 2000 Conference Proceedings.
 ```
+
+The improvements contributed here include:
+- build support for Linux and macOS
+- compatibility with modern C++ compilers: Clang and GCC
+- conformance with C++11
+- reformatted with a modern C++ style and readability in mind
+- Markdown-ified README files
 
 ## Features
 
