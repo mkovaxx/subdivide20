@@ -24,12 +24,12 @@ For example, to build for macOS, execute the following command:
 make -C subdivide -f Makefile.macos
 ```
 
+## How to Use
+
 The build process creates the following outputs:
 - `subdivide/examples/ccsub`: Catmull-Clark subdivision tool (CLI).
 - `subdivide/examples/loopsub`: Loop subdivision tool (CLI).
 - `subdivide/examples/subviewer`: Visual subdivision app (GUI).
-
-## How to Use
 
 All three executables print information about their usage when invoked without arguments.
 
