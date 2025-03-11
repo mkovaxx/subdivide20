@@ -1,11 +1,11 @@
 #include "compat.hpp"
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
+#include <GLFW/glfw3.h>
 #include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #endif
 
 #include "ballviewer.hpp"

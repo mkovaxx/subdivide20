@@ -6,13 +6,13 @@
 #include "pickableparam.hpp"
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
+#include <GLFW/glfw3.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #endif
 
 #include "sectorinfo.hpp"

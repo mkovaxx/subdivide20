@@ -25,9 +25,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "geoobject.hpp"
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
+#include <GLFW/glfw3.h>
 #else
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #endif
 
 GeoObject::GeoObject(float d) : _d(d) { ; }

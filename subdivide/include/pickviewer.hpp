@@ -28,9 +28,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "pickobject.hpp"
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
+#include <GLFW/glfw3.h>
 #else
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #endif
 
 class PickViewer : public BallViewer {
