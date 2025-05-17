@@ -27,6 +27,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "subtri.hpp"
 #include "tagmesh.hpp"
 #include "triangle.hpp"
+#include "mesh.hpp"
+#include "trimesh.hpp"
 
 // numbering
 VnoType Triangle::noVtx() const {
@@ -125,6 +127,53 @@ void Triangle::setPos(VnoType vno, const cvec3f& pos, int depth) {
 const cvec3f& Triangle::vtxPos(VnoType vno, int depth) const {
     assert(_t);
     return _t->pos(vno, depth);
+}
+
+// TriangleIter implementation
+TriangleIter::TriangleIter(TriIter ti) { _ti = new TriIter(ti); }
+
+TriangleIter::TriangleIter() { _ti = new TriIter(); }
+
+TriangleIter::~TriangleIter() { delete _ti; }
+
+Triangle TriangleIter::operator*() {
+    assert(_ti);
+    return Triangle(**_ti);
+}
+
+TriangleIter& TriangleIter::operator++() {
+    assert(_ti);
+    ++(*_ti);
+    return *this;
+}
+
+TriangleIter& TriangleIter::operator=(const TriangleIter& i) {
+    assert(_ti);
+    assert(i._ti);
+    *_ti = *(i._ti);
+    return *this;
+}
+
+bool TriangleIter::operator==(const TriangleIter& i) const {
+    assert(_ti);
+    assert(i._ti);
+    return (*_ti) == (*i._ti);
+}
+
+bool TriangleIter::operator!=(const TriangleIter& i) const {
+    assert(_ti);
+    assert(i._ti);
+    return (*_ti) != (*i._ti);
+}
+
+int TriangleIter::depth() const {
+    assert(_ti);
+    return _ti->depth();
+}
+
+int TriangleIter::maxDepth() const {
+    assert(_ti);
+    return _ti->maxDepth();
 }
 
 const cvec3f& Triangle::headPos(EnoType eno, int depth) const {
