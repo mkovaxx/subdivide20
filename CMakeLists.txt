@@ -33,6 +33,11 @@ else()
     endif()
 endif()
 
+# Find GLFW
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLFW3 REQUIRED glfw3)
+include_directories(${GLFW3_INCLUDE_DIRS})
+
 # Add subdirectories
 add_subdirectory(qvlib)
 add_subdirectory(subdivide)

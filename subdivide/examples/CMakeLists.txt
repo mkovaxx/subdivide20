@@ -30,26 +30,26 @@ target_link_libraries(loopsub
         qvlib
 )
 
-# Subviewer example
-add_executable(subviewer subviewer.cpp)
+# GLFW-based subviewer
+add_executable(glfw_subviewer glfw_subviewer.cpp)
 
-target_include_directories(subviewer
+target_include_directories(glfw_subviewer
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../qvlib/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../viewer
 )
 
-target_link_libraries(subviewer
+target_link_libraries(glfw_subviewer
     PRIVATE
         viewer
-        subdivide
-        qvlib
         ${OPENGL_LIBRARIES}
-        ${GLUT_LIBRARIES}
+        ${GLFW3_LIBRARIES}
 )
 
+target_include_directories(glfw_subviewer SYSTEM PRIVATE ${GLFW3_INCLUDE_DIRS})
+
 # Install targets
-install(TARGETS ccsub loopsub subviewer
+install(TARGETS ccsub loopsub glfw_subviewer
     RUNTIME DESTINATION bin
 )

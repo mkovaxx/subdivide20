@@ -1,17 +1,8 @@
 # Find required packages
 find_package(OpenGL REQUIRED)
 
-# Find GLFW using find_package first, then fall back to pkg-config
-find_package(glfw3 QUIET)
-if(NOT glfw3_FOUND)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(GLFW3 REQUIRED glfw3)
-    set(GLFW3_LIBRARIES ${GLFW3_LIBRARIES} dl)
-    include_directories(${GLFW3_INCLUDE_DIRS})
-    link_directories(${GLFW3_LIBRARY_DIRS})
-else()
-    set(GLFW3_LIBRARIES glfw)
-endif()
+# GLFW is found in the root CMakeLists.txt
+set(GLFW3_LIBRARIES ${GLFW3_LIBRARIES} dl)
 
 # Find source files
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
