@@ -402,7 +402,6 @@ template <class Face> void MeshTp<Face>::toFlatMesh(FlatMesh* flatMesh) {
     }
 
     // add polygons
-    int fcnt = 0;
     typename std::set<Face*>::iterator si;
     for (si = _faceSet.begin(); si != _faceSet.end(); ++si) {
         Face* f = (*si);
@@ -412,7 +411,6 @@ template <class Face> void MeshTp<Face>::toFlatMesh(FlatMesh* flatMesh) {
         for (VnoType v = 0; v < f->noVtx(); ++v, e = f->nextEno(e)) {
             flatMesh->index_v.push_back(_vertexIndexMap[f->headVert(e)]);
         }
-        ++fcnt;
     }
 }
 

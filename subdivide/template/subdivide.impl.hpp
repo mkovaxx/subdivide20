@@ -31,7 +31,8 @@ template <class RuleTable, class FaceRing> void SubdivideTp<RuleTable, FaceRing>
     assert(ring().centerVert() == t->headVert(e));
     assert(ring().centerVert() == t->vert(vn));
 
-    SectorInfo* si = t->sectorInfo(vn);
+    // SectorInfo is not used in this method
+    (void)t->sectorInfo(vn);  // Suppress unused variable warning
 }
 
 template <class RuleTable, class FaceRing>

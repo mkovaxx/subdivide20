@@ -155,9 +155,9 @@ template <class BaseFace> class ConvenientFaceTp : public BaseFace {
     }
     OrientationType edgeDir(EnoType e) const { return (e > 0) ? this->_orient : reverseOrientation(this->_orient); }
 
-    bool checkCno(CnoType c) const { return (this != 0) && (c < this->childCount()); }
-    bool checkEno(EnoType e) const { return (this != 0) && (0 < abs(e)) && (abs(e) < this->noVtx() + 1); }
-    bool checkVno(VnoType v) const { return (this != 0) && (v < this->noVtx()); }
+    bool checkCno(CnoType c) const { return c < this->childCount(); }
+    bool checkEno(EnoType e) const { return (0 < abs(e)) && (abs(e) < this->noVtx() + 1); }
+    bool checkVno(VnoType v) const { return v < this->noVtx(); }
 
     // method for replacing a vertex...
     void setVert(VnoType v, Vertex* vert) {
