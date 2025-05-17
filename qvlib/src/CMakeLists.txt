@@ -3,6 +3,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# List all source files directly
 set(SOURCES
     QvAsciiText.cpp
     QvChildList.cpp
@@ -26,7 +27,6 @@ set(SOURCES
     QvInfo.cpp
     QvInput.cpp
     QvLOD.cpp
-    QvLib.cpp
     QvLists.cpp
     QvMFColor.cpp
     QvMFFloat.cpp
@@ -83,6 +83,9 @@ set(SOURCES
     QvWWWAnchor.cpp
     QvWWWInline.cpp
 )
+
+# Add include directories
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Create the library
 add_library(qvlib ${SOURCES})
