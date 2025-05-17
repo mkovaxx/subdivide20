@@ -19,6 +19,8 @@ jobs:
         run: |
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
+          ls -la build/subdivide/viewer/libviewer.a
+          [ -f build/subdivide/viewer/libviewer.a ]
 
   build-linux:
     runs-on: ubuntu-latest
@@ -36,3 +38,5 @@ jobs:
         run: |
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
+          ls -la build/subdivide/viewer/libviewer.a
+          [ -f build/subdivide/viewer/libviewer.a ]

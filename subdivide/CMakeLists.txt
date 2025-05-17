@@ -13,3 +13,6 @@ add_subdirectory(src)
 
 # Add examples (ccsub and loopsub)
 add_subdirectory(examples)
+
+# Add viewer
+add_subdirectory(viewer)
