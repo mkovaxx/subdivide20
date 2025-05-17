@@ -23,13 +23,22 @@ jobs:
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
-          # Verify example binaries
+          # Verify example binaries exist
           ls -la build/subdivide/examples/ccsub
           [ -f build/subdivide/examples/ccsub ]
           ls -la build/subdivide/examples/loopsub
           [ -f build/subdivide/examples/loopsub ]
           ls -la build/subdivide/examples/subviewer
           [ -f build/subdivide/examples/subviewer ]
+
+      - name: Test CLI help commands
+        run: |
+          # Test each CLI with help flag
+          echo "Testing ccsub --help"
+          build/subdivide/examples/ccsub --help || build/subdivide/examples/ccsub -h
+
+          echo "Testing loopsub --help"
+          build/subdivide/examples/loopsub --help || build/subdivide/examples/loopsub -h
 
   build-linux:
     runs-on: ubuntu-latest
@@ -38,7 +47,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ freeglut3-dev
+          sudo apt-get install -y cmake g++ freeglut3-dev xvfb
       - name: Configure with CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
@@ -51,10 +60,19 @@ jobs:
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
-          # Verify example binaries
+          # Verify example binaries exist
           ls -la build/subdivide/examples/ccsub
           [ -f build/subdivide/examples/ccsub ]
           ls -la build/subdivide/examples/loopsub
           [ -f build/subdivide/examples/loopsub ]
           ls -la build/subdivide/examples/subviewer
           [ -f build/subdivide/examples/subviewer ]
+
+      - name: Test CLI help commands
+        run: |
+          # Test each CLI with help flag
+          echo "Testing ccsub --help"
+          build/subdivide/examples/ccsub --help || build/subdivide/examples/ccsub -h
+
+          echo "Testing loopsub --help"
+          build/subdivide/examples/loopsub --help || build/subdivide/examples/loopsub -h
