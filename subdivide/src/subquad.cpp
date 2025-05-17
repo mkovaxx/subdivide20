@@ -24,46 +24,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "subquad.hpp"
 
-VnoType Quad::noVtx() const {
-    return 4; // Quads always have 4 vertices
-}
-
-void Quad::setNormal(VnoType v, const cvec3f& n) {
-    if (v < noVtx()) {
-        _normal[v] = n;
-    }
-}
-
-cvec3f Quad::getNormal(VnoType v) const {
-    return (v < noVtx()) ? _normal[v] : cvec3f(0, 0, 0);
-}
-
-Vertex* Quad::centerVert() const {
-    return _centerVert;
-}
-
-void Quad::setCenterVert(Vertex* v) {
-    _centerVert = v;
-}
-
-cvec3f Quad::getPos(VnoType v) const {
-    return (v < noVtx()) ? vert(v)->getPos(0) : cvec3f(0, 0, 0);
-}
-
-bool Quad::isSet(VnoType v) const {
-    return (v < noVtx()) ? vert(v)->isSet(0) : false;
-}
-
-void Quad::set(VnoType v, bool value) {
-    if (v < noVtx()) {
-        if (value) {
-            vert(v)->set(0);
-        } else {
-            vert(v)->unset();
-        }
-    }
-}
-
 void Quad::midSub(int d) {
     if (isLeaf()) {
         makeChildren(d);
