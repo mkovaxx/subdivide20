@@ -1,15 +1,17 @@
 #include <QvInput.hpp>
 #include <QvReadError.hpp>
 #include <QvString.hpp>
-#include <stdarg.h>
+#include <cstdarg>
+#include <cstdio>
 
 void QvReadError::post(const QvInput* in, const char* formatString...) {
     char buf[10000];
     va_list ap;
 
     va_start(ap, formatString);
-    vsprintf(buf, formatString, ap);
+    vsnprintf(buf, sizeof(buf), formatString, ap);
     va_end(ap);
+    buf[sizeof(buf) - 1] = '\0';  // Ensure null-termination
 
     QvString locstr;
     in->getLocationString(locstr);

@@ -57,59 +57,50 @@ void QvOut::write(QvNode* node) {
 //---------------------------------------------------------------------
 // write fields
 
-char* getFieldDefName(QvField* field) {
-
-    char* name;
-
+const char* getFieldDefName(QvField* field) {
     if (dynamic_cast<QvMFColor*>(field)) {
-        name = "MFColor";
+        return "MFColor";
     } else if (dynamic_cast<QvMFVec3f*>(field)) {
-        name = "MFVec3f";
+        return "MFVec3f";
     } else if (dynamic_cast<QvMFVec2f*>(field)) {
-        name = "MFVec2f";
+        return "MFVec2f";
     } else if (dynamic_cast<QvMFString*>(field)) {
-        name = "MFString";
+        return "MFString";
     } else if (dynamic_cast<QvMFLong*>(field)) {
-        name = "MFLong";
+        return "MFLong";
     } else if (dynamic_cast<QvMFInt32*>(field)) {
-        name = "MFInt32";
+        return "MFInt32";
     } else if (dynamic_cast<QvMFFloat*>(field)) {
-        name = "MFFloat";
-    }
-
-    else if (dynamic_cast<QvSFMatrix*>(field)) {
-        name = "SFMatrix";
+        return "MFFloat";
+    } else if (dynamic_cast<QvSFMatrix*>(field)) {
+        return "SFMatrix";
     } else if (dynamic_cast<QvSFLong*>(field)) {
-        name = "SFLong";
+        return "SFLong";
     } else if (dynamic_cast<QvSFImage*>(field)) {
-        name = "SFImage";
+        return "SFImage";
     } else if (dynamic_cast<QvSFFloat*>(field)) {
-        name = "SFFloat";
+        return "SFFloat";
     } else if (dynamic_cast<QvSFEnum*>(field)) {
-        name = "SFEnum";
+        return "SFEnum";
     } else if (dynamic_cast<QvSFColor*>(field)) {
-        name = "SFColor";
+        return "SFColor";
     } else if (dynamic_cast<QvSFBool*>(field)) {
-        name = "SFBool";
+        return "SFBool";
     } else if (dynamic_cast<QvSFBitMask*>(field)) {
-        name = "SFBitMask";
+        return "SFBitMask";
     } else if (dynamic_cast<QvSFRotation*>(field)) {
-        name = "SFRotation";
+        return "SFRotation";
     } else if (dynamic_cast<QvSFString*>(field)) {
-        name = "SFString";
+        return "SFString";
     } else if (dynamic_cast<QvSFVec2f*>(field)) {
-        name = "SFVec2f";
+        return "SFVec2f";
     } else if (dynamic_cast<QvSFVec3f*>(field)) {
-        name = "SFVec3f";
+        return "SFVec3f";
     }
 
-    else {
-        std::cerr << "QvOut: unknown field" << std::endl;
-        name = "";
-        QvOut::_error = true;
-    }
-
-    return name;
+    std::cerr << "QvOut: unknown field" << std::endl;
+    QvOut::_error = true;
+    return "";
 }
 
 static void printIndent(int indent, std::ostream& outfile) {
