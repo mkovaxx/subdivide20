@@ -2,18 +2,13 @@
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
-set(SOURCES
-    viewer.cpp
-    camera.cpp
-    arcball.cpp
-    pickviewer.cpp
-    ballviewer.cpp
-    geoobject.cpp
-    pickobject.cpp
-    pickabletri.cpp
-    pickablequad.cpp
-    pickableparam.cpp
+# Use file globbing to find all .cpp files in the current directory
+file(GLOB SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
+
+# Sort the sources for deterministic builds
+list(SORT SOURCES)
 
 add_library(viewer ${SOURCES})
 
