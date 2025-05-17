@@ -48,76 +48,26 @@ class Quad;
 
 // TODO remove first parameter of BaseFaceTp
 
-class Quad;
-
-template <class Face> struct QuadFaceRingType {
-    typedef FaceRingTp<Face> type;
-};
-
 class Quad : public TagFaceTp<                        // normals and tags
                  GeoFaceTp<                           // accessors to geom information
                      ConvenientFaceTp<                // accessors to children etc.
                          BaseQuadTp<                  // quad mesh neighbors and children
                              BaseFaceTp<Quad, TLQuad> // base class for all faces
                              >>>> {
-public:
-    // Make FaceRingType public for use in templates
-    typedef typename QuadFaceRingType<Quad>::type FaceRingType;
+  public:
     typedef QuadRuleTableTp<FaceRingType> QuadRuleTableType;
     typedef SubdivideTp<QuadRuleTableType, FaceRingType> SubdivideType;
 
-    Quad() : _centerVert(nullptr) {
-        for (int i = 0; i < 4; ++i) {
-            _normal[i] = cvec3f(0, 0, 0);
-        }
-    }
-    virtual ~Quad() {
-        if (_centerVert) {
-            delete _centerVert;
-        }
-    }
-
-    // Forward declarations for member functions
-    VnoType noVtx() const;
-    void setNormal(VnoType v, const cvec3f& n);
-    cvec3f getNormal(VnoType v) const;
-
-    // Center vertex related functions
-    Vertex* centerVert() const;
-    void setCenterVert(Vertex* v);
-
-    // Vertex position related functions
-    cvec3f getPos(VnoType v) const;
-
-    // Tag related functions
-    bool isSet(VnoType v) const;
-    void set(VnoType v, bool value = true);
+    Quad() { ; }
+    virtual ~Quad() { ; }
 
     void clearFace(int d = 0);
     void clearNormal() {
         for (VnoType v = 0; v < noVtx(); ++v) {
-            setNormal(v, cvec3f(0, 0, 0));
+            setNormal(v, 0);
         }
     }
     void midSub(int d = 0);
-    
-    // Center position related functions
-    bool hasCenterPos(int d) const {
-        Vertex* cv = centerVert();
-        return cv && cv->isSet(d + 1);
-    }
-
-    void setCenterPos(int d, const cvec3f& p) {
-        if (Vertex* cv = centerVert()) {
-            cv->setPos(d + 1, p);
-            cv->set(d + 1);
-        }
-    }
-
-    cvec3f centerPos(int d) const {
-        Vertex* cv = centerVert();
-        return cv ? cv->getPos(d + 1) : cvec3f(0, 0, 0);
-    }
 
     // complete subdivision
     void subdivide(int d);
@@ -126,8 +76,12 @@ public:
     void computeNormalAndLimit(int d);
 
   private:
-    cvec3f _normal[4];  // Normal vectors for each vertex
-    Vertex* _centerVert; // Center vertex for subdivision
+    bool hasCenterPos(int d) const { return centerVert()->isSet(d + 1); }
+    void setCenterPos(int d, const cvec3f& p) {
+        centerVert()->setPos(d + 1, p);
+        centerVert()->set(d + 1);
+    }
+    cvec3f centerPos(int d) const { return centerVert()->getPos(d + 1); }
 
     cvec3f computeVertexPoint(EnoType e, int d);
     void computeFaceNormal(int d);
