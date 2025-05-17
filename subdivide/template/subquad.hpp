@@ -76,23 +76,23 @@ public:
             delete _centerVert;
         }
     }
-    
+
     // Forward declarations for member functions
     VnoType noVtx() const;
     void setNormal(VnoType v, const cvec3f& n);
     cvec3f getNormal(VnoType v) const;
-    
+
     // Center vertex related functions
     Vertex* centerVert() const;
     void setCenterVert(Vertex* v);
-    
+
     // Vertex position related functions
     cvec3f getPos(VnoType v) const;
-    
+
     // Tag related functions
     bool isSet(VnoType v) const;
     void set(VnoType v, bool value = true);
-    
+
     void clearFace(int d = 0);
     void clearNormal() {
         for (VnoType v = 0; v < noVtx(); ++v) {
@@ -102,19 +102,19 @@ public:
     void midSub(int d = 0);
     
     // Center position related functions
-    bool hasCenterPos(int d) const { 
+    bool hasCenterPos(int d) const {
         Vertex* cv = centerVert();
-        return cv && cv->isSet(d + 1); 
+        return cv && cv->isSet(d + 1);
     }
-    
+
     void setCenterPos(int d, const cvec3f& p) {
         if (Vertex* cv = centerVert()) {
             cv->setPos(d + 1, p);
             cv->set(d + 1);
         }
     }
-    
-    cvec3f centerPos(int d) const { 
+
+    cvec3f centerPos(int d) const {
         Vertex* cv = centerVert();
         return cv ? cv->getPos(d + 1) : cvec3f(0, 0, 0);
     }
