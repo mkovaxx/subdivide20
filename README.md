@@ -38,11 +38,9 @@ The following platforms are currently supported:
 
 Support for Windows is coming soon!
 
-Each platform has a corresponding `Makefile.$PLATFORM` inside the `subdivide` directory.
-
-For example, to build for macOS, execute the following command:
+Execute the following command:
 ```sh
-make -C subdivide -f Makefile.macos
+cmake -B build && cmake --build build
 ```
 
 ## How to Use
