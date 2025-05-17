@@ -4,7 +4,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(ccsub ccsub.cpp)
 
 target_include_directories(ccsub
-    PRIVATE 
+    PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../qvlib/include
 )
@@ -19,7 +19,7 @@ target_link_libraries(ccsub
 add_executable(loopsub loopsub.cpp)
 
 target_include_directories(loopsub
-    PRIVATE 
+    PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../include
         ${CMAKE_CURRENT_SOURCE_DIR}/../../qvlib/include
 )
@@ -30,7 +30,24 @@ target_link_libraries(loopsub
         qvlib
 )
 
+# Subviewer example
+add_executable(subviewer subviewer.cpp)
+
+target_include_directories(subviewer
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../qvlib/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../viewer
+)
+
+target_link_libraries(subviewer
+    PRIVATE
+        viewer
+        ${OPENGL_LIBRARIES}
+        ${GLUT_LIBRARIES}
+)
+
 # Install targets
-install(TARGETS ccsub loopsub
+install(TARGETS ccsub loopsub subviewer
     RUNTIME DESTINATION bin
 )

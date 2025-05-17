@@ -9,6 +9,13 @@ set(SOURCES
     viewer.cpp
     camera.cpp
     arcball.cpp
+    pickviewer.cpp
+    ballviewer.cpp
+    geoobject.cpp
+    pickobject.cpp
+    pickabletri.cpp
+    pickablequad.cpp
+    pickableparam.cpp
 )
 
 add_library(viewer ${SOURCES})
@@ -17,6 +24,7 @@ add_library(viewer ${SOURCES})
 target_include_directories(viewer
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../qvlib/include
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Link with dependencies
