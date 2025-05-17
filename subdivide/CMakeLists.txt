@@ -8,7 +8,5 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/qvlib/include
 )
 
-# Add subdirectories
+# Add subdirectory for the main library
 add_subdirectory(src)
-add_subdirectory(viewer)
-add_subdirectory(examples)
