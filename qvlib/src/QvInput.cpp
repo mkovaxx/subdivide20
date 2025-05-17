@@ -237,8 +237,7 @@ QvBool QvInput::eof() const { return feof(fp); }
 
 void QvInput::getLocationString(QvString& string) const {
     char buf[128];
-    snprintf(buf, sizeof(buf), "\tOccurred at line %3d", lineNum);
-    buf[sizeof(buf) - 1] = '\0';  // Ensure null-termination
+    sprintf(buf, "\tOccurred at line %3d", lineNum);
     string = buf;
 }
 
