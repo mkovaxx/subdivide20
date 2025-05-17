@@ -19,15 +19,15 @@ SIGGRAPH 2000 Conference Proceedings.
 
 ## Features
 
-### Subdivision Algorithms
-- **Catmull-Clark Subdivision**: For quadrilateral meshes
-- **Loop Subdivision**: For triangular meshes
-- **Piecewise Smooth Subdivision**: With normal control
+### Supported Subdivision Types
+
+- **Catmull-Clark** for quadrilateral meshes
+- **Loop** for triangular meshes
 
 ### Interactive Viewer
+
 - Real-time visualization of subdivision surfaces
-- Interactive mesh manipulation
-- Support for creases and corners
+- Interactive manipulation of creases, corners, and normals
 - Export capabilities for both control and subdivided meshes
 
 ### Visual Examples
@@ -47,11 +47,13 @@ Precise surface manipulation at corners:
 ## Building from Source
 
 ### Prerequisites
+
 - CMake 3.15 or later
 - C++17 compatible compiler (GCC 8+, Clang 10+, Apple Clang 12+)
 - OpenGL and GLUT (for the viewer application)
 
-### Linux (Ubuntu/Debian)
+#### Linux (Ubuntu/Debian)
+
 ```bash
 # Install dependencies
 sudo apt-get update
@@ -61,7 +63,8 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
 ```
 
-### macOS
+#### macOS
+
 ```bash
 # Install dependencies using Homebrew
 brew install cmake freeglut
@@ -71,16 +74,24 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
 ```
 
-### Build Options
+### Build
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
+```
+
+#### Options
+
 - `-DCMAKE_BUILD_TYPE=Release` (default): Optimized release build
 - `-DCMAKE_BUILD_TYPE=Debug`: Build with debug symbols
-- `-DBUILD_TESTS=ON`: Build test suite (coming soon)
 
 ## Usage
 
 ### Command Line Tools
 
 #### Catmull-Clark Subdivision (`ccsub`)
+
 ```bash
 # Show help
 ./build/bin/ccsub --help
@@ -90,6 +101,7 @@ cmake --build build --config Release -- -j$(nproc)
 ```
 
 #### Loop Subdivision (`loopsub`)
+
 ```bash
 # Show help
 ./build/bin/loopsub --help
@@ -106,6 +118,7 @@ cmake --build build --config Release -- -j$(nproc)
 ```
 
 #### Viewer Controls
+
 - **Left Mouse Button**: Rotate view
 - **Right Mouse Button**: Pan view
 - **Mouse Wheel**: Zoom in/out
