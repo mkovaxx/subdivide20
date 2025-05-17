@@ -43,6 +43,8 @@ target_include_directories(subviewer
 target_link_libraries(subviewer
     PRIVATE
         viewer
+        subdivide
+        qvlib
         ${OPENGL_LIBRARIES}
         ${GLUT_LIBRARIES}
 )
