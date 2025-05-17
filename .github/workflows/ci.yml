@@ -18,27 +18,29 @@ jobs:
       - name: Verify artifacts
         run: |
           # Verify libraries
+          ls -la build/lib/libqvlib.a
+          [ -f build/lib/libqvlib.a ]
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
           # Verify example binaries exist
-          ls -la build/subdivide/examples/ccsub
-          [ -f build/subdivide/examples/ccsub ]
-          ls -la build/subdivide/examples/loopsub
-          [ -f build/subdivide/examples/loopsub ]
-          ls -la build/subdivide/examples/subviewer
-          [ -f build/subdivide/examples/subviewer ]
+          ls -la build/bin/ccsub
+          [ -f build/bin/ccsub ]
+          ls -la build/bin/loopsub
+          [ -f build/bin/loopsub ]
+          ls -la build/bin/subviewer
+          [ -f build/bin/subviewer ]
 
       - name: Test CLI help commands
         run: |
           # Test each CLI with help flag
           echo "Testing ccsub --help"
-          build/subdivide/examples/ccsub --help || build/subdivide/examples/ccsub -h
+          build/bin/ccsub --help || build/bin/ccsub -h
 
           echo "Testing loopsub --help"
-          build/subdivide/examples/loopsub --help || build/subdivide/examples/loopsub -h
+          build/bin/loopsub --help || build/bin/loopsub -h
 
   build-linux:
     runs-on: ubuntu-latest
@@ -55,24 +57,26 @@ jobs:
       - name: Verify artifacts
         run: |
           # Verify libraries
+          ls -la build/lib/libqvlib.a
+          [ -f build/lib/libqvlib.a ]
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
           # Verify example binaries exist
-          ls -la build/subdivide/examples/ccsub
-          [ -f build/subdivide/examples/ccsub ]
-          ls -la build/subdivide/examples/loopsub
-          [ -f build/subdivide/examples/loopsub ]
-          ls -la build/subdivide/examples/subviewer
-          [ -f build/subdivide/examples/subviewer ]
+          ls -la build/bin/ccsub
+          [ -f build/bin/ccsub ]
+          ls -la build/bin/loopsub
+          [ -f build/bin/loopsub ]
+          ls -la build/bin/subviewer
+          [ -f build/bin/subviewer ]
 
       - name: Test CLI help commands
         run: |
           # Test each CLI with help flag
           echo "Testing ccsub --help"
-          build/subdivide/examples/ccsub --help || build/subdivide/examples/ccsub -h
+          build/bin/ccsub --help || build/bin/ccsub -h
 
           echo "Testing loopsub --help"
-          build/subdivide/examples/loopsub --help || build/subdivide/examples/loopsub -h
+          build/bin/loopsub --help || build/bin/loopsub -h
