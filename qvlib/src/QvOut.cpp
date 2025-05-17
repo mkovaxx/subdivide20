@@ -1,5 +1,6 @@
-#include <QvOut.hpp>
+#include <iostream>
 
+#include <QvOut.hpp>
 #include <QvNode.hpp>
 
 #include <QvMFColor.hpp>
