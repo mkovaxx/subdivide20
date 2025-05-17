@@ -10,3 +10,6 @@ include_directories(
 
 # Add subdirectory for the main library
 add_subdirectory(src)
+
+# Add examples (ccsub and loopsub)
+add_subdirectory(examples)
