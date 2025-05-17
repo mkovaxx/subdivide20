@@ -17,10 +17,19 @@ jobs:
         run: cmake --build build --config Release
       - name: Verify artifacts
         run: |
+          # Verify libraries
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
+
+          # Verify example binaries
+          ls -la build/subdivide/examples/ccsub
+          [ -f build/subdivide/examples/ccsub ]
+          ls -la build/subdivide/examples/loopsub
+          [ -f build/subdivide/examples/loopsub ]
+          ls -la build/subdivide/examples/subviewer
+          [ -f build/subdivide/examples/subviewer ]
 
   build-linux:
     runs-on: ubuntu-latest
@@ -36,7 +45,16 @@ jobs:
         run: cmake --build build --config Release
       - name: Verify artifacts
         run: |
+          # Verify libraries
           ls -la build/subdivide/src/libsub.a
           [ -f build/subdivide/src/libsub.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
+
+          # Verify example binaries
+          ls -la build/subdivide/examples/ccsub
+          [ -f build/subdivide/examples/ccsub ]
+          ls -la build/subdivide/examples/loopsub
+          [ -f build/subdivide/examples/loopsub ]
+          ls -la build/subdivide/examples/subviewer
+          [ -f build/subdivide/examples/subviewer ]
