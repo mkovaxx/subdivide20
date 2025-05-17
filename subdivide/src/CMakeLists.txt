@@ -37,9 +37,8 @@ target_compile_options(subdivide
 # Link with qvlib
 target_link_libraries(subdivide PRIVATE qvlib)
 
-# Set output name to match the original Makefile
+# Set version properties
 set_target_properties(subdivide PROPERTIES
-    OUTPUT_NAME sub
     VERSION 1.0.0
     SOVERSION 1
 )
