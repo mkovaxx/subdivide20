@@ -57,9 +57,8 @@ Precise surface manipulation at corners:
 sudo apt-get update
 sudo apt-get install -y cmake g++ freeglut3-dev
 
-# Build
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
 ```
 
 ### macOS
@@ -68,8 +67,8 @@ cmake --build build --config Release
 brew install cmake freeglut
 
 # Build
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
 ```
 
 ### Build Options
