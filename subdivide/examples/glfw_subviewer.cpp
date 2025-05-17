@@ -1,7 +1,6 @@
 // GLFW-based subviewer implementation
 
 #include "pickviewer.hpp"
-
 #include "GLFW/glfw3.h"
 
 #include <iostream>

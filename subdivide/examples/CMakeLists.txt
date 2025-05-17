@@ -40,14 +40,17 @@ target_include_directories(glfw_subviewer
         ${CMAKE_CURRENT_SOURCE_DIR}/../viewer
 )
 
+# Link against GLFW and OpenGL
 target_link_libraries(glfw_subviewer
     PRIVATE
         viewer
-        ${OPENGL_LIBRARIES}
-        ${GLFW3_LIBRARIES}
+        glfw
+        OpenGL::GL
 )
 
-target_include_directories(glfw_subviewer SYSTEM PRIVATE ${GLFW3_INCLUDE_DIRS})
+# Add OpenGL include directories
+find_package(OpenGL REQUIRED)
+target_include_directories(glfw_subviewer PRIVATE ${OPENGL_INCLUDE_DIR})
 
 # Install targets
 install(TARGETS ccsub loopsub glfw_subviewer

@@ -53,7 +53,6 @@ class Viewer {
 
     static void initGL(int* argc, char** argv);
 
-  protected:
     virtual void display();
     virtual void reshape(int w, int h);
     virtual void mouse(int button, int state, int x, int y);

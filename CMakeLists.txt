@@ -33,10 +33,15 @@ else()
     endif()
 endif()
 
-# Find GLFW
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(GLFW3 REQUIRED glfw3)
-include_directories(${GLFW3_INCLUDE_DIRS})
+# Find GLFW using CMake's find_package
+find_package(glfw3 3.3 REQUIRED)
+if (NOT TARGET glfw)
+    # If the imported target doesn't exist, create an interface library
+    add_library(glfw INTERFACE)
+    target_link_libraries(glfw INTERFACE ${GLFW3_LIBRARY})
+    target_include_directories(glfw INTERFACE ${GLFW3_INCLUDE_DIRS})
+    target_compile_definitions(glfw INTERFACE -DGLFW_INCLUDE_NONE)  # Don't include GLFW/gl.h
+endif()
 
 # Add subdirectories
 add_subdirectory(qvlib)
