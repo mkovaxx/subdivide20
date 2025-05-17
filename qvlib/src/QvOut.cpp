@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include <QvOut.hpp>
+
 #include <QvNode.hpp>
 
 #include <QvMFColor.hpp>
@@ -32,7 +31,9 @@
 #include <QvPerspectiveCamera.hpp>
 #include <QvSeparator.hpp>
 #include <QvUnknownNode.hpp>
+
 #include <fstream>
+#include <iostream>
 
 static void writeNode(QvNode* node, int indent, std::ostream& outfile);
 
@@ -57,50 +58,59 @@ void QvOut::write(QvNode* node) {
 //---------------------------------------------------------------------
 // write fields
 
-const char* getFieldDefName(QvField* field) {
+char* getFieldDefName(QvField* field) {
+
+    char* name;
+
     if (dynamic_cast<QvMFColor*>(field)) {
-        return "MFColor";
+        name = "MFColor";
     } else if (dynamic_cast<QvMFVec3f*>(field)) {
-        return "MFVec3f";
+        name = "MFVec3f";
     } else if (dynamic_cast<QvMFVec2f*>(field)) {
-        return "MFVec2f";
+        name = "MFVec2f";
     } else if (dynamic_cast<QvMFString*>(field)) {
-        return "MFString";
+        name = "MFString";
     } else if (dynamic_cast<QvMFLong*>(field)) {
-        return "MFLong";
+        name = "MFLong";
     } else if (dynamic_cast<QvMFInt32*>(field)) {
-        return "MFInt32";
+        name = "MFInt32";
     } else if (dynamic_cast<QvMFFloat*>(field)) {
-        return "MFFloat";
-    } else if (dynamic_cast<QvSFMatrix*>(field)) {
-        return "SFMatrix";
-    } else if (dynamic_cast<QvSFLong*>(field)) {
-        return "SFLong";
-    } else if (dynamic_cast<QvSFImage*>(field)) {
-        return "SFImage";
-    } else if (dynamic_cast<QvSFFloat*>(field)) {
-        return "SFFloat";
-    } else if (dynamic_cast<QvSFEnum*>(field)) {
-        return "SFEnum";
-    } else if (dynamic_cast<QvSFColor*>(field)) {
-        return "SFColor";
-    } else if (dynamic_cast<QvSFBool*>(field)) {
-        return "SFBool";
-    } else if (dynamic_cast<QvSFBitMask*>(field)) {
-        return "SFBitMask";
-    } else if (dynamic_cast<QvSFRotation*>(field)) {
-        return "SFRotation";
-    } else if (dynamic_cast<QvSFString*>(field)) {
-        return "SFString";
-    } else if (dynamic_cast<QvSFVec2f*>(field)) {
-        return "SFVec2f";
-    } else if (dynamic_cast<QvSFVec3f*>(field)) {
-        return "SFVec3f";
+        name = "MFFloat";
     }
 
-    std::cerr << "QvOut: unknown field" << std::endl;
-    QvOut::_error = true;
-    return "";
+    else if (dynamic_cast<QvSFMatrix*>(field)) {
+        name = "SFMatrix";
+    } else if (dynamic_cast<QvSFLong*>(field)) {
+        name = "SFLong";
+    } else if (dynamic_cast<QvSFImage*>(field)) {
+        name = "SFImage";
+    } else if (dynamic_cast<QvSFFloat*>(field)) {
+        name = "SFFloat";
+    } else if (dynamic_cast<QvSFEnum*>(field)) {
+        name = "SFEnum";
+    } else if (dynamic_cast<QvSFColor*>(field)) {
+        name = "SFColor";
+    } else if (dynamic_cast<QvSFBool*>(field)) {
+        name = "SFBool";
+    } else if (dynamic_cast<QvSFBitMask*>(field)) {
+        name = "SFBitMask";
+    } else if (dynamic_cast<QvSFRotation*>(field)) {
+        name = "SFRotation";
+    } else if (dynamic_cast<QvSFString*>(field)) {
+        name = "SFString";
+    } else if (dynamic_cast<QvSFVec2f*>(field)) {
+        name = "SFVec2f";
+    } else if (dynamic_cast<QvSFVec3f*>(field)) {
+        name = "SFVec3f";
+    }
+
+    else {
+        std::cerr << "QvOut: unknown field" << std::endl;
+        name = "";
+        QvOut::_error = true;
+    }
+
+    return name;
 }
 
 static void printIndent(int indent, std::ostream& outfile) {
