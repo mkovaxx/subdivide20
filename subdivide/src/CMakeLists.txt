@@ -3,23 +3,16 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Source files for the subdivide library
-set(SOURCES
-    flatmesh.cpp
-    ivgraph.cpp
-    quadmanipulator.cpp
-    quadmesh.cpp
-    quadrule.cpp
-    subquad.cpp
-    subtri.cpp
-    tagflatmesh.cpp
-    tagivgraph.cpp
-    triangle.cpp
-    trianglering.cpp
-    trimanipulator.cpp
-    trimesh.cpp
-    trirule.cpp
+# Use file globbing to find all .cpp files in the current directory
+file(GLOB SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
+
+# Remove triangleiter.cpp if it was included
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/triangleiter.cpp")
+
+# Sort the sources for deterministic builds
+list(SORT SOURCES)
 
 # Create the library
 add_library(subdivide STATIC ${SOURCES})
