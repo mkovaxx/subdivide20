@@ -10,7 +10,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
-          brew install cmake
+          brew install cmake freeglut
       - name: Configure with CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++
+          sudo apt-get install -y cmake g++ freeglut3-dev
       - name: Configure with CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
