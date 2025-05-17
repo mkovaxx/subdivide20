@@ -11,13 +11,13 @@ SIGGRAPH 2000 Conference Proceedings.
 
 ## Features
 
+### Improvements Made
+
 - **Modern Build System**: Uses CMake for cross-platform building
 - **Cross-Platform**: Supports Linux and macOS (Windows support coming soon)
 - **Modern C++**: Updated to C++11 standard
 - **CI/CD**: Automated testing with GitHub Actions
 - **Improved Documentation**: Comprehensive build and usage instructions
-
-## Features
 
 ### Supported Subdivision Types
 
@@ -97,7 +97,7 @@ cmake --build build --config Release -- -j$(nproc)
 ./build/bin/ccsub --help
 
 # Subdivide a mesh
-./build/bin/ccsub input.obj -o output.obj -s 3
+./build/bin/ccsub input.wrl -o output.wrl -s 3
 ```
 
 #### Loop Subdivision (`loopsub`)
@@ -107,21 +107,21 @@ cmake --build build --config Release -- -j$(nproc)
 ./build/bin/loopsub --help
 
 # Subdivide a mesh
-./build/bin/loopsub input.obj -o output.obj -s 2
+./build/bin/loopsub input.wrl -o output.wrl -s 2
 ```
 
 ### Interactive Viewer (`subviewer`)
 
 ```bash
 # Launch the viewer
-./build/bin/subviewer [input.obj]
+./build/bin/subviewer [input.wrl]
 ```
 
 #### Viewer Controls
 
 - **Left Mouse Button**: Rotate view
-- **Right Mouse Button**: Pan view
-- **Mouse Wheel**: Zoom in/out
+- **Middle Mouse Button**: Pan view
+- **Right Mouse Button**: Zoom in/out
 - **Space**: Toggle control mode between `move`/`pick`
   - `move`: Drag to change view orientation
   - `pick`: Click to toggle mesh entity tags
