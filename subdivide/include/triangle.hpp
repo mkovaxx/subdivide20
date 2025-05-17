@@ -33,15 +33,19 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "general.hpp"
 #include "sectorinfo.hpp"
 
-// Forward declarations
+// internal representation
 class Tri;
+
+// triangle iterator wrapper needs to call private constructor
 class TriangleIter;
+
+// trianglering wrapper needs to have access to tri pointer
 class TriangleRing;
-template <class Face> class FaceIterTp;
 
 // The wrapper for a tri.  This is basically a reference class.  We
 // don't do reference counting on triangles as they are taken care for
 // in the mesh class.  (Only toplevel triangles are counted...)
+
 class Triangle {
     friend class TriangleIter;
     friend class TriangleRing;
@@ -52,6 +56,7 @@ class Triangle {
 
     Triangle() : _t(0) { ; }
     Triangle(const Triangle& tri) { _t = tri._t; }
+
     Triangle& operator=(const Triangle& tri) {
         _t = tri._t;
         return *this;
@@ -99,6 +104,7 @@ class Triangle {
     CnoType childCount() const;
     Triangle child(CnoType c) const;
     Triangle parent() const;
+
     bool isLeaf() const;
     bool isToplevel() const;
 
@@ -108,30 +114,6 @@ class Triangle {
   private:
     Triangle(Tri* t) : _t(t) { ; }
     Tri* _t;
-};
-
-// The TriangleIter class provides iteration over triangles in a mesh
-class TriangleIter {
-    friend class TriMesh;
-
-  public:
-    TriangleIter();
-    ~TriangleIter();
-    TriangleIter(const TriangleIter& i);
-    TriangleIter& operator=(const TriangleIter& i);
-
-    Triangle operator*();
-    TriangleIter& operator++();
-    bool operator==(const TriangleIter& i) const;
-    bool operator!=(const TriangleIter& i) const;
-
-    int depth() const;
-    int maxDepth() const;
-
-  private:
-    typedef FaceIterTp<Tri> TriIter;
-    TriIter* _ti;
-    TriangleIter(TriIter _ti);
 };
 
 #endif /* __TRIANGLE_H__ */
