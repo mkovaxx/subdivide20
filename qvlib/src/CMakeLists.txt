@@ -1,3 +1,8 @@
+# Set the C++ standard and compiler warnings
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(SOURCES
     QvAsciiText.cpp
     QvChildList.cpp
@@ -90,9 +95,6 @@ target_include_directories(qvlib
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-# Set C++ standard
-target_compile_features(qvlib PRIVATE cxx_std_11)
 
 # Set output directory
 set_target_properties(qvlib PROPERTIES
