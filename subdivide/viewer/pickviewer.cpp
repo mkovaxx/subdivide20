@@ -29,6 +29,13 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "pickobject.hpp"
 #include "stdlib.h"
 
+// Include GLUT for GLUT_DOWN and glutPostRedisplay
+#if defined(__APPLE__)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 void PickViewer::mouse(int button, int state, int x, int y) {
     if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
         pick(x, getHeight() - y);

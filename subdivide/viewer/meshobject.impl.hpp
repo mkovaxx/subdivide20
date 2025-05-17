@@ -23,13 +23,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glut.h>
 #endif
 
 template <class Mesh> MeshObjectTp<Mesh>::MeshObjectTp() : _mesh(), _minPoint(0), _maxPoint(0) {}
