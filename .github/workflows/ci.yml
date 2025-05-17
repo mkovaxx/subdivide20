@@ -20,8 +20,8 @@ jobs:
           # Verify libraries
           ls -la build/lib/libqvlib.a
           [ -f build/lib/libqvlib.a ]
-          ls -la build/subdivide/src/libsub.a
-          [ -f build/subdivide/src/libsub.a ]
+          ls -la build/subdivide/src/libsubdivide.a
+          [ -f build/subdivide/src/libsubdivide.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
@@ -59,8 +59,8 @@ jobs:
           # Verify libraries
           ls -la build/lib/libqvlib.a
           [ -f build/lib/libqvlib.a ]
-          ls -la build/subdivide/src/libsub.a
-          [ -f build/subdivide/src/libsub.a ]
+          ls -la build/subdivide/src/libsubdivide.a
+          [ -f build/subdivide/src/libsubdivide.a ]
           ls -la build/subdivide/viewer/libviewer.a
           [ -f build/subdivide/viewer/libviewer.a ]
 
