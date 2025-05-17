@@ -159,7 +159,7 @@ template <class F> class CVec3T {
     //: for nonzero vectors, returns the normalized vector
     CVec3T dir(void) const {
         F a = l2();
-        if (a == 0) {
+        if ((a == 0)) {
             return *this;
         } else {
             return *this / a;
