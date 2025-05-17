@@ -39,8 +39,6 @@ target_include_directories(subdivide
 target_compile_options(subdivide
     PRIVATE
         $<$<CONFIG:Debug>:-g>
-        -Wall
-        -pedantic
 )
 
 # Link with qvlib

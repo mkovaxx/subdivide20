@@ -2,9 +2,6 @@
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
-# Silence deprecation warnings on macOS
-add_definitions(-DGL_SILENCE_DEPRECATION)
-
 set(SOURCES
     viewer.cpp
     camera.cpp
