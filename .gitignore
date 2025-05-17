@@ -4,6 +4,20 @@ subdivide/exmaples/ccsub
 subdivide/exmaples/loopsub
 subdivide/exmaples/subviewer
 
+# Build directory
+build/
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+Makefile
+*.ninja
+*.o
+*.a
+*.so
+*.dylib
+
 # Makedepend files
 Makedepend.*
 

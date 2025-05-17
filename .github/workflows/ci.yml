@@ -1,23 +1,82 @@
 name: CI
+
 on: [push, pull_request]
 
 jobs:
   build-osx:
     runs-on: macos-latest
     steps:
-      - run: brew update
       - uses: actions/checkout@v4
-      - run: make -C subdivide -f Makefile.macos
-      - run: '[ -f subdivide/examples/ccsub ]'
-      - run: '[ -f subdivide/examples/loopsub ]'
-      - run: '[ -f subdivide/examples/subviewer ]'
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install cmake freeglut
+      - name: Build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release -- -j$(nproc)
+      - name: Verify artifacts
+        run: |
+          # Verify libraries
+          ls -la build/lib/libqvlib.a
+          [ -f build/lib/libqvlib.a ]
+          ls -la build/lib/libsubdivide.a
+          [ -f build/lib/libsubdivide.a ]
+          ls -la build/lib/libviewer.a
+          [ -f build/lib/libviewer.a ]
+
+          # Verify example binaries exist
+          ls -la build/bin/ccsub
+          [ -f build/bin/ccsub ]
+          ls -la build/bin/loopsub
+          [ -f build/bin/loopsub ]
+          ls -la build/bin/subviewer
+          [ -f build/bin/subviewer ]
+
+      - name: Test CLI help commands
+        run: |
+          # Test each CLI with help flag
+          echo "Testing ccsub --help"
+          build/bin/ccsub --help || build/bin/ccsub -h
+
+          echo "Testing loopsub --help"
+          build/bin/loopsub --help || build/bin/loopsub -h
 
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt install freeglut3-dev
       - uses: actions/checkout@v4
-      - run: make -C subdivide -f Makefile.linux
-      - run: '[ -f subdivide/examples/ccsub ]'
-      - run: '[ -f subdivide/examples/loopsub ]'
-      - run: '[ -f subdivide/examples/subviewer ]'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ freeglut3-dev xvfb
+      - name: Build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release -- -j$(nproc)
+      - name: Verify artifacts
+        run: |
+          # Verify libraries
+          ls -la build/lib/libqvlib.a
+          [ -f build/lib/libqvlib.a ]
+          ls -la build/lib/libsubdivide.a
+          [ -f build/lib/libsubdivide.a ]
+          ls -la build/lib/libviewer.a
+          [ -f build/lib/libviewer.a ]
+
+          # Verify example binaries exist
+          ls -la build/bin/ccsub
+          [ -f build/bin/ccsub ]
+          ls -la build/bin/loopsub
+          [ -f build/bin/loopsub ]
+          ls -la build/bin/subviewer
+          [ -f build/bin/subviewer ]
+
+      - name: Test CLI help commands
+        run: |
+          # Test each CLI with help flag
+          echo "Testing ccsub --help"
+          build/bin/ccsub --help || build/bin/ccsub -h
+
+          echo "Testing loopsub --help"
+          build/bin/loopsub --help || build/bin/loopsub -h

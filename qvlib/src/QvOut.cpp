@@ -31,7 +31,9 @@
 #include <QvPerspectiveCamera.hpp>
 #include <QvSeparator.hpp>
 #include <QvUnknownNode.hpp>
+
 #include <fstream>
+#include <iostream>
 
 static void writeNode(QvNode* node, int indent, std::ostream& outfile);
 

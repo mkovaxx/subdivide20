@@ -9,14 +9,28 @@ Piecewise smooth subdivision surfaces with normal control.
 SIGGRAPH 2000 Conference Proceedings.
 ```
 
-The improvements contributed here include:
-- build support for Linux and macOS
-- compatibility with modern C++ compilers: Clang and GCC
-- conformance with C++11
-- reformatted with a modern C++ style and readability in mind
-- Markdown-ified README files
-
 ## Features
+
+### Improvements Made
+
+- **Modern Build System**: Uses CMake for cross-platform building
+- **Cross-Platform**: Supports Linux and macOS (Windows support coming soon)
+- **Modern C++**: Updated to C++11 standard
+- **CI/CD**: Automated testing with GitHub Actions
+- **Improved Documentation**: Comprehensive build and usage instructions
+
+### Supported Subdivision Types
+
+- **Catmull-Clark** for quadrilateral meshes
+- **Loop** for triangular meshes
+
+### Interactive Viewer
+
+- Real-time visualization of subdivision surfaces
+- Interactive manipulation of creases, corners, and normals
+- Export capabilities for both control and subdivided meshes
+
+### Visual Examples
 
 Complex geometrical features:
 
@@ -30,36 +44,103 @@ Precise surface manipulation at corners:
 
 ![surface manipulation with corners](doc/images/8.png)
 
-## How to Build
+## Building from Source
 
-The following platforms are currently supported:
-- Linux (Ubuntu)
-- macOS
+### Prerequisites
 
-Support for Windows is coming soon!
+- CMake 3.15 or later
+- C++17 compatible compiler (GCC 8+, Clang 10+, Apple Clang 12+)
+- OpenGL and GLUT (for the viewer application)
 
-Each platform has a corresponding `Makefile.$PLATFORM` inside the `subdivide` directory.
+#### Linux (Ubuntu/Debian)
 
-For example, to build for macOS, execute the following command:
-```sh
-make -C subdivide -f Makefile.macos
+```bash
+# Install dependencies
+sudo apt-get update
+sudo apt-get install -y cmake g++ freeglut3-dev
+
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
 ```
 
-## How to Use
+#### macOS
 
-The build process creates the following outputs:
-- `subdivide/examples/ccsub`: Catmull-Clark subdivision tool (CLI).
-- `subdivide/examples/loopsub`: Loop subdivision tool (CLI).
-- `subdivide/examples/subviewer`: Visual subdivision app (GUI).
+```bash
+# Install dependencies using Homebrew
+brew install cmake freeglut
 
-All three executables print information about their usage when invoked without arguments.
+# Build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
+```
 
-The `subviewer` GUI app's controls are as follows:
-- `<space>`: toggle control mode between `move`/`pick`
-  - in `move` mode, dragging with the pointer changes the orientation
-  - in `pick` mode: clicking on a control mesh entity toggles its tag
-    - edge tags: `smooth`/`crease`
-    - (boundary) vertex tags: `crease`/`corner`
-- `S`: increase subdivision depth (number of iterations)
-- `W`: write control mesh to file
-- `D`: write subdivided mesh to file
+### Build
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -- -j$(nproc)
+```
+
+#### Options
+
+- `-DCMAKE_BUILD_TYPE=Release` (default): Optimized release build
+- `-DCMAKE_BUILD_TYPE=Debug`: Build with debug symbols
+
+## Usage
+
+### Command Line Tools
+
+#### Catmull-Clark Subdivision (`ccsub`)
+
+```bash
+# Show help
+./build/bin/ccsub --help
+
+# Subdivide a mesh
+./build/bin/ccsub input.wrl -o output.wrl -s 3
+```
+
+#### Loop Subdivision (`loopsub`)
+
+```bash
+# Show help
+./build/bin/loopsub --help
+
+# Subdivide a mesh
+./build/bin/loopsub input.wrl -o output.wrl -s 2
+```
+
+### Interactive Viewer (`subviewer`)
+
+```bash
+# Launch the viewer
+./build/bin/subviewer [input.wrl]
+```
+
+#### Viewer Controls
+
+- **Left Mouse Button**: Rotate view
+- **Middle Mouse Button**: Pan view
+- **Right Mouse Button**: Zoom in/out
+- **Space**: Toggle control mode between `move`/`pick`
+  - `move`: Drag to change view orientation
+  - `pick`: Click to toggle mesh entity tags
+    - Edge tags: `smooth`/`crease`
+    - Boundary vertex tags: `crease`/`corner`
+- **S**: Increase subdivision depth
+- **W**: Write control mesh to file
+- **D**: Write subdivided mesh to file
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+## License
+
+This project is licensed under the [GNU GPLv2](LICENSE).
+
+## Acknowledgments
+
+- Original work by H. Biermann, A. Levin, and D. Zorin
+- Initial maintenance work by Máté J Kovács
+- Maintained by the open source community
