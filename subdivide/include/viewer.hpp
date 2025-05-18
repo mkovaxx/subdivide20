@@ -52,7 +52,7 @@ class Viewer {
     void setPos(int x, int y);
     void setWindow();
 
-    // Execute event loop
+    // event loop
     void runEventLoop();
 
     static void initGL(int* argc, char** argv);
@@ -80,16 +80,13 @@ class Viewer {
     // the object to view
     GeoObject* _geoObject;
 
-    // GLFW-compatible static callback functions
-    // These will retrieve the Viewer instance using glfwGetWindowUserPointer
-    // and then call the corresponding instance method.
-    static void glfw_error_callback(int error, const char* description);
-    static void glfw_framebuffer_size_callback(GLFWwindow* window, int width, int height);
-    static void glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-    static void glfw_cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
-    static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-    // Optional: static void glfw_char_callback(GLFWwindow* window, unsigned int codepoint);
-    // Optional: static void glfw_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+    // static callbacks to be used with GLFW
+    static void errorWrapper(int error, const char* description);
+    static void reshapeWrapper(GLFWwindow* window, int width, int height);
+    static void mouseWrapper(GLFWwindow* window, int button, int action, int mods);
+    static void motionWrapper(GLFWwindow* window, double xpos, double ypos);
+    static void keyWrapper(GLFWwindow* window, unsigned int codepoint);
+    static void specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
 
 #endif /* __VIEWER_H__ */

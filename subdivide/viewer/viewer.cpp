@@ -47,16 +47,14 @@ static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoObject(0) {
     strcpy(_title, t);
 
-    // GLFW Window Hints (replaces glutInitDisplayMode)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     // The following does not work on macOS, which is why it is commented out.
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // Corresponds to GLUT_DOUBLE
-    glfwWindowHint(GLFW_DEPTH_BITS, 24);         // Corresponds to GLUT_DEPTH (assuming 24-bit)
-                                                 // GLUT_RGBA is default
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+    glfwWindowHint(GLFW_DEPTH_BITS, 24);
 
     _window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
     if (!_window) {
@@ -71,24 +69,15 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     // If a library like GLEW were used, glewInit() would go here.
 
     // Register GLFW callbacks for this window
-    glfwSetFramebufferSizeCallback(_window, Viewer::glfw_framebuffer_size_callback);
-    glfwSetMouseButtonCallback(_window, Viewer::glfw_mouse_button_callback);
-    glfwSetCursorPosCallback(_window, Viewer::glfw_cursor_position_callback);
-    glfwSetKeyCallback(_window, Viewer::glfw_key_callback);
-    // Optional: glfwSetCharCallback(_window, Viewer::glfw_char_callback);
-    // Optional: glfwSetScrollCallback(_window, Viewer::glfw_scroll_callback);
+    glfwSetFramebufferSizeCallback(_window, Viewer::reshapeWrapper);
+    glfwSetMouseButtonCallback(_window, Viewer::mouseWrapper);
+    glfwSetCursorPosCallback(_window, Viewer::motionWrapper);
+    glfwSetKeyCallback(_window, Viewer::specialKeyWapper);
+    glfwSetCharCallback(_window, Viewer::keyWrapper);
 
     // Enable depth testing by default
     glEnable(GL_DEPTH_TEST);
 
-    // TODO: GLFW Migration - Replace these GLUT calls with GLFW equivalents
-    // glutSetWindow(getWindow());
-    // glutDisplayFunc(displayWrapper);
-    // glutMouseFunc(mouseWrapper);
-    // glutMotionFunc(motionWrapper);
-    // glutReshapeFunc(reshapeWrapper);
-    // glutKeyboardFunc(keyWrapper);
-    // glutSpecialFunc(specialKeyWrapper);
     glCheck();
 
     _camera = new Camera();
@@ -114,12 +103,8 @@ void Viewer::setSize(int w, int h) {
 }
 
 void Viewer::setPos(int x, int y) {
-    // TODO: GLFW Migration - Replace with GLFW equivalent
-    // glutSetWindow(getWindow());
-    // glutPositionWindow(x, y);
-    // glutPostRedisplay();
     glfwSetWindowPos(getWindow(), x, y);
-    // glfwPostEmptyEvent(); // Or manage redraw flag for GLFW loop
+    glfwPostEmptyEvent();
     glCheck();
 }
 
@@ -151,32 +136,22 @@ void Viewer::reshape(int w, int h) {
     _camera->computeModelview();
     _camera->computeProjection();
     _camera->loadMatrices();
-    // TODO: GLFW Migration - glutPostRedisplay equivalent needed if not rendering every frame
-    // glutPostRedisplay(); 
     glCheck();
 }
 
 void Viewer::mouse(int button, int state, int x, int y, int mods) {
-    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
-    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::motion(int x, int y) {
-    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
-    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::key(unsigned char key, int x, int y) {
-    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
-    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::specialKey(int key, int x, int y) {
-    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
-    // glutPostRedisplay();
     glCheck();
 }
 
@@ -211,21 +186,18 @@ void Viewer::runEventLoop() {
     }
 }
 
-//--------------------------------------------------------------
-// GLFW static callback implementations
-
-void Viewer::glfw_error_callback(int error, const char* description) {
+void Viewer::errorWrapper(int error, const char* description) {
     fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
 }
 
-void Viewer::glfw_framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void Viewer:: reshapeWrapper(GLFWwindow* window, int width, int height) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
         viewer->reshape(width, height);
     }
 }
 
-void Viewer::glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+void Viewer:: mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
         double xpos_double, ypos_double;
@@ -289,7 +261,7 @@ void Viewer::initGL(int* argc, char** argv) { // argc and argv often not directl
         fprintf(stderr, "Failed to initialize GLFW\n");
         exit(EXIT_FAILURE);
     }
-    glfwSetErrorCallback(Viewer::glfw_error_callback); // Set global error callback
+    glfwSetErrorCallback(Viewer::errorWrapper);
 
     // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
 }

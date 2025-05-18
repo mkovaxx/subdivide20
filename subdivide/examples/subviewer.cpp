@@ -481,7 +481,6 @@ void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle rendered view with o (for 'o'ther view)
     triViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleTriViewerStateCB, triObject));
     triViewer->addPickCallback(triPickCB, triObject);
-    // TODO: GLFW Migration - Verify these key mappings are correct for GLFW
     triViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
     triViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
     triViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
@@ -501,7 +500,6 @@ void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
     // toggle rendered view with o (for 'o'ther view)
     quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
     quadViewer->addPickCallback(quadPickCB, quadObject);
-    // TODO: GLFW Migration - Verify these key mappings are correct for GLFW
     quadViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
     quadViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
     quadViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
@@ -558,11 +556,11 @@ int main(int argc, char** argv) {
 
     // GLFW Main Loop
     if (viewer) {
-        viewer->runEventLoop(); // Call the Viewer's main loop method
-        delete viewer; // Clean up the viewer object
+        viewer->runEventLoop();
+        delete viewer;
         viewer = nullptr;
     }
 
-    glfwTerminate(); // Terminate GLFW
+    glfwTerminate();
     return 0;
 }

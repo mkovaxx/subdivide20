@@ -87,38 +87,37 @@ void BallViewer::display() {
     glDisable(GL_DEPTH_TEST);
     _arcball.DrawCompleteBall(getCamera()->viewWorldPosition());
 
-    // TODO: GLFW Migration - Replace with glfwSwapBuffers(getWindow()) in main loop
-    // glutSwapBuffers();
     glCheck();
 }
 
 void BallViewer::mouse(int button, int state, int x, int y, int mods) {
-    y = getHeight() - y; // Invert y-coordinate as is common
+    y = getHeight() - y;
 
-    if (state == 0) { // GLFW_PRESS is mapped to state 0
+    if (state == GLFW_PRESS) {
         if (_uiAction) {
             delete _uiAction;
-            _uiAction = nullptr; // Good practice to nullify after delete
+}
+
+        // map left+ALT to right button
+        if ((button == GLFW_MOUSE_BUTTON_LEFT) && (mods & GLFW_MOD_ALT)) {
+            button = GLFW_MOUSE_BUTTON_RIGHT;
         }
 
         switch (button) {
-            case GLFW_MOUSE_BUTTON_LEFT: // Left Button (original or after mod check)
-                _uiAction = new CameraRotateAction(x, y, &_arcball, getCamera());
-                break;
-            case GLFW_MOUSE_BUTTON_MIDDLE: // Middle Button (original or after mod check)
-                _uiAction = new CameraTransXYAction(x, y, &_arcball, getCamera());
-                break;
-            case GLFW_MOUSE_BUTTON_RIGHT: // Right Button (original or after mod check)
-                _uiAction = new CameraTransZAction(x, y, &_arcball, getCamera());
-                break;
+        case GLFW_MOUSE_BUTTON_LEFT:
+            _uiAction = new CameraRotateAction(x, y, &_arcball, getCamera());
+            break;
+        case GLFW_MOUSE_BUTTON_MIDDLE:
+            _uiAction = new CameraTransXYAction(x, y, &_arcball, getCamera());
+            break;
+        case GLFW_MOUSE_BUTTON_RIGHT:
+            _uiAction = new CameraTransZAction(x, y, &_arcball, getCamera());
+            break;
         }
-    } else if (state == 1) { // GLFW_RELEASE is mapped to state 1
+    } else if (state == GLFW_RELEASE) {
         delete _uiAction;
         _uiAction = nullptr;
     }
-
-    // TODO: GLFW Migration - Equivalent for glutPostRedisplay (e.g., set redraw flag or call if needed)
-    // For now, assuming display happens in the main loop based on glfwPollEvents()
 }
 
 void BallViewer::motion(int x, int y) {
@@ -126,8 +125,6 @@ void BallViewer::motion(int x, int y) {
     if (_uiAction) {
         _uiAction->update(x, y);
     }
-    // TODO: GLFW Migration - Equivalent for glutPostRedisplay
-    // glutPostRedisplay();
 }
 
 void BallViewer::key(unsigned char k, int, int y) {
@@ -148,20 +145,15 @@ void BallViewer::key(unsigned char k, int, int y) {
         break;
     }
 
-    // TODO: GLFW Migration - Equivalent for glutPostRedisplay
-    // glutPostRedisplay();
 }
 
 void BallViewer::specialKey(int k, int /* x */, int /* y */) {
-    // TODO: GLFW Migration - Replace GLUT_KEY_HOME with GLFW_KEY_HOME and update logic
     switch (k) {
     case GLFW_KEY_HOME:
         positionCamera();
         positionArcBall();
         break;
     }
-    // TODO: GLFW Migration - Equivalent for glutPostRedisplay
-    // glutPostRedisplay();
 }
 
 void BallViewer::centerArcBall() {

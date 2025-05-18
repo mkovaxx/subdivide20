@@ -32,16 +32,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <cctype> // For tolower
 
 void PickViewer::mouse(int button, int state, int x, int y, int mods) {
-    // TODO: GLFW Migration - Replace GLUT_DOWN with GLFW_PRESS and update logic
-    // if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
-    if ((_uiState == PICK_STATE) && (state == GLFW_PRESS)) { // Tentative replacement
+    if ((_uiState == PICK_STATE) && (state == GLFW_PRESS)) {
         pick(x, getHeight() - y);
         // callback to mesh class
         if (_pickCB) {
             _pickCB(_pickedStuff, _pickData);
         }
-        // TODO: GLFW Migration - Replace glutPostRedisplay
-        // glutPostRedisplay();
     } else {
         BallViewer::mouse(button, state, x, y, mods);
     }
@@ -61,8 +57,6 @@ void PickViewer::key(unsigned char k, int x, int y) {
 
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
-        // TODO: GLFW Migration - Replace glutPostRedisplay
-        // glutPostRedisplay();
     } else {
         BallViewer::key(k, x, y);
     }
@@ -72,8 +66,6 @@ void PickViewer::specialKey(int k, int x, int y) {
     std::map<int, CBPairType>::iterator it = _specialMap.find(k);
     if (it != _specialMap.end()) {
         ((*it).second.first)((*it).second.second);
-        // TODO: GLFW Migration - Replace glutPostRedisplay
-        // glutPostRedisplay();
     } else {
         BallViewer::specialKey(k, x, y);
     }
