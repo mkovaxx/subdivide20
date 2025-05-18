@@ -49,34 +49,62 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "sectorinfo.hpp" // sector information used for call backs
 
+#include <cstring>
+
 int depth = 3;
 
-void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
-    TagIvGraph ivGraph;
+void init(int argc, char** argv, bool& triMode, TagIvGraph& ivGraph) {
     if (argc < 2) {
-        std::cerr << "usage: " << argv[0] << " infile" << std::endl;
+        std::cerr << "usage: " << argv[0] << " [--mode tri|quad] infile [depth]" << std::endl;
         exit(1);
-    } else {
-        bool res = ivGraph.read(argv[1]);
-        if (!res) {
-            std::cerr << "could not read " << argv[1] << std::endl;
-            exit(1);
-        }
+    }
 
-        if (argc > 2) {
-            depth = std::min(std::max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
+    // Default mode is triangles
+    triMode = true;
+
+    // Parse command-line arguments for --mode and input file
+    const char* inputFile = nullptr;
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "--mode") == 0) {
+            if (i + 1 >= argc) {
+                std::cerr << "Error: --mode requires an argument (tri|quad)" << std::endl;
+                exit(1);
+            }
+            const char* modeArg = argv[i + 1];
+            if (strcmp(modeArg, "tri") == 0) {
+                triMode = true;
+            } else if (strcmp(modeArg, "quad") == 0) {
+                triMode = false;
+            } else {
+                std::cerr << "Error: invalid mode '" << modeArg << "' (must be 'tri' or 'quad')" << std::endl;
+                exit(1);
+            }
+            i++; // Consumed mode argument value
+        } else if (!inputFile) {
+            // The first non-option argument is the input file
+            inputFile = argv[i];
+        } else if (i == argc - 1) {
+            // The last argument is the optional depth
+            depth = std::min(std::max(atoi(argv[i]), 0), GEN_MAX_DEPTH);
         }
     }
 
-    TagFlatMesh tagFlatMesh;
+    if (!inputFile) {
+        std::cerr << "Error: No input file specified" << std::endl;
+        exit(1);
+    }
 
-    ivGraph.toTagFlatMesh(&tagFlatMesh, true);
-    TriMesh triMesh(tagFlatMesh);
-    triObj.setMesh(triMesh);
-
-    ivGraph.toTagFlatMesh(&tagFlatMesh, false);
-    QuadMesh quadMesh(tagFlatMesh);
-    quadObj.setMesh(quadMesh);
+    // Create a modifiable copy of the filename for the read() method
+    char* filename = new char[strlen(inputFile) + 1];
+    strcpy(filename, inputFile);
+    
+    bool res = ivGraph.read(filename);
+    delete[] filename;
+    
+    if (!res) {
+        std::cerr << "could not read " << inputFile << std::endl;
+        exit(1);
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -440,77 +468,89 @@ void toggleQuadViewerStateCB(void* o) {
 
 //----------------------------------------------------------------------------
 
-void registerCB(PickViewer* triViewer, PickViewer* quadViewer, PickableTri* triObject, PickableQuad* quadObject) {
-
+// register Triangle viewer callbacks
+void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle call back on space
     triViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, triViewer));
-    quadViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, quadViewer));
-
     // subdivide call back on s
     triViewer->addKeyCallback('s', PickViewer::CBPairType(&subTriObjectCB, triObject));
-    quadViewer->addKeyCallback('s', PickViewer::CBPairType(&subQuadObjectCB, quadObject));
-
     // write ctrl mesh on w
     triViewer->addKeyCallback('w', PickViewer::CBPairType(&writeTriCtrlCB, triObject));
-    quadViewer->addKeyCallback('w', PickViewer::CBPairType(&writeQuadCtrlCB, quadObject));
-
     // dump subdivided mesh on d
     triViewer->addKeyCallback('d', PickViewer::CBPairType(&writeTriSubCB, triObject));
-    quadViewer->addKeyCallback('d', PickViewer::CBPairType(&writeQuadSubCB, quadObject));
-
     // toggle rendered view with o (for 'o'ther view)
     triViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleTriViewerStateCB, triObject));
-    quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
-
     triViewer->addPickCallback(triPickCB, triObject);
-    quadViewer->addPickCallback(quadPickCB, quadObject);
-
     triViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
+}
+
+// register Quad viewer callbacks
+void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
+    // toggle call back on space
+    quadViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, quadViewer));
+    // subdivide call back on s
+    quadViewer->addKeyCallback('s', PickViewer::CBPairType(&subQuadObjectCB, quadObject));
+    // write ctrl mesh on w
+    quadViewer->addKeyCallback('w', PickViewer::CBPairType(&writeQuadCtrlCB, quadObject));
+    // dump subdivided mesh on d
+    quadViewer->addKeyCallback('d', PickViewer::CBPairType(&writeQuadSubCB, quadObject));
+    // toggle rendered view with o (for 'o'ther view)
+    quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
+    quadViewer->addPickCallback(quadPickCB, quadObject);
+    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
+    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
     quadViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
 }
 
 //-----------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-
     PickViewer::initGL(&argc, argv);
 
-    // we have two objects, a quadbased object and a tribased one
-    PickableQuad quadObject;
+    // process command line arguments and read input file
+    bool triMode;
+    TagIvGraph ivGraph;
+    init(argc, argv, triMode, ivGraph);
+
+    TagFlatMesh tagFlatMesh;
     PickableTri triObject;
+    PickableQuad quadObject;
 
-    // read files
-    init(argc, argv, triObject, quadObject);
+    if (triMode) {
+        ivGraph.toTagFlatMesh(&tagFlatMesh, true);
+        TriMesh triMesh(tagFlatMesh);
+        triObject.setMesh(triMesh);
 
-    // render everything but not normals
-    quadObject.tlRenderMode() = triObject.tlRenderMode() =
-        PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
+        // render everything but not normals
+        triObject.tlRenderMode() = PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
 
-    // compute 0 subdivision level
-    triObject.getMesh().subdivide(0);
-    quadObject.getMesh().subdivide(0);
+        // compute 0 subdivision level
+        triObject.getMesh().subdivide(0);
 
-    // create a viewer for the tribased structure
-    PickViewer triViewer("triViewer");
-    triViewer.setObject(&triObject);
+        PickViewer* triViewer = new PickViewer("Subdivide 2.0 :: Triangles");
+        triViewer->setObject(&triObject);
+        triViewer->setPos(100, 100);
+        registerTriCB(triViewer, &triObject);
+    } else {
+        ivGraph.toTagFlatMesh(&tagFlatMesh, false);
+        QuadMesh quadMesh(tagFlatMesh);
+        quadObject.setMesh(quadMesh);
 
-    // create a viewer for the quadbased structure
-    PickViewer quadViewer("quadViewer");
-    quadViewer.setObject(&quadObject);
+        // render everything but not normals
+        quadObject.tlRenderMode() = PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
 
-    quadViewer.setPos(50, 50);
-    triViewer.setPos(100, 100);
+        // compute 0 subdivision level
+        quadObject.getMesh().subdivide(0);
 
-    registerCB(&triViewer, &quadViewer, &triObject, &quadObject);
+        PickViewer* quadViewer = new PickViewer("Subdivide 2.0 :: Quads");
+        quadViewer->setObject(&quadObject);
+        quadViewer->setPos(100, 100);
+        registerQuadCB(quadViewer, &quadObject);
+    }
 
     // enter glut main loop
     glutMainLoop();
