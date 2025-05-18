@@ -80,12 +80,12 @@ class Viewer {
 
     static Viewer* getCurrentViewer(GLFWwindow* window);
     // static callbacks to be used with GLFW
-    static void errorWrapper(int error, const char* description);
     static void reshapeWrapper(GLFWwindow* window, int width, int height);
     static void mouseWrapper(GLFWwindow* window, int button, int action, int mods);
     static void motionWrapper(GLFWwindow* window, double xpos, double ypos);
     static void keyWrapper(GLFWwindow* window, unsigned int codepoint);
     static void specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void errorWrapper(int error, const char* description);
 
   protected:
     void positionCamera();

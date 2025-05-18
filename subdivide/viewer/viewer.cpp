@@ -188,58 +188,58 @@ void Viewer::runEventLoop() {
     }
 }
 
-void Viewer::errorWrapper(int error, const char* description) {
-    fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
-}
-
 void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
-    Viewer* viewer = getCurrentViewer(window);
-    if (viewer) {
-        viewer->reshape(width, height);
+    Viewer* v = getCurrentViewer(window);
+    if (v) {
+        v->reshape(width, height);
     }
 }
 
 void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
-    Viewer* viewer = getCurrentViewer(window);
-    if (viewer) {
+    Viewer* v = getCurrentViewer(window);
+    if (v) {
         double xpos_double, ypos_double;
         glfwGetCursorPos(window, &xpos_double, &ypos_double);
         int xpos = static_cast<int>(xpos_double);
         int ypos = static_cast<int>(ypos_double);
 
-        viewer->mouse(button, action, xpos, ypos, mods);
+        v->mouse(button, action, xpos, ypos, mods);
     }
 }
 
 void Viewer::motionWrapper(GLFWwindow* window, double xpos, double ypos) {
-    Viewer* viewer = getCurrentViewer(window);
-    if (viewer) {
-        viewer->motion(static_cast<int>(xpos), static_cast<int>(ypos));
+    Viewer* v = getCurrentViewer(window);
+    if (v) {
+        v->motion(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 }
 
 void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
-    Viewer* viewer = getCurrentViewer(window);
-    if (!viewer) return;
+    Viewer* v = getCurrentViewer(window);
+    if (!v) return;
 
     double xpos_double, ypos_double;
     glfwGetCursorPos(window, &xpos_double, &ypos_double);
     int x = static_cast<int>(xpos_double);
     int y = static_cast<int>(ypos_double);
 
-    viewer->key(tolower(codepoint), x, y);
+    v->key(tolower(codepoint), x, y);
 }
 
 void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Viewer* viewer = getCurrentViewer(window);
-    if (!viewer) return;
+    Viewer* v = getCurrentViewer(window);
+    if (!v) return;
 
     double xpos_double, ypos_double;
     glfwGetCursorPos(window, &xpos_double, &ypos_double);
     int x = static_cast<int>(xpos_double);
     int y = static_cast<int>(ypos_double);
 
-    viewer->specialKey(key, x, y);
+    v->specialKey(key, x, y);
+}
+
+void Viewer::errorWrapper(int error, const char* description) {
+    fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
