@@ -48,7 +48,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "trimanipulator.hpp"  // manipulation of triangles
 
 #include "sectorinfo.hpp" // sector information used for call backs
-#include <cstring> // For strcmp
+
+#include <cstring>
 
 int depth = 3;
 
