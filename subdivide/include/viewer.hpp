@@ -65,8 +65,6 @@ class Viewer {
     virtual void key(unsigned char k, int x, int y);
     virtual void specialKey(int k, int x, int y);
 
-    void positionCamera();
-
   private:
     // window data
     GLFWwindow* _window;
@@ -87,6 +85,9 @@ class Viewer {
     static void motionWrapper(GLFWwindow* window, double xpos, double ypos);
     static void keyWrapper(GLFWwindow* window, unsigned int codepoint);
     static void specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+  protected:
+    void positionCamera();
 };
 
 #endif /* __VIEWER_H__ */
