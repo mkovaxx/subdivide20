@@ -84,6 +84,14 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glCheck();
 }
 
+void Viewer::initGL(int* argc, char** argv) {
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        exit(EXIT_FAILURE);
+    }
+    glfwSetErrorCallback(Viewer::errorWrapper);
+}
+
 Viewer::~Viewer() { 
     // If this viewer owned the window, it might be destroyed here, 
     // but typically window destruction and glfwTerminate are handled at global application exit.
@@ -232,14 +240,6 @@ void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int ac
     int y = static_cast<int>(ypos_double);
 
     viewer->specialKey(key, x, y);
-}
-
-void Viewer::initGL(int* argc, char** argv) {
-    if (!glfwInit()) {
-        fprintf(stderr, "Failed to initialize GLFW\n");
-        exit(EXIT_FAILURE);
-    }
-    glfwSetErrorCallback(Viewer::errorWrapper);
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
