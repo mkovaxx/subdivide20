@@ -522,6 +522,8 @@ int main(int argc, char** argv) {
     PickableTri triObject;
     PickableQuad quadObject;
 
+    PickViewer* viewer = nullptr;
+
     if (triMode) {
         ivGraph.toTagFlatMesh(&tagFlatMesh, true);
         TriMesh triMesh(tagFlatMesh);
@@ -533,10 +535,10 @@ int main(int argc, char** argv) {
         // compute 0 subdivision level
         triObject.getMesh().subdivide(0);
 
-        PickViewer* triViewer = new PickViewer("Subdivide 2.0 :: Triangles");
-        triViewer->setObject(&triObject);
-        triViewer->setPos(100, 100);
-        registerTriCB(triViewer, &triObject);
+        viewer = new PickViewer("Subdivide 2.0 :: Triangles");
+        viewer->setObject(&triObject);
+        viewer->setPos(100, 100);
+        registerTriCB(viewer, &triObject);
     } else {
         ivGraph.toTagFlatMesh(&tagFlatMesh, false);
         QuadMesh quadMesh(tagFlatMesh);
@@ -548,14 +550,30 @@ int main(int argc, char** argv) {
         // compute 0 subdivision level
         quadObject.getMesh().subdivide(0);
 
-        PickViewer* quadViewer = new PickViewer("Subdivide 2.0 :: Quads");
-        quadViewer->setObject(&quadObject);
-        quadViewer->setPos(100, 100);
-        registerQuadCB(quadViewer, &quadObject);
+        viewer = new PickViewer("Subdivide 2.0 :: Quads");
+        viewer->setObject(&quadObject);
+        viewer->setPos(100, 100);
+        registerQuadCB(viewer, &quadObject);
     }
 
-    // enter glut main loop
-    // TODO: GLFW Migration - Replace with GLFW main loop
-    // glutMainLoop();
+    // GLFW Main Loop
+    if (viewer) {
+        GLFWwindow* window = viewer->getWindow();
+        if (window) {
+            while (!glfwWindowShouldClose(window)) {
+                // The Viewer class should have made its window's context current.
+                // Viewer::displayWrapper() finds the viewer for the current context
+                // and calls its protected display() method.
+                Viewer::displayWrapper();
+
+                glfwSwapBuffers(window); // Swap front and back buffers
+                glfwPollEvents();        // Poll for and process events
+            }
+        }
+        delete viewer; // Clean up the viewer object
+        viewer = nullptr;
+    }
+
+    glfwTerminate(); // Terminate GLFW
     return 0;
 }
