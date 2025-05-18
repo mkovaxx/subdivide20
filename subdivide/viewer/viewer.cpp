@@ -122,10 +122,6 @@ void Viewer::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glCheck();
 
-    if (_camera) { // Ensure camera exists and its matrices are loaded
-        _camera->loadMatrices(); 
-    }
-
     if (_geoObject) {
         _geoObject->render();
     }

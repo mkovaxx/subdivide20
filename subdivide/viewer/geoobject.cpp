@@ -32,6 +32,4 @@ cvec3f GeoObject::minPoint() const { return cvec3f(-_d, -_d, -_d); }
 
 cvec3f GeoObject::maxPoint() const { return cvec3f(_d, _d, _d); }
 
-void GeoObject::render() { 
-    // TODO: consider removing this method
-}
+void GeoObject::render() { ; }
