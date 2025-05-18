@@ -70,7 +70,7 @@ class PickViewer : public BallViewer {
   protected:
     virtual void key(unsigned char k, int x, int y);
     virtual void pick(GLint x, GLint y);
-    virtual void mouse(int button, int state, int x, int y, int mods);
+    virtual void mouse(int button, int action, int x, int y, int mods);
     virtual void specialKey(int k, int x, int y);
 
   private:
