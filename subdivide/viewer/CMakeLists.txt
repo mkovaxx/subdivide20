@@ -1,6 +1,6 @@
 # Find required packages
 find_package(OpenGL REQUIRED)
-find_package(GLUT REQUIRED)
+find_package(glfw3 REQUIRED)
 
 # Find source files
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
@@ -24,7 +24,7 @@ target_link_libraries(viewer PRIVATE
     subdivide
     qvlib
     ${OPENGL_LIBRARIES}
-    ${GLUT_LIBRARIES}
+    glfw
 )
 
 # Add X11 libraries for Linux

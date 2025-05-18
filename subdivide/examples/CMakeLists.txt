@@ -44,7 +44,7 @@ target_link_libraries(subviewer
     PRIVATE
         viewer
         ${OPENGL_LIBRARIES}
-        ${GLUT_LIBRARIES}
+        glfw
 )
 
 # Install targets

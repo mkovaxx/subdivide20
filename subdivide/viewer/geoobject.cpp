@@ -24,12 +24,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "geoobject.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 GeoObject::GeoObject(float d) : _d(d) { ; }
 
 cvec3f GeoObject::centerPoint() const { return 0.5 * (minPoint() + maxPoint()); }
