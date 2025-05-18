@@ -29,6 +29,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "pickobject.hpp"
 #include "stdlib.h"
 #include <GLFW/glfw3.h>
+#include <cctype> // For tolower
 
 void PickViewer::mouse(int button, int state, int x, int y, int mods) {
     // TODO: GLFW Migration - Replace GLUT_DOWN with GLFW_PRESS and update logic
@@ -48,6 +49,16 @@ void PickViewer::mouse(int button, int state, int x, int y, int mods) {
 
 void PickViewer::key(unsigned char k, int x, int y) {
     std::map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
+
+    // If not found with original case, try lowercase version
+    // This handles callbacks registered with lowercase keys when uppercase is passed
+    if (it == _cbMap.end()) {
+        unsigned char lower_k = static_cast<unsigned char>(tolower(k));
+        if (k != lower_k) { // Avoid re-finding if k was already lowercase or not a letter
+            it = _cbMap.find(lower_k);
+        }
+    }
+
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
         // TODO: GLFW Migration - Replace glutPostRedisplay

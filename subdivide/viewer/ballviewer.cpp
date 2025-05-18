@@ -134,11 +134,11 @@ void BallViewer::key(unsigned char k, int, int y) {
     y = getHeight() - y;
 
     switch (k) {
-    case 'q':
+    case 'Q':
         // quit the viewer
         exit(0);
         break;
-    case 'c':
+    case 'C':
         // center the arc ball
         if (_uiAction) {
             delete _uiAction;
@@ -154,14 +154,12 @@ void BallViewer::key(unsigned char k, int, int y) {
 
 void BallViewer::specialKey(int k, int /* x */, int /* y */) {
     // TODO: GLFW Migration - Replace GLUT_KEY_HOME with GLFW_KEY_HOME and update logic
-    /*
     switch (k) {
-    case GLUT_KEY_HOME:
+    case GLFW_KEY_HOME:
         positionCamera();
         positionArcBall();
         break;
     }
-    */
     // TODO: GLFW Migration - Equivalent for glutPostRedisplay
     // glutPostRedisplay();
 }
