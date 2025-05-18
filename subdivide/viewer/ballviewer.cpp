@@ -92,11 +92,11 @@ void BallViewer::display() {
 
 void BallViewer::mouse(int button, int state, int x, int y, int mods) {
     y = getHeight() - y;
-
     if (state == GLFW_PRESS) {
+
         if (_uiAction) {
             delete _uiAction;
-}
+        }
 
         // map left+ALT to right button
         if ((button == GLFW_MOUSE_BUTTON_LEFT) && (mods & GLFW_MOD_ALT)) {
