@@ -93,10 +93,8 @@ void Viewer::initGL(int* argc, char** argv) {
 }
 
 Viewer::~Viewer() { 
-    // If this viewer owned the window, it might be destroyed here, 
-    // but typically window destruction and glfwTerminate are handled at global application exit.
-    // For now, do nothing specific for GLFW here. 
-    // glfwDestroyWindow(_window); // This might be premature if other viewers exist or app isn't closing
+    glfwDestroyWindow(_window);
+    _window = nullptr;
 }
 
 void Viewer::setObject(GeoObject* object) {
@@ -216,26 +214,26 @@ void Viewer::motionWrapper(GLFWwindow* window, double xpos, double ypos) {
 
 void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
     Viewer* v = getCurrentViewer(window);
-    if (!v) return;
+    if (v) {
+        double xpos_double, ypos_double;
+        glfwGetCursorPos(window, &xpos_double, &ypos_double);
+        int x = static_cast<int>(xpos_double);
+        int y = static_cast<int>(ypos_double);
 
-    double xpos_double, ypos_double;
-    glfwGetCursorPos(window, &xpos_double, &ypos_double);
-    int x = static_cast<int>(xpos_double);
-    int y = static_cast<int>(ypos_double);
-
-    v->key(tolower(codepoint), x, y);
+        v->key(tolower(codepoint), x, y);
+    }
 }
 
 void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
     Viewer* v = getCurrentViewer(window);
-    if (!v) return;
+    if (v) {
+        double xpos_double, ypos_double;
+        glfwGetCursorPos(window, &xpos_double, &ypos_double);
+        int x = static_cast<int>(xpos_double);
+        int y = static_cast<int>(ypos_double);
 
-    double xpos_double, ypos_double;
-    glfwGetCursorPos(window, &xpos_double, &ypos_double);
-    int x = static_cast<int>(xpos_double);
-    int y = static_cast<int>(ypos_double);
-
-    v->specialKey(key, x, y);
+        v->specialKey(key, x, y);
+    }
 }
 
 void Viewer::errorWrapper(int error, const char* description) {
