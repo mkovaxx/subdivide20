@@ -70,7 +70,7 @@ void init(int argc, char** argv, bool& triMode, TagIvGraph& ivGraph) {
                 std::cerr << "Error: --mode requires an argument (tri|quad)" << std::endl;
                 exit(1);
             }
-            const char* modeArg = argv[i+1];
+            const char* modeArg = argv[i + 1];
             if (strcmp(modeArg, "tri") == 0) {
                 triMode = true;
             } else if (strcmp(modeArg, "quad") == 0) {
