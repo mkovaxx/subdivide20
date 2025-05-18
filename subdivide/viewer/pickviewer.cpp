@@ -31,15 +31,15 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <GLFW/glfw3.h>
 #include <cctype> // For tolower
 
-void PickViewer::mouse(int button, int state, int x, int y, int mods) {
-    if ((_uiState == PICK_STATE) && (state == GLFW_PRESS)) {
+void PickViewer::mouse(int button, int action, int x, int y, int mods) {
+    if ((_uiState == PICK_STATE) && (action == GLFW_PRESS)) {
         pick(x, getHeight() - y);
         // callback to mesh class
         if (_pickCB) {
             _pickCB(_pickedStuff, _pickData);
         }
     } else {
-        BallViewer::mouse(button, state, x, y, mods);
+        BallViewer::mouse(button, action, x, y, mods);
     }
 }
 

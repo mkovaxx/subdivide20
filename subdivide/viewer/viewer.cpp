@@ -72,7 +72,7 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glfwSetFramebufferSizeCallback(_window, Viewer::reshapeWrapper);
     glfwSetMouseButtonCallback(_window, Viewer::mouseWrapper);
     glfwSetCursorPosCallback(_window, Viewer::motionWrapper);
-    glfwSetKeyCallback(_window, Viewer::specialKeyWapper);
+    glfwSetKeyCallback(_window, Viewer::specialKeyWrapper);
     glfwSetCharCallback(_window, Viewer::keyWrapper);
 
     // Enable depth testing by default
@@ -122,9 +122,6 @@ void Viewer::display() {
         _geoObject->render();
     }
     glCheck();
-
-    // glutSwapBuffers(); // Will be replaced by glfwSwapBuffers(getWindow()) in main loop
-    glCheck();
 }
 
 void Viewer::reshape(int w, int h) {
@@ -161,11 +158,8 @@ void Viewer::positionCamera() {
 }
 
 void Viewer::setWindow() {
-    // TODO: GLFW Migration - Replace with GLFW equivalent
-    // glutSetWindow(getWindow());
-    // glutPostRedisplay();
-    glfwMakeContextCurrent(getWindow()); // Make this window's context current
-    // glfwPostEmptyEvent(); // Or manage redraw flag
+    glfwMakeContextCurrent(getWindow());
+    glfwPostEmptyEvent();
 }
 
 void Viewer::runEventLoop() {
@@ -179,10 +173,10 @@ void Viewer::runEventLoop() {
     glfwMakeContextCurrent(_window);
 
     while (!glfwWindowShouldClose(_window)) {
-        this->display(); // Calls the virtual display() of this viewer instance directly
+        this->display();
 
-        glfwSwapBuffers(_window); // Swap front and back buffers
-        glfwPollEvents();        // Poll for and process events
+        glfwSwapBuffers(_window);
+        glfwPollEvents();
     }
 }
 
@@ -190,14 +184,14 @@ void Viewer::errorWrapper(int error, const char* description) {
     fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
 }
 
-void Viewer:: reshapeWrapper(GLFWwindow* window, int width, int height) {
+void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
         viewer->reshape(width, height);
     }
 }
 
-void Viewer:: mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
+void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
         double xpos_double, ypos_double;
@@ -205,65 +199,47 @@ void Viewer:: mouseWrapper(GLFWwindow* window, int button, int action, int mods)
         int xpos = static_cast<int>(xpos_double);
         int ypos = static_cast<int>(ypos_double);
 
-        int glut_button = -1;
-        if (button == GLFW_MOUSE_BUTTON_LEFT) glut_button = 0; // GLUT_LEFT_BUTTON
-        else if (button == GLFW_MOUSE_BUTTON_MIDDLE) glut_button = 1; // GLUT_MIDDLE_BUTTON
-        else if (button == GLFW_MOUSE_BUTTON_RIGHT) glut_button = 2; // GLUT_RIGHT_BUTTON
-
-        int glut_state = -1;
-        if (action == GLFW_PRESS) glut_state = 0; // GLUT_DOWN
-        else if (action == GLFW_RELEASE) glut_state = 1; // GLUT_UP
-
-        if (glut_button != -1 && glut_state != -1) {
-            viewer->mouse(glut_button, glut_state, xpos, ypos, mods);
-        }
+        viewer->mouse(button, action, xpos, ypos, mods);
     }
 }
 
-void Viewer::glfw_cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+void Viewer::motionWrapper(GLFWwindow* window, double xpos, double ypos) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
         viewer->motion(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 }
 
-void Viewer::glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (!viewer) return;
 
-    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-        double xpos_double, ypos_double;
-        glfwGetCursorPos(window, &xpos_double, &ypos_double);
-        int x = static_cast<int>(xpos_double);
-        int y = static_cast<int>(ypos_double);
+    double xpos_double, ypos_double;
+    glfwGetCursorPos(window, &xpos_double, &ypos_double);
+    int x = static_cast<int>(xpos_double);
+    int y = static_cast<int>(ypos_double);
 
-        // Special keys (function keys, arrows, navigation, Esc, Enter, Tab, etc.)
-        // GLFW key codes for these are typically >= GLFW_KEY_ESCAPE (256)
-        if (key >= GLFW_KEY_ESCAPE) {
-            viewer->specialKey(key, x, y); // Pass GLFW key code directly
-        } 
-        // Character-like keys (letters, numbers, symbols, space)
-        // GLFW key codes for these are typically < 256 and often map to ASCII values.
-        // We filter out GLFW_KEY_UNKNOWN (-1) and other negative values if any.
-        else if (key >= 0 && key < GLFW_KEY_ESCAPE) {
-            // Note: This will pass GLFW_KEY_A (65) as 'A'. 
-            // If Viewer::key expects lowercase unless Shift is pressed, 
-            // 'mods' would need to be checked here to adjust the character case.
-            // For now, direct mapping is simpler.
-            viewer->key(static_cast<unsigned char>(key), x, y);
-        }
-        // Keys like GLFW_KEY_UNKNOWN (-1) will be ignored by this logic.
-    }
+    viewer->key(static_cast<unsigned char>(codepoint), x, y);
 }
 
-void Viewer::initGL(int* argc, char** argv) { // argc and argv often not directly used by glfwInit
+void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    if (!viewer) return;
+
+    double xpos_double, ypos_double;
+    glfwGetCursorPos(window, &xpos_double, &ypos_double);
+    int x = static_cast<int>(xpos_double);
+    int y = static_cast<int>(ypos_double);
+
+    viewer->specialKey(key, x, y);
+}
+
+void Viewer::initGL(int* argc, char** argv) {
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
         exit(EXIT_FAILURE);
     }
     glfwSetErrorCallback(Viewer::errorWrapper);
-
-    // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
