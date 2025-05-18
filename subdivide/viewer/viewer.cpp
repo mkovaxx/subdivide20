@@ -207,6 +207,26 @@ void Viewer::setWindow() {
     // glfwPostEmptyEvent(); // Or manage redraw flag
 }
 
+void Viewer::runEventLoop() {
+    if (!_window) {
+        fprintf(stderr, "Error: Viewer window not initialized before runEventLoop()\n");
+        return;
+    }
+
+    // Ensure this viewer's context is current for the loop operations
+    // Although displayWrapper should also handle this for its specific drawing call.
+    glfwMakeContextCurrent(_window);
+
+    while (!glfwWindowShouldClose(_window)) {
+        // displayWrapper internally gets the current viewer and calls its display method.
+        // It assumes the correct context is already current, or it might set it.
+        Viewer::displayWrapper(); // Calls the virtual display() of the correct viewer instance
+
+        glfwSwapBuffers(_window); // Swap front and back buffers
+        glfwPollEvents();        // Poll for and process events
+    }
+}
+
 //--------------------------------------------------------------
 // dispatcher
 

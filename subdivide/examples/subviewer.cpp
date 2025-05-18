@@ -558,18 +558,7 @@ int main(int argc, char** argv) {
 
     // GLFW Main Loop
     if (viewer) {
-        GLFWwindow* window = viewer->getWindow();
-        if (window) {
-            while (!glfwWindowShouldClose(window)) {
-                // The Viewer class should have made its window's context current.
-                // Viewer::displayWrapper() finds the viewer for the current context
-                // and calls its protected display() method.
-                Viewer::displayWrapper();
-
-                glfwSwapBuffers(window); // Swap front and back buffers
-                glfwPollEvents();        // Poll for and process events
-            }
-        }
+        viewer->runEventLoop(); // Call the Viewer's main loop method
         delete viewer; // Clean up the viewer object
         viewer = nullptr;
     }

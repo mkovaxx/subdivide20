@@ -52,7 +52,11 @@ class Viewer {
     void setPos(int x, int y);
     void setWindow();
 
+    // Execute vent loop
+    void runEventLoop();
+
     static void initGL(int* argc, char** argv);
+    static void redisplayAll();
 
   protected:
     virtual void display();
@@ -61,6 +65,8 @@ class Viewer {
     virtual void motion(int x, int y);
     virtual void key(unsigned char k, int x, int y);
     virtual void specialKey(int k, int x, int y);
+
+    void positionCamera();
 
   private:
     // window data
@@ -84,12 +90,6 @@ class Viewer {
     static void keyWrapper(unsigned char k, int x, int y);
     static void specialKeyWrapper(int k, int x, int y);
     static std::vector<Viewer*> _viewer;
-
-  protected:
-    void positionCamera();
-
-  public:
-    static void redisplayAll();
 };
 
 #endif /* __VIEWER_H__ */
