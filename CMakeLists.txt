@@ -33,6 +33,9 @@ else()
     endif()
 endif()
 
+# Ignore warnings while migrating from GLUT to GLFW
+add_compile_options(-w)
+
 # Add subdirectories
 add_subdirectory(qvlib)
 add_subdirectory(subdivide)

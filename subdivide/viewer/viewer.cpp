@@ -35,9 +35,12 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "geoobject.hpp"
 #include "viewer.hpp"
+
+#include <GLFW/glfw3.h>
 
 std::vector<Viewer*> Viewer::_viewer;
 
@@ -53,30 +56,58 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
 
     _viewer.push_back(this);
 
-    glutInitWindowPosition(100, 100);
-    glutInitWindowSize(_width, _height);
+    // GLFW Window Hints (replaces glutInitDisplayMode)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // Corresponds to GLUT_DOUBLE
+    glfwWindowHint(GLFW_DEPTH_BITS, 24);         // Corresponds to GLUT_DEPTH (assuming 24-bit)
+                                                 // GLUT_RGBA is default
 
-    _winId = glutCreateWindow(_title);
+    _window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
+    if (!_window) {
+        fprintf(stderr, "Failed to create GLFW window\n");
+        glfwTerminate();
+        // Consider a more robust error handling mechanism, perhaps throwing an exception
+        exit(EXIT_FAILURE); 
+    }
 
-    glutSetWindow(getId());
-    glutDisplayFunc(displayWrapper);
-    glutMouseFunc(mouseWrapper);
-    glutMotionFunc(motionWrapper);
-    glutReshapeFunc(reshapeWrapper);
-    glutKeyboardFunc(keyWrapper);
-    glutSpecialFunc(specialKeyWrapper);
+    glfwMakeContextCurrent(_window);
+    // If a library like GLEW were used, glewInit() would go here.
+
+    // TODO: GLFW Migration - Replace these GLUT calls with GLFW equivalents
+    // glutSetWindow(getWindow());
+    // glutDisplayFunc(displayWrapper);
+    // glutMouseFunc(mouseWrapper);
+    // glutMotionFunc(motionWrapper);
+    // glutReshapeFunc(reshapeWrapper);
+    // glutKeyboardFunc(keyWrapper);
+    // glutSpecialFunc(specialKeyWrapper);
     glCheck();
 
     _camera = new Camera();
     glCheck();
 }
 
-void Viewer::initGL(int* argc, char** argv) {
-    glutInit(argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+void Viewer::initGL(int* /*argc*/, char** /*argv*/) { // argc and argv often not directly used by glfwInit
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        // Consider a more robust error handling mechanism
+        exit(EXIT_FAILURE);
+    }
+    // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
 }
 
-Viewer::~Viewer() { ; }
+Viewer::~Viewer() { 
+    // If this viewer owned the window, it might be destroyed here, 
+    // but typically window destruction and glfwTerminate are handled at global application exit.
+    // For now, do nothing specific for GLFW here. 
+    // glfwDestroyWindow(_window); // This might be premature if other viewers exist or app isn't closing
+}
 
 void Viewer::setObject(GeoObject* object) {
     _geoObject = object;
@@ -90,9 +121,12 @@ void Viewer::setSize(int w, int h) {
 }
 
 void Viewer::setPos(int x, int y) {
-    glutSetWindow(getId());
-    glutPositionWindow(x, y);
-    glutPostRedisplay();
+    // TODO: GLFW Migration - Replace with GLFW equivalent
+    // glutSetWindow(getWindow());
+    // glutPositionWindow(x, y);
+    // glutPostRedisplay();
+    glfwSetWindowPos(getWindow(), x, y);
+    // glfwPostEmptyEvent(); // Or manage redraw flag for GLFW loop
     glCheck();
 }
 
@@ -107,7 +141,7 @@ void Viewer::display() {
     }
     glCheck();
 
-    glutSwapBuffers();
+    // glutSwapBuffers(); // Will be replaced by glfwSwapBuffers(getWindow()) in main loop
     glCheck();
 }
 
@@ -120,34 +154,42 @@ void Viewer::reshape(int w, int h) {
     _camera->computeModelview();
     _camera->computeProjection();
     _camera->loadMatrices();
-    glutPostRedisplay();
+    // TODO: GLFW Migration - glutPostRedisplay equivalent needed if not rendering every frame
+    // glutPostRedisplay(); 
     glCheck();
 }
 
 void Viewer::mouse(int, int, int, int) {
-    glutPostRedisplay();
+    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
+    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::motion(int, int) {
-    glutPostRedisplay();
+    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
+    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::key(unsigned char, int, int) {
-    glutPostRedisplay();
+    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
+    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::specialKey(int, int, int) {
-    glutPostRedisplay();
+    // TODO: GLFW Migration - glutPostRedisplay equivalent needed
+    // glutPostRedisplay();
     glCheck();
 }
 
 void Viewer::redisplayAll() {
     for (uint i = 0; i < _viewer.size(); ++i) {
-        glutSetWindow(_viewer[i]->getId());
-        glutPostRedisplay();
+        // TODO: GLFW Migration - Replace with GLFW equivalent or new logic
+        // glutSetWindow(_viewer[i]->getWindow());
+        // glutPostRedisplay();
+        // For GLFW, redisplay logic will likely be a flag checked in the main loop for each window
+        // or calling glfwPostEmptyEvent() if a redraw is needed outside direct event handling.
     }
     glCheck();
 }
@@ -158,20 +200,31 @@ void Viewer::positionCamera() {
 }
 
 void Viewer::setWindow() {
-    glutSetWindow(getId());
-    glutPostRedisplay();
+    // TODO: GLFW Migration - Replace with GLFW equivalent
+    // glutSetWindow(getWindow());
+    // glutPostRedisplay();
+    glfwMakeContextCurrent(getWindow()); // Make this window's context current
+    // glfwPostEmptyEvent(); // Or manage redraw flag
 }
 
 //--------------------------------------------------------------
 // dispatcher
 
 Viewer* Viewer::getCurrentViewer() {
-    int id = glutGetWindow();
+    // TODO: GLFW Migration - This logic is GLUT-specific (glutGetWindow).
+    // GLFW's callbacks provide the GLFWwindow* directly. 
+    // This function might become obsolete or need a different way to associate GLFWwindow* with Viewer instance.
+    // For now, it will likely not work as expected or be needed in a typical GLFW event model.
+    /*
+    int id = glutGetWindow(); // This is the problematic GLUT call
     for (uint i = 0; i < Viewer::_viewer.size(); ++i) {
-        if (_viewer[i]->getId() == id) {
-            return _viewer[i];
-        }
+        // if (_viewer[i]->getWindow() == id) { // This comparison is also problematic (GLFWwindow* vs int)
+        //     return _viewer[i];
+        // }
     }
+    */
+    // Hacky temporary: return first viewer, or null. This needs a proper fix based on how events are handled.
+    if (!_viewer.empty()) return _viewer[0];
     return 0;
 }
 

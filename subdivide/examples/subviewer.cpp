@@ -49,6 +49,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include <cstring>
 
+#include <GLFW/glfw3.h> // Added for GLFW key constants
+
 int depth = 3;
 
 void init(int argc, char** argv, bool& triMode, TagIvGraph& ivGraph) {
@@ -479,10 +481,11 @@ void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle rendered view with o (for 'o'ther view)
     triViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleTriViewerStateCB, triObject));
     triViewer->addPickCallback(triPickCB, triObject);
-    triViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
+    // TODO: GLFW Migration - Verify these key mappings are correct for GLFW
+    triViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
 }
 
 // register Quad viewer callbacks
@@ -498,10 +501,11 @@ void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
     // toggle rendered view with o (for 'o'ther view)
     quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
     quadViewer->addPickCallback(quadPickCB, quadObject);
-    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
+    // TODO: GLFW Migration - Verify these key mappings are correct for GLFW
+    quadViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
 }
 
 //-----------------------------------------------------------------------------
@@ -551,6 +555,7 @@ int main(int argc, char** argv) {
     }
 
     // enter glut main loop
-    glutMainLoop();
+    // TODO: GLFW Migration - Replace with GLFW main loop
+    // glutMainLoop();
     return 0;
 }

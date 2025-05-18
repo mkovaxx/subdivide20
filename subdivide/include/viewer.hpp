@@ -25,6 +25,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VIEWER_H__
 #define __VIEWER_H__
 
+#include <GLFW/glfw3.h>
 #include "camera.hpp"
 #include "compat.hpp"
 #include <vector>
@@ -44,7 +45,7 @@ class Viewer {
     Camera* getCamera() { return _camera; }
 
     // window management
-    int getId() const { return _winId; }
+    GLFWwindow* getWindow() const { return _window; }
     int getWidth() { return _width; }
     int getHeight() { return _height; }
     void setSize(int w, int h);
@@ -63,7 +64,7 @@ class Viewer {
 
   private:
     // window data
-    int _winId;
+    GLFWwindow* _window;
     int _width;
     int _height;
     char _title[80];

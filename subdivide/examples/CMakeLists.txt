@@ -43,8 +43,6 @@ target_include_directories(subviewer
 target_link_libraries(subviewer
     PRIVATE
         viewer
-        ${OPENGL_LIBRARIES}
-        glfw
 )
 
 # Install targets

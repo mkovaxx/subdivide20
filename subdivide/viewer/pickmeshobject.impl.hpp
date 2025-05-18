@@ -380,7 +380,8 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::rerender() {
         glDeleteLists(_listNo, 2);
         glCheck();
     }
-    glutPostRedisplay();
+    // TODO: GLFW Migration - Replace glutPostRedisplay with mechanism to trigger redraw
+    // glutPostRedisplay();
 }
 
 template <class Mesh> void PickMeshObjectTp<Mesh>::render() {

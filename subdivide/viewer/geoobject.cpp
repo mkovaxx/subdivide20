@@ -32,4 +32,7 @@ cvec3f GeoObject::minPoint() const { return cvec3f(-_d, -_d, -_d); }
 
 cvec3f GeoObject::maxPoint() const { return cvec3f(_d, _d, _d); }
 
-void GeoObject::render() { glutSolidTeapot(_d); }
+void GeoObject::render() { 
+    // TODO: GLFW Migration - Replace glutSolidTeapot with custom geometry rendering or a placeholder
+    // glutSolidTeapot(_d);
+}
