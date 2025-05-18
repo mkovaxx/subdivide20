@@ -52,13 +52,11 @@ class Viewer {
     void setPos(int x, int y);
     void setWindow();
 
-    // event loop
-    void runEventLoop();
-
     static void initGL(int* argc, char** argv);
 
-  protected:
     virtual void display();
+
+  protected:
     virtual void reshape(int w, int h);
     virtual void mouse(int button, int action, int x, int y, int mods);
     virtual void motion(int x, int y);

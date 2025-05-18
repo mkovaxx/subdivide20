@@ -554,11 +554,14 @@ int main(int argc, char** argv) {
         registerQuadCB(viewer, &quadObject);
     }
 
-    // GLFW Main Loop
+    // GLFW event loop
     if (viewer) {
-        viewer->runEventLoop();
-        delete viewer;
-        viewer = nullptr;
+        GLFWwindow* window = viewer->getWindow();
+        while (!glfwWindowShouldClose(window)) {
+            viewer->display();
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
     }
 
     glfwTerminate();

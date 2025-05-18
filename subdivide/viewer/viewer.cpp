@@ -168,24 +168,6 @@ Viewer* Viewer::getCurrentViewer(GLFWwindow* window) {
     return static_cast<Viewer*>(glfwGetWindowUserPointer(window));
 }
 
-void Viewer::runEventLoop() {
-    if (!_window) {
-        fprintf(stderr, "Error: Viewer window not initialized before runEventLoop()\n");
-        return;
-    }
-
-    // Ensure this viewer's context is current for the loop operations
-    // Although displayWrapper should also handle this for its specific drawing call.
-    glfwMakeContextCurrent(_window);
-
-    while (!glfwWindowShouldClose(_window)) {
-        this->display();
-
-        glfwSwapBuffers(_window);
-        glfwPollEvents();
-    }
-}
-
 void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
     Viewer* v = getCurrentViewer(window);
     if (v) {
