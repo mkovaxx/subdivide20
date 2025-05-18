@@ -30,7 +30,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "stdlib.h"
 #include <GLFW/glfw3.h>
 
-void PickViewer::mouse(int button, int state, int x, int y) {
+void PickViewer::mouse(int button, int state, int x, int y, int mods) {
     // TODO: GLFW Migration - Replace GLUT_DOWN with GLFW_PRESS and update logic
     // if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
     if ((_uiState == PICK_STATE) && (state == GLFW_PRESS)) { // Tentative replacement
@@ -42,7 +42,7 @@ void PickViewer::mouse(int button, int state, int x, int y) {
         // TODO: GLFW Migration - Replace glutPostRedisplay
         // glutPostRedisplay();
     } else {
-        BallViewer::mouse(button, state, x, y);
+        BallViewer::mouse(button, state, x, y, mods);
     }
 }
 

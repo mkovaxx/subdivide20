@@ -95,16 +95,6 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glCheck();
 }
 
-void Viewer::initGL(int* argc, char** argv) { // argc and argv often not directly used by glfwInit
-    if (!glfwInit()) {
-        fprintf(stderr, "Failed to initialize GLFW\n");
-        exit(EXIT_FAILURE);
-    }
-    glfwSetErrorCallback(Viewer::glfw_error_callback); // Set global error callback
-
-    // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
-}
-
 Viewer::~Viewer() { 
     // If this viewer owned the window, it might be destroyed here, 
     // but typically window destruction and glfwTerminate are handled at global application exit.
@@ -166,25 +156,25 @@ void Viewer::reshape(int w, int h) {
     glCheck();
 }
 
-void Viewer::mouse(int, int, int, int) {
+void Viewer::mouse(int button, int state, int x, int y, int mods) {
     // TODO: GLFW Migration - glutPostRedisplay equivalent needed
     // glutPostRedisplay();
     glCheck();
 }
 
-void Viewer::motion(int, int) {
+void Viewer::motion(int x, int y) {
     // TODO: GLFW Migration - glutPostRedisplay equivalent needed
     // glutPostRedisplay();
     glCheck();
 }
 
-void Viewer::key(unsigned char, int, int) {
+void Viewer::key(unsigned char key, int x, int y) {
     // TODO: GLFW Migration - glutPostRedisplay equivalent needed
     // glutPostRedisplay();
     glCheck();
 }
 
-void Viewer::specialKey(int, int, int) {
+void Viewer::specialKey(int key, int x, int y) {
     // TODO: GLFW Migration - glutPostRedisplay equivalent needed
     // glutPostRedisplay();
     glCheck();
@@ -238,12 +228,23 @@ void Viewer::glfw_framebuffer_size_callback(GLFWwindow* window, int width, int h
 void Viewer::glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
     if (viewer) {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        // TODO: Map GLFW button/action/mods to what Viewer::mouse expects if different from GLUT.
-        // For now, passing them directly. Viewer::mouse expects 'state' (press/release)
-        // GLFW 'action' is GLFW_PRESS or GLFW_RELEASE, which might map directly.
-        viewer->mouse(button, action, static_cast<int>(xpos), static_cast<int>(ypos));
+        double xpos_double, ypos_double;
+        glfwGetCursorPos(window, &xpos_double, &ypos_double);
+        int xpos = static_cast<int>(xpos_double);
+        int ypos = static_cast<int>(ypos_double);
+
+        int glut_button = -1;
+        if (button == GLFW_MOUSE_BUTTON_LEFT) glut_button = 0; // GLUT_LEFT_BUTTON
+        else if (button == GLFW_MOUSE_BUTTON_MIDDLE) glut_button = 1; // GLUT_MIDDLE_BUTTON
+        else if (button == GLFW_MOUSE_BUTTON_RIGHT) glut_button = 2; // GLUT_RIGHT_BUTTON
+
+        int glut_state = -1;
+        if (action == GLFW_PRESS) glut_state = 0; // GLUT_DOWN
+        else if (action == GLFW_RELEASE) glut_state = 1; // GLUT_UP
+
+        if (glut_button != -1 && glut_state != -1) {
+            viewer->mouse(glut_button, glut_state, xpos, ypos, mods);
+        }
     }
 }
 
@@ -256,27 +257,41 @@ void Viewer::glfw_cursor_position_callback(GLFWwindow* window, double xpos, doub
 
 void Viewer::glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
-    if (viewer) {
-        // TODO: Reconcile parameters. Viewer::key expects unsigned char, Viewer::specialKey expects int.
-        // GLFW 'key' covers both. 'action' is press/release/repeat.
-        // Mouse coordinates x, y are not available here. Passing 0,0 as placeholders.
-        // This logic will need refinement based on how key/specialKey are used.
-        
-        // A simple heuristic: if key is an ASCII value, treat as 'char'. This is imperfect.
-        // A more robust approach would be to use glfwSetCharCallback for text input.
-        if (key >= 0 && key <= 255 && (action == GLFW_PRESS || action == GLFW_REPEAT)) { // Crude check for printable ASCII for 'key'
-             // Only pass on press/repeat for regular keys, consistent with typical char input
-            viewer->key(static_cast<unsigned char>(key), 0, 0); 
+    if (!viewer) return;
+
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+        double xpos_double, ypos_double;
+        glfwGetCursorPos(window, &xpos_double, &ypos_double);
+        int x = static_cast<int>(xpos_double);
+        int y = static_cast<int>(ypos_double);
+
+        // Special keys (function keys, arrows, navigation, Esc, Enter, Tab, etc.)
+        // GLFW key codes for these are typically >= GLFW_KEY_ESCAPE (256)
+        if (key >= GLFW_KEY_ESCAPE) {
+            viewer->specialKey(key, x, y); // Pass GLFW key code directly
+        } 
+        // Character-like keys (letters, numbers, symbols, space)
+        // GLFW key codes for these are typically < 256 and often map to ASCII values.
+        // We filter out GLFW_KEY_UNKNOWN (-1) and other negative values if any.
+        else if (key >= 0 && key < GLFW_KEY_ESCAPE) {
+            // Note: This will pass GLFW_KEY_A (65) as 'A'. 
+            // If Viewer::key expects lowercase unless Shift is pressed, 
+            // 'mods' would need to be checked here to adjust the character case.
+            // For now, direct mapping is simpler.
+            viewer->key(static_cast<unsigned char>(key), x, y);
         }
-        // For special keys (arrows, F-keys, etc.) or any key action for specialKey handling
-        // We can pass all key events to specialKey and let it filter, or add more logic here.
-        // For now, let's assume specialKey handles non-char keys or all keys if viewer->key isn't appropriate.
-        // This is a placeholder and likely needs more specific logic. 
-        // Viewer::specialKey might be intended for non-ASCII keys or when specific GLFW_KEY_ values are used.
-        if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-             viewer->specialKey(key, 0, 0); // Passing GLFW_KEY_XXX values
-        }
+        // Keys like GLFW_KEY_UNKNOWN (-1) will be ignored by this logic.
     }
+}
+
+void Viewer::initGL(int* argc, char** argv) { // argc and argv often not directly used by glfwInit
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        exit(EXIT_FAILURE);
+    }
+    glfwSetErrorCallback(Viewer::glfw_error_callback); // Set global error callback
+
+    // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {
