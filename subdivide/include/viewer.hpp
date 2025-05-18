@@ -78,6 +78,7 @@ class Viewer {
     // the object to view
     GeoObject* _geoObject;
 
+    static Viewer* getCurrentViewer(GLFWwindow* window);
     // static callbacks to be used with GLFW
     static void errorWrapper(int error, const char* description);
     static void reshapeWrapper(GLFWwindow* window, int width, int height);

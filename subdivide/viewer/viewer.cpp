@@ -166,6 +166,10 @@ void Viewer::setWindow() {
     glfwPostEmptyEvent();
 }
 
+Viewer* Viewer::getCurrentViewer(GLFWwindow* window) {
+    return static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+}
+
 void Viewer::runEventLoop() {
     if (!_window) {
         fprintf(stderr, "Error: Viewer window not initialized before runEventLoop()\n");
@@ -189,14 +193,14 @@ void Viewer::errorWrapper(int error, const char* description) {
 }
 
 void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
-    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    Viewer* viewer = getCurrentViewer(window);
     if (viewer) {
         viewer->reshape(width, height);
     }
 }
 
 void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
-    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    Viewer* viewer = getCurrentViewer(window);
     if (viewer) {
         double xpos_double, ypos_double;
         glfwGetCursorPos(window, &xpos_double, &ypos_double);
@@ -208,14 +212,14 @@ void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) 
 }
 
 void Viewer::motionWrapper(GLFWwindow* window, double xpos, double ypos) {
-    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    Viewer* viewer = getCurrentViewer(window);
     if (viewer) {
         viewer->motion(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 }
 
 void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
-    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    Viewer* viewer = getCurrentViewer(window);
     if (!viewer) return;
 
     double xpos_double, ypos_double;
@@ -227,7 +231,7 @@ void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    Viewer* viewer = getCurrentViewer(window);
     if (!viewer) return;
 
     double xpos_double, ypos_double;
