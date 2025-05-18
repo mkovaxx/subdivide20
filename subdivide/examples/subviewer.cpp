@@ -48,6 +48,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "trimanipulator.hpp"  // manipulation of triangles
 
 #include "sectorinfo.hpp" // sector information used for call backs
+#include <cstring> // For strcmp
 
 int depth = 3;
 
@@ -440,47 +441,64 @@ void toggleQuadViewerStateCB(void* o) {
 
 //----------------------------------------------------------------------------
 
-void registerCB(PickViewer* triViewer, PickViewer* quadViewer, PickableTri* triObject, PickableQuad* quadObject) {
-
+// New function for Triangle viewer callbacks
+void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle call back on space
     triViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, triViewer));
-    quadViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, quadViewer));
-
     // subdivide call back on s
     triViewer->addKeyCallback('s', PickViewer::CBPairType(&subTriObjectCB, triObject));
-    quadViewer->addKeyCallback('s', PickViewer::CBPairType(&subQuadObjectCB, quadObject));
-
     // write ctrl mesh on w
     triViewer->addKeyCallback('w', PickViewer::CBPairType(&writeTriCtrlCB, triObject));
-    quadViewer->addKeyCallback('w', PickViewer::CBPairType(&writeQuadCtrlCB, quadObject));
-
     // dump subdivided mesh on d
     triViewer->addKeyCallback('d', PickViewer::CBPairType(&writeTriSubCB, triObject));
-    quadViewer->addKeyCallback('d', PickViewer::CBPairType(&writeQuadSubCB, quadObject));
-
     // toggle rendered view with o (for 'o'ther view)
     triViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleTriViewerStateCB, triObject));
-    quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
-
     triViewer->addPickCallback(triPickCB, triObject);
-    quadViewer->addPickCallback(quadPickCB, quadObject);
-
     triViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
-
     triViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
+}
+
+// New function for Quad viewer callbacks
+void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
+    // toggle call back on space
+    quadViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, quadViewer));
+    // subdivide call back on s
+    quadViewer->addKeyCallback('s', PickViewer::CBPairType(&subQuadObjectCB, quadObject));
+    // write ctrl mesh on w
+    quadViewer->addKeyCallback('w', PickViewer::CBPairType(&writeQuadCtrlCB, quadObject));
+    // dump subdivided mesh on d
+    quadViewer->addKeyCallback('d', PickViewer::CBPairType(&writeQuadSubCB, quadObject));
+    // toggle rendered view with o (for 'o'ther view)
+    quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
+    quadViewer->addPickCallback(quadPickCB, quadObject);
+    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
+    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
     quadViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
 }
 
 //-----------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
+
+    const char* mode = "tri"; // Default to showing both viewers
+
+    // Parse command-line arguments for --mode
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "--mode") == 0) {
+            if (i + 1 < argc) {
+                const char* modeArg = argv[i+1];
+                if (strcmp(modeArg, "tri") == 0 || strcmp(modeArg, "triangle") == 0) {
+                    mode = "tri";
+                } else if (strcmp(modeArg, "quad") == 0 || strcmp(modeArg, "quadrilateral") == 0) {
+                    mode = "quad";
+                } // else: invalid mode, stick to default "tri"
+                i++; // Consumed mode argument value
+            }
+        }
+    }
 
     PickViewer::initGL(&argc, argv);
 
@@ -499,18 +517,19 @@ int main(int argc, char** argv) {
     triObject.getMesh().subdivide(0);
     quadObject.getMesh().subdivide(0);
 
-    // create a viewer for the tribased structure
-    PickViewer triViewer("triViewer");
-    triViewer.setObject(&triObject);
-
-    // create a viewer for the quadbased structure
-    PickViewer quadViewer("quadViewer");
-    quadViewer.setObject(&quadObject);
-
-    quadViewer.setPos(50, 50);
-    triViewer.setPos(100, 100);
-
-    registerCB(&triViewer, &quadViewer, &triObject, &quadObject);
+    if (strcmp(mode, "tri") == 0) {
+        PickViewer* triViewer = nullptr;
+        triViewer = new PickViewer("triViewer");
+        triViewer->setObject(&triObject);
+        triViewer->setPos(100, 100);
+        registerTriCB(triViewer, &triObject);
+    } else if (strcmp(mode, "quad") == 0) {
+        PickViewer* quadViewer = nullptr;
+        quadViewer = new PickViewer("quadViewer");
+        quadViewer->setObject(&quadObject);
+        quadViewer->setPos(50, 50);
+        registerQuadCB(quadViewer, &quadObject);
+    }
 
     // enter glut main loop
     glutMainLoop();
