@@ -56,7 +56,6 @@ class Viewer {
     void runEventLoop();
 
     static void initGL(int* argc, char** argv);
-    static void redisplayAll();
 
   protected:
     virtual void display();
@@ -81,15 +80,16 @@ class Viewer {
     // the object to view
     GeoObject* _geoObject;
 
-    // some wrapper functions
-    static Viewer* getCurrentViewer();
-    static void displayWrapper();
-    static void reshapeWrapper(int x, int y);
-    static void mouseWrapper(int button, int state, int x, int y);
-    static void motionWrapper(int x, int y);
-    static void keyWrapper(unsigned char k, int x, int y);
-    static void specialKeyWrapper(int k, int x, int y);
-    static std::vector<Viewer*> _viewer;
+    // GLFW-compatible static callback functions
+    // These will retrieve the Viewer instance using glfwGetWindowUserPointer
+    // and then call the corresponding instance method.
+    static void glfw_error_callback(int error, const char* description);
+    static void glfw_framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static void glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+    static void glfw_cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+    static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    // Optional: static void glfw_char_callback(GLFWwindow* window, unsigned int codepoint);
+    // Optional: static void glfw_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 };
 
 #endif /* __VIEWER_H__ */

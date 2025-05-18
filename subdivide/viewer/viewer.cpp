@@ -42,28 +42,18 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include <GLFW/glfw3.h>
 
-std::vector<Viewer*> Viewer::_viewer;
-
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
 Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoObject(0) {
-
-    if (t == 0) {
-        sprintf(_title, "Viewer#%d", _viewer.size());
-    } else {
-        strcpy(_title, t);
-    }
-
-    _viewer.push_back(this);
+    strcpy(_title, t);
 
     // GLFW Window Hints (replaces glutInitDisplayMode)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // The following does not work on macOS, which is why it is commented out.
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // Corresponds to GLUT_DOUBLE
     glfwWindowHint(GLFW_DEPTH_BITS, 24);         // Corresponds to GLUT_DEPTH (assuming 24-bit)
                                                  // GLUT_RGBA is default
@@ -72,12 +62,24 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     if (!_window) {
         fprintf(stderr, "Failed to create GLFW window\n");
         glfwTerminate();
-        // Consider a more robust error handling mechanism, perhaps throwing an exception
         exit(EXIT_FAILURE); 
     }
 
+    glfwSetWindowUserPointer(_window, this); // Associate this Viewer instance with the window
+
     glfwMakeContextCurrent(_window);
     // If a library like GLEW were used, glewInit() would go here.
+
+    // Register GLFW callbacks for this window
+    glfwSetFramebufferSizeCallback(_window, Viewer::glfw_framebuffer_size_callback);
+    glfwSetMouseButtonCallback(_window, Viewer::glfw_mouse_button_callback);
+    glfwSetCursorPosCallback(_window, Viewer::glfw_cursor_position_callback);
+    glfwSetKeyCallback(_window, Viewer::glfw_key_callback);
+    // Optional: glfwSetCharCallback(_window, Viewer::glfw_char_callback);
+    // Optional: glfwSetScrollCallback(_window, Viewer::glfw_scroll_callback);
+
+    // Enable depth testing by default
+    glEnable(GL_DEPTH_TEST);
 
     // TODO: GLFW Migration - Replace these GLUT calls with GLFW equivalents
     // glutSetWindow(getWindow());
@@ -93,12 +95,13 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glCheck();
 }
 
-void Viewer::initGL(int* /*argc*/, char** /*argv*/) { // argc and argv often not directly used by glfwInit
+void Viewer::initGL(int* argc, char** argv) { // argc and argv often not directly used by glfwInit
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
-        // Consider a more robust error handling mechanism
         exit(EXIT_FAILURE);
     }
+    glfwSetErrorCallback(Viewer::glfw_error_callback); // Set global error callback
+
     // glutInitDisplayMode removed, handled by glfwWindowHint in constructor
 }
 
@@ -135,6 +138,10 @@ void Viewer::display() {
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glCheck();
+
+    if (_camera) { // Ensure camera exists and its matrices are loaded
+        _camera->loadMatrices(); 
+    }
 
     if (_geoObject) {
         _geoObject->render();
@@ -183,17 +190,6 @@ void Viewer::specialKey(int, int, int) {
     glCheck();
 }
 
-void Viewer::redisplayAll() {
-    for (uint i = 0; i < _viewer.size(); ++i) {
-        // TODO: GLFW Migration - Replace with GLFW equivalent or new logic
-        // glutSetWindow(_viewer[i]->getWindow());
-        // glutPostRedisplay();
-        // For GLFW, redisplay logic will likely be a flag checked in the main loop for each window
-        // or calling glfwPostEmptyEvent() if a redraw is needed outside direct event handling.
-    }
-    glCheck();
-}
-
 void Viewer::positionCamera() {
     int vp[4] = {0, 0, _width, _height};
     spositionCamera(getCamera(), getObject(), vp);
@@ -218,9 +214,7 @@ void Viewer::runEventLoop() {
     glfwMakeContextCurrent(_window);
 
     while (!glfwWindowShouldClose(_window)) {
-        // displayWrapper internally gets the current viewer and calls its display method.
-        // It assumes the correct context is already current, or it might set it.
-        Viewer::displayWrapper(); // Calls the virtual display() of the correct viewer instance
+        this->display(); // Calls the virtual display() of this viewer instance directly
 
         glfwSwapBuffers(_window); // Swap front and back buffers
         glfwPollEvents();        // Poll for and process events
@@ -228,65 +222,60 @@ void Viewer::runEventLoop() {
 }
 
 //--------------------------------------------------------------
-// dispatcher
+// GLFW static callback implementations
 
-Viewer* Viewer::getCurrentViewer() {
-    // TODO: GLFW Migration - This logic is GLUT-specific (glutGetWindow).
-    // GLFW's callbacks provide the GLFWwindow* directly. 
-    // This function might become obsolete or need a different way to associate GLFWwindow* with Viewer instance.
-    // For now, it will likely not work as expected or be needed in a typical GLFW event model.
-    /*
-    int id = glutGetWindow(); // This is the problematic GLUT call
-    for (uint i = 0; i < Viewer::_viewer.size(); ++i) {
-        // if (_viewer[i]->getWindow() == id) { // This comparison is also problematic (GLFWwindow* vs int)
-        //     return _viewer[i];
-        // }
-    }
-    */
-    // Hacky temporary: return first viewer, or null. This needs a proper fix based on how events are handled.
-    if (!_viewer.empty()) return _viewer[0];
-    return 0;
+void Viewer::glfw_error_callback(int error, const char* description) {
+    fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
 }
 
-void Viewer::displayWrapper() {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->display();
+void Viewer::glfw_framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    if (viewer) {
+        viewer->reshape(width, height);
     }
 }
 
-void Viewer::reshapeWrapper(int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->reshape(x, y);
+void Viewer::glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    if (viewer) {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        // TODO: Map GLFW button/action/mods to what Viewer::mouse expects if different from GLUT.
+        // For now, passing them directly. Viewer::mouse expects 'state' (press/release)
+        // GLFW 'action' is GLFW_PRESS or GLFW_RELEASE, which might map directly.
+        viewer->mouse(button, action, static_cast<int>(xpos), static_cast<int>(ypos));
     }
 }
 
-void Viewer::mouseWrapper(int button, int state, int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->mouse(button, state, x, y);
+void Viewer::glfw_cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    if (viewer) {
+        viewer->motion(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 }
 
-void Viewer::motionWrapper(int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->motion(x, y);
-    }
-}
-
-void Viewer::keyWrapper(unsigned char k, int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->key(k, x, y);
-    }
-}
-
-void Viewer::specialKeyWrapper(int k, int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->specialKey(k, x, y);
+void Viewer::glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    Viewer* viewer = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+    if (viewer) {
+        // TODO: Reconcile parameters. Viewer::key expects unsigned char, Viewer::specialKey expects int.
+        // GLFW 'key' covers both. 'action' is press/release/repeat.
+        // Mouse coordinates x, y are not available here. Passing 0,0 as placeholders.
+        // This logic will need refinement based on how key/specialKey are used.
+        
+        // A simple heuristic: if key is an ASCII value, treat as 'char'. This is imperfect.
+        // A more robust approach would be to use glfwSetCharCallback for text input.
+        if (key >= 0 && key <= 255 && (action == GLFW_PRESS || action == GLFW_REPEAT)) { // Crude check for printable ASCII for 'key'
+             // Only pass on press/repeat for regular keys, consistent with typical char input
+            viewer->key(static_cast<unsigned char>(key), 0, 0); 
+        }
+        // For special keys (arrows, F-keys, etc.) or any key action for specialKey handling
+        // We can pass all key events to specialKey and let it filter, or add more logic here.
+        // For now, let's assume specialKey handles non-char keys or all keys if viewer->key isn't appropriate.
+        // This is a placeholder and likely needs more specific logic. 
+        // Viewer::specialKey might be intended for non-ASCII keys or when specific GLFW_KEY_ values are used.
+        if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+             viewer->specialKey(key, 0, 0); // Passing GLFW_KEY_XXX values
+        }
     }
 }
 
