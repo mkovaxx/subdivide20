@@ -482,8 +482,7 @@ void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
 //-----------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-
-    const char* mode = "tri"; // Default to showing both viewers
+    bool triMode = true;
 
     // Parse command-line arguments for --mode
     for (int i = 1; i < argc; ++i) {
@@ -491,9 +490,9 @@ int main(int argc, char** argv) {
             if (i + 1 < argc) {
                 const char* modeArg = argv[i+1];
                 if (strcmp(modeArg, "tri") == 0 || strcmp(modeArg, "triangle") == 0) {
-                    mode = "tri";
+                    triMode = true;
                 } else if (strcmp(modeArg, "quad") == 0 || strcmp(modeArg, "quadrilateral") == 0) {
-                    mode = "quad";
+                    triMode = false;
                 } // else: invalid mode, stick to default "tri"
                 i++; // Consumed mode argument value
             }
@@ -517,15 +516,13 @@ int main(int argc, char** argv) {
     triObject.getMesh().subdivide(0);
     quadObject.getMesh().subdivide(0);
 
-    if (strcmp(mode, "tri") == 0) {
-        PickViewer* triViewer = nullptr;
-        triViewer = new PickViewer("triViewer");
+    if (triMode) {
+        PickViewer* triViewer = new PickViewer("Subdivide 2.0 :: Triangles");
         triViewer->setObject(&triObject);
         triViewer->setPos(100, 100);
         registerTriCB(triViewer, &triObject);
-    } else if (strcmp(mode, "quad") == 0) {
-        PickViewer* quadViewer = nullptr;
-        quadViewer = new PickViewer("quadViewer");
+    } else {
+        PickViewer* quadViewer = new PickViewer("Subdivide 2.0 :: Quads");
         quadViewer->setObject(&quadObject);
         quadViewer->setPos(50, 50);
         registerQuadCB(quadViewer, &quadObject);
