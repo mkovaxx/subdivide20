@@ -227,7 +227,7 @@ void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
     int x = static_cast<int>(xpos_double);
     int y = static_cast<int>(ypos_double);
 
-    viewer->key(static_cast<unsigned char>(codepoint), x, y);
+    viewer->key(tolower(codepoint), x, y);
 }
 
 void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {

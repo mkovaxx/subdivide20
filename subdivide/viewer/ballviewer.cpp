@@ -131,11 +131,11 @@ void BallViewer::key(unsigned char k, int, int y) {
     y = getHeight() - y;
 
     switch (k) {
-    case 'Q':
+    case 'q':
         // quit the viewer
         exit(0);
         break;
-    case 'C':
+    case 'c':
         // center the arc ball
         if (_uiAction) {
             delete _uiAction;
