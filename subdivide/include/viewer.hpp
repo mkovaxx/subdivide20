@@ -52,7 +52,7 @@ class Viewer {
     void setPos(int x, int y);
     void setWindow();
 
-    // Execute vent loop
+    // Execute event loop
     void runEventLoop();
 
     static void initGL(int* argc, char** argv);
