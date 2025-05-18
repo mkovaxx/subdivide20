@@ -52,8 +52,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 int depth = 3;
 
-void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
-    TagIvGraph ivGraph;
+void init(int argc, char** argv, TagIvGraph& ivGraph) {
     if (argc < 2) {
         std::cerr << "usage: " << argv[0] << " infile" << std::endl;
         exit(1);
@@ -68,16 +67,6 @@ void init(int argc, char** argv, PickableTri& triObj, PickableQuad& quadObj) {
             depth = std::min(std::max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
         }
     }
-
-    TagFlatMesh tagFlatMesh;
-
-    ivGraph.toTagFlatMesh(&tagFlatMesh, true);
-    TriMesh triMesh(tagFlatMesh);
-    triObj.setMesh(triMesh);
-
-    ivGraph.toTagFlatMesh(&tagFlatMesh, false);
-    QuadMesh quadMesh(tagFlatMesh);
-    quadObj.setMesh(quadMesh);
 }
 
 //----------------------------------------------------------------------------
@@ -441,7 +430,7 @@ void toggleQuadViewerStateCB(void* o) {
 
 //----------------------------------------------------------------------------
 
-// New function for Triangle viewer callbacks
+// register Triangle viewer callbacks
 void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle call back on space
     triViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, triViewer));
@@ -460,7 +449,7 @@ void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     triViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
 }
 
-// New function for Quad viewer callbacks
+// register Quad viewer callbacks
 void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
     // toggle call back on space
     quadViewer->addKeyCallback(' ', PickViewer::CBPairType(&toggleViewerStateCB, quadViewer));
@@ -501,30 +490,43 @@ int main(int argc, char** argv) {
 
     PickViewer::initGL(&argc, argv);
 
-    // we have two objects, a quadbased object and a tribased one
-    PickableQuad quadObject;
-    PickableTri triObject;
-
     // read files
-    init(argc, argv, triObject, quadObject);
+    TagIvGraph ivGraph;
+    init(argc, argv, ivGraph);
 
-    // render everything but not normals
-    quadObject.tlRenderMode() = triObject.tlRenderMode() =
-        PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
-
-    // compute 0 subdivision level
-    triObject.getMesh().subdivide(0);
-    quadObject.getMesh().subdivide(0);
+    TagFlatMesh tagFlatMesh;
+    PickableTri triObject;
+    PickableQuad quadObject;
 
     if (triMode) {
+        ivGraph.toTagFlatMesh(&tagFlatMesh, true);
+        TriMesh triMesh(tagFlatMesh);
+        triObject.setMesh(triMesh);
+
+        // render everything but not normals
+        triObject.tlRenderMode() = PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
+
+        // compute 0 subdivision level
+        triObject.getMesh().subdivide(0);
+
         PickViewer* triViewer = new PickViewer("Subdivide 2.0 :: Triangles");
         triViewer->setObject(&triObject);
         triViewer->setPos(100, 100);
         registerTriCB(triViewer, &triObject);
     } else {
+        ivGraph.toTagFlatMesh(&tagFlatMesh, false);
+        QuadMesh quadMesh(tagFlatMesh);
+        quadObject.setMesh(quadMesh);
+
+        // render everything but not normals
+        quadObject.tlRenderMode() = PickedStuff::PICK_VERTEX | PickedStuff::PICK_EDGE | PickedStuff::PICK_SECTOR;
+
+        // compute 0 subdivision level
+        quadObject.getMesh().subdivide(0);
+
         PickViewer* quadViewer = new PickViewer("Subdivide 2.0 :: Quads");
         quadViewer->setObject(&quadObject);
-        quadViewer->setPos(50, 50);
+        quadViewer->setPos(100, 100);
         registerQuadCB(quadViewer, &quadObject);
     }
 
