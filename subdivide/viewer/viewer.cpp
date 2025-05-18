@@ -173,12 +173,28 @@ void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
 void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
     Viewer* v = getCurrentViewer(window);
     if (v) {
-        double xpos_double, ypos_double;
-        glfwGetCursorPos(window, &xpos_double, &ypos_double);
-        int xpos = static_cast<int>(xpos_double);
-        int ypos = static_cast<int>(ypos_double);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
 
-        v->mouse(button, action, xpos, ypos, mods);
+        int window_width_screen, window_height_screen;
+        glfwGetWindowSize(window, &window_width_screen, &window_height_screen);
+
+        // Initialize pixel coordinates to screen coordinates as a fallback
+        double xpos_pixel_double = xpos_screen_double;
+        double ypos_pixel_double = ypos_screen_double;
+
+        // Perform scaling if window dimensions are valid
+        if (window_width_screen > 0 && window_height_screen > 0) {
+            double scaleX = (double)v->getWidth() / window_width_screen;
+            double scaleY = (double)v->getHeight() / window_height_screen;
+            xpos_pixel_double = xpos_screen_double * scaleX;
+            ypos_pixel_double = ypos_screen_double * scaleY;
+        }
+
+        int xpos_pixel = static_cast<int>(xpos_pixel_double);
+        int ypos_pixel = static_cast<int>(ypos_pixel_double);
+
+        v->mouse(button, action, xpos_pixel, ypos_pixel, mods);
     }
 }
 
