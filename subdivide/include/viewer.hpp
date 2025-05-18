@@ -48,7 +48,6 @@ class Viewer {
     GLFWwindow* getWindow() const { return _window; }
     int getWidth() { return _width; }
     int getHeight() { return _height; }
-    void setSize(int w, int h);
     void setPos(int x, int y);
     void setWindow();
 

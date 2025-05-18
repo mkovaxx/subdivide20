@@ -103,11 +103,6 @@ void Viewer::setObject(GeoObject* object) {
     spositionCamera(_camera, object, vp);
 }
 
-void Viewer::setSize(int w, int h) {
-    reshape(w, h);
-    glCheck();
-}
-
 void Viewer::setPos(int x, int y) {
     glfwSetWindowPos(getWindow(), x, y);
     glfwPostEmptyEvent();
