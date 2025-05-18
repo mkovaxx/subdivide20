@@ -52,20 +52,55 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 int depth = 3;
 
-void init(int argc, char** argv, TagIvGraph& ivGraph) {
+void init(int argc, char** argv, bool& triMode, TagIvGraph& ivGraph) {
     if (argc < 2) {
-        std::cerr << "usage: " << argv[0] << " infile" << std::endl;
+        std::cerr << "usage: " << argv[0] << " [--mode tri|quad] infile [depth]" << std::endl;
         exit(1);
-    } else {
-        bool res = ivGraph.read(argv[1]);
-        if (!res) {
-            std::cerr << "could not read " << argv[1] << std::endl;
-            exit(1);
-        }
+    }
 
-        if (argc > 2) {
-            depth = std::min(std::max(atoi(argv[2]), 0), GEN_MAX_DEPTH);
+    // Default mode is triangles
+    triMode = true;
+
+    // Parse command-line arguments for --mode and input file
+    const char* inputFile = nullptr;
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "--mode") == 0) {
+            if (i + 1 < argc) {
+                const char* modeArg = argv[i+1];
+                if (strcmp(modeArg, "tri") == 0 || strcmp(modeArg, "triangle") == 0) {
+                    triMode = true;
+                } else if (strcmp(modeArg, "quad") == 0 || strcmp(modeArg, "quadrilateral") == 0) {
+                    triMode = false;
+                } else {
+                    std::cerr << "Invalid mode: " << modeArg << std::endl;
+                    exit(1);
+                }
+                i++; // Consumed mode argument value
+            }
+        } else if (!inputFile) {
+            // The first non-option argument is the input file
+            inputFile = argv[i];
+        } else if (i == argc - 1) {
+            // The last argument is the optional depth
+            depth = std::min(std::max(atoi(argv[i]), 0), GEN_MAX_DEPTH);
         }
+    }
+
+    if (!inputFile) {
+        std::cerr << "Error: No input file specified" << std::endl;
+        exit(1);
+    }
+
+    // Create a modifiable copy of the filename for the read() method
+    char* filename = new char[strlen(inputFile) + 1];
+    strcpy(filename, inputFile);
+    
+    bool res = ivGraph.read(filename);
+    delete[] filename;
+    
+    if (!res) {
+        std::cerr << "could not read " << inputFile << std::endl;
+        exit(1);
     }
 }
 
@@ -471,28 +506,12 @@ void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
 //-----------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-    bool triMode = true;
-
-    // Parse command-line arguments for --mode
-    for (int i = 1; i < argc; ++i) {
-        if (strcmp(argv[i], "--mode") == 0) {
-            if (i + 1 < argc) {
-                const char* modeArg = argv[i+1];
-                if (strcmp(modeArg, "tri") == 0 || strcmp(modeArg, "triangle") == 0) {
-                    triMode = true;
-                } else if (strcmp(modeArg, "quad") == 0 || strcmp(modeArg, "quadrilateral") == 0) {
-                    triMode = false;
-                } // else: invalid mode, stick to default "tri"
-                i++; // Consumed mode argument value
-            }
-        }
-    }
-
     PickViewer::initGL(&argc, argv);
 
-    // read files
+    // process command line arguments and read input file
+    bool triMode;
     TagIvGraph ivGraph;
-    init(argc, argv, ivGraph);
+    init(argc, argv, triMode, ivGraph);
 
     TagFlatMesh tagFlatMesh;
     PickableTri triObject;
