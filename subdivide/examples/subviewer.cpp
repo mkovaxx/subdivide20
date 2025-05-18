@@ -65,18 +65,20 @@ void init(int argc, char** argv, bool& triMode, TagIvGraph& ivGraph) {
     const char* inputFile = nullptr;
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "--mode") == 0) {
-            if (i + 1 < argc) {
-                const char* modeArg = argv[i+1];
-                if (strcmp(modeArg, "tri") == 0 || strcmp(modeArg, "triangle") == 0) {
-                    triMode = true;
-                } else if (strcmp(modeArg, "quad") == 0 || strcmp(modeArg, "quadrilateral") == 0) {
-                    triMode = false;
-                } else {
-                    std::cerr << "Invalid mode: " << modeArg << std::endl;
-                    exit(1);
-                }
-                i++; // Consumed mode argument value
+            if (i + 1 >= argc) {
+                std::cerr << "Error: --mode requires an argument (tri|quad)" << std::endl;
+                exit(1);
             }
+            const char* modeArg = argv[i+1];
+            if (strcmp(modeArg, "tri") == 0) {
+                triMode = true;
+            } else if (strcmp(modeArg, "quad") == 0) {
+                triMode = false;
+            } else {
+                std::cerr << "Error: invalid mode '" << modeArg << "' (must be 'tri' or 'quad')" << std::endl;
+                exit(1);
+            }
+            i++; // Consumed mode argument value
         } else if (!inputFile) {
             // The first non-option argument is the input file
             inputFile = argv[i];
