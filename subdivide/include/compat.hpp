@@ -35,13 +35,13 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #define _USE_MATH_DEFINES
 #endif
 
-typedef unsigned int uint;
-
 inline void die() {
 #ifndef NDEBUG
     std::cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << std::endl;
 #endif
     abort();
 }
+
+typedef unsigned int uint;
 
 #endif /* __COMPAT_H__ */
