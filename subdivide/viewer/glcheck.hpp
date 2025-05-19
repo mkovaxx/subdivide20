@@ -36,10 +36,30 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #define glCheck() __glCheck__(__FILE__, __LINE__)
 
+namespace {
+    // Function to get a human-readable string for an OpenGL error code
+    const char* glErrorToString(GLenum error) {
+        switch (error) {
+        case GL_NO_ERROR:                       return "GL_NO_ERROR";
+        case GL_INVALID_ENUM:                   return "GL_INVALID_ENUM";
+        case GL_INVALID_VALUE:                  return "GL_INVALID_VALUE";
+        case GL_INVALID_OPERATION:              return "GL_INVALID_OPERATION";
+        // GL_STACK_OVERFLOW and GL_STACK_UNDERFLOW are deprecated in core profiles
+        // but might still be reported by some drivers/contexts.
+        case GL_STACK_OVERFLOW:                 return "GL_STACK_OVERFLOW (deprecated)";
+        case GL_STACK_UNDERFLOW:                return "GL_STACK_UNDERFLOW (deprecated)";
+        case GL_OUT_OF_MEMORY:                  return "GL_OUT_OF_MEMORY";
+        case GL_INVALID_FRAMEBUFFER_OPERATION:  return "GL_INVALID_FRAMEBUFFER_OPERATION";
+        //case GL_CONTEXT_LOST:                   return "GL_CONTEXT_LOST"; // If using OpenGL 4.5+ or KHR_robustness
+        default:                                return "Unknown GL error";
+        }
+    }
+}
+
 inline int __glCheck__(char* fileName, int n) {
     int e = glGetError();
     if (e) {
-        std::cerr << (char*)gluErrorString(e) << "  " << fileName << ", #" << n << std::endl;
+        std::cerr << glErrorToString(e) << "  " << fileName << ", #" << n << std::endl;
     }
     return (e);
 }
