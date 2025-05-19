@@ -28,7 +28,7 @@ target_link_libraries(viewer
         subdivide
         qvlib
     PUBLIC 
-        ${OPENGL_LIBRARIES}
+        OpenGL::GL
         glfw
         glm::glm
 )
