@@ -78,7 +78,6 @@ cmake --build build --config Release --parallel
 
 ```bash
 # Install dependencies
-choco install vcpkg
 vcpkg install glfw3:x64-windows
 
 # Build
