@@ -92,18 +92,13 @@ jobs:
       - name: Build
         shell: pwsh
         run: |
-          Write-Host "--- Debugging ChocolateyToolsLocation ---"
-          if ($env:ChocolateyToolsLocation) {
-              Write-Host "SUCCESS: \$env:ChocolateyToolsLocation is set."
-              Write-Host "Value: '$($env:ChocolateyToolsLocation)'"
-          } else {
-              Write-Warning "WARNING: \$env:ChocolateyToolsLocation is NOT set or is empty."
-              Write-Host "INFO: Chocolatey often defaults to 'C:\tools' for tool installations if this variable is not explicitly set."
-          }
-          Write-Host "--- End Debugging ---"
+          # Get-Command finds the executable in PATH
+          $vcpkgExePath = (Get-Command vcpkg -ErrorAction Stop).Source
+          # Get the directory of the executable
+          $vcpkgRoot = (Get-Item $vcpkgExePath).DirectoryName
           cmake -S . -B build `
             -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_TOOLCHAIN_FILE="$env:ChocolateyToolsLocation\vcpkg\scripts\buildsystems\vcpkg.cmake"
+            -DCMAKE_TOOLCHAIN_FILE="$vcpkgRoot\scripts\buildsystems\vcpkg.cmake"
           cmake --build build --config Release --parallel
       - name: Verify artifacts
         run: |
