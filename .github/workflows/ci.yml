@@ -88,7 +88,7 @@ jobs:
       - name: Install dependencies
         run: |
           choco install -y cmake
-          choco install -y glfw
+          choco install -y glfw3
           choco install -y glm
       - name: Build
         run: |
