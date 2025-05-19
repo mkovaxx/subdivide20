@@ -49,7 +49,6 @@ class Viewer {
     int getWidth() { return _width; }
     int getHeight() { return _height; }
     void setPos(int x, int y);
-    void setWindow();
 
     static void initGL(int* argc, char** argv);
 

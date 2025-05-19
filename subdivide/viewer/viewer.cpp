@@ -150,11 +150,6 @@ void Viewer::positionCamera() {
     spositionCamera(getCamera(), getObject(), vp);
 }
 
-void Viewer::setWindow() {
-    glfwMakeContextCurrent(getWindow());
-    glfwPostEmptyEvent();
-}
-
 Viewer* Viewer::getCurrentViewer(GLFWwindow* window) {
     return static_cast<Viewer*>(glfwGetWindowUserPointer(window));
 }
