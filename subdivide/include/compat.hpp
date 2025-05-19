@@ -66,18 +66,21 @@ template <class T, class dist> class bidirectional_iterator : public iterator<bi
 #endif
 
 // dealing with Microsoft min/max mess:
-// assume that under Windows the code is compiled with NOMINMAX defined
-// which disables #define's for min/max.
-// however, Microsoft  violates the C++ standard even with
-// NOMINMAX on, and defines templates _cpp_min and _cpp_max
-// instead of templates min/max
-// define the correct templates here
+// We need to include the Windows headers with NOMINMAX defined to prevent
+// the min/max macros from being defined, and then provide our own versions
+// in the std namespace to avoid conflicts with STL.
 
 #ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 
-template <class _Ty> inline const _Ty& max(const _Ty& _X, const _Ty& _Y) { return (_X < _Y ? _Y : _X); }
+#include <algorithm>
 
-template <class _Ty> inline const _Ty& min(const _Ty& _X, const _Ty& _Y) { return (_Y < _X ? _Y : _X); }
+namespace std {
+    template <class T> inline const T& max(const T& a, const T& b) { return (a < b) ? b : a; }
+    template <class T> inline const T& min(const T& a, const T& b) { return (b < a) ? b : a; }
+}
 #endif
 
 // disable VC6.0 warning "identifier was truncated to 255 characters "
@@ -99,13 +102,13 @@ template <class _Ty> inline const _Ty& min(const _Ty& _X, const _Ty& _Y) { retur
 #pragma warning(disable : 4305)
 #endif
 
+typedef unsigned int uint;
+
 inline void die() {
 #ifndef NDEBUG
     std::cerr << "unexpected condition, aborting, " << __FILE__ << ":" << __LINE__ << std::endl;
 #endif
     abort();
 }
-
-typedef unsigned int uint;
 
 #endif /* __COMPAT_H__ */
