@@ -10,7 +10,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
-          brew install cmake glfw glm
+          brew install cmake glfw
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake libglfw3-dev libglm-dev
+          sudo apt-get install -y cmake libglfw3-dev
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -89,7 +89,6 @@ jobs:
         run: |
           choco install -y cmake
           choco install -y glfw3
-          choco install -y glm
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
