@@ -13,9 +13,10 @@ SIGGRAPH 2000 Conference Proceedings.
 
 ### Improvements Made
 
-- **Modern Build System**: Uses CMake for cross-platform building
+- **Build System**: Updated to use CMake for better portability
 - **Cross-Platform**: Supports Linux and macOS (Windows support coming soon)
 - **Modern C++**: Updated to C++11 standard
+- **Modern OpenGL**: Updated to use GLFW and GLM
 - **CI/CD**: Automated testing with GitHub Actions
 - **Improved Documentation**: Comprehensive build and usage instructions
 
@@ -50,14 +51,14 @@ Precise surface manipulation at corners:
 
 - CMake 3.15 or later
 - C++17 compatible compiler (GCC 8+, Clang 10+, Apple Clang 12+)
-- OpenGL and GLUT (for the viewer application)
+- GLFW and GLM (for the viewer application)
 
 #### Linux (Ubuntu/Debian)
 
 ```bash
 # Install dependencies
 sudo apt-get update
-sudo apt-get install -y cmake g++ freeglut3-dev
+sudo apt-get install -y cmake libglfw3-dev libglm-dev
 
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
@@ -67,7 +68,7 @@ cmake --build build --config Release -- -j$(nproc)
 
 ```bash
 # Install dependencies using Homebrew
-brew install cmake freeglut
+brew install cmake glfw glm
 
 # Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
