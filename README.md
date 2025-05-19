@@ -60,7 +60,7 @@ sudo apt-get install -y cmake libglfw3-dev
 
 # Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -- -j$(nproc)
+cmake --build build --config Release --parallel
 ```
 
 ### macOS
@@ -71,7 +71,7 @@ brew install cmake glfw
 
 # Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -- -j$(nproc)
+cmake --build build --config Release --parallel
 ```
 
 ### Windows
@@ -82,8 +82,8 @@ choco install vcpkg
 vcpkg install glfw3:x64-windows
 
 # Build
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$(vcpkg/scripts/buildsystems/vcpkg.cmake)
-cmake --build build --config Release -- -j$(nproc)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$env:ChocolateyToolsLocation\vcpkg\scripts\buildsystems\vcpkg.cmake"
+cmake --build build --config Release --parallel
 ```
 
 ### Options
