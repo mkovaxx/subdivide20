@@ -47,24 +47,23 @@ Precise surface manipulation at corners:
 
 ## Building from Source
 
-### Prerequisites
-
 - CMake 3.15 or later
 - C++17 compatible compiler (GCC 8+, Clang 10+, Apple Clang 12+)
-- GLFW and GLM (for the viewer application)
+- GLFW (for the viewer application)
 
-#### Linux (Ubuntu/Debian)
+### Linux (Ubuntu/Debian)
 
 ```bash
 # Install dependencies
 sudo apt-get update
 sudo apt-get install -y cmake libglfw3-dev
 
+# Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
 ```
 
-#### macOS
+### macOS
 
 ```bash
 # Install dependencies using Homebrew
@@ -75,14 +74,19 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
 ```
 
-### Build
+### Windows
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+# Install dependencies
+choco install vcpkg
+vcpkg install glfw3:x64-windows
+
+# Build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$(vcpkg/scripts/buildsystems/vcpkg.cmake)
 cmake --build build --config Release -- -j$(nproc)
 ```
 
-#### Options
+### Options
 
 - `-DCMAKE_BUILD_TYPE=Release` (default): Optimized release build
 - `-DCMAKE_BUILD_TYPE=Debug`: Build with debug symbols

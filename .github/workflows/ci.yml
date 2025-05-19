@@ -90,8 +90,11 @@ jobs:
           choco install -y cmake vcpkg
           vcpkg install glfw3:x64-windows
       - name: Build
+        shell: pwsh
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$(vcpkg/scripts/buildsystems/vcpkg.cmake)
+          cmake -S . -B build `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
           cmake --build build --config Release -- -j$(nproc)
       - name: Verify artifacts
         run: |
