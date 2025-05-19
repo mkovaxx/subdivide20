@@ -22,7 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Compiler flags
 if(MSVC)
-    add_compile_options(/w)
+    add_compile_options(/W4)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
     
