@@ -24,16 +24,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "compat.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif
-
 #include "general.hpp" // maxdepth
 
 #include "pickviewer.hpp" // viewer class
@@ -50,6 +40,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "sectorinfo.hpp" // sector information used for call backs
 
 #include <cstring>
+
+#include <GLFW/glfw3.h> // Added for GLFW key constants
 
 int depth = 3;
 
@@ -481,10 +473,10 @@ void registerTriCB(PickViewer* triViewer, PickableTri* triObject) {
     // toggle rendered view with o (for 'o'ther view)
     triViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleTriViewerStateCB, triObject));
     triViewer->addPickCallback(triPickCB, triObject);
-    triViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
-    triViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&triFlatUpCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&triFlatDownCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&triThetaUpCB, triObject));
+    triViewer->addSpecialCallback(GLFW_KEY_LEFT, PickViewer::CBPairType(&triThetaDownCB, triObject));
 }
 
 // register Quad viewer callbacks
@@ -500,10 +492,10 @@ void registerQuadCB(PickViewer* quadViewer, PickableQuad* quadObject) {
     // toggle rendered view with o (for 'o'ther view)
     quadViewer->addKeyCallback('o', PickViewer::CBPairType(&toggleQuadViewerStateCB, quadObject));
     quadViewer->addPickCallback(quadPickCB, quadObject);
-    quadViewer->addSpecialCallback(GLUT_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
-    quadViewer->addSpecialCallback(GLUT_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_UP, PickViewer::CBPairType(&quadFlatUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_DOWN, PickViewer::CBPairType(&quadFlatDownCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_RIGHT, PickViewer::CBPairType(&quadThetaUpCB, quadObject));
+    quadViewer->addSpecialCallback(GLFW_KEY_LEFT, PickViewer::CBPairType(&quadThetaDownCB, quadObject));
 }
 
 //-----------------------------------------------------------------------------
@@ -520,6 +512,8 @@ int main(int argc, char** argv) {
     PickableTri triObject;
     PickableQuad quadObject;
 
+    PickViewer* viewer = nullptr;
+
     if (triMode) {
         ivGraph.toTagFlatMesh(&tagFlatMesh, true);
         TriMesh triMesh(tagFlatMesh);
@@ -531,10 +525,10 @@ int main(int argc, char** argv) {
         // compute 0 subdivision level
         triObject.getMesh().subdivide(0);
 
-        PickViewer* triViewer = new PickViewer("Subdivide 2.0 :: Triangles");
-        triViewer->setObject(&triObject);
-        triViewer->setPos(100, 100);
-        registerTriCB(triViewer, &triObject);
+        viewer = new PickViewer("Subdivide 2.0 :: Triangles");
+        viewer->setObject(&triObject);
+        viewer->setPos(100, 100);
+        registerTriCB(viewer, &triObject);
     } else {
         ivGraph.toTagFlatMesh(&tagFlatMesh, false);
         QuadMesh quadMesh(tagFlatMesh);
@@ -546,13 +540,22 @@ int main(int argc, char** argv) {
         // compute 0 subdivision level
         quadObject.getMesh().subdivide(0);
 
-        PickViewer* quadViewer = new PickViewer("Subdivide 2.0 :: Quads");
-        quadViewer->setObject(&quadObject);
-        quadViewer->setPos(100, 100);
-        registerQuadCB(quadViewer, &quadObject);
+        viewer = new PickViewer("Subdivide 2.0 :: Quads");
+        viewer->setObject(&quadObject);
+        viewer->setPos(100, 100);
+        registerQuadCB(viewer, &quadObject);
     }
 
-    // enter glut main loop
-    glutMainLoop();
+    // GLFW event loop
+    if (viewer) {
+        GLFWwindow* window = viewer->getWindow();
+        while (!glfwWindowShouldClose(window)) {
+            viewer->display();
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+    }
+
+    glfwTerminate();
     return 0;
 }

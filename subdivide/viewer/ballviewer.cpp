@@ -26,15 +26,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.hpp"
 #include "glcheck.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif
+#include <GLFW/glfw3.h>
 
 #include "geoobject.hpp"
 #include "uiaction.hpp"
@@ -87,38 +79,36 @@ void BallViewer::display() {
     glDisable(GL_DEPTH_TEST);
     _arcball.DrawCompleteBall(getCamera()->viewWorldPosition());
 
-    glutSwapBuffers();
     glCheck();
 }
 
-void BallViewer::mouse(int button, int state, int x, int y) {
+void BallViewer::mouse(int button, int state, int x, int y, int mods) {
     y = getHeight() - y;
-    if (state == GLUT_DOWN) {
+    if (state == GLFW_PRESS) {
         if (_uiAction) {
             delete _uiAction;
         }
 
-        // map left+shift to right button
-        if ((button == GLUT_LEFT_BUTTON) && (glutGetModifiers() & GLUT_ACTIVE_ALT)) {
-            button = GLUT_RIGHT_BUTTON;
+        // map left+ALT to right button
+        if ((button == GLFW_MOUSE_BUTTON_LEFT) && (mods & GLFW_MOD_ALT)) {
+            button = GLFW_MOUSE_BUTTON_RIGHT;
         }
 
         switch (button) {
-        case GLUT_LEFT_BUTTON:
+        case GLFW_MOUSE_BUTTON_LEFT:
             _uiAction = new CameraRotateAction(x, y, &_arcball, getCamera());
             break;
-        case GLUT_MIDDLE_BUTTON:
+        case GLFW_MOUSE_BUTTON_MIDDLE:
             _uiAction = new CameraTransXYAction(x, y, &_arcball, getCamera());
             break;
-        case GLUT_RIGHT_BUTTON:
+        case GLFW_MOUSE_BUTTON_RIGHT:
             _uiAction = new CameraTransZAction(x, y, &_arcball, getCamera());
             break;
         }
-    } else {
+    } else if (state == GLFW_RELEASE) {
         delete _uiAction;
-        _uiAction = 0;
+        _uiAction = nullptr;
     }
-    glutPostRedisplay();
 }
 
 void BallViewer::motion(int x, int y) {
@@ -126,7 +116,6 @@ void BallViewer::motion(int x, int y) {
     if (_uiAction) {
         _uiAction->update(x, y);
     }
-    glutPostRedisplay();
 }
 
 void BallViewer::key(unsigned char k, int, int y) {
@@ -147,17 +136,15 @@ void BallViewer::key(unsigned char k, int, int y) {
         break;
     }
 
-    glutPostRedisplay();
 }
 
 void BallViewer::specialKey(int k, int /* x */, int /* y */) {
     switch (k) {
-    case GLUT_KEY_HOME:
+    case GLFW_KEY_HOME:
         positionCamera();
         positionArcBall();
         break;
     }
-    glutPostRedisplay();
 }
 
 void BallViewer::centerArcBall() {

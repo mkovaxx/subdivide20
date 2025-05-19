@@ -1,10 +1,4 @@
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#endif
+#include <GLFW/glfw3.h>
 
 #include "compat.hpp"
 

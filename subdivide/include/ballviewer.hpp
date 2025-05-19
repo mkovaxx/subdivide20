@@ -40,12 +40,13 @@ class BallViewer : public Viewer {
 
     ArcBall* getArcBall() { return &_arcball; }
 
+    virtual void display();
+
   protected:
     UiAction* _uiAction;
     ArcBall _arcball;
-    virtual void display();
     virtual void renderObject();
-    virtual void mouse(int button, int state, int x, int y);
+    virtual void mouse(int button, int action, int x, int y, int mods);
     virtual void motion(int x, int y);
     virtual void key(unsigned char k, int x, int y);
     virtual void specialKey(int k, int x, int y);

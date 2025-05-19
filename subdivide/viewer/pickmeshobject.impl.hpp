@@ -5,15 +5,7 @@
 #include "glcheck.hpp"
 #include "pickableparam.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif
+#include <GLFW/glfw3.h>
 
 #include "sectorinfo.hpp"
 #include "tagflatmesh.hpp"
@@ -382,7 +374,6 @@ template <class Mesh> void PickMeshObjectTp<Mesh>::rerender() {
         glDeleteLists(_listNo, 2);
         glCheck();
     }
-    glutPostRedisplay();
 }
 
 template <class Mesh> void PickMeshObjectTp<Mesh>::render() {

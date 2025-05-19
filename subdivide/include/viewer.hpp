@@ -27,7 +27,9 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "camera.hpp"
 #include "compat.hpp"
+
 #include <vector>
+#include <GLFW/glfw3.h>
 
 class GeoObject;
 
@@ -44,26 +46,25 @@ class Viewer {
     Camera* getCamera() { return _camera; }
 
     // window management
-    int getId() const { return _winId; }
+    GLFWwindow* getWindow() const { return _window; }
     int getWidth() { return _width; }
     int getHeight() { return _height; }
-    void setSize(int w, int h);
     void setPos(int x, int y);
-    void setWindow();
 
     static void initGL(int* argc, char** argv);
 
-  protected:
     virtual void display();
+
+  protected:
     virtual void reshape(int w, int h);
-    virtual void mouse(int button, int state, int x, int y);
+    virtual void mouse(int button, int action, int x, int y, int mods);
     virtual void motion(int x, int y);
     virtual void key(unsigned char k, int x, int y);
     virtual void specialKey(int k, int x, int y);
 
   private:
     // window data
-    int _winId;
+    GLFWwindow* _window;
     int _width;
     int _height;
     char _title[80];
@@ -74,21 +75,20 @@ class Viewer {
     // the object to view
     GeoObject* _geoObject;
 
-    // some wrapper functions
-    static Viewer* getCurrentViewer();
-    static void displayWrapper();
-    static void reshapeWrapper(int x, int y);
-    static void mouseWrapper(int button, int state, int x, int y);
-    static void motionWrapper(int x, int y);
-    static void keyWrapper(unsigned char k, int x, int y);
-    static void specialKeyWrapper(int k, int x, int y);
-    static std::vector<Viewer*> _viewer;
+    static Viewer* getCurrentViewer(GLFWwindow* window);
+    // static callbacks to be used with GLFW
+    static void reshapeWrapper(GLFWwindow* window, int width, int height);
+    static void mouseWrapper(GLFWwindow* window, int button, int action, int mods);
+    static void motionWrapper(GLFWwindow* window, double xpos, double ypos);
+    static void keyWrapper(GLFWwindow* window, unsigned int codepoint);
+    static void specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void errorWrapper(int error, const char* description);
+
+    // helper function to transform screen coordinates to pixel coordinates, which may differ in GLFW
+    void transformScreenToPixelCoords(double x_screen, double y_screen, int& x_pixel, int& y_pixel);
 
   protected:
     void positionCamera();
-
-  public:
-    static void redisplayAll();
 };
 
 #endif /* __VIEWER_H__ */

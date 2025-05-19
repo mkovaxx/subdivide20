@@ -28,17 +28,17 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "math.h"
 #include "pickobject.hpp"
 #include "stdlib.h"
+#include <GLFW/glfw3.h>
 
-void PickViewer::mouse(int button, int state, int x, int y) {
-    if ((_uiState == PICK_STATE) && (state == GLUT_DOWN)) {
+void PickViewer::mouse(int button, int action, int x, int y, int mods) {
+    if ((_uiState == PICK_STATE) && (action == GLFW_PRESS)) {
         pick(x, getHeight() - y);
         // callback to mesh class
         if (_pickCB) {
             _pickCB(_pickedStuff, _pickData);
         }
-        glutPostRedisplay();
     } else {
-        BallViewer::mouse(button, state, x, y);
+        BallViewer::mouse(button, action, x, y, mods);
     }
 }
 
@@ -46,7 +46,6 @@ void PickViewer::key(unsigned char k, int x, int y) {
     std::map<unsigned char, CBPairType>::iterator it = _cbMap.find(k);
     if (it != _cbMap.end()) {
         ((*it).second.first)((*it).second.second);
-        glutPostRedisplay();
     } else {
         BallViewer::key(k, x, y);
     }
@@ -56,7 +55,6 @@ void PickViewer::specialKey(int k, int x, int y) {
     std::map<int, CBPairType>::iterator it = _specialMap.find(k);
     if (it != _specialMap.end()) {
         ((*it).second.first)((*it).second.second);
-        glutPostRedisplay();
     } else {
         BallViewer::specialKey(k, x, y);
     }

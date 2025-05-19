@@ -27,12 +27,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "ballviewer.hpp"
 #include "pickobject.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 class PickViewer : public BallViewer {
 
   public:
@@ -76,7 +70,7 @@ class PickViewer : public BallViewer {
   protected:
     virtual void key(unsigned char k, int x, int y);
     virtual void pick(GLint x, GLint y);
-    virtual void mouse(int button, int state, int x, int y);
+    virtual void mouse(int button, int action, int x, int y, int mods);
     virtual void specialKey(int k, int x, int y);
 
   private:

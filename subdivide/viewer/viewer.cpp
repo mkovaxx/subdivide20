@@ -25,60 +25,63 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.hpp"
 #include "glcheck.hpp"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "geoobject.hpp"
 #include "viewer.hpp"
 
-std::vector<Viewer*> Viewer::_viewer;
-
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
-Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoObject(0) {
+Viewer::Viewer(char* t, int w, int h) : _camera(0), _geoObject(0) {
+    strcpy(_title, t);
 
-    if (t == 0) {
-        sprintf(_title, "Viewer#%d", _viewer.size());
-    } else {
-        strcpy(_title, t);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // The following does not work on macOS, which is why it is commented out.
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+    glfwWindowHint(GLFW_DEPTH_BITS, 24);
+
+    _window = glfwCreateWindow(w, h, _title, NULL, NULL);
+    if (!_window) {
+        fprintf(stderr, "Failed to create GLFW window\n");
+        glfwTerminate();
+        exit(EXIT_FAILURE); 
     }
 
-    _viewer.push_back(this);
+    glfwSetWindowUserPointer(_window, this); // Associate this Viewer instance with the window
+    glfwMakeContextCurrent(_window);
 
-    glutInitWindowPosition(100, 100);
-    glutInitWindowSize(_width, _height);
-
-    _winId = glutCreateWindow(_title);
-
-    glutSetWindow(getId());
-    glutDisplayFunc(displayWrapper);
-    glutMouseFunc(mouseWrapper);
-    glutMotionFunc(motionWrapper);
-    glutReshapeFunc(reshapeWrapper);
-    glutKeyboardFunc(keyWrapper);
-    glutSpecialFunc(specialKeyWrapper);
-    glCheck();
+    // Register GLFW callbacks for this window
+    glfwSetFramebufferSizeCallback(_window, Viewer::reshapeWrapper);
+    glfwSetMouseButtonCallback(_window, Viewer::mouseWrapper);
+    glfwSetCursorPosCallback(_window, Viewer::motionWrapper);
+    glfwSetKeyCallback(_window, Viewer::specialKeyWrapper);
+    glfwSetCharCallback(_window, Viewer::keyWrapper);
 
     _camera = new Camera();
     glCheck();
+
+    glfwGetFramebufferSize(_window, &_width, &_height);
+    reshape(_width, _height);
 }
 
 void Viewer::initGL(int* argc, char** argv) {
-    glutInit(argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        exit(EXIT_FAILURE);
+    }
+    glfwSetErrorCallback(Viewer::errorWrapper);
 }
 
-Viewer::~Viewer() { ; }
+Viewer::~Viewer() { 
+    glfwDestroyWindow(_window);
+    _window = nullptr;
+}
 
 void Viewer::setObject(GeoObject* object) {
     _geoObject = object;
@@ -86,19 +89,15 @@ void Viewer::setObject(GeoObject* object) {
     spositionCamera(_camera, object, vp);
 }
 
-void Viewer::setSize(int w, int h) {
-    reshape(w, h);
-    glCheck();
-}
-
 void Viewer::setPos(int x, int y) {
-    glutSetWindow(getId());
-    glutPositionWindow(x, y);
-    glutPostRedisplay();
+    glfwSetWindowPos(getWindow(), x, y);
+    glfwPostEmptyEvent();
     glCheck();
 }
 
 void Viewer::display() {
+    glfwMakeContextCurrent(_window);
+    glCheck();
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -107,9 +106,6 @@ void Viewer::display() {
     if (_geoObject) {
         _geoObject->render();
     }
-    glCheck();
-
-    glutSwapBuffers();
     glCheck();
 }
 
@@ -122,35 +118,22 @@ void Viewer::reshape(int w, int h) {
     _camera->computeModelview();
     _camera->computeProjection();
     _camera->loadMatrices();
-    glutPostRedisplay();
     glCheck();
 }
 
-void Viewer::mouse(int, int, int, int) {
-    glutPostRedisplay();
+void Viewer::mouse(int button, int state, int x, int y, int mods) {
     glCheck();
 }
 
-void Viewer::motion(int, int) {
-    glutPostRedisplay();
+void Viewer::motion(int x, int y) {
     glCheck();
 }
 
-void Viewer::key(unsigned char, int, int) {
-    glutPostRedisplay();
+void Viewer::key(unsigned char key, int x, int y) {
     glCheck();
 }
 
-void Viewer::specialKey(int, int, int) {
-    glutPostRedisplay();
-    glCheck();
-}
-
-void Viewer::redisplayAll() {
-    for (uint i = 0; i < _viewer.size(); ++i) {
-        glutSetWindow(_viewer[i]->getId());
-        glutPostRedisplay();
-    }
+void Viewer::specialKey(int key, int x, int y) {
     glCheck();
 }
 
@@ -159,64 +142,87 @@ void Viewer::positionCamera() {
     spositionCamera(getCamera(), getObject(), vp);
 }
 
-void Viewer::setWindow() {
-    glutSetWindow(getId());
-    glutPostRedisplay();
+Viewer* Viewer::getCurrentViewer(GLFWwindow* window) {
+    return static_cast<Viewer*>(glfwGetWindowUserPointer(window));
 }
 
-//--------------------------------------------------------------
-// dispatcher
-
-Viewer* Viewer::getCurrentViewer() {
-    int id = glutGetWindow();
-    for (uint i = 0; i < Viewer::_viewer.size(); ++i) {
-        if (_viewer[i]->getId() == id) {
-            return _viewer[i];
-        }
-    }
-    return 0;
-}
-
-void Viewer::displayWrapper() {
-    Viewer* v = getCurrentViewer();
+void Viewer::reshapeWrapper(GLFWwindow* window, int width, int height) {
+    Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->display();
+        v->reshape(width, height);
     }
 }
 
-void Viewer::reshapeWrapper(int x, int y) {
-    Viewer* v = getCurrentViewer();
+void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) {
+    Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->reshape(x, y);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
+
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+
+        v->mouse(button, action, xpos_pixel, ypos_pixel, mods);
     }
 }
 
-void Viewer::mouseWrapper(int button, int state, int x, int y) {
-    Viewer* v = getCurrentViewer();
+void Viewer::motionWrapper(GLFWwindow* window, double xpos_screen_double, double ypos_screen_double) {
+    Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->mouse(button, state, x, y);
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+        v->motion(xpos_pixel, ypos_pixel);
     }
 }
 
-void Viewer::motionWrapper(int x, int y) {
-    Viewer* v = getCurrentViewer();
+void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
+    Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->motion(x, y);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
+
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+
+        v->key(tolower(codepoint), xpos_pixel, ypos_pixel);
     }
 }
 
-void Viewer::keyWrapper(unsigned char k, int x, int y) {
-    Viewer* v = getCurrentViewer();
+void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->key(k, x, y);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
+
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+
+        v->specialKey(key, xpos_pixel, ypos_pixel);
     }
 }
 
-void Viewer::specialKeyWrapper(int k, int x, int y) {
-    Viewer* v = getCurrentViewer();
-    if (v) {
-        v->specialKey(k, x, y);
+void Viewer::errorWrapper(int error, const char* description) {
+    fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
+}
+
+void Viewer::transformScreenToPixelCoords(double x_screen, double y_screen, int& x_pixel, int& y_pixel) {
+    int window_width_screen, window_height_screen;
+    glfwGetWindowSize(getWindow(), &window_width_screen, &window_height_screen);
+
+    // Initialize pixel coordinates to screen coordinates as a fallback
+    double xpos_pixel_double = x_screen;
+    double ypos_pixel_double = y_screen;
+
+    // Perform scaling if window dimensions are valid
+    if (window_width_screen > 0 && window_height_screen > 0) {
+        double scaleX = (double)getWidth() / window_width_screen;
+        double scaleY = (double)getHeight() / window_height_screen;
+        xpos_pixel_double = x_screen * scaleX;
+        ypos_pixel_double = y_screen * scaleY;
     }
+
+    x_pixel = static_cast<int>(xpos_pixel_double);
+    y_pixel = static_cast<int>(ypos_pixel_double);
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {

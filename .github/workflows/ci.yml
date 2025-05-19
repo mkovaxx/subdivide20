@@ -10,7 +10,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
-          brew install cmake freeglut
+          brew install cmake glfw glm
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ freeglut3-dev xvfb
+          sudo apt-get install -y cmake libglfw3-dev libglm-dev
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
