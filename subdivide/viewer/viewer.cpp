@@ -106,6 +106,8 @@ void Viewer::setPos(int x, int y) {
 }
 
 void Viewer::display() {
+    glfwMakeContextCurrent(_window);
+    glCheck();
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
