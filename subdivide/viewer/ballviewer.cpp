@@ -26,12 +26,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "compat.hpp"
 #include "glcheck.hpp"
 
-#if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
-
 #include <GLFW/glfw3.h>
 
 #include "geoobject.hpp"

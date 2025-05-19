@@ -25,10 +25,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #ifndef __VIEWER_H__
 #define __VIEWER_H__
 
-#include <GLFW/glfw3.h>
 #include "camera.hpp"
 #include "compat.hpp"
+
 #include <vector>
+#include <GLFW/glfw3.h>
 
 class GeoObject;
 
