@@ -26,11 +26,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #define __GL_CHECK_H__
 #include "compat.hpp"
 
-#if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
+#include <GLFW/glfw3.h>
 
 #define glCheck() __glCheck__(__FILE__, __LINE__)
 
@@ -47,7 +43,7 @@ namespace {
         case GL_STACK_OVERFLOW:                 return "GL_STACK_OVERFLOW (deprecated)";
         case GL_STACK_UNDERFLOW:                return "GL_STACK_UNDERFLOW (deprecated)";
         case GL_OUT_OF_MEMORY:                  return "GL_OUT_OF_MEMORY";
-        case GL_INVALID_FRAMEBUFFER_OPERATION:  return "GL_INVALID_FRAMEBUFFER_OPERATION";
+        //case GL_INVALID_FRAMEBUFFER_OPERATION:  return "GL_INVALID_FRAMEBUFFER_OPERATION";
         //case GL_CONTEXT_LOST:                   return "GL_CONTEXT_LOST"; // If using OpenGL 4.5+ or KHR_robustness
         default:                                return "Unknown GL error";
         }

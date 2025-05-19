@@ -32,8 +32,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "geoobject.hpp"
 #include "viewer.hpp"
 
-#include <GLFW/glfw3.h>
-
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
 Viewer::Viewer(char* t, int w, int h) : _camera(0), _geoObject(0) {
