@@ -14,7 +14,7 @@ SIGGRAPH 2000 Conference Proceedings.
 ### Improvements Made
 
 - **Build System**: Updated to use CMake for better portability
-- **Cross-Platform**: Supports Linux and macOS (Windows support coming soon)
+- **Cross-Platform**: Supports Linux, macOS, and Windows
 - **Modern C++**: Updated to C++11 standard
 - **Modern OpenGL**: Updated to use GLFW and GLM
 - **CI/CD**: Automated testing with GitHub Actions
@@ -58,7 +58,7 @@ Precise surface manipulation at corners:
 ```bash
 # Install dependencies
 sudo apt-get update
-sudo apt-get install -y cmake libglfw3-dev libglm-dev
+sudo apt-get install -y cmake libglfw3-dev
 
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release -- -j$(nproc)
@@ -68,7 +68,7 @@ cmake --build build --config Release -- -j$(nproc)
 
 ```bash
 # Install dependencies using Homebrew
-brew install cmake glfw glm
+brew install cmake glfw
 
 # Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
