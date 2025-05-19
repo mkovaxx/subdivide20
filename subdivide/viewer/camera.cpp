@@ -24,6 +24,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "camera.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 // storage for current matrices
 GLdouble Camera::_proj[16];
 GLdouble Camera::_view[16];
@@ -138,34 +142,54 @@ void Camera::loadMatrices() const {
 
 // ******************** project/unproject ********************
 
+// Helper to convert HMatrix (assumed double[16]) to glm::mat4
+static inline glm::mat4 hmatrixToGlm(const HMatrix& hMat) {
+    // HMatrix seems to be castable to (const double*). Assuming column-major.
+    return glm::make_mat4(static_cast<const double*>(hMat));
+}
+
 // project a point from world space to screen space
 CVec3T<float> Camera::project(const CVec3T<float>& worldPoint) const {
-    GLdouble winx, winy, winz;
+    glm::mat4 modelView = hmatrixToGlm(_modelviewMatrix);
+    glm::mat4 projection = hmatrixToGlm(_projectionMatrix);
+    glm::vec4 viewport = glm::vec4(_viewport[0], _viewport[1], _viewport[2], _viewport[3]);
 
-    gluProject(worldPoint.x(), worldPoint.y(), worldPoint.z(), (const double*)(_modelviewMatrix),
-               (const double*)(_projectionMatrix), _viewport, &winx, &winy, &winz);
-
-    return CVec3T<float>(winx, winy, winz);
+    glm::vec3 screenCoords = glm::project(
+        glm::vec3(worldPoint.x(), worldPoint.y(), worldPoint.z()),
+        modelView,
+        projection,
+        viewport
+    );
+    return CVec3T<float>(screenCoords.x, screenCoords.y, screenCoords.z);
 }
 
 // compute the world space coordinate for an image coordinate
 CVec3T<float> Camera::unproject(const CVec3T<float>& imagePoint) const {
-    GLdouble objx, objy, objz;
+    glm::mat4 modelView = hmatrixToGlm(_modelviewMatrix);
+    glm::mat4 projection = hmatrixToGlm(_projectionMatrix);
+    glm::vec4 viewport = glm::vec4(_viewport[0], _viewport[1], _viewport[2], _viewport[3]);
 
-    gluUnProject(imagePoint.x(), imagePoint.y(), imagePoint.z(), (const double*)(_modelviewMatrix),
-                 (const double*)(_projectionMatrix), _viewport, &objx, &objy, &objz);
-
-    return CVec3T<float>(objx, objy, objz);
+    glm::vec3 worldCoords = glm::unProject(
+        glm::vec3(imagePoint.x(), imagePoint.y(), imagePoint.z()),
+        modelView,
+        projection,
+        viewport
+    );
+    return CVec3T<float>(worldCoords.x, worldCoords.y, worldCoords.z);
 }
 
-// compute the object space coordinate for an image coordinate
 CVec3T<float> Camera::unproject(const HMatrix& model, const CVec3T<float>& imagePoint) const {
-    GLdouble objx, objy, objz;
+    glm::mat4 modelView = hmatrixToGlm(_modelviewMatrix * model);
+    glm::mat4 projection = hmatrixToGlm(_projectionMatrix);
+    glm::vec4 viewport = glm::vec4(_viewport[0], _viewport[1], _viewport[2], _viewport[3]);
 
-    gluUnProject(imagePoint.x(), imagePoint.y(), imagePoint.z(), (double*)(_modelviewMatrix * model),
-                 (const double*)(_projectionMatrix), _viewport, &objx, &objy, &objz);
-
-    return CVec3T<float>(objx, objy, objz);
+    glm::vec3 worldCoords = glm::unProject(
+        glm::vec3(imagePoint.x(), imagePoint.y(), imagePoint.z()),
+        modelView,
+        projection,
+        viewport
+    );
+    return CVec3T<float>(worldCoords.x, worldCoords.y, worldCoords.z);
 }
 
 // ******************** camera modification ********************

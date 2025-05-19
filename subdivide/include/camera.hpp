@@ -29,12 +29,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "cvec3t.hpp"
 #include "hmatrix.hpp"
 
-#if defined(__APPLE__)
-#include <OpenGL/glu.h>
-#else
-#include <GL/glu.h>
-#endif
-
 class Camera;
 std::ostream& operator<<(std::ostream& os, const Camera& camera);
 std::istream& operator>>(std::istream& is, Camera& camera);

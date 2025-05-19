@@ -1,6 +1,7 @@
 # Find required packages
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
 
 # Find source files
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
@@ -29,6 +30,7 @@ target_link_libraries(viewer
     PUBLIC 
         ${OPENGL_LIBRARIES}
         glfw
+        glm::glm
 )
 
 # Add X11 libraries for Linux
