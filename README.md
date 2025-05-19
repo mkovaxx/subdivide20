@@ -146,5 +146,5 @@ This project is licensed under the [GNU GPLv2](LICENSE).
 ## Acknowledgments
 
 - Original work by H. Biermann, A. Levin, and D. Zorin
-- Initial maintenance work by Máté J Kovács
+- Recent maintenance work by Máté J Kovács
 - Maintained by the open source community
