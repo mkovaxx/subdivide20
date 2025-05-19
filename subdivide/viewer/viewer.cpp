@@ -44,7 +44,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 static void spositionCamera(Camera* camera, GeoObject* object, int* vp);
 
-Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoObject(0) {
+Viewer::Viewer(char* t, int w, int h) : _camera(0), _geoObject(0) {
     strcpy(_title, t);
 
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -56,7 +56,7 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_DEPTH_BITS, 24);
 
-    _window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
+    _window = glfwCreateWindow(w, h, _title, NULL, NULL);
     if (!_window) {
         fprintf(stderr, "Failed to create GLFW window\n");
         glfwTerminate();
@@ -64,9 +64,7 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     }
 
     glfwSetWindowUserPointer(_window, this); // Associate this Viewer instance with the window
-
     glfwMakeContextCurrent(_window);
-    // If a library like GLEW were used, glewInit() would go here.
 
     // Register GLFW callbacks for this window
     glfwSetFramebufferSizeCallback(_window, Viewer::reshapeWrapper);
@@ -75,13 +73,11 @@ Viewer::Viewer(char* t, int w, int h) : _width(w), _height(h), _camera(0), _geoO
     glfwSetKeyCallback(_window, Viewer::specialKeyWrapper);
     glfwSetCharCallback(_window, Viewer::keyWrapper);
 
-    // Enable depth testing by default
-    glEnable(GL_DEPTH_TEST);
-
-    glCheck();
-
     _camera = new Camera();
     glCheck();
+
+    glfwGetFramebufferSize(_window, &_width, &_height);
+    reshape(_width, _height);
 }
 
 void Viewer::initGL(int* argc, char** argv) {
