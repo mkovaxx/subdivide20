@@ -80,3 +80,43 @@ jobs:
 
           echo "Testing loopsub --help"
           build/bin/loopsub --help || build/bin/loopsub -h
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          choco install -y cmake
+          choco install -y glfw
+          choco install -y glm
+      - name: Build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release -- -j$(nproc)
+      - name: Verify artifacts
+        run: |
+          # Verify libraries
+          ls -la build/lib/libqvlib.a
+          [ -f build/lib/libqvlib.a ]
+          ls -la build/lib/libsubdivide.a
+          [ -f build/lib/libsubdivide.a ]
+          ls -la build/lib/libviewer.a
+          [ -f build/lib/libviewer.a ]
+
+          # Verify example binaries exist
+          ls -la build/bin/ccsub
+          [ -f build/bin/ccsub ]
+          ls -la build/bin/loopsub
+          [ -f build/bin/loopsub ]
+          ls -la build/bin/subviewer
+          [ -f build/bin/subviewer ]
+
+      - name: Test CLI help commands
+        run: |
+          # Test each CLI with help flag
+          echo "Testing ccsub --help"
+          build/bin/ccsub --help || build/bin/ccsub -h
+
+          echo "Testing loopsub --help"
+          build/bin/loopsub --help || build/bin/loopsub -h
