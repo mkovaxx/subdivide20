@@ -107,8 +107,8 @@ jobs:
           Write-Host "Checking for library files..."
           $libs = @(
               "$pwd\build\lib\Release\qvlib.lib",
-              "$pwd\build\subdivide\Release\subdivide.lib",
-              "$pwd\build\subdivide\viewer\Release\viewer.lib"
+              "$pwd\build\lib\Release\subdivide.lib",
+              "$pwd\build\lib\Release\viewer.lib"
           )
           
           foreach ($lib in $libs) {
@@ -122,9 +122,9 @@ jobs:
           # Verify example binaries exist
           Write-Host "`nChecking for executable files..."
           $bins = @(
-              "$pwd\build\subdivide\examples\Release\ccsub.exe",
-              "$pwd\build\subdivide\examples\Release\loopsub.exe",
-              "$pwd\build\subdivide\examples\Release\subviewer.exe"
+              "$pwd\build\bin\Release\ccsub.exe",
+              "$pwd\build\bin\Release\loopsub.exe",
+              "$pwd\build\bin\Release\subviewer.exe"
           )
           
           foreach ($bin in $bins) {
@@ -142,13 +142,13 @@ jobs:
           $ErrorActionPreference = 'Stop'
           
           Write-Host "`nTesting ccsub --help"
-          & "$pwd\build\subdivide\examples\Release\ccsub.exe" --help
+          & "$pwd\build\bin\Release\ccsub.exe" --help
           if ($LASTEXITCODE -ne 0) {
-              & "$pwd\build\subdivide\examples\Release\ccsub.exe" -h
+              & "$pwd\build\bin\Release\ccsub.exe" -h
           }
 
           Write-Host "`nTesting loopsub --help"
-          & "$pwd\build\subdivide\examples\Release\loopsub.exe" --help
+          & "$pwd\build\bin\Release\loopsub.exe" --help
           if ($LASTEXITCODE -ne 0) {
-              & "$pwd\build\subdivide\examples\Release\loopsub.exe" -h
+              & "$pwd\build\bin\Release\loopsub.exe" -h
           }
