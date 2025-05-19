@@ -1,6 +1,6 @@
 # Subdivide 2.0
 
-This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision) from the Media Research Lab at NYU.
+This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision), originally created at the Media Research Lab at NYU.
 
 It is meant as companion code to the following [paper](doc/piecewise-smooth.pdf):
 ```
