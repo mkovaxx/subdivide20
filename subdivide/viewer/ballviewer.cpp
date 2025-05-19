@@ -32,7 +32,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include <GL/gl.h>
 #endif
 
-#include <GLFW/glfw3.h> // Added for future GLFW use
+#include <GLFW/glfw3.h>
 
 #include "geoobject.hpp"
 #include "uiaction.hpp"
