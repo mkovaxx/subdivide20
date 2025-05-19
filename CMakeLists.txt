@@ -33,7 +33,7 @@ else()
     endif()
 endif()
 
-add_compile_definitions(-w)
+add_compile_options(-w)
 
 # Add subdirectories
 add_subdirectory(qvlib)
