@@ -31,6 +31,10 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include <math.h>
 
+#ifdef _WIN32
+#define _USE_MATH_DEFINES
+#endif
+
 typedef unsigned int uint;
 
 inline void die() {
