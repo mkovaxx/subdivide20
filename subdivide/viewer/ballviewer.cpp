@@ -28,10 +28,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
 #else
 #include <GL/gl.h>
-#include <GL/glu.h>
 #endif
 
 #include <GLFW/glfw3.h> // Added for future GLFW use
