@@ -1,6 +1,6 @@
 # Subdivide 2.0
 
-This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision) from the Media Research Lab at NYU.
+This is a **maintained** fork of [Subdivide 2.0](https://cs.nyu.edu/home/people/in_memoriam/biermann/subdivision), originally created at the Media Research Lab at NYU.
 
 It is meant as companion code to the following [paper](doc/piecewise-smooth.pdf):
 ```
@@ -14,7 +14,7 @@ SIGGRAPH 2000 Conference Proceedings.
 ### Improvements Made
 
 - **Build System**: Updated to use CMake for better portability
-- **Cross-Platform**: Supports Linux and macOS (Windows support coming soon)
+- **Cross-Platform**: Supports Linux, macOS, and Windows
 - **Modern C++**: Updated to C++11 standard
 - **Modern OpenGL**: Updated to use GLFW and GLM
 - **CI/CD**: Automated testing with GitHub Actions
@@ -47,42 +47,45 @@ Precise surface manipulation at corners:
 
 ## Building from Source
 
-### Prerequisites
-
 - CMake 3.15 or later
 - C++17 compatible compiler (GCC 8+, Clang 10+, Apple Clang 12+)
-- GLFW and GLM (for the viewer application)
+- GLFW (for the viewer application)
 
-#### Linux (Ubuntu/Debian)
+### Linux (Ubuntu/Debian)
 
 ```bash
 # Install dependencies
 sudo apt-get update
-sudo apt-get install -y cmake libglfw3-dev libglm-dev
-
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -- -j$(nproc)
-```
-
-#### macOS
-
-```bash
-# Install dependencies using Homebrew
-brew install cmake glfw glm
+sudo apt-get install -y cmake libglfw3-dev
 
 # Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -- -j$(nproc)
+cmake --build build --config Release --parallel
 ```
 
-### Build
+### macOS
 
 ```bash
+# Install dependencies using Homebrew
+brew install cmake glfw
+
+# Build
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -- -j$(nproc)
+cmake --build build --config Release --parallel
 ```
 
-#### Options
+### Windows
+
+```bash
+# Install dependencies
+vcpkg install glfw3:x64-windows
+
+# Build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$env:ChocolateyToolsLocation\vcpkg\scripts\buildsystems\vcpkg.cmake"
+cmake --build build --config Release --parallel
+```
+
+### Options
 
 - `-DCMAKE_BUILD_TYPE=Release` (default): Optimized release build
 - `-DCMAKE_BUILD_TYPE=Debug`: Build with debug symbols
@@ -143,5 +146,5 @@ This project is licensed under the [GNU GPLv2](LICENSE).
 ## Acknowledgments
 
 - Original work by H. Biermann, A. Levin, and D. Zorin
-- Initial maintenance work by Máté J Kovács
+- Recent maintenance work by Máté J Kovács
 - Maintained by the open source community

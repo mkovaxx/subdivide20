@@ -10,11 +10,11 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
-          brew install cmake glfw glm
+          brew install cmake glfw
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release -- -j$(nproc)
+          cmake --build build --config Release --parallel
       - name: Verify artifacts
         run: |
           # Verify libraries
@@ -49,11 +49,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake libglfw3-dev libglm-dev
+          sudo apt-get install -y cmake libglfw3-dev
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release -- -j$(nproc)
+          cmake --build build --config Release --parallel
       - name: Verify artifacts
         run: |
           # Verify libraries
@@ -80,3 +80,75 @@ jobs:
 
           echo "Testing loopsub --help"
           build/bin/loopsub --help || build/bin/loopsub -h
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          vcpkg install glfw3:x64-windows
+      - name: Build
+        shell: pwsh
+        run: |
+          # Get-Command finds the executable in PATH
+          $vcpkgExePath = (Get-Command vcpkg -ErrorAction Stop).Source
+          # Get the directory of the executable
+          $vcpkgRoot = (Get-Item $vcpkgExePath).DirectoryName
+          cmake -S . -B build `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_TOOLCHAIN_FILE="$vcpkgRoot\scripts\buildsystems\vcpkg.cmake"
+          cmake --build build --config Release --parallel
+      
+      - name: Verify artifacts
+        shell: pwsh
+        run: |
+          # Verify libraries
+          Write-Host "Checking for library files..."
+          $libs = @(
+              "$pwd\build\lib\Release\qvlib.lib",
+              "$pwd\build\lib\Release\subdivide.lib",
+              "$pwd\build\lib\Release\viewer.lib"
+          )
+          
+          foreach ($lib in $libs) {
+              if (-not (Test-Path $lib)) {
+                  Write-Error "Library not found: $lib"
+                  exit 1
+              }
+              Write-Host "Found: $lib"
+          }
+
+          # Verify example binaries exist
+          Write-Host "`nChecking for executable files..."
+          $bins = @(
+              "$pwd\build\bin\Release\ccsub.exe",
+              "$pwd\build\bin\Release\loopsub.exe",
+              "$pwd\build\bin\Release\subviewer.exe"
+          )
+          
+          foreach ($bin in $bins) {
+              if (-not (Test-Path $bin)) {
+                  Write-Error "Binary not found: $bin"
+                  exit 1
+              }
+              Write-Host "Found: $bin"
+          }
+
+      - name: Test CLI help commands
+        shell: pwsh
+        run: |
+          # Test each CLI with help flag
+          $ErrorActionPreference = 'Stop'
+          
+          Write-Host "`nTesting ccsub --help"
+          & "$pwd\build\bin\Release\ccsub.exe" --help
+          if ($LASTEXITCODE -ne 0) {
+              & "$pwd\build\bin\Release\ccsub.exe" -h
+          }
+
+          Write-Host "`nTesting loopsub --help"
+          & "$pwd\build\bin\Release\loopsub.exe" --help
+          if ($LASTEXITCODE -ne 0) {
+              & "$pwd\build\bin\Release\loopsub.exe" -h
+          }
