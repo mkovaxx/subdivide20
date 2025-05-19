@@ -94,7 +94,7 @@ jobs:
         run: |
           cmake -S . -B build `
             -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+            -DCMAKE_TOOLCHAIN_FILE="$env:ChocolateyToolsLocation\vcpkg\scripts\buildsystems\vcpkg.cmake"
           cmake --build build --config Release --parallel
       - name: Verify artifacts
         run: |
