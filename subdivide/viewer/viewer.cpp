@@ -176,61 +176,70 @@ void Viewer::mouseWrapper(GLFWwindow* window, int button, int action, int mods) 
         double xpos_screen_double, ypos_screen_double;
         glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
 
-        int window_width_screen, window_height_screen;
-        glfwGetWindowSize(window, &window_width_screen, &window_height_screen);
-
-        // Initialize pixel coordinates to screen coordinates as a fallback
-        double xpos_pixel_double = xpos_screen_double;
-        double ypos_pixel_double = ypos_screen_double;
-
-        // Perform scaling if window dimensions are valid
-        if (window_width_screen > 0 && window_height_screen > 0) {
-            double scaleX = (double)v->getWidth() / window_width_screen;
-            double scaleY = (double)v->getHeight() / window_height_screen;
-            xpos_pixel_double = xpos_screen_double * scaleX;
-            ypos_pixel_double = ypos_screen_double * scaleY;
-        }
-
-        int xpos_pixel = static_cast<int>(xpos_pixel_double);
-        int ypos_pixel = static_cast<int>(ypos_pixel_double);
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
 
         v->mouse(button, action, xpos_pixel, ypos_pixel, mods);
     }
 }
 
-void Viewer::motionWrapper(GLFWwindow* window, double xpos, double ypos) {
+void Viewer::motionWrapper(GLFWwindow* window, double xpos_screen_double, double ypos_screen_double) {
     Viewer* v = getCurrentViewer(window);
     if (v) {
-        v->motion(static_cast<int>(xpos), static_cast<int>(ypos));
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+        v->motion(xpos_pixel, ypos_pixel);
     }
 }
 
 void Viewer::keyWrapper(GLFWwindow* window, unsigned int codepoint) {
     Viewer* v = getCurrentViewer(window);
     if (v) {
-        double xpos_double, ypos_double;
-        glfwGetCursorPos(window, &xpos_double, &ypos_double);
-        int x = static_cast<int>(xpos_double);
-        int y = static_cast<int>(ypos_double);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
 
-        v->key(tolower(codepoint), x, y);
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+
+        v->key(tolower(codepoint), xpos_pixel, ypos_pixel);
     }
 }
 
 void Viewer::specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods) {
     Viewer* v = getCurrentViewer(window);
     if (v) {
-        double xpos_double, ypos_double;
-        glfwGetCursorPos(window, &xpos_double, &ypos_double);
-        int x = static_cast<int>(xpos_double);
-        int y = static_cast<int>(ypos_double);
+        double xpos_screen_double, ypos_screen_double;
+        glfwGetCursorPos(window, &xpos_screen_double, &ypos_screen_double);
 
-        v->specialKey(key, x, y);
+        int xpos_pixel, ypos_pixel;
+        v->transformScreenToPixelCoords(xpos_screen_double, ypos_screen_double, xpos_pixel, ypos_pixel);
+
+        v->specialKey(key, xpos_pixel, ypos_pixel);
     }
 }
 
 void Viewer::errorWrapper(int error, const char* description) {
     fprintf(stderr, "GLFW Error [%d]: %s\n", error, description);
+}
+
+void Viewer::transformScreenToPixelCoords(double x_screen, double y_screen, int& x_pixel, int& y_pixel) {
+    int window_width_screen, window_height_screen;
+    glfwGetWindowSize(getWindow(), &window_width_screen, &window_height_screen);
+
+    // Initialize pixel coordinates to screen coordinates as a fallback
+    double xpos_pixel_double = x_screen;
+    double ypos_pixel_double = y_screen;
+
+    // Perform scaling if window dimensions are valid
+    if (window_width_screen > 0 && window_height_screen > 0) {
+        double scaleX = (double)getWidth() / window_width_screen;
+        double scaleY = (double)getHeight() / window_height_screen;
+        xpos_pixel_double = x_screen * scaleX;
+        ypos_pixel_double = y_screen * scaleY;
+    }
+
+    x_pixel = static_cast<int>(xpos_pixel_double);
+    y_pixel = static_cast<int>(ypos_pixel_double);
 }
 
 void spositionCamera(Camera* camera, GeoObject* object, int* vp) {

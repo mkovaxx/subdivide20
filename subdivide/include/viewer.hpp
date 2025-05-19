@@ -84,6 +84,9 @@ class Viewer {
     static void specialKeyWrapper(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void errorWrapper(int error, const char* description);
 
+    // helper function to transform screen coordinates to pixel coordinates, which may differ in GLFW
+    void transformScreenToPixelCoords(double x_screen, double y_screen, int& x_pixel, int& y_pixel);
+
   protected:
     void positionCamera();
 };
